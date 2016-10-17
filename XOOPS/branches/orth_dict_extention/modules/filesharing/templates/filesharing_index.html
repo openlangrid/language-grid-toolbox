@@ -1,0 +1,133 @@
+<{include file="db:filesharing_base_top.html"}>
+<script language="Javascript">
+
+function getCheck(obj){
+	    var count;
+    var all_cid = document.getElementsByName("cid[]");
+        
+    for(count = 0; count < all_cid.length; count++){
+        all_cid[count].checked = obj.checked;
+    }
+    var all_lid = document.getElementsByName("lid[]");
+    for(count = 0 ; count < all_lid.length; count++){
+        all_lid[count].checked = obj.checked;
+    }
+}
+
+</script>
+	<div class="contents_title">
+		<table cellspacing="0" cellpadding="0" border="0" width="100%">
+			<tr>
+				<td class="title_l" width="19"/>
+				<td class="title_m"><{$smarty.const._MD_ALBM_MAIN}></td>
+				<td class="title_r" width="19"/>
+			</tr>
+		</table>
+	</div>
+	
+	<table style="width:100%;">
+		<tr>
+			<td style="padding-left:10px;">
+				<b><{$folder_description}></b>
+			</td>
+			<td style="text-align:right;white-space:nowrap;" nowrap>
+				<{if $lang_add_file}>
+					<a href="?page=submit&cid=1" class="btn btn-file">
+					<img src="<{$mod_url}>/img/icn_add.gif" border="0" alt="<{$lang_add_file}>" title="<{$lang_add_file}>" />
+					<{$lang_add_file}>
+					</a>
+				<{/if}>
+				<{if $lang_add_folder}>
+					<a href="?page=createfolder&pid=1" class="btn btn-file">
+					<img src="<{$mod_url}>/img/icn_add.gif" border="0" alt="<{$lang_add_folder}>" title="<{$lang_add_folder}>" />
+					<{$lang_add_folder}>
+					</a>
+				<{/if}>
+			</td>
+		</tr>
+	</table>
+	<br />
+
+		<form method="post"  action="?page=deletemulti&conf_delete=1">
+
+			<input type="submit" value="Delete All" class="btn_blue01">
+
+			
+	<table width="100%" cellspacing="0" class="outer">
+		<tr>
+			<td class="even" align="left">
+				<table class="body_title list-table">
+					<tr class="table_title_bg">
+						<td>
+							<input type="checkbox" onclick="getCheck(this)">
+						</td>
+						<td class="col-title">
+							<a href="<{$mod_url}>/?pos=<{$nowpos}>&sortkey=<{$sortheader->getNextKey(1)}>">
+							<{$smarty.const._MD_ALBM_NAME}>
+							</a>
+							<{$sortheader->getLabel(1)}>
+						</td>
+						<td class="col-desc">
+							<a href="<{$mod_url}>/?pos=<{$nowpos}>&sortkey=<{$sortheader->getNextKey(2)}>">
+							<{$smarty.const._MD_ALBM_DESCRIPTION}>
+							</a>
+							<{$sortheader->getLabel(2)}>
+						</td>
+						<td class="col-perm">
+							<a href="<{$mod_url}>/?pos=<{$nowpos}>&sortkey=<{$sortheader->getNextKey(3)}>">
+							<{$smarty.const._MD_ALBM_READ}>
+							</a>
+							<{$sortheader->getLabel(3)}>
+						</td>
+						<td class="col-perm">
+							<a href="<{$mod_url}>/?pos=<{$nowpos}>&sortkey=<{$sortheader->getNextKey(4)}>">
+							<{$smarty.const._MD_ALBM_EDIT}>
+							</a>
+							<{$sortheader->getLabel(4)}>
+						</td>
+						<td class="col-date">
+							<a href="<{$mod_url}>/?pos=<{$nowpos}>&sortkey=<{$sortheader->getNextKey(5)}>">
+							<{$smarty.const._MD_ALBM_NEWUPDATE}>
+							</a>
+							<{$sortheader->getLabel(5)}>
+						</td>
+					</tr>
+					<{foreach from=$files item=file_for_tpl}>
+						<{include file="db:filesharing_file_in_list.html"}>
+					<{/foreach}>
+				</table>
+				<{if $filenavdisp }>
+					<{$filenav}>
+					<{*
+					<hr />
+					<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+						<tr>
+							<td align='left'>
+								<{$filenavinfo}>
+							</td>
+							<td align='right'>
+								<{$filenav}>
+							</td>
+						</tr>
+					</table>
+					*}>
+				<{/if}>
+			</td>
+		</tr>
+	</table>
+		
+
+		<input type="submit" value="Delete All" class="btn_blue01">
+
+		</form>
+
+	<br />
+	<{*
+	<div style="text-align:center;width:100%;">
+		<form method="post" style="float:right;" action="<{$xoops_requesturi}>">
+			<input type="submit" value="<{$smarty.const._MD_ALBM_UPDATENOW}>" class="btn_blue01">
+		</form>
+	</div>
+	<{include file="db:filesharing_footer.html"}>
+	*}>
+<{include file="db:filesharing_base_footer.html"}>

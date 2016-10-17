@@ -1,0 +1,85 @@
+<{include file="db:filesharing_base_top.html"}>
+	<{*include file="db:filesharing_header.html"*}>
+	<div class="list_table02" style="width:600px;margin-top:0;">
+		<{if $error_msg != ""}>
+			<ul class="errorMsg" style="color:red;">
+				<li><{$error_msg}></li>
+			</ul>
+		<{/if}>
+		<FORM id="uploadfile" method="post" name="uploadfile" action="?page=editfile&lid=<{$lid}>">
+			<TABLE style="text-align:left;" class="outer" cellSpacing="1">
+				<tr>
+					<th colSpan=2><{$smarty.const._MD_ALBM_FILEEDITUPLOAD}></th>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_SELECTFILE}></td>
+					<td>
+						<a name='<{$file_for_tpl.lid}>'></a><a href='<{$mod_url}>/?page=file_dl&lid=<{$file_for_tpl.lid}>' target="_blank">
+						<{$file_for_tpl.title|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'}>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FILEDESC}></td>
+					<td>
+						<INPUT id="desc_text" maxLength="255" size="50" type="text" name="desc_text" value="<{$file_for_tpl.description|escape}>">
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FOLDER}></td>
+					<td>
+						<{$folder_select}>
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_OWNER}></td>
+					<td>
+						<a href="<{$file_for_tpl.owner_info}>">
+						<{$file_for_tpl.owner_name}>
+						</a>
+					</td>
+				</tr>
+				<{if $my_uid == $file_for_tpl.submitter || $isadmin }>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_EDIT_PERMISSION}></td>
+					<td>
+						<select name="edit_permission" onchange="change_read_perm(this);" style="width:200px;">
+							<option value="public"<{if $file_for_tpl.edit_type == 'public'}> selected<{/if}>><{$smarty.const._MD_ALBM_FOR_ALL_USERS}></option>
+							<option value="user"<{if $file_for_tpl.edit_type == 'user'}> selected<{/if}>><{$smarty.const._MD_ALBM_FOR_THE_CURRENT_USER_ONLY}></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_READ_PERMISSION}></td>
+					<td>
+						<select name="read_permission" id="read_perm" style="width:200px;">
+							<option value="public"<{if $file_for_tpl.read_type == 'public'}> selected<{/if}>><{$smarty.const._MD_ALBM_FOR_ALL_USERS}></option>
+							<{if $file_for_tpl.edit_type != 'public'}>
+								<option value="user"<{if $file_for_tpl.read_type == 'user'}> selected<{/if}>><{$smarty.const._MD_ALBM_FOR_THE_CURRENT_USER_ONLY}></option>
+							<{/if}>
+						</select>
+					</td>
+				</tr>
+				<{/if}>
+				<tr>
+					<td colspan="2" style="text-align:center;border:none;">
+						<INPUT id="back"   class="btn_blue01" value="<{$smarty.const._MD_ALBM_BTN_BACK}>"   type="button" name="back" onclick="page_back();" style="width:70px;"> &nbsp; 
+						<INPUT id="submit" class="btn_blue01" value="<{$smarty.const._MD_ALBM_BTN_OK}>" type="submit" name="submit" style="width:70px;"> &nbsp; 
+					</td>
+				</tr>
+			</TABLE>
+			<INPUT id="ref" value="<{$ref}>" type="hidden" name="ref">
+			<INPUT id="fieldCounter"   value="1"   type="hidden" name="fieldCounter">
+			<INPUT id="op"             value="submit" type="hidden" name="op">
+			<{$gticket}>
+		</FORM>
+	</div>
+	<SCRIPT type="text/javascript">
+	<!--//
+		function page_back(){
+			document.location = "<{$ref}>";
+		}
+	//-->
+	</SCRIPT>
+	<{include file="db:filesharing_footer.html"}>
+<{include file="db:filesharing_base_footer.html"}>

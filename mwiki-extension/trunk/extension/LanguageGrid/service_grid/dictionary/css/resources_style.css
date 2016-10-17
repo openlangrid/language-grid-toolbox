@@ -1,0 +1,170 @@
+/**
+ * Pane
+ */
+.popupbox {
+	border: 1px solid #9ccfce;
+	background: #fff;
+	width: 510px;
+	text-align: left;
+	z-index: 2;
+}
+
+.popupbox .inner {
+	margin: 10px 0;
+	padding: 5px 15px;
+}
+
+.selectedDictionaryRow {
+	background-color:#efefef !important;
+}
+tr.selectedDictionaryRow td {
+	background-color:#efefef !important;
+}
+
+#edit-dictionary-table-wrapper table tbody tr td {
+	padding: 1px;
+	height: 30px;
+	cursor: pointer;
+}
+
+/*added*/
+#contents_body table.body_title{
+border-collapse:collapse;
+}
+
+/*changed*/
+#contents_body table.body_title td {
+padding:2px;width:400px;border:1px solid #999;}
+/**
+ * Dictionary Edit
+ */
+#dictionary-edit-area {
+	clear:both;
+}
+#edit-dictionary-table-header-wrapper-wrapper {
+	padding: 1px 1px 0;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	position: relative;
+}
+#edit-dictionary-table-header-wrapper {
+	top:0px;
+	left:0px;
+	position:relative;
+}
+/*added*/
+#edit-dictionary-table-header-wrapper {
+	top:0px;
+	left:0px;
+	position:relative;
+}
+
+#edit-dictionary-table-header-wrapper table.body_title{
+	background:efefef;
+}
+
+#edit-dictionary-table-header {
+	margin: 0;
+}
+/*changed*/
+#edit-dictionary-table-wrapper {
+	padding: 0 1px 1px;
+	max-height:270px;
+	overflow: auto;margin-bottom:10px;
+	
+}
+
+#dictionary-edit-area {
+	text-align: left !important;
+}
+
+/*changed*/
+.dict_entry_label {
+	text-align:right;
+	display: block;
+	font-size: 15px;
+	font-style: italic;
+}
+
+
+
+#dictfile {
+	margin: 0 0 0 10px;
+	width: 320px;
+}
+
+
+
+.hand:hover {
+	cursor: pointer;
+}
+
+#import-dictionary-area {
+	max-height: 270px;
+	overflow-y: auto;
+	width: 830px;
+}
+
+/*
+#import-dictionary-pane {
+	position: absolute;
+	background: #fff;
+	z-index: 1;
+	border: 1px solid #9ccfce;
+	left: 350px;
+	top: 400px;
+	width: 470px;
+	padding: 15px;
+}
+	*/
+
+#import-dictionary-area table {
+	width: 800px;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+#import-dictionary-area td {
+	padding: 5px 0;
+	border-bottom: 1px solid #999;
+}
+
+#import-dictionary-area td.delete {
+	text-align: right;
+}
+
+#import-dictionary-title {
+	width: 450px;
+	margin: 0 0 20px 0;
+}
+
+#import-button-wrapper {
+	text-align: right;
+	width: 830px;
+}
+
+#import-dictionary-button {
+}
+
+#import-dictionary-pane {
+	margin: 15px 0 0 0;
+	font-size: 12px;
+}
+
+#import-dictionary-title {
+	margin: 0 0 0 10px;
+	width: 320px;
+}
+
+.import-dictionary-button {
+	margin: 0 0 0 5px;	
+}
+
+#import-dictionary-button-set {
+	margin: 0 10px 10px 10px;
+}
+
+#import-dictionary-status {
+	margin: 15px 0 0 0;
+	height: 15px;
+}

@@ -1,0 +1,37 @@
+<?php $tpl = $this->assign; ?>
+<?php require_once dirname(__FILE__).'/php2js.html'; ?>
+<div id="contents_body">
+	<form name="createdictionarylanguagesform" id="createdictionarylanguagesform" method="post" action="<?php echo $tpl->submiturl; ?>" onsubmit="return onLanguageSubmit();">
+	<div class="setting" id="">
+		<fieldset>
+			<legend>Languages</legend>
+			<div id="languages">
+				<?php
+					foreach ($tpl->language_array as $key => $value) {
+						$length = mb_strlen($value, 'UTF-8');
+						$css = ($length <= 11) ? 100 : 200;
+						$checked = '';
+						$csson = '';
+
+						if (in_array($key, $tpl->current_language_array)) {
+							$checked = 'checked=yes';	
+							$csson = 'on';
+						}
+						echo '<span style="float:left; min-width:'.$css.'px;" class="'.$csson.'">';
+						echo '	<input type="checkbox" id="language-check-for-'.$key.'" name="lang[]" value="'.$key.'" '.$checked.' />';
+						echo '	<label for="language-check-for-'.$key.'">'.$value.'</label>';
+						echo '</span>';
+					}
+				?>
+			</div>
+		</fieldset>
+	</div>
+	<div>
+	<input type="submit" value="<?php echo $tpl->savebuttonlabel; ?>" id=""/>
+		<span style="margin-left: 20px;">
+			<a href="<?php echo $tpl->cancelurl; ?>">Cancel</a>
+			<!--<a href="#" onclick="history.back(); return false;" id="">Cancel</a>-->
+		</span>
+	</div>
+</form>
+</div>

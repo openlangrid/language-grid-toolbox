@@ -1,0 +1,18 @@
+
+<{if $content}>
+
+	<{if $content->getType() == 'image'}>
+	
+		<{include file="db:%s_contents_show_image.html"|sprintf:$mod_name}>
+			
+	<{elseif $content->getType() == 'google_map'}>
+	  	
+		<{include file="db:%s_contents_show_google_map.html"|sprintf:$mod_name}>
+		
+	<{/if}>
+	
+	<input type="hidden" name="relatedMessageNum" value="<{$content->relatedMessageNum()}>" />
+	
+	<input type="hidden" name="messageId" value="<{$smarty.get.messageId}>" />
+	<input type="hidden" name="isOwner" value="<{$content->isOwnerByLoginUser()}>" />
+<{/if}>

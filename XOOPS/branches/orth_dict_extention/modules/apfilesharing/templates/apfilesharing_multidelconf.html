@@ -1,0 +1,76 @@
+<{include file="db:filesharing_base_top.html"}>
+	<{*include file="db:filesharing_header.html"*}>
+	<div class="list_table02" style="width:600px;margin-top:0;">
+		<{if $error_msg != ""}>
+			<ul class="errorMsg" style="color:red;">
+				<li><{$error_msg}></li>
+			</ul>
+		<{/if}>
+		<FORM method="post" name="deletefile" action="?page=deletemulti&do_delete=delete">
+			<INPUT id="ref" value="<{$ref}>" type="hidden" name="ref">
+			<{$gticket}>
+			<TABLE style="text-align:left;" class="outer" cellSpacing="1">
+			
+				<tr>
+					<th colSpan=2><{$smarty.const._MD_ALBM_FILEDELETE}></th>
+				</tr>
+			<{foreach from=$folder_for_tpl item=folder_for_tpl}>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FOLDER_NAME}></td>
+					<td>
+					<INPUT type="hidden" name="cid[]" value='<{$folder_for_tpl.cid}>'>
+						<{$folder_for_tpl.title|escape}> &nbsp;
+					</td>
+				</tr>
+
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FILEDESC}></td>
+					<td>
+						<{$folder_for_tpl.description|escape}> &nbsp;
+					</td>
+				</tr>
+				
+				<{/foreach}>
+				<{foreach from=$file_for_tpl item=file_for_tpl}>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_SELECTFILE}></td>
+					<td>
+					<INPUT type="hidden" name="lid[]" value='<{$file_for_tpl.lid}>'>
+					
+						<a name='<{$file_for_tpl.lid}>'></a><a href='<{$mod_url}>/?page=file_dl&lid=<{$file_for_tpl.lid}>' target="_blank">
+						<{$file_for_tpl.title|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'}>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FILEDESC}></td>
+					<td>
+						<{$file_for_tpl.description|escape}> &nbsp;
+					</td>
+				</tr>
+				<{/foreach}>
+
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FOLDER}></td>
+					<td>
+						<{$parent_folder|escape}> &nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:center;border:none;">
+						<INPUT id="back"   class="btn_blue01" value="<{$smarty.const._MD_ALBM_BTN_BACK}>"   type="button" name="back" onclick="page_back();" style="width:70px;"> &nbsp; 
+						<INPUT id="submit" class="btn_blue01" value="<{$smarty.const._MD_ALBM_AM_BUTTON_REMOVE}>" type="submit" name="do_delete" style="width:70px;"> &nbsp; 
+					</td>
+				</tr>
+			</TABLE>
+		</FORM>
+	</div>
+	<SCRIPT type="text/javascript">
+	<!--//
+		function page_back(){
+			document.location = "<{$ref}>";
+		}
+	//-->
+	</SCRIPT>
+	<{*include file="db:filesharing_footer.html"*}>
+<{include file="db:filesharing_base_footer.html"}>

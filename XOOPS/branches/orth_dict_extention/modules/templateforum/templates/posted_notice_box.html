@@ -1,0 +1,47 @@
+<div id="posted_notice_box">
+<script type="text/javascript">
+var PostedNoticeConst = {
+	Label : {
+		popTitle : '<{$smarty.const._MD_D3FORUM_POSTED_NOTICE_POP_TITE}>',
+		interval : '<{$smarty.const._MD_D3FORUM_POSTED_NOTICE_POP_LB_INTERVAL}>',
+		language : '<{$smarty.const._MD_D3FORUM_POSTED_NOTICE_POP_LB_LANGUAGE}>'
+	},
+	Message : {
+	},
+	Templates : {
+		languageSelector : '<select id="#{ID}"><{foreach from=$allLanguages item=item key=key}><option value="<{$key}>"><{$item}></option><{/foreach}></select>',
+		intervalSelector : '<select id="#{ID}">'
+			+'<option value="0"><{$smarty.const._MD_D3FORUM_POSTED_NOTICE_POP_INTERVAL_OP_0}></option>'
+			+'<option value="1"><{$smarty.const._MD_D3FORUM_POSTED_NOTICE_POP_INTERVAL_OP_1}></option>'
+			+'<option value="2"><{$smarty.const._MD_D3FORUM_POSTED_NOTICE_POP_INTERVAL_OP_2}></option>'
+		+'</select>'
+	},
+	Config : <{$postedNoticeConfig}>
+};
+var TagConfigConst = {
+	IsShow : '<{if $permission->isAdmin()}>yes<{else}>0<{/if}>',
+	Resource : <{$tagConfigResource}>,
+	Languages : <{$allLanguageJson}>,
+	Text : {
+		TITLE : '<{$smarty.const._MD_D3FORUM_TAG_MANAGE_TITLE}>',
+		ADD_TAG_SET : '<{$smarty.const._MD_D3FORUM_ADD_TAG_SET}>',
+		BLANK : '<{$smarty.const._MD_D3FORUM_BLANK}>',
+		CONFIRM_DISCARD_CHANGES : '<{$smarty.const._MD_D3FORUM_CONFIRM_DISCARD_CHANGES}>',
+		CONFIRM_DELETE : '<{$smarty.const._MD_D3FORUM_CONFIRM_DELETE}>',
+		CONFIRM_DELETE_BOUND_WORD_SET : '<{$smarty.const._MD_D3FORUM_CONFIRM_DELETE_BOUND_WORD_SET}>',
+		ALL_EMPTY_NOT_REGISTER : '<{$smarty.const._MD_D3FORUM_ALL_EMPTY_NOT_REGISTER}>',
+		EDIT_TAGS : '<{$smarty.const._MD_D3FORUM_EDIT_TAGS}>',
+		ADD_TAG : '<{$smarty.const._MD_D3FORUM_ADD_TAG}>',
+		CLOSE : '<{$smarty.const._MD_D3FORUM_CLOSE}>',
+		SAVE : '<{$smarty.const._MD_D3FORUM_TAG_CONFIG_POP_SAVE}>',
+		EDIT : '<{$smarty.const._MD_D3FORUM_TAG_CONFIG_POP_EDIT}>',
+		DELETE : '<{$smarty.const._MD_D3FORUM_TAG_CONFIG_POP_DELETE}>',
+		CANCEL : '<{$smarty.const._MD_D3FORUM_TAG_CONFIG_POP_CANCEL}>'
+	}
+};
+</script>
+
+	<form method="get" name="postedNoticeForm" action="" target="">
+		<input type="button" id="posted-notice-config-button" name="posted-notice-config-button" value="<{$smarty.const._MD_D3FORUM_BTN_POSTED_NOTICE}>" class="btn_blue01" />
+	</form>
+</div>

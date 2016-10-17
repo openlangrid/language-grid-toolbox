@@ -1,0 +1,51 @@
+<{include file="db:`$mydirname`_base_top.html" forums=$forums categories=$categories forumId=$forum->getId() categoryId=$category->getId() activeTab=0}>
+<input type='hidden' id='moduleId' value='forum'>
+<input type='hidden' id='screenId' value='post_delete'>
+<div id="topic_path">
+	<ol>
+		<li><a href="./"><{$smarty.const._MD_D3FORUM_RETURN_COMMUNITY_TOP}></a></li>
+		<li><a href="./?categoryId=<{$category->getId()|escape}>"><{$category->getTitle()|escape}></a></li>
+		<li><a href="./?forumId=<{$forum->getId()|escape}>"><{$forum->getTitle()|escape}></a></li>
+		<li><a href="./?topicId=<{$topic->getId()|escape}>"><{$topic->getTitle()|escape}></a></li>
+		<li><{$smarty.const._MD_D3FORUM_COMMON_DELETE}></li>
+	</ol>
+</div>
+<{*
+<h2 class="topic_title"><{$topic->getTitle()|escape}></h2>
+*}>
+<div class="title_bg01">
+<{$smarty.const._MD_D3FORUM_COMMON_DELETE}>
+</div>
+<p class="bbs-confirm-delete-message"><{$smarty.const._MD_D3FORUM_DELETE_CONFIRM_MESSAGE}></p>
+<div class="list_table01" style="margin: 15px 0 0 0;">
+    <table border="0" cellspacing="0" cellpadding="0">
+		<{assign var='user' value=$post->getUser()}>
+        <tr>
+            <td class="list_line01 bbs-post-list-post-header"><{$post->getNumber()}>: <a href="<{$xoops_url}>/userinfo.php?uid=<{$user->getId()}>"><{$user->getName()}>
+			</a>  (<{$post->getOriginalLanguageName()|escape}>)
+			<{$smarty.const._MD_D3FORUM_ON}> <{$post->getTime()}></td>
+        </tr>
+		<tr>
+			<td><{$post->getBody()|escape|nl2br}></td>
+		</tr>
+    </table>
+    <{*
+    <div class="page_num03">
+        <a href="#"><{$smarty.const._MD_D3FORUM_RETURN_PAGE_TOP}></a>
+    </div>
+    *}>
+</div>
+<div class="list_table02">
+	<form name="postDelete" action="<{$mod_url}>/?page=post-delete" method="post">
+		<input type="hidden" name="postId" value="<{$post->getId()}>" />
+	    <ul class="btn_set01">
+                    <li><a href="#" onclick="formSubmit('postDelete'); return false;">
+                 <div class="btn_blue01">
+                     <span class="bbs-common-button"><{$smarty.const._MD_D3FORUM_OK}></span>
+                 </div>
+               </a></li>
+</ul>
+	</form>
+</div>
+</div>
+<{include file="db:`$mydirname`_base_footer.html"}>

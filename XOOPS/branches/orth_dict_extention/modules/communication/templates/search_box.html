@@ -1,0 +1,49 @@
+<{*
+<div id="message_search_box">
+	<script language="javascript" type="text/javascript">
+		function searchForm_submit(){
+			searchText = $('search_text').value;
+			searchText = searchText.strip();
+
+			if(Prototype.Browser.IE || Prototype.Browser.MobileSafari){
+				searchText = searchText.replace(/[\s]/,"");
+				tmp = "";
+				for(i=0;i<searchText.length;i++){
+					var s = searchText.substr(i,1);
+					if(s.charCodeAt(0) != 12288 && s.charCodeAt(0) != 32){
+						tmp += s;
+					}
+				}
+				searchText = tmp;
+			}
+			
+			if (searchText == "") {
+				$('search_text').value = "";
+				return false;
+			}else{
+				var RequestUri = "./?word="+encodeURI($('search_text').value);
+				<{if $categoryId > 0}>RequestUri += "&categoryId=<{$categoryId}>";<{/if}>
+				<{if $forumId > 0}>RequestUri += "&forumId=<{$forumId}>";<{/if}>
+				<{if $topicId > 0}>RequestUri += "&topicId=<{$topicId}>";<{/if}>
+				
+				location.href = RequestUri;
+				//document.searchForm.submit();
+			}
+		}
+		
+		function submitCheck(e){
+			if (!e) var e = window.event;
+			if(e.keyCode == 13){
+				searchForm_submit();
+			}
+		}
+		
+	</script>
+	<form method="get" name="searchForm" action="" target="">
+		<input type="text" name="dmy" value="" style="visibility:hidden;display:none;" />
+		<input type="text" id="search_text" name="search_text" value="<{$word}>" style="width:150px;height:21px;font-size:11pt;padding:1px;"  onKeyPress="return submitCheck(event);" />
+		<input type="button" value="<{$smarty.const._MD_D3FORUM_BTN_SEARCH}>" class="btn_blue01" onclick="searchForm_submit();"/>
+	</form>
+</div>
+*}>
+<br style="clear:both;">

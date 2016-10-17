@@ -1,0 +1,240 @@
+
+<a href="javascript: $('trans-panel-pane').toggle(); void(0);"><{$smarty.const.COM_LNK_SHOW_TRANS_PROGRESS}></a>
+ 
+<!-- translated text in each language ======================================================================== -->
+ <div class="trans-panel-pane" id="trans-panel-pane" style="display: none;">
+	<p class="area-fr-p4"><{$smarty.const.COM_ALL_TRANSLATION}>
+		<a href="javascript:void(0)" onclick="allTransPanelControl(true);"><{$smarty.const.COM_LNK_OPEN}></a> | <a href="javascript:void(0)" onclick="allTransPanelControl(false);"><{$smarty.const.COM_LNK_CLOSE}></a>
+	</p>
+ 
+
+   <{foreach from=$toLanguages key=targetLanguageCode item=targetLanguageName name=foreachTargetLanguages}>
+   <div class="trans-panel" id="targetLanguage-<{$targetLanguageCode}>">
+     <div class="area-fl">
+     	<a href="javascript:void(0)" class="trans-panel-lang-close" onclick="transPanelEventHandler(event)"><{$targetLanguageName}></a>
+     </div>
+     <div class="area-fr"></div>
+     <br class="clear" />
+     <div class="trans-panel-view" style="display:none">
+       <div class="area-fr-p4">
+         <span>
+         	<input class="commitFlg" type="checkbox"/>
+         	<{$smarty.const.COM_COMMIT}>
+         </span>
+         <br class="clear" />
+       </div>
+       <br class="clear" />
+       <{if $message}>
+	       <textarea id="targetLanguageArea-<{$targetLanguageCode}>"
+	       			title="<{$smarty.const.COM_TRANSLATE_SENTENCE}>(<{$targetLanguageName}>)" 
+	       			name="message&#91;<{$targetLanguageCode}>&#93;"
+	       			style="width:48%;height: 100px;flaot:left;"
+	       			class="com-required"><{$message->getDescriptionForLang($targetLanguageCode)}></textarea>
+       <{else}>
+	       <textarea id="targetLanguageArea-<{$targetLanguageCode}>" 
+	       			 title="<{$smarty.const.COM_TRANSLATE_SENTENCE}>(<{$targetLanguageName}>)" 
+	       			 name="message&#91;<{$targetLanguageCode}>&#93;" 
+	       			 style="width:48%;height: 100px;flaot:left;"
+	       			 class="com-required"></textarea>
+       <{/if}>
+       
+       <textarea id="returnedLanguageArea-<{$targetLanguageCode}>" style="width:48%;height: 100px;flaot:left;" readonly="readonly" class="return-translate"></textarea>
+       <div class="back-trans-ctrl" style="text-align:center;margin-top: 4px;"> <a href="javascript:void(0)" class="btn" onclick="backTranslateButtonHandler(event, '<{$targetLanguageCode}>')"><{$smarty.const.COM_BTN_TRANSLATE}></a></div>
+     </div>
+   </div>
+   <{/foreach}>
+</div>
+	
+	
+<script type="text/javascript">
+window.transPanelEventHandler = function(event){
+	transPanelEventControl(Event.element(event).up(".trans-panel"));
+};
+
+window.allTransPanelControl = function(open){
+	$$(".trans-panel").each(function(item){
+		if(open){
+			item.down(".area-fl a").className = 'trans-panel-lang-open';
+			item.down(".trans-panel-view").style.display = "";
+		}else{
+			item.down(".area-fl a").className = 'trans-panel-lang-close';
+			item.down(".trans-panel-view").style.display = "none";
+		}
+	});
+};
+
+window.transPanelEventControl = function(target){
+	var link = target.down(".area-fl a");
+	var viewElement = target.down(".trans-panel-view");
+	if(link.className == 'trans-panel-lang-open'){
+		link.className = 'trans-panel-lang-close';
+		viewElement.style.display = "none";
+	}else{
+		link.className = 'trans-panel-lang-open';
+		viewElement.style.display = "";
+	}
+};
+
+var MAX_WORKER_NUM = 2;
+var translationArray = new Array();
+var timer;
+var interval = 100;
+var requestQue = 0;
+var translateTotalCount = <{$toLanguages|@count}>;
+var transProgress = progressBar("progressionArea", translateTotalCount, "translated-count");
+var backtransProgress = progressBar("backProgressionArea", translateTotalCount);
+
+var processingQue = new Array();
+window.addTranslatedCount = function(){
+	updateTranslatedCount();
+};
+
+window.updateTranslatedCount = function(){
+	var remain = translationArray.findAll(function(e){ return !e.backTranslate }).length;
+	remain    += processingQue.findAll(function(e){ return !e.backTranslate }).length;
+	transProgress.update(translateTotalCount - remain);	
+};
+
+window.addBackTranslatedCount = function() {
+	updateBackTranslatedCount();
+};
+
+window.updateBackTranslatedCount = function(){
+	var remain = translationArray.findAll(function(e){ return e.backTranslate }).length
+	remain    += processingQue.findAll(function(e){ return e.backTranslate }).length;
+	backtransProgress.update(translateTotalCount - remain);
+};
+
+window.translateControl = function(){
+	if(translationArray.length == 0){
+		clearInterval(timer);
+		return;
+	}
+	
+	if(requestQue < MAX_WORKER_NUM){
+		var tMap = translationArray.filter(function(item){return !item['waitFlg']});
+		if(tMap.length == 0){
+			return;
+		}
+		var trans = tMap[0];
+		translationArray.splice([translationArray.indexOf(trans)], 1);
+		
+		var panel = $(trans['panelId']);
+		if( trans['backTranslate'] || !panel.down('.commitFlg').checked ){
+			requestQue++;
+			processingQue.push(trans);
+			panel.down('.area-fr').update('<img src="<{$mod_url}>/images/etc/loading2.gif" class="loading" alt="" /> <{$smarty.const.COM_NOW_TRANSLATIONING}>');
+			
+			var source = $(trans['souceLanguageArea']).value;
+			var req = new Ajax.Request(
+					"<{$mod_url}>/json/", 
+					{
+						"method": "post",
+					    parameters : $H({
+                            action: 'translate',
+                            sourceLanguageCode: trans['sourceLanguageCode'], 
+					        targetLanguageCode: trans['targetLanguageCode'], 
+							sourceText: source
+							}).toQueryString(),
+						onComplete : function(request) {
+							var res = eval("(" + request.responseText + ")");
+							if(res.status == 'OK'){
+								$(trans['targetLanguageArea']).value = res.contents.targetText.contents;
+                                if(trans['backTransLanguageArea']) {
+                                    $(trans['backTransLanguageArea']).value = res.contents.backTranslateText.contents;
+                                }
+							}else{
+								$(trans['targetLanguageArea']).value = res.message;
+                                if(trans['backTransLanguageArea']) {
+                                    $(trans['backTransLanguageArea']).value = res.message;
+                                }
+							}
+							processingQue = processingQue.reject(function(e) { return e == trans });
+							onTranslationRequestFinished(trans);
+							requestQue--;
+						}, 
+						onFailure: function(request) {
+							$(trans['targetLanguageArea']).value = "Error!!";
+                            if(trans['backTransLanguageArea']) {
+                                $(trans['backTransLanguageArea']).value = "Error!!";
+                            }
+							onTranslationRequestFinished(trans);
+						},
+						onException: function (request, ex) {
+							$(trans['targetLanguageArea']).value = "Error!!";
+                            if(trans['backTransLanguageArea']) {
+                                $(trans['backTransLanguageArea']).value = "Error!!";
+                            }
+							onTranslationRequestFinished(trans);
+						}
+					}
+			);
+		}
+	}
+};
+
+window.onTranslationRequestFinished = function(trans){
+	var samePanelTransArr = translationArray.filter(function(item){return item['panelId'] == trans['panelId']});
+	
+	if(!trans["backTranslate"]) {
+		samePanelTransArr.each(function(item){ item['waitFlg'] = false; });
+		trans['progressionFlg'] && addTranslatedCount();
+	} else {
+		addBackTranslatedCount();
+	}
+	if(samePanelTransArr.length == 0) {
+		$(trans['panelId']).down('.area-fr').update('');
+	}
+};
+
+window.backTranslateButtonHandler = function(event, targetLanguageCode){
+	translationArray.push({
+		panelId:"targetLanguage-" + targetLanguageCode,
+		sourceLanguageCode:targetLanguageCode,
+		targetLanguageCode:"<{$selectedLanguageTag}>",
+		souceLanguageArea:"targetLanguageArea-" + targetLanguageCode,
+		targetLanguageArea: "returnedLanguageArea-" + targetLanguageCode,
+		backTranslate: true, 
+		progressionFlg:false,
+		waitFlg:false
+	});
+	timer = setInterval(translateControl, interval);
+};
+window.translateAll = function(){
+	if(translationArray.length > 0) return;
+	translationArray.clear();
+	
+	transProgress.init();
+	backtransProgress.init();
+	
+	<{foreach from=$toLanguages key=targetLanguageCode item=targetLanguageName name=foreachTargetLanguages}>
+	if(!$("targetLanguage-<{$targetLanguageCode}>").down('.commitFlg').checked){
+		if($("sourse-message").value.strip() != ""){
+			translationArray.push({
+				panelId:"targetLanguage-<{$targetLanguageCode}>",
+				sourceLanguageCode:"<{$selectedLanguageTag}>",
+				targetLanguageCode:"<{$targetLanguageCode}>",
+				souceLanguageArea:"sourse-message",
+				targetLanguageArea: "targetLanguageArea-<{$targetLanguageCode}>",
+				backTransLanguageArea: "returnedLanguageArea-<{$targetLanguageCode}>",
+				backTranslate: false, 
+				progressionFlg: true, 
+				waitFlg:false
+			});
+		}else{
+			$("targetLanguageArea-<{$targetLanguageCode}>").value = "";
+			$("returnedLanguageArea-<{$targetLanguageCode}>").value = "";
+		}
+	}
+	<{/foreach}>
+
+	updateTranslatedCount();
+	updateBackTranslatedCount();
+	
+	translationArray.each(function(item){
+		$(item['panelId']).down(".area-fr").update("wating");
+	});
+	timer = setInterval(translateControl, interval);
+};
+</script>
+ 

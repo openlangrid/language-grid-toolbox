@@ -1,0 +1,34 @@
+<div id="contents_body">
+	<form name="translation-form" method="post" action="#">
+	<table>
+		<tr>
+			<td><label>Translation Path</label></td>
+			<td>
+				<select name="path" id="path">
+					<{$LangOpt}>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td><label>Source</label></td>
+			<td>
+				<textarea name="source" id="source" rows='5' cols='60'></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><label>&nbsp;</label></td>
+			<td>
+				<input type="button" name="translation" id="translation" value="translation" onclick="$('result').clear();">
+			</td>
+		</tr>
+		<tr>
+			<td><label>Result</label></td>
+			<td>
+				<textarea name="result" id="result" rows='5' cols='60'></textarea>
+			</td>
+		</tr>
+	</table>
+	</form>
+</div>
+<div id="license"></div>
+<script language="JavaScript" type="text/javascript" src="./js/langrid-test.js"></script>

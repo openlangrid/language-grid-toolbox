@@ -1,0 +1,20 @@
+
+<{if !$zoom && $content->isOverPreviewArea()}>
+<img id="preview-content-image" title="content file" class="preview-content" style="width: 100%;"
+	 src="<{$mod_url}>/contents/?action=_image&contentId=<{$content->getContentId()}>" />
+<{else}>
+<img id="preview-content-image" title="content file" class="preview-content"   
+	 src="<{$mod_url}>/contents/?action=_image&contentId=<{$content->getContentId()}>" />
+<{/if}>
+
+<{if $marker}>
+	<{if $zoom}>
+   		<img class="point_marker" src="<{$mod_url}>/images/marker/marker_A.png"
+			style="left: <{$marker->getXCoordinate4zoom()}>px; top: <{$marker->getYcoordinate4zoom()}>px;" />
+   	<{else}>
+		<img class="point_marker" src="<{$mod_url}>/images/marker/marker_A.png"
+			style="left: <{$marker->getXcoordinate()}>px; top: <{$marker->getYcoordinate()}>px;"/>
+   	<{/if}>
+<{/if}>
+
+<input type="hidden" name="fileId" value="<{$content->getFileId()}>" />

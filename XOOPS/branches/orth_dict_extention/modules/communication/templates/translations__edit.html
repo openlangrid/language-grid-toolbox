@@ -1,0 +1,76 @@
+
+    <div class="message-area" style="margin-top: 4px;width:97%;">
+      <!-- Title part -->
+      <div class="message-title"> <img src="<{$message->getUserIcon()}>" height="24" width="24" class="message-icon" />
+      	<span class="message-user"><{$message->getUserName()}> </span>
+      	<br />(<span class="message-date"><{$selectedLanguageName}> <{$nowdate}></span>)
+      </div>
+      
+      <!-- Operation part -->
+      <div class="message-operation"></div>
+      <!-- Main text -->
+      <form name="main" method="post" action="<{$mod_url}>/translations/?action=update&messageId=<{$message->getId()}>">
+      	<textarea style="width:48%;height: 150px;flaot:left;" disabled="disabled" class="original-message"><{$message->getDescriptionForOriginal()}></textarea>
+      	<textarea style="width:48%;height: 150px;flaot:left;" name="message&#91;<{$message->getSelectedLanguage()}>&#93;" class="com-required" title="<{$smarty.const.COM_TRANSLATE_SENTENCE}>"><{$message->getDescriptionForSelectedLanguage()}></textarea>
+      </form>
+    </div>
+    
+    <div class="area-fr-p8">
+      <a href="javascript:void(0)" onclick="postButtonHandler()" class="btn-s"><span class="btn-save"><{$smarty.const.COM_BTN_SAVE}></span></a>
+      <a href="<{$mod_url}>/?topicId=<{$message->getTopicId()}>" class="btn">
+      	<span class="btn-cancel"><{$smarty.const.COM_BTN_CANCEL}></span>
+      </a>
+    </div>
+    <br class="clear" />
+    
+    <!-- update history ======================================================================== -->
+    <p class="area-fl-p4">
+    	<strong><{$smarty.const.COM_HISTORY}></strong>
+    </p>
+    <p class="area-fr-p4"><{$smarty.const.COM_ALL_HISTORY}> 
+    	<a onclick="$$('.history-panel-close').each(toggleHistoryPanel);" href="javascript: void(0);"><{$smarty.const.COM_LNK_OPEN}></a> | 
+    	<a onclick="$$('.history-panel-open').each(toggleHistoryPanel);" href="javascript: void(0);"><{$smarty.const.COM_LNK_CLOSE}></a>
+    </p>
+    
+    <div class="history-panel-pane">
+	  <{foreach from=$postRevisions item=item key=key}>
+      <div class="history-panel">
+        <div class="area-fl">
+        	<a href="javascript: void(0);" onclick="toggleHistoryPanel(this);" class="history-panel-close">
+        		<{$item->getCreatorName()|escape}> <{$smarty.const.COM_POSTED_ON}> <{$item->getCreateDateAsFormatString()}>
+        	</a>
+        </div>
+        <div class="area-fr"></div>
+        <br class="clear" />
+        <div style="display: none;" class="editLog">
+          <p><{$item->getEditLog()|escape|nl2br}></p>
+          <br class="clear" />
+        </div>
+      </div>
+      <{/foreach}>
+    </div>
+    
+<script type="text/javascript">
+function postButtonHandler(){
+	var errorMessages = new Array();
+	$$('.com-required').each(function(element){
+		if (!element.getValue()) {
+			errorMessages.push(element.title + " <{$smarty.const.COM_IS_REQUIRED}>");
+		}
+	});
+	if (errorMessages.length > 0) {
+		alert(errorMessages.join("\n"));
+	} else {
+		document.forms['main'].submit();
+	}
+	return false;
+}
+
+(function() {
+	window.toggleHistoryPanel = function(anchor) {
+		anchor = $(anchor);
+        replaceClassName(anchor,'history-panel-close','history-panel-open'); 
+        anchor.up('.history-panel').down('.editLog').toggle();
+	};
+})();
+</script>

@@ -1,0 +1,355 @@
+<link rel="stylesheet" type="text/css" media="all" href="css/common.css" />
+<link rel="stylesheet" type="text/css" media="all" href="css/button.css" />
+<link rel="stylesheet" type="text/css" media="all" href="css/communication.css" />
+
+<!-- ==================================================================================================== -->
+
+<div id="tbx-body">
+  <div style="float:right">
+    <!-- Change display language -->
+    <div id="bbs-language"> in
+	    <select name="lang" id="displaylanguage" onchange="lanChange(this.value);">
+			<{foreach from=$allLanguages item=item key=key}>
+				<{if $key == $selectedLanguageTag }>
+					<{assign var="selected" value=" selected='selected'"}>
+				<{else}>
+					<{assign var="selected" value="" }>
+				<{/if}>
+				<option<{$selected}> value="<{$key}>"><{$item}></option>
+			<{/foreach}>
+			</select>
+    </div>
+    <!-- Active User -->
+    <div id="bbs-active-member"></div>
+  </div>
+  <!-- Bread list -->
+  <div id="bread-path"><a href="#test">Language Grid</a> &gt; <a href="#test">Technical Information</a> &gt; <a href="#test">Question Mail</a> &gt;</div>
+  <!-- Topic title -->
+  <div class="area-topic-title">
+    <div class="left-part">&nbsp;</div>
+    <h1><{$topicTitle}></h1>
+    <div class="right-part">&nbsp;</div>
+  </div>
+  <!-- ==================================================================================================== -->
+  <!-- Right side contents area -->
+  <div id="message-part">
+    <!-- Message index -->
+    <div class="header-part">
+      <div class="area-fl"><img src="images/icon/icon_message.png" style="margin-top:4px;" alt="" /> <strong id="messageCount"><{$messageCount}></strong> messages</div>
+      <!-- Font size control -->
+      <div class="area-fl area-fontsize-ctrl">
+        <!-- Font size minimize -->
+        <a href="#" class="btn" title="set font size to smaller" onclick="smaller();">A-</a>
+        <!-- Font size maximum -->
+        <a href="#" class="btn" title="set font size to larger" onclick="larger();">A+</a></div>
+      <div class="area-fr" id="newMessageButton"><a href="#" class="btn-s" onclick="openNewMessage();">+ New Message</a></div>
+      <div class="area-fr area-update-setting">setting:
+      <select id="messageReload" onchange="">
+	      <option value="0">manual</option>
+	      <option value="1">auto</option>
+	  </select>
+      <!--<a href="c1_com_main_update.html">manual</a>-->
+      </div>
+    </div>
+    <div id="newMessageField"><strong>new message</strong><br />
+      <textarea style="width:98%; height:12em;">Please fill in here.</textarea>
+      <br  />
+      <div class="area-fr-p8">
+        <!-- -->
+        <a href="?action=translate" class="btn-s"><span class="btn-translate">translate</span></a>
+        <!-- -->
+        <a href="#" class="btn" onclick="closeNewMessage();"><span class="btn-cancel">cancel</span></a> </div>
+    </div>
+    <div class="notification-part" id="newMessageArrived"><a href="index.php?action=list">New Message arrived "click for update"</a> </div>
+    <div id="messageReloading"><img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height"25" alt="" /> New Message Reloading... </div>
+    <!-- ========================================= -->
+    <!-- Message list part -->
+    <div id="message-scroll-part">
+      <!-- ========================================= -->
+		<{foreach from=$messageList item=item key=key}>
+			<div class="message-area">
+			  <div class="message-title"> <img src="../../uploads/<{$item.user_avatar}>" alt="" width=24 height=24 /><span class="message-user"> <{$item.name}></span> <br />
+			    (<span class="message-date"><{$item.language}> <{$item.date}></span>)</div>
+			  <div class="message-operation">
+			    <a href="#test" class="btn" title="option menu (edit,delete)"><span class="btn-option">PULLDOWN</span></a>
+			    <a href="index.php?action=edit&mode=reply" class="btn" title="reply this message"><span class="btn-reply">reply</span></a>
+			    </div>
+			  <p class="message-body"> <{$item.body}>
+			  </p>
+			</div>
+			<!-- ========================================= -->
+		<{/foreach}>
+	
+      <!-- Each message -->
+      <div class="message-area">
+        <!-- Title part -->
+        <div class="message-title"> <img src="images/etc/user_mini.png" class="message-icon" alt="" /><span class="message-user"> Mother Goose</span> <br />
+          (<span class="message-date">English 2009/11/24 15:00</span>)</div>
+        <!-- Operatio part -->
+        <div class="message-operation">
+          <!-- Option -->
+          <a href="#test" class="btn" title="option menu (edit,delete)"><span class="btn-option">PULLDOWN</span></a>
+          <!-- Reply button -->
+          <a href="index.php?action=edit&mode=reply" class="btn" title="reply this message"><span class="btn-reply">reply</span></a>
+          <!-- Attachment -->
+          <a href="#test"><img src="images/icon/icon_file.png" alt="" /></a> </div>
+        <!-- Main text -->
+        <p class="ad-content"> London Bridge is falling down, <br />
+          Falling down, falling down, <br />
+          London Bridge is falling down, <br />
+          My fair lady. <br />
+        </p>
+        <a href="#test" title="click to preview this contets"><img src="images/icon/icon_file.png" alt="" /> contents_title </a> </div>
+      <!-- ========================================= -->
+      <!-- Each message -->
+      <div class="message-area">
+        <!-- Title part -->
+        <div class="message-title"> <img src="images/etc/user_mini.png" class="message-icon" alt="" /><span class="message-user"> Tanaka Kenichirou </span><br />
+          (<span class="message-date">Japanese 2009/11/24 15:00</span>)</div>
+        <!-- Operation part -->
+        <div class="message-operation">
+          <!-- Option -->
+          <a href="#test" class="btn" title="option menu (edit,delete)"><span class="btn-option">PULLDOWN</span></a>
+          <!-- Reply button -->
+          <a href="index.php?action=edit&mode=reply" class="btn" title="reply this message"><span class="btn-reply">reply</span></a></div>
+        <!-- Main text -->
+        <p class="ad-content"> London Bridge is falling down, <br />
+          Falling down, falling down, <br />
+          London Bridge is falling down, <br />
+          My fair lady. <br />
+        </p>
+        <span>* related content was deteled. </span> </div>
+      <!-- ========================================= -->
+      <!-- Each message -->
+      <div class="message-area">
+        <!-- Title part -->
+        <div class="message-title"> <img src="images/etc/user_mini.png" class="message-icon" alt="" /><span class="message-user"> Suzumi Tarou </span><br />
+          (<span class="message-date">Japanese 2009/11/24 15:00</span>)</div>
+        <!-- Operation part -->
+        <div class="message-operation">
+          <!-- Option -->
+          <a href="#test" class="btn" title="option menu (edit,delete)"><span class="btn-option">PULLDOWN</span></a>
+          <!-- Reply button -->
+          <a href="index.php?action=edit&mode=reply" class="btn" title="reply this message"><span class="btn-reply">reply</span></a></div>
+        <!-- Main text -->
+        <p class="message-body"> London Bridge is falling down, <br />
+          Falling down, falling down, <br />
+          London Bridge is falling down, <br />
+          My fair lady. <br />
+        </p>
+      </div>
+      <!-- ========================================= -->
+      <!-- Each message -->
+      <div class="message-area">
+        <!-- Title part -->
+        <div class="message-title"> <img src="images/etc/user_mini.png" class="message-icon" alt="" /><span class="message-user"> Suzumi Tarou </span><br />
+          (<span class="message-date">Japanese 2009/11/24 15:00</span>)</div>
+        <!-- Operation part -->
+        <div class="message-operation">
+          <!-- Option -->
+          <a href="#test" class="btn" title="option menu (edit,delete)"><span class="btn-option">PULLDOWN</span></a>
+          <!-- Reply button -->
+          <a href="index.php?action=edit&mode=reply" class="btn" title="reply this message"><span class="btn-reply">reply</span></a></div>
+        <!-- Main text -->
+        <p class="message-body"> London Bridge is falling down, <br />
+          Falling down, falling down, <br />
+          London Bridge is falling down, <br />
+          My fair lady. <br />
+        </p>
+      </div>
+      
+    </div>
+    <br class="clear" />
+  </div>
+  <!-- ==================================================================================================== -->
+
+  
+  <!-- Right side contents area -->
+  <div id="contents-part">
+    <div class="header-part">
+      <div class="area-fl"><img src="images/icon/icon_file.png" style="margin-top:4px;"  alt="" /> <strong>6</strong> contents</div>
+      <div class="area-fr"><a href="contents/index.php?action=new" class="btn-s">+ New Content</a></div>
+    </div>
+    <div class="area-fl-p4">
+      <select id="contents-select-popup" onchange="changeContent(this.value)">
+      
+        <{foreach from=$image_list item="image"}>
+          <option value="<{$image.image_id}>"> <{$image.image_id}> : <{$image.image_title}> : <{$image.image_file_name}> : <{$image.image_mimetype}> : <{$image.image_created}></option>
+        <{/foreach}>
+      
+      </select>
+    </div>
+    
+
+    
+    <div class="area-fr-p4">
+      <p></p>
+      <a href="#test" class="btn">&lt;</a> <a href="#test" class="btn">&gt;</a> </div>
+      
+    <!-- for IE css absolute setting -->
+    <span style="clear:both;"></span>
+      
+    <!-- Contents image -->
+    <div id="contents-preview-area" >
+          <img id="point_marker" class="" style="border: 0px none ; margin: 0px; padding: 0px; width: 27px; height: 27px;
+           -moz-user-select: none; position: absolute; left: 360px; top: 52px; z-index: 114094464;" src="images/marker/marker_A.png"/>
+    
+      <img title="content file" alt="contentn alt" id="preview-content-image" src="contents/index.php?action=show&image_id=1&getbinary=1" class="preview-content" />
+    </div>
+    <!-- Contents operation -->
+    <div class="area-fl-p8">
+      <!-- -->
+      <a href="#test" class="btn"><span class="btn-zoom">zoom</span></a></div>
+    <br class="clear" />
+  </div>
+</div>
+<br class="clear" />
+
+  <script type="text/javascript">
+  <!--
+  var Const = {
+     Images : {
+       loading : "<{$xoops_imageurl}>/common/img/loading.gif"
+     }
+  }
+
+  /*
+   * change content by select box change
+   */
+  function changeContent(selectValue) {
+	  img = $('preview-content-image');
+	  img.src = Const.Images.loading;
+
+	  if (selectValue != null) {
+	  	img.src = "contents/index.php?action=show&image_id=" + selectValue + "&getbinary=0";
+	  } else {
+				
+	  }
+  }
+
+  /*
+   * Get current relative mouse position,
+   * and set marker icon there.
+   *
+   */
+  function getCurrentPostion(event) {
+
+	// get parent object offset
+    var offset = Position.cumulativeOffset($("contents-preview-area"));
+    //alert("[offset x]" + offset[0]);
+    //alert("[offset y]" + offset[1]);
+    
+    // get scroll offset
+    var scrollOffset= Position.realOffset($("contents-preview-area"));
+    //alert("[scrollOffset x]" + scrollOffset[0]);
+    //alert("[scrollOffset y]" + scrollOffset[1]);
+    
+    var mouseX = Event.pointerX(event) - offset[0] + scrollOffset[0];
+    var mouseY = Event.pointerY(event) - offset[1] + scrollOffset[1];
+    //alert(mouseX + ", " + mouseY);
+
+    // set marker icon as designated.
+    $("point_marker").style.left = mouseX + "px";
+    $("point_marker").style.top = mouseY + "px";        
+    
+  }
+
+  Event.observe($("contents-preview-area"), "click", getCurrentPostion, false);
+
+	function lanChange(value) {
+		location.href = '<{$pagenquery}>' + value;
+	}
+
+    var fontSize = 100;
+    function larger(){
+    	fontSize *= 1.2;
+    	var elements1 = document.getElementsByClassName('message-body');
+    	for(i = 0; i < elements1.length; i++){
+    		document.getElementsByClassName('message-body')[i].style.fontSize = fontSize + '%';
+    	}
+    	var elements2 = document.getElementsByClassName('ad-content');
+    	for(i = 0; i < elements2.length; i++){
+    		document.getElementsByClassName('ad-content')[i].style.fontSize = fontSize + '%';
+    	}
+    }
+    function smaller(){
+    	fontSize /= 1.2;
+    	var elements1 = document.getElementsByClassName('message-body');
+    	for(i = 0; i < elements1.length; i++){
+    		document.getElementsByClassName('message-body')[i].style.fontSize = fontSize + '%';
+    	}
+    	var elements2 = document.getElementsByClassName('ad-content');
+    	for(i = 0; i < elements2.length; i++){
+    		document.getElementsByClassName('ad-content')[i].style.fontSize = fontSize + '%';
+    	}
+    }
+
+    document.getElementById('newMessageArrived').style.display='none';
+	document.getElementById('messageReloading').style.display='none';
+	var checkTime = '<{$checkTime}>';
+	var topicId = '<{$topic_id}>';
+    
+    function messageCheck(){
+       	new Ajax.Request('messages/message_check.php',{
+       		method:'get',  
+       		parameters:'topic_id=' + topicId,
+       		onSuccess:function( transport ){
+           		if(document.getElementById('messageReload').value == 0){
+                   	// manual
+           			if (checkTime < transport.responseText){
+           				document.getElementById('newMessageArrived').style.display='block';
+           			}
+           		}else{
+                   	// auto
+           			if (checkTime < transport.responseText){
+           				// auto reload
+           				document.getElementById('messageReloading').style.display='block';
+           				checkTime = transport.responseText;
+           				
+				       	new Ajax.Request('messages/message_reload.php',{
+				       		method:'get',  
+				       		parameters:'topic_id=' + topicId,
+				       		onSuccess:function( mr_transport ){
+	           					$('message-scroll-part').update(mr_transport.responseText);
+	    				       	document.getElementById('newMessageArrived').style.display='none';
+	               				document.getElementById('messageReloading').style.display='none';
+			       			}
+				       	});
+
+				       	// update message count
+				       	new Ajax.Request('messages/message_count.php',{
+				       		method:'get',  
+				       		parameters:'topic_id=' + topicId,
+				       		onSuccess:function( mc_transport ){
+	           					$('messageCount').update(mc_transport.responseText);
+			       			}
+				       	});
+
+           			}
+           		}
+       		}
+       	});
+    }
+
+    function setMessageCheckTimer(){
+    	messageCheckTimer = setInterval("messageCheck()",60 * 1000);
+    	messageCheck();
+    }
+
+    setMessageCheckTimer();
+
+	document.getElementById('newMessageField').style.display='none';
+
+    function openNewMessage(){
+    	document.getElementById('newMessageButton').style.display='none';
+    	document.getElementById('newMessageField').style.display='block';
+    }
+    function closeNewMessage(){
+    	document.getElementById('newMessageButton').style.display='block';
+    	document.getElementById('newMessageField').style.display='none';
+    }
+	
+  //-->
+  </script>
+  <script language="JavaScript" type="text/javascript" src="'.XOOPS_URL.'/modules/communication/js/message-check.js"></script>
+<!-- ==================================================================================================== -->

@@ -1,0 +1,86 @@
+
+<!-- Message index -->
+<div class="header-part">
+	<div class="area-fl">
+		<img src="<{$mod_url}>/images/icon/icon_message.png" style="margin-top:4px;" alt="" />	
+		<{$smarty.const.COM_MESSAGES|sprintf:"<strong id=\"messageCount\">$messageCount</strong>"}>
+	</div>
+	
+	<!-- Font size control -->
+	<div class="area-fl area-fontsize-ctrl">
+  		<!-- Font size minimize -->
+		<a href="javascript: fontResizer.toSmall(); new CookieManager().setCookie('fontSizePosition', fontResizer.getPosition()); void(0);" id="smallerButton" class="btn" title="set font size to smaller">
+			<{$smarty.const.COM_BTN_A_MINUS}><!-- A- -->
+		</a>
+		<!-- Font size maximum -->
+		<a href="javascript: fontResizer.toLarge(); new CookieManager().setCookie('fontSizePosition', fontResizer.getPosition()); void(0);" id="largerButton" class="btn" title="set font size to larger">
+			<{$smarty.const.COM_BTN_A_PLUS}><!-- A+ -->
+		</a>
+	</div>
+	
+	<div class="area-fr area-update-setting" id="messageReloadArea">
+		reload:
+		<select id="messageReload" onchange="AutoUpdater.changeFrequency()">
+			<optgroup label="<{$smarty.const.COM_MANUAL}>">
+				<option value=""><{$smarty.const.COM_MANUAL}></option>
+			</optgroup>
+      		<optgroup label="<{$smarty.const.COM_AUTO}>">
+				<option value="10">10sec</option>
+				<option value="20">20sec</option>
+				<option value="30">30sec</option>
+				<option value="60">60sec</option>
+				<option value="120">120sec</option>
+			</optgroup>
+		</select>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+if (!document.body.getElementsByClassName) {
+	document.getElementsByClassName = (
+		document.all ?
+			    function(classname, tagname){
+					
+			        var element = "";
+			        if (arguments.length == 1) {
+			            element = document.all;
+			        }
+			        else{
+			            element = document.getElementsByTagName(tagname);
+			        }
+			        var classElements = new Array();
+			        var regexe = new RegExp("\\b" + classname + "\\b");
+			        for( i = 0; i < element.length; i++ ) {
+			           if( regexe.exec(element[i].className) ) {
+			                classElements.push(element[i]);
+			           }
+			        }
+			        return classElements;
+			    }:
+			    function(classname, tagname){
+			        if (arguments.length == 1) {
+			            tagname = "*";
+			        }
+			    	
+			        var classElements = new Array();
+			        var element = document.getElementsByTagName(tagname);
+			        
+			        var regexe = new RegExp("\\b" + classname + "\\b");
+			        for( i = 0; i < element.length; i++ ) {
+			            if( regexe.exec(element[i].className) ) {
+			                classElements.push(element[i]);
+			            }
+			        }
+			        
+			        return classElements;
+			    }
+			);
+}
+
+var fontResizer = new FontResizer(
+	[".message-body", "textarea"],{	min: 10, max: 100, value: 2	}
+);
+
+
+</script>

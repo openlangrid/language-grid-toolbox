@@ -1,0 +1,134 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"	 content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" media="all" href="../css/button.css" />
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="<{$xoops_url}>/common/lib/prototype.js"></script>
+<script type="text/javascript" src="<{$mod_url}>/js/communication_common.js"></script>
+
+<style type="text/css">
+
+/* ----- for zoom ----------------------------*/
+body {
+	width: auto;
+}
+
+#contents-zoom-area {
+	background-color:#D0D0D0;
+	background-position:center center;
+	background-repeat:no-repeat;
+	border:1px solid #DDDDDD;
+	clear:both;
+	overflow:auto;
+	margin-top: 20px;
+	margin-left: 5px;	
+	margin-right: 5px;
+	position:relative;
+	float: left;
+}
+
+#contents-zoom-area img.preview-content {
+	margin: 16px auto auto;
+}
+#contents-zoom-area .point_marker{
+	width: 27px;
+	height: 27px;
+}
+.btn {
+	margin: 10px auto 20px;
+}
+
+.point_marker {
+	position: absolute;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	width: 27px;
+	height: 27px;
+	z-index: 95;
+}
+</style>
+
+
+<{if $content->getType() == 'google_map'}>
+<style type="text/css">
+#contents-zoom-area {
+	text-align:center;
+	vertical-align:middle;
+	height:640px;
+	overflow:auto;
+	width:900px;
+}
+</style>
+<{/if}>
+
+<!-- script for google map controll -->
+<script type="text/javascript">
+function GoogleMapWrapper(container) {
+	this.mapContainer = container.down(".googlemap-area");
+	var param = params(this.mapContainer);
+	var type = GoogleMapWrapper.TYPES[param["mapType"]] || google.maps.MapTypeId.ROADMAP;
+	
+	this.map = new google.maps.Map(this.mapContainer, {
+        zoom: parseInt(param['zoomValue']),
+        center: new google.maps.LatLng(
+			param['centerLat'], param['centerLng']
+        ),
+        mapTypeId: type,
+        scaleControl: true
+	});
+	
+    if(param["markerLat"] && param["markerLng"]) {
+		this.markerObj = new google.maps.Marker({
+	    	position: new google.maps.LatLng(param["markerLat"], param["markerLng"]), 
+	    	map: this.map,
+	    	icon: '<{$mod_url}>/images/marker/marker_A.png'
+		});
+    }
+    
+	
+	google.maps.event.addListener(this.map, "click", this.onClick.bind(this));
+}
+Object.extend(GoogleMapWrapper.prototype, {
+	onClick: function(event) {
+		this.mapContainer.next(".last_clicked_lat").setValue(event.latLng.lat());
+		this.mapContainer.next(".last_clicked_lng").setValue(event.latLng.lng());
+	}
+});
+GoogleMapWrapper.TYPES = {
+	m: google.maps.MapTypeId.ROADMAP,
+	d: google.maps.MapTypeId.SATELLITE,
+	h: google.maps.MapTypeId.HYBRID,
+	p: google.maps.MapTypeId.TERRAIN
+};
+</script>
+</head>
+
+<body>
+	<h1 style="text-align: center"><{$content->getContentTitle()}></h1>
+	
+	<!-- Contents image -->
+	<div id="contents-zoom-area">
+	<{if $content->getType() == 'image'}>
+  
+	  	<{include file="db:%s_contents_show_image.html"|sprintf:$mod_name zoom=true}>
+	  	
+	<{elseif $content->getType() == 'google_map'}>
+		<{include file="db:%s_contents_show_google_map.html"|sprintf:$mod_name}>
+		<script type="text/javascript">
+		Event.observe(window, 'load', function(){
+			new GoogleMapWrapper($("contents-zoom-area"));
+		});
+		</script>
+	<{/if}>
+	</div>
+	
+	<br class="clear">
+	<p style="text-align: center" class="btn">
+		<a href="javascript: self.close();"><{$smarty.const.COM_LNK_CLOSE}></a>
+	</p>
+
+</body>
+</html>

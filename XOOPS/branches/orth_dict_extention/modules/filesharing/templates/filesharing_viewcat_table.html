@@ -1,0 +1,108 @@
+<{strip}>
+<table width="100%" cellspacing="0" class="outer">
+	<tr>
+		<td class="even">
+			<br />
+			<{include file="db:filesharing_header.html"}>
+			<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+				<tr>
+					<td align='left'>
+						<span style="font-weight:bold;"><a href='index.php'><{$lang_album_main}></a>&nbsp;:&nbsp;<{$album_sub_title}></span>&nbsp;<{$lang_total}><{$file_total_sum}>
+					</td>
+					<td align='right'>
+						<{if $lang_add_file}><a href="?page=submit&cid=<{$category_id}>"><{$lang_add_file}><img src="<{$mod_url}>/images/pictadd.gif" border="0" alt="<{$lang_add_file}>" title="<{$lang_add_file}>" /></a><{/if}>
+					</td>
+				</tr>
+			</table>
+			<{if count( $subcategories ) > 0 }>
+				<hr />
+				<{include file="db:filesharing_categories.html"}>
+			<{/if}>
+		</td>
+	</tr>
+</table>
+<br />
+
+<{if $file_small_sum < 1 }>
+	<div align="center">
+		<{$lang_nomatch}>
+	</div>
+<{else}>
+	<table width="100%" cellspacing="0" class="outer">
+		<tr>
+			<td class="even" align="left">
+				<{if $file_small_sum > 1 }>
+					<div align="center">
+						<{$lang_sortby}>&nbsp;&nbsp;
+						<{$lang_title}> (<a href="?page=viewcat&cid=<{$category_id}>&amp;orderby=titleA"><img src="images/up.gif" border="0" align="middle" alt="" /></a><a href="?page=viewcat&cid=<{$category_id}>&amp;orderby=titleD"><img src="images/down.gif" border="0" align="middle" alt="" /></a>)&nbsp;
+						<{$lang_date}> (<a href="?page=viewcat&cid=<{$category_id}>&amp;orderby=dateA"><img src="images/up.gif" border="0" align="middle" alt="" /></a><a href="?page=viewcat&cid=<{$category_id}>&amp;orderby=dateD"><img src="images/down.gif" border="0" align="middle" alt="" /></a>)&nbsp;
+						<{*
+						<{if $canrateview }>
+							<{$lang_rating}> (<a href="?page=viewcat&cid=<{$category_id}>&amp;orderby=ratingA"><img src="images/up.gif" border="0" align="middle" alt="" /></a><a href="?page=viewcat&cid=<{$category_id}>&amp;orderby=ratingD"><img src="images/down.gif" border="0" align="middle" alt="" /></a>)&nbsp;
+						<{/if}>
+						<{$lang_popularity}> (<a href="?page=viewcat&cid=<{$category_id}>&amp;orderby=hitsA"><img src="images/up.gif" border="0" align="middle" alt="" /></a><a href="?page=viewcat&cid=<{$category_id}>&amp;orderby=hitsD"><img src="images/down.gif" border="0" align="middle" alt="" /></a>)
+						*}>
+						<br />
+						<b><{$lang_cursortedby}></b>
+						<br />
+						<br />
+						<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+							<tr>
+								<td align='left'>
+									<{$filenavinfo}>
+								</td>
+								<td align='right'>
+									<{$filenav}>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<hr />
+				<{/if}>
+				<br />
+				<table width='100%' cellspacing='0' cellpadding='0' border='0'>
+					<tr>
+						<{foreach from=$files item=file}>
+							<td align='center' style='margin:0px;padding:5px 0px;'>
+								<a href='<{$mod_url}>/?page=file&lid=<{$file.lid}>'><img src='<{$file.imgsrc_thumb}>' <{$file.width_spec}> alt='<{$file.title}>' title='<{$file.title}>' border='0' /></a>
+							</td>
+							<{if $file.count is div by $colsoftableview }>
+								</tr>
+								<tr>
+							<{/if}>
+						<{/foreach}>
+					</tr>
+				</table>
+
+				<{if $file_small_sum > 1 }>
+					<hr />
+					<div align="center">
+						<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+							<tr>
+								<td align='left'>
+									<{$filenavinfo}>
+								</td>
+								<td align='right'>
+									<{$filenav}>
+								</td>
+							</tr>
+						</table>
+					</div>
+				<{/if}>
+
+			</td>
+		</tr>
+	</table>
+<{/if}>
+<br />
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		<td align="center">
+			<br />
+			<{include file='db:system_notification_select.html'}>
+			<br />
+			<{include file="db:filesharing_footer.html"}>
+		</td>
+	</tr>
+</table>
+<{/strip}>

@@ -1,0 +1,48 @@
+/**
+ * Document
+ */
+#translate-button-area {
+	text-decoration: none;
+	width : 150px;
+	margin-right:auto;
+	margin-left:auto
+}
+
+#translation-workspace-table textarea {
+	height: 220px;
+	margin:0px;
+	border: solid 1px #C1DAD7;
+	font-size :  15px;
+}
+
+#translation-textarea{
+	height: 220px;
+	border: solid 1px #C1DAD7;
+	text-align : left;
+	font-size : 15px;
+	overflow-y : auto;
+}
+
+#backtranslate-information{
+	height: 220px;
+	border: solid 1px #C1DAD7;
+	text-align : left;
+	font-size : 15px;
+	overflow-y : auto;
+}
+
+/**
+ * Util
+ */
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+.clearfix { display: inline-block; }
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+ 

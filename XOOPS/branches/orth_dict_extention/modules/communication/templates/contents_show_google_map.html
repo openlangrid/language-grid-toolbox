@@ -1,0 +1,16 @@
+
+<!-- Google Map Content -->
+<div class="googlemap-area" style="width:100%;height:100%;">
+	<input type="hidden" name="centerLat" value="<{$content->getLatitude()}>">
+	<input type="hidden" name="centerLng" value="<{$content->getLongitude()}>">
+	<input type="hidden" name="zoomValue" value="<{$content->getZoom()}>">
+	<input type="hidden" name="mapType" value="<{$content->getMapType()}>">
+	
+	<{if $marker}>
+	<input type="hidden" name="markerLat" value="<{$marker->getXcoordinate()}>">
+	<input type="hidden" name="markerLng" value="<{$marker->getYcoordinate()}>">
+	<{/if}>
+</div>
+
+<input type="hidden" class="last_clicked_lat" value="">
+<input type="hidden" class="last_clicked_lng" value="">

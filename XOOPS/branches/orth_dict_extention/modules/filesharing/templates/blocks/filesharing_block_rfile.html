@@ -1,0 +1,14 @@
+<table width='100%' cellspacing='0' cellpadding='0' border='0'>
+  <tr>
+    <{foreach item=file key=count from=$block.file name=fileloop}>
+      <td align='center' style='margin:0px;padding:5px 0px;'>
+        <a href="<{$block.mod_url}>/?page=file&lid=<{$file.lid}>&amp;cid=<{$file.cid}>"><img src="<{$file.thumbs_url}>/<{$file.lid}>.<{$file.ext}>" <{$file.img_attribs}> alt="<{$file.title}>" title="<{$file.title}>" /></a>
+      </td>
+      <{if $count is div by $block.cols && ! $smarty.foreach.fileloop.last
+}>
+        </tr>
+        <tr>
+      <{/if}>
+    <{/foreach}>
+  </tr>
+</table>

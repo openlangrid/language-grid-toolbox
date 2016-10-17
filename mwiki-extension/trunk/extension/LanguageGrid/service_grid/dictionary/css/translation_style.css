@@ -1,0 +1,61 @@
+/* Common Class */
+
+.clickable {
+	cursor: pointer;
+}
+
+.link {
+	color: #002BB8;
+	cursor: pointer;
+}
+
+.link:hover {
+	text-decoration: underline;
+}
+
+.float-right {
+	float: right;
+}
+
+.translation-area {
+	width: 400px;
+}
+
+#back-translation-wrapper {
+	width: 830px;
+}
+
+#back-area {
+	width: 100%;
+}
+
+#translation-wrapper {
+}
+
+#translation-wrapper table {
+}
+
+#license-area {
+	padding: 10px;
+	max-height: 160px;
+	height: 160px;
+	overflow-y: auto;
+	border: 1px solid #C1DAD7;
+	background: #ffffe7;
+	text-align: left;
+	width: 830px;
+}
+#license-area .licence-box-with-border {
+	border-top: 1px solid #C1DAD7;
+	margin: 15px 0 0 0;
+	padding: 15px 0 0 0;
+}
+#license-area .license-title {
+	color: #005AAA;
+	border-left: 4px solid #005AAA;
+	padding: 0 0 0 5px;
+}
+#license-area .license-body {
+	margin: 5px 0 10px;
+}
+

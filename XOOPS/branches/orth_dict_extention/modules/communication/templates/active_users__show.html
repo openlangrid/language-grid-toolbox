@@ -1,0 +1,27 @@
+
+<strong><{$activeUsers|@count}></strong> user
+
+<{foreach from=$activeUsers item=au key=index}>
+<{if $key <= 5}>
+	<a href="<{$xoops_url}>/userinfo.php?uid=<{$au->getId()}>" title="<{$au->getName()}>">
+		<img src="<{$au->getIcon()}>" alt="" width=24 height=24 />
+	</a>
+<{/if}>
+<{/foreach}>
+
+<a href="javascript: $('activeUserList').toggle(); void(0);" title="view user list"><img src="<{$mod_url}>/images/icon/icon_option_big.png" alt="" /></a>
+
+
+<div id='activeUserList' class="activeUserList" style='display: none;'>
+	<ul>
+	<{foreach from=$activeUsers item=au key=index}>
+	<li>
+		<a href="<{$xoops_url}>/userinfo.php?uid=<{$au->getId()}>" title="<{$au->getName()}>">
+			<img src="<{$au->getIcon()}>" alt="" width=24 height=24 />
+			<{$au->getName()}>
+		</a>
+		<input type="hidden" name="activeUserId[]" value="<{$au->getId()}>">
+	</li>
+	<{/foreach}>
+	</ul>
+</div>

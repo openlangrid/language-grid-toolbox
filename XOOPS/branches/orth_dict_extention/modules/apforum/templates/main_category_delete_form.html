@@ -1,0 +1,45 @@
+<{include file="db:`$mydirname`_base_top.html" forums=$forums categories=$categories forumId=$forumId categoryId=$categoryId activeTab=2}>
+<input type='hidden' id='moduleId' value='forum'>
+<input type='hidden' id='screenId' value='category_delete'>
+<div id="topic_path">
+	<ol>
+		<li><a href="./"><{$smarty.const._MD_D3FORUM_RETURN_COMMUNITY_TOP}></a></li>
+		<li><a href="./?categoryId=<{$category->getId()|escape}>"><{$category->getTitle()|escape}></a></li>
+		<li><{$smarty.const._MD_D3FORUM_COMMON_DELETE}></li>
+	</ol>
+</div>
+<div class="title_bg01">
+<{$smarty.const._MD_D3FORUM_COMMON_DELETE}>
+</div>
+<p class="bbs-confirm-delete-message"><{$smarty.const._MD_D3FORUM_DELETE_CONFIRM_CATEGORY}></p>
+<form name="categoryForm" method="post" action="./?page=category-delete">
+<div class="list_table02">
+	<input type="hidden" name="categoryId" value="<{$category->getId()|escape}>" />
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" >
+        <tr>
+            <td class="list_line03 bbs-composite-create-header"><{$smarty.const._MD_D3FORUM_TH_CATEGORYTITLE}></td>
+            <td class="list_line04">
+            <p><{$category->getTitle()|escape}></p>
+		   </td>
+        </tr>
+        <tr>
+            <td class="list_line03 bbs-composite-create-header"><{$smarty.const._MD_D3FORUM_TH_CATEGORYDESC}></td>
+            <td class="list_line04">
+            <p><{$category->getDescription()|escape|nl2br}></p>
+			</td>
+        </tr>
+    </table>
+</div>
+<div class="clearfix">
+	<ul class="btn_set01">
+		<li>
+		<a href="#" onclick="formSubmit('categoryForm'); return false;">
+			<div class="btn_blue01">
+				<span class="bbs-common-button"><{$smarty.const._MD_D3FORUM_OK}></span>
+			</div>
+		</a>
+		</li>
+	</ul>
+</div>
+</form>
+<{include file="db:`$mydirname`_base_footer.html"}>

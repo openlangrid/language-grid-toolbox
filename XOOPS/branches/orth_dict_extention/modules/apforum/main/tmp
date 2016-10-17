@@ -1,0 +1,4 @@
+var groupIds = new Array();
+<{foreach from=$groupIds key=index item=value}>
+groupIds[<{$index}>] = <{$value}>;
+<{/foreach}>

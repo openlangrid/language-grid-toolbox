@@ -1,0 +1,317 @@
+/**
+ * BBS preview
+ */
+.bbs-preview-title {
+	font-size: 120%;
+}
+.bbs-preview-parameter-title {
+	font-weight: bold;
+}
+#bbs-preview-target-area {
+	margin: 20px;
+	max-height: 500px;
+	overflow-y: auto;
+	position: relative;
+	overflow-x: hidden;
+	text-align: left;
+	border: 1px solid #B3C6D3;
+}
+.bbs-preview-toggle-button {
+	display: block;
+	font-size: 120%;
+	width: 23px;
+	height: 23px;
+	text-align: center;
+	border: 1px solid #B3C6D3;
+	position: relative;
+	top: -1px;
+	left: -1px;
+	cursor: pointer;
+}
+.bbs-preview-toggle-button-area {
+	width: 35px;
+	position: relative;
+}
+.bbs-preview-target-textarea {
+	margin: 4px 0 15px 0;
+}
+.bbs-preview-back-translation-area {
+	height: 120px;
+	border: 1px solid #B3C6D3;
+	background: #ddd;
+	margin: 4px 0 15px 0;
+	overflow-y: auto;
+}
+.bbs-preview-translation-button-area {
+	width: 130px;
+	padding: 0 10px;
+}
+.bbs-preview-now-translating-area {
+	display: block;
+	height: 30px;
+}
+.bbs-preview-language-title-table {
+	position: relative;
+}
+.bbs-preview-parameter-title-table {
+	margin-bottom: -2px;
+}
+.bbs-preview-language-translations-area {
+	padding: 15px;
+}
+.bbs-preview-parameter-area {
+	border: 1px solid #B3C6D3;
+}
+.bbs-preview-table-indent {
+	width: 65px;
+	position: relative;
+}
+.bbs-preview-target-language-title-wrapper {
+	border-top: 1px solid #B3C6D3;
+	position: relative;
+	top: -1px;
+	margin-bottom: -2px;
+}
+.bbs-preview-cancel-post-buttons {
+	margin: 20px 0;
+}
+.title_m {
+	font-size: 110%;
+	font-weight: bold;
+}
+
+
+/**
+ * Post List
+ */
+.bbs-post-list-add-message-wrapper {
+	margin: 0;	
+	padding: 0;
+}
+div.bbs-composite-descritpion-box {
+	padding: 0 14px 6px 3px;
+	margin: 5px 0;
+	border: 0;
+}
+h2.bbs-composite-descritpion-area {
+	float: left;
+	font-size: 100%;
+	font-weight: normal;
+	padding: 0 0 0 5px;
+}
+.bbs-composite-description-buttons {
+	float: right;
+	width: 200px;
+}
+.bbs-post-list-post-header {
+	font-size: 110%;
+}
+
+span.bbs-invalid-post {
+	color: gray;
+}
+
+/**
+ * Delete
+ */
+.bbs-confirm-delete-message {
+	padding: 10px 10px 0;
+	margin: 0;
+	clear: both;
+}
+
+/**
+ * Modify Form
+ */
+table.bbs-modification-component-table tr {
+	font-size: 100%;
+}
+table.bbs-modification-component-table td {
+	font-size: 100%;
+}
+.bbs-modification-composite-box {
+	margin: 4px 0 10px 0;
+	padding: 2px;
+}
+h3.bbs-modification-mode-composite-header {
+	font-size: 110%;
+	margin: 0 0 5px 0;
+}
+
+.bbs-modification-mode-composite-title {
+	height: 20px;
+}
+p.bbs-modification-mode-composite-title {
+	overflow: auto;
+	border: 1px solid #ccc;
+	background: #eee;
+	color: #444;
+	margin-top: 10px;
+	padding: 3px;
+}
+textarea.bbs-modification-mode-composite-title {
+	padding: 3px;
+	width: 98%;
+}
+.bbs-modification-mode-composite-body {
+	height: 200px;
+}
+p.bbs-modification-mode-composite-body {
+	overflow: auto;
+	border: 1px solid #ccc;
+	background: #eee;
+	color: #444;
+	padding: 3px;
+}
+textarea.bbs-modification-mode-composite-body {
+	padding: 3px;
+	width: 98%;
+}
+#contents_body textarea.bbs-modification-mode-composite-title {
+	font-size: 100%;
+	margin-top: 4px;
+	padding: 3px;
+}
+#contents_body textarea.bbs-modification-mode-composite-body {
+	font-size: 100%;
+	margin-top: 0px;
+	padding: 3px;
+}
+#contents_body textarea.bbs-modification-mode-composite-body {
+}
+ 
+/**
+ * List Table
+ */
+#contents_body table.list-table {
+	border: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+#contents_body table.list-table tr.table_title_bg td {
+	vertical-align: middle !important;
+	white-space:nowrap;
+}
+#contents_body table.list-table td {
+	vertical-align: top;
+	padding: 2px 4px;
+}
+#contents_body table.list-table td.list-composite-title {
+	width: 150px;
+	vertical-align: top;
+}
+#contents_body table.list-table td.list-composite-entries {
+	text-align: center;
+	width: 72px;
+	padding: 2px;
+	vertical-align: middle;
+}
+#contents_body table.list-table td.list-latest-post {
+	width: 103px;
+	padding: 2px;
+}
+/**
+ * Pager
+ */
+.bbs-pager {
+	width: 100%;
+	text-align: center;
+	margin: 10px auto;
+}
+.bbs-pager ul {
+	margin: 0 auto;
+}
+.bbs-pager ul li {
+	float: left;
+	margin: 0 3px;
+}
+.bbs-pager ul li a, .bbs-pager ul li span {
+	display: block;
+	border: 1px solid #ccc;
+	padding: 3px 8px;
+	font-size: 110%;
+}
+.bbs-pager ul li a:hover {
+	border: 1px solid #94cbef;
+	text-decoration: none;
+}
+.page_index {
+	margin-bottom: 30px;
+}
+/**
+ * Form
+ */
+.bbs-new-mark {
+	color: #f33;
+	font-size: 90%;
+}
+/**
+ * Create Form
+ */
+.bbs-composite-create-header {
+	width: 140px !important;
+}
+
+/**
+ * Common
+ */
+.bbs-common-button {
+	width: 55px;
+	text-align: center;
+}
+
+label.bbs-preview-commit{
+	margin-left: 40px;
+}
+/**
+ * License
+ */
+#license-information {
+	margin: 0 20px;
+}
+.license-information-with-border {
+	border-top: 1px solid #C1DAD7;
+	margin: 15px 0 0 0;
+	padding: 15px 0 0 0;
+}
+#license-information-title {
+	font-size: 115%;
+	font-weight: bold;
+	padding: 5px 0 5px 8px;
+	border: 1px solid #C1DAD7;
+	text-align: left;
+}
+#license-information-area {
+	padding: 10px;
+	max-height: 170px;
+	height: 170px;
+	overflow-y: auto;
+	border: 1px solid #C1DAD7;
+	background: #ffffe7;
+	text-align: left;
+}
+#license-information-area .license-title {
+	color: #005AAA;
+	border-left: 6px solid #005AAA;
+	padding: 1px 0 1px 7px;
+}
+#license-information-area .license-body {
+	margin: 5px 0 5px 25px; 
+}
+#list{
+}
+
+#panel {
+	border:2px solid #0667B4;
+	padding:4px;
+	z-index: 10;
+	position : absolute;
+	width: 410px;
+	background: #f5f5f5;
+}
+#mask {
+	background: #000;
+	position: absolute;
+	z-index: 5;
+}

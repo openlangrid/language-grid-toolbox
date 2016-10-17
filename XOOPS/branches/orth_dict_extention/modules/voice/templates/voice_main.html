@@ -1,0 +1,223 @@
+<script type="text/javascript">
+<{include file="db:document_php2js.html"}>
+</script>
+<{$revision}>
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="#">
+			<ul class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m">
+					<span><{$smarty.const._MI_VOICE_TOOL_NAME}></span>
+				</li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+
+<input type='hidden' id='moduleId' value='voice'>
+<input type='hidden' id='screenId' value='voice_trans'>
+
+<div id="contents_body" class="yui-skin-sam">
+	<table id="translation-workspace-table" width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<th width="40%">
+				<div class="title_bg02 editor-head">
+					<h2><{$smarty.const._MI_VOICE_TOOL_TRANSLATION_FROM}>:&nbsp;<span id="from-language"><{$languages.source.default.name}></span></h2>
+					<ul style='width:120px;'>
+						<li>
+							<a href="#" onclick="return false;" id='source-editor-font-resize-small'>
+								<img src="<{$xoops_imageurl}>/img/font_small.jpg" alt="textarea_smaller" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='source-editor-font-resize-large'>
+								<img src="<{$xoops_imageurl}>/img/font_large.jpg" alt="textarea_larger" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='source-editor-resize-small'>
+								<img id="source-editor-reduction-button" src="<{$xoops_imageurl}>/img/textarea_smaller.gif" alt="textarea_smaller" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='source-editor-resize-large'>
+								<img id="source-editor-expansion-button" src="<{$xoops_imageurl}>/img/textarea_larger.gif" alt="textarea_larger" width="22" height="21" />
+							</a>
+						</li>
+					</ul>
+				</div>
+			</th>
+			<td width="20%">&nbsp;</td>
+			<th width="40%">
+				<div class="title_bg02 editor-head">
+					<h2><{$smarty.const._MI_VOICE_TOOL_TRANSLATION_TO}>:&nbsp;<span id="to-language"><{$languages.target.default.name}></span></h2>
+					<ul style='width:120px;'>
+						<li>
+							<a href="#" onclick="return false;" id='target-editor-font-resize-small'>
+								<img src="<{$xoops_imageurl}>/img/font_small.jpg" alt="textarea_smaller" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='target-editor-font-resize-large'>
+								<img src="<{$xoops_imageurl}>/img/font_large.jpg" alt="textarea_larger" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='target-editor-resize-small'>
+								<img id="target-editor-reduction-button" src="<{$xoops_imageurl}>/img/textarea_smaller.gif" alt="textarea_smaller" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='target-editor-resize-large'>
+								<img id="target-editor-expansion-button" src="<{$xoops_imageurl}>/img/textarea_larger.gif" alt="textarea_larger" width="22" height="21" />
+							</a>
+						</li>
+					</ul>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<td valign="top">
+				<textarea id="original-textarea" name="original-textarea"></textarea>
+			</td>
+			<td>
+				<div style="text-align:center;">
+					<select style="width: 70px;" id="sourceLang">
+					 <{$languages.source.tags}>
+					</select>
+					&nbsp;&gt;&nbsp;
+					<select style="width: 70px;" id="targetLang">
+					 <{$languages.target.tags}>
+					</select>
+					<br/>
+					<br/>
+					<img src="<{$xoops_imageurl}>/img/icon_next01.gif" alt="" width="33" height="26" />
+					<br/>
+					<br/>
+					<div id='translate-button-area'>
+						<a id="translate-button" href="#" onclick="return false;">
+							<span class="btn_blue01">
+									<{$smarty.const._MI_VOICE_TOOL_BUTTON_TRANSLATE}>
+							</span>
+						</a>
+						<a id="cancel-button" style="display: none;" href="#" onclick="return false;">
+							<span class="btn_blue01">
+									<{$smarty.const._MI_VOICE_TOOL_BUTTON_TRANSLATE_CANCEL}>
+							</span>
+						</a>
+					</div>
+					<br/>
+					<div><{$smarty.const._MI_VOICE_TOOL_BUTTON_TRANSLATION_TIME}>: <span id="time">0</span> sec.</div>
+					
+					<div id='clear-button-area'>
+						<a id="clear-button" href="#" onclick="return false;">
+							<span class="btn_blue01">
+									<{$smarty.const._MI_VOICE_TOOL_BUTTON_CLEAR}>
+							</span>
+						</a>
+					</div>
+				</div>
+			</td>
+			<td valign="top">
+				<textarea id="translation-textarea" name="translation-textarea"></textarea>
+				<div id="translation-voicearea"></div>
+				<!-- div id="translation-textarea"></div -->
+			</td>
+		</tr>
+		<tr>
+			<td height="50" valign="top">
+				<span style="display: none;" id="parsing">
+					<img src="img/loading.gif" />&nbsp;
+					<{$smarty.const._MI_VOICE_TOOL_TRANSLATION_PARSE_TEXT}>
+				</span>
+			</td>
+			<td height="50">
+				<span style="text-align:center;">
+					<img src="<{$xoops_imageurl}>/img/icon_next02.gif" alt="" width="33" height="32" />
+				</span>
+			</td>
+			<td height="50" valign="top">
+				<span style="display: none;" id="translating">
+					<img src="img/loading.gif" />&nbsp;
+					<span id="translatingMessage"><{$smarty.const._MI_VOICE_TOOL_TRANSLATION_DOING}></span>
+					<span id="cancelMessage" style="display:none;"><{$smarty.const._MI_VOICE_TOOL_BUTTON_TRANSLATE_CANCEL_DOING}></span>
+					&nbsp;"<span id="traslatingSentence"></span>"
+				</span>
+				<span id="translate-parsing" style="display: none;"><img src="img/loading.gif" />&nbsp;<{$smarty.const._MI_VOICE_TOOL_TRANSLATION_PARSE_TEXT}></span>
+			</td>
+		</tr>
+		<tr>
+			<th width="40%">
+				<div class="title_bg02 editor-head">
+					<h2><{$smarty.const._MI_VOICE_TOOL_BACKTRANSLATION_NAME}>:&nbsp;<span id="backtranslation-head"><{$languages.source.default.name}></span></h2>
+					<ul style='width:120px;'>
+						<li>
+							<a href="#" onclick="return false;" id='backtarget-editor-font-resize-small'>
+								<img src="<{$xoops_imageurl}>/img/font_small.jpg" alt="textarea_smaller" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='backtarget-editor-font-resize-large'>
+								<img src="<{$xoops_imageurl}>/img/font_large.jpg" alt="textarea_larger" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='backtarget-editor-resize-small'>
+								<img src="<{$xoops_imageurl}>/img/textarea_smaller.gif" alt="textarea_smaller" width="22" height="21" />
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="return false;" id='backtarget-editor-resize-large'>
+								<img src="<{$xoops_imageurl}>/img/textarea_larger.gif" alt="textarea_larger" width="22" height="21" />
+							</a>
+						</li>
+					</ul>
+				</div>
+			</th>
+			<td valign="top" rowspan="2">
+				<div id='back-translate-button-area'>
+					<a id="back-translate-button" href="#" onclick="return false;">
+						<span class="btn_blue01">
+								<{$smarty.const._MI_VOICE_TOOL_BUTTON_TRANSLATE}>
+						</span>
+					</a>
+					<a id="back-translate-cancel-button" style="display: none;" href="#" onclick="return false;">
+						<span class="btn_blue01">
+								<{$smarty.const._MI_VOICE_TOOL_BUTTON_TRANSLATE_CANCEL}>
+						</span>
+					</a>
+				</div>
+				<br/>
+				<div><{$smarty.const._MI_VOICE_TOOL_BUTTON_TRANSLATION_TIME}>: <span id="back-translate-time">0</span> sec.</div>
+			</td>
+			<th width="40%">
+			</th>
+		</tr>
+		<tr>
+			<td valign="top">
+				<textarea id="backtranslation-textarea" name="backtranslation-textarea"></textarea>
+			</td>
+			<td valign="top">
+			</td>
+		</tr>
+		<tr>
+			<td height="50" valign="top">
+				<span style="display: none;" id="backtranslating">
+					<img src="img/loading.gif" />&nbsp;
+					<span id="backtranslatingMessage"><{$smarty.const._MI_VOICE_TOOL_BACKTRANSLATION_DOING}></span>
+					<span id="cancelBackMessage" style="display:none;"><{$smarty.const._MI_VOICE_TOOL_BUTTON_TRANSLATE_CANCEL_DOING}></span>
+					&nbsp;"<span id="backtranslatingSentence"></span>"
+				</span>
+			</td>
+			<td height="50">&nbsp;</td>
+			<td height="50" valign="top">&nbsp;</td>
+		</tr>
+	</table>
+
+<div class="title_bg02 editor-head">
+	<h2><{$smarty.const._MI_VOICE_LICENSE_INFORMATION}></h2>
+</div>
+<div id="license-information-area"></div>
+</div>

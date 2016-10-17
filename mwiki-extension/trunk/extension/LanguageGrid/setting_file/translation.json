@@ -1,0 +1,14 @@
+{"path":
+	{"source_lang":"ja",
+		"target_lang":"en",
+		"exec":
+		[{"source_lang":"ja",
+			"target_lang":"en",
+			"service_id":"NICTJServer",
+			"dictionary_flag":1,
+			"bind":{"bind_type":9,
+				"bind_value":"Mecab"
+			}
+		}]
+	}
+}

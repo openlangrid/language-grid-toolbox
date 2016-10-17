@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<file id="main">
+	<style>
+		<path>#{ExtRootPath}/</path>
+	</style>
+	<script>
+		<path>#{ExtRootPath}/</path>
+	</script>
+</file>

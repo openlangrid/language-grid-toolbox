@@ -1,0 +1,104 @@
+<{include file="db:filesharing_base_top.html"}>
+	<div class="list_table02" style="width:600px;">
+		<{if $error_msg != ""}>
+			<ul class="errorMsg" style="color:red;">
+				<li><{$error_msg}></li>
+			</ul>
+		<{/if}>
+		<FORM method="post" name="addfolder" action="?page=createfolder&cid=<{$folder.cid}>">
+			<TABLE style="text-align:left;" class="outer" cellSpacing="1">
+				<tr>
+					<th colSpan=2>
+					<{if $op_mode == "edit" }>
+						<{$smarty.const._MD_ALBM_FOLDER_EDIT}>
+					<{else}>
+						<{$smarty.const._MD_ALBM_FOLDER_CREATE}>
+					<{/if}>
+					</th>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FOLDER_NAME}></td>
+					<td>
+						<INPUT id="folder_name" maxLength="255" size="80" type="text" name="folder_name" value="<{$folder.title}>">
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_PARENT_FOLDER}></td>
+					<td>
+						<{$folder_select}>
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FILEDESC}></td>
+					<td>
+						<INPUT id="desc_text" maxLength="255" size="50" type="text" name="desc_text" value="<{$folder.description}>">
+					</td>
+				</tr>
+				<{if $op_mode == "edit" }>
+					<tr>
+						<td class="list_line03"><{$smarty.const._MD_ALBM_OWNER}></td>
+						<td>
+							<a href="<{$owner_info}>">
+							<{$owner_name}>
+							</a>
+						</td>
+					</tr>
+				<{/if}>
+				<{if $my_uid == $folder.user_id || $isadmin }>
+				<tr>
+<style type="text/css">
+.check_list label {
+  display: block;
+  float: left;
+  width: 110px;
+}
+</style>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_EDIT_PERMISSION}></td>
+					<td class="check_list">
+						<label><input type="checkbox" name="edit_permission[]" value="public"/><{$smarty.const.MD_apfilesharing_ALL_USER}></label>
+						<{foreach key=group_id item=group_name from=$groups}>
+							<label><input type="checkbox" name="edit_permission[]" value="<{$group_id}>"/><{$group_name}></label>
+						<{/foreach}>
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_READ_PERMISSION}></td>
+					<td class="check_list">
+						<label><input type="checkbox" name="read_permission[]" value="public"/><{$smarty.const.MD_apfilesharing_ALL_USER}></label>
+						<{foreach key=group_id item=group_name from=$groups}>
+							<label><input type="checkbox" name="read_permission[]" value="<{$group_id}>"/><{$group_name}></label>
+						<{/foreach}>
+					</td>
+				</tr>
+				<{/if}>
+				<tr>
+					<td colspan="2" style="text-align:center;border:none;">
+						<INPUT id="back"   class="btn_blue01" value="<{$smarty.const._MD_ALBM_BTN_BACK}>"   type="button" name="back" onclick="page_back();" style="width:70px;"> &nbsp; 
+						<INPUT id="submit" class="btn_blue01" value="<{$smarty.const._MD_ALBM_BTN_OK}>" type="submit" name="submit" style="width:70px;"> &nbsp; 
+					</td>
+				</tr>
+		</TABLE>
+			<INPUT id="ref" value="<{$ref}>" type="hidden" name="ref">
+			<{*<INPUT id="fieldCounter"   value="1"   type="hidden" name="fieldCounter">*}>
+			<INPUT id="op"             value="submit" type="hidden" name="op">
+			<INPUT id="op_mode"        value="<{$op_mode}>" type="hidden" name="op_mode">
+			<INPUT id="my_cid"         value="<{$folder.cid}>" type="hidden" name="my_cid">
+			
+			<{$gticket}>
+		</FORM>
+	</div>
+	<SCRIPT type="text/javascript">
+	<!--//
+		function page_back(){
+			document.location = "<{$ref}>";
+		}
+		
+		function reset_form(){
+			$("desc_text").value="";
+			$("cid").value="";
+			$("upload_file").value="";
+		}
+	//-->
+	</SCRIPT>
+	<{*include file="db:filesharing_footer.html"*}>
+<{include file="db:filesharing_base_footer.html"}>

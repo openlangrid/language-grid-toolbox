@@ -1,0 +1,12 @@
+<div id="bbs-language"><{$smarty.const.COM_LABEL_DISCUSSION_IN}>
+	<select name="lang" id="displaylanguage" onchange="reloadMessages(); reloadTopicHeader()">
+		<{foreach from=$allLanguages item=item key=key}>
+			<{if $key == $selectedLanguageTag }>
+				<{assign var="selected" value=" selected='selected'"}>
+			<{else}>
+				<{assign var="selected" value="" }>
+			<{/if}>
+			<option<{$selected}> value="<{$key}>"><{$item}></option>
+		<{/foreach}>
+	</select>
+</div>

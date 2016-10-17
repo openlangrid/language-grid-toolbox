@@ -1,0 +1,195 @@
+<{include file="db:`$mydirname`_base_top.html" titles=$titles forumId=$forumId categoryId=$categoryId activeTab=0}>
+<input type='hidden' id='moduleId' value='forum'>
+<input type='hidden' id='screenId' value='forum_list'>
+<div id="topic_path" style="float:left;">
+	<ol>
+		<li><a href="./"><{$smarty.const._MD_D3FORUM_RETURN_COMMUNITY_TOP}></a></li>
+		<li><{$category->getTitle()|escape}></li>
+	</ol>
+</div>
+<{include file="db:`$mydirname`_search_box.html" forumId=$forumId categoryId=$categoryId}>
+<div class="contents_title">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="19" class="title_l"></td>
+			<td class="title_m"><{$category->getTitle()|escape}></td>
+			<td width="19" class="title_r"></td>
+		</tr>
+	</table>
+</div>
+<div class="topic_title bbs-composite-descritpion-box clearfix">
+	<h2 class="bbs-composite-descritpion-area"><{$category->getDescription()|escape|nl2br}></h2>
+		<ul class="btn_set01" style="margin-bottom: 0;">
+		<{if $permission->categoryDelete()}>
+			<li>
+				<a href="<{$mod_url}>/?page=category-delete&categoryId=<{$categoryId}>">
+					<div class="btn_gray01">
+						<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_DELETE}></span>
+					</div>
+				</a>
+			</li>
+		<{/if}>
+		<{if $permission->categoryEdit()}>
+			<li>
+				<form action="<{$mod_url}>/?page=preview" method="post" name="editLinkForm">
+				<input type="hidden" name="type_code" value="category_edit" />
+				<input type="hidden" name="id" value="<{$category->getId()|escape}>" />
+					<a href="#" onclick="document.editLinkForm.submit(); return false;">
+						<div class="btn_blue01">
+							<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_EDIT}></span>
+						</div>
+					</a>
+				</form>
+				<{*
+				<a href="<{$mod_url}>/?page=category-edit&categoryId=<{$categoryId}>">
+					<div class="btn_blue01">
+						<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_EDIT}></span>
+					</div>
+				</a>
+				*}>
+			</li>
+		<{elseif $permission->categoryModify()}>
+			<li>
+				<a href="<{$mod_url}>/?page=category-modify&categoryId=<{$categoryId}>">
+					<div class="btn_blue01">
+						<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_MODIFY}></span>
+					</div>
+				</a>
+			</li>
+		<{/if}>
+	</ul>
+</div>
+
+<{if $permission->forumCreate()}>
+<p class="bbs-create-composite-link">
+	<form action="<{$mod_url}>/?page=preview" method="post" name="createLinkForm">
+	<input type="hidden" name="type_code" value="forum_create" />
+	<input type="hidden" name="id" value="<{$category->getId()|escape}>" />
+	<p class="bbs-create-composite-link">
+		<a href="#" onclick="document.createLinkForm.submit(); return false;">
+			<{$smarty.const._MD_D3FORUM_CREATE_A_NEW_FORUM}>
+		</a>
+	</p>
+	</form>
+	<{*
+	<a href="<{$mod_url}>/?page=forum-create&categoryId=<{$category->getId()|escape}>">
+		<{$smarty.const._MD_D3FORUM_CREATE_A_NEW_FORUM}>
+	</a>
+	*}>
+</p>
+<{/if}>
+<{assign var='myurl' value="$mod_url/?categoryId=$categoryId&lang=$selectedLanguageTag"}>
+<{if $pager->getTotalPages() >= 2}>
+<div class="page_index">
+	<div class="bbs-pager">
+		<ul class="clearfix" style="width: <{$pager->getTotalPages()*40+200}>px;">
+			<{if $pager->hasPreview()}>
+				<li><a href="<{$myurl}>&page=<{$pager->getPreviewNumber()}>&sortkey=<{$sortheader->getCurrentKey()}>">&lt;&lt; Previous</a></li>
+			<{/if}>
+			<{foreach from=$pager->toArray() key=key item=item}>
+				<li>
+				<{if $item == 'CURRENT'}>
+					<span><{$pager->getCurrentPage()}></span>
+				<{elseif $item == 'SKIP'}>
+					<span>...</span>
+				<{else}>
+					<a href="<{$myurl}>&page=<{$item}>&sortkey=<{$sortheader->getCurrentKey()}>"><{$item}></a>
+				<{/if}>
+				</li>
+			<{/foreach}>
+			<{if $pager->hasNext()}>
+				<li><a href="<{$myurl}>&page=<{$pager->getNextNumber()}>&sortkey=<{$sortheader->getCurrentKey()}>">Next &gt;&gt;</a></li>
+			<{/if}>
+		</ul>
+	</div>
+</div>
+<{/if}>
+<table class="body_title list-table">
+	<tr class="table_title_bg">
+		<td class="list-composite-title">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(1)}>">
+			<{$smarty.const._MD_D3FORUM_FORUM}>
+			</a>
+			<{$sortheader->getLabel(1)}>
+		</td>
+		<td>
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(2)}>">
+			<{$smarty.const._MD_D3FORUM_DESCRIPTION}>
+			</a>
+			<{$sortheader->getLabel(2)}>
+		</td>
+		<td class="list-composite-entries">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(3)}>">
+			<{$smarty.const._MD_D3FORUM_TOTALTOPICSCOUNT}>
+			</a>
+			<{$sortheader->getLabel(3)}>
+		</td>
+		<td class="list-composite-entries">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(4)}>">
+			<{$smarty.const._MD_D3FORUM_TOTALPOSTSCOUNT}>
+			</a>
+			<{$sortheader->getLabel(4)}>
+		</td>
+		<td class="list-latest-post">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(5)}>">
+			<{$smarty.const._MD_D3FORUM_LASTPOST}>
+			</a>
+			<{$sortheader->getLabel(5)}>
+		</td>
+	</tr>
+	<{foreach from=$forums item=forum}>
+		<{assign var='params' value=$forum->getParams()}>
+		<tr>
+			<td class="list-composite-title">
+				<{strip}>
+					<a href="<{$mod_url}>/?forumId=<{$forum->getId()}>">
+						<{$forum->getTitle()}>
+					</a>
+					<{if $forum->hasNewPost() }>
+		        		<span class="bbs-new-mark">
+		        			&nbsp;<{$smarty.const._MD_D3FORUM_NEW_MARK}>
+		        		</span>
+		        	<{/if}>
+				<{/strip}>
+			</td>
+			<td>
+			<{$forum->getDescription()|mb_substr:0:300:"utf-8"}>
+			<{if mb_strlen($forum->getDescription(), "utf-8") > 301 }>
+				...
+			<{/if}>
+			</td>
+			<td class="list-composite-entries"><{$params.forum_topics_count}></td>
+			<td class="list-composite-entries"><{$params.forum_posts_count}></td>
+			<td class="list-latest-post">
+				<a href="<{$xoops_url}>/userinfo.php?uid=<{$params.uid}>"><{$params.uname}></a><br />
+				<{$params.forum_last_post_time_f}>
+			</td>
+		</tr>
+	<{/foreach}>
+</table>
+<{if $pager->getTotalPages() >= 2}>
+<div class="page_index">
+	<div class="bbs-pager">
+		<ul class="clearfix" style="width: <{$pager->getTotalPages()*40+200}>px;">
+			<{if $pager->hasPreview()}>
+				<li><a href="<{$myurl}>&page=<{$pager->getPreviewNumber()}>&sortkey=<{$sortheader->getCurrentKey()}>">&lt;&lt; Previous</a></li>
+			<{/if}>
+			<{foreach from=$pager->toArray() key=key item=item}>
+				<li>
+				<{if $item == 'CURRENT'}>
+					<span><{$pager->getCurrentPage()}></span>
+				<{elseif $item == 'SKIP'}>
+					<span>...</span>
+				<{else}>
+					<a href="<{$myurl}>&page=<{$item}>&sortkey=<{$sortheader->getCurrentKey()}>"><{$item}></a>
+				<{/if}>
+				</li>
+			<{/foreach}>
+			<{if $pager->hasNext()}>
+				<li><a href="<{$myurl}>&page=<{$pager->getNextNumber()}>&sortkey=<{$sortheader->getCurrentKey()}>">Next &gt;&gt;</a></li>
+			<{/if}>
+		</ul>
+	</div>
+</div>
+<{/if}>
+<{include file="db:`$mydirname`_base_footer.html"}>

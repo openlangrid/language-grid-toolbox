@@ -1,0 +1,26 @@
+
+<!-- Message list part -->
+<div id="message-scroll-part">
+	<!-- ========================================= -->
+	<{foreach from=$messages item=item key=key}>
+		<{assign var="message" value=$item->toMessage()}>
+	
+		<{include file="db:%s_messages__show.html"|sprintf:$mod_name}>
+	<{/foreach}>
+</div>
+
+
+<div class="notification-part" id="newMessageArrived" style="display: none;">
+	<a href="javascript: reloadMessages(); void(0);"><{$smarty.const.COM_LNK_NEW_MESSAGE_ARRIVED}></a>
+</div>
+
+<div id="messageReloading" style="display: none;">
+	<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height"25" alt="" /> <{$smarty.const.COM_LNK_NEW_MESSAGE_RELOADING}><!-- New Message Reloading... --> 
+</div>
+
+<script type="text/javascript">
+(function(){ 
+	var fontPos = parseInt(new CookieManager().getCookie("fontSizePosition")) || 0;
+	fontResizer.restorePosition(fontPos);
+}).defer();
+</script>

@@ -1,0 +1,201 @@
+<{include file="db:`$mydirname`_base_top.html" forums=$forums categories=$categories forumId=$forumId categoryId=$categoryId activeTab=2 changeLanguageDisabled=true}>
+<div id="topic_path">
+	<{$topicPath}>
+</div>
+<form action="./?page=preview" method="post" name="previewForm" enctype="multipart/form-data">
+<input type="hidden" name="source_language_code" value="<{$selectedLanguageTag}>" />
+<input type="hidden" name="type_code" value="<{$typeCode}>" />
+<input type="hidden" name="id" value="<{$bbsPreviewId}>" />
+<{if $typeCode == "post_reply"}>
+	<input type="hidden" name="reply_id" value="<{$replyId}>" />
+<{/if}>
+<h2 class="bbs-preview-title"><{$selectedLanguageName}></h2>
+<table width="100%">
+<tr>
+<td>
+	<div class="list_table02">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+	<{foreach from=$parameters key=groupCode item=parameterValue}>
+		<tr>
+		<td class="list_line03 bbs-composite-create-header"><{$parameterValue.header}></td>
+		<td class="list_line04"><textarea name="contents&#91;<{$selectedLanguageTag}>&#93;&#91;<{$groupCode}>&#93;" rows="<{$parameterValue.rows}>" name="<{$selectedLanguageTag}>_<{$groupCode}>" id="source-textarea-<{$selectedLanguageTag}><{$separator}><{$groupCode}>"><{$parameterValue.contents.$selectedLanguageTag|escape}></textarea></td>
+		</tr>
+	<{/foreach}>
+	</table>
+	</div>
+</td>
+<td class="bbs-preview-translation-button-area">
+<button class="bbs-common-button-component" id="source-button-<{$selectedLanguageTag}><{$separator}>0"><{$smarty.const._MD_D3FORUM_COMMON_TRANSLATE}></button><br />
+<span class="bbs-preview-now-translating-area" id="source-status-area-<{$selectedLanguageTag}><{$separator}>0"></span>
+</td>
+</tr>
+</table>
+
+<{if $showTagBox == "yes"}>
+<{include file="db:`$mydirname`_tag_box.html"}>
+<{/if}>
+
+<div id="container_upload">
+<table><tr><td>
+	<table id="tblUpload"  border="0" cellspacing="0" cellpadding="0">
+		<tbody id="tbodyUpload"></tbody>
+	</table>
+</td>
+	<{if $FileList}>
+	<td id='tdDownloadFileButton' valign='top'>
+		<div align="left" id="DownloadFileButton-<{$bbsPreviewId}>" class="DownloadFileButton">
+			<a href="javascript:void(0)" ><img src="images/attach_icon.gif" id="DownloadImage-<{$bbsPreviewId}>" alt="<{$smarty.const._MD_D3FORUM_ATACCHED_FILELIST}>" /></a>
+		</div>
+	</td>
+	<{/if}>
+</tr></table>
+</div>
+
+
+<{assign var=toggleId value=0}>
+<div id="bbs-preview-target-area">
+	<{foreach from=$toLanguages key=targetLanguageCode item=targetLanguageName name=foreachTargetLanguages}>
+		<div class="bbs-preview-target-language-title-wrapper">
+			<table width="100%" class="bbs-preview-language-title-table">
+			<tr>
+			<td class="bbs-preview-toggle-button-area"><span class="bbs-preview-toggle-button" id="toggle-button-<{$toggleId}>">-</span></td>
+			<td><h2 class="bbs-preview-title"><{$targetLanguageName}></h2></td>
+			</tr>
+			</table>
+		</div>
+			<div class="bbs-preview-language-translations-area" id="toggle-panel-<{$toggleId}>">
+			<{assign var=toggleId value=$toggleId+1}>
+				<{foreach from=$parameters key=groupCode item=parameterValue}>
+					<h2><{$parameterValue.header}></h2>
+					<div class="bbs-preview-parameter-area">
+						<table width="100%" class="bbs-preview-parameter-title-table">
+						<tr>
+						<td class="bbs-preview-table-indent"><span class="bbs-preview-toggle-button" id="toggle-button-<{$toggleId}>">+</span></td>
+						<td>
+							<{$smarty.const._MD_D3FORUM_COMMON_TRANSLATION}>
+							<label class="bbs-preview-commit"><input type="checkbox" id="commit-checkbox-<{$targetLanguageCode}><{$separator}><{$groupCode}>" /> <{$smarty.const._MD_D3FORUM_COMMON_COMMIT}></label>
+						</td></tr>
+						<tr><td> </td>
+						<td>
+							<div id="toggle-panel-<{$toggleId}>" style="display: none;">
+								<table width="100%">
+									<tr>
+									<td>
+									<div>
+										<textarea name="contents&#91;<{$targetLanguageCode}>&#93;&#91;<{$groupCode}>&#93;" rows="<{$parameterValue.rows}>" class="bbs-preview-target-textarea" id="target-textarea-<{$targetLanguageCode}><{$separator}><{$groupCode}>"><{$parameterValue.contents.$targetLanguageCode|escape}></textarea>
+									</div>
+									</td>
+									<td class="bbs-preview-translation-button-area">
+										<button class="bbs-common-button-component" id="target-button-<{$targetLanguageCode}><{$separator}><{$groupCode}>"><{$smarty.const._MD_D3FORUM_COMMON_TRANSLATE}></button>
+										<span class="bbs-preview-now-translating-area" id="target-status-area-<{$targetLanguageCode}><{$separator}><{$groupCode}>"></span>
+									</td>
+									</tr>
+								</table>
+							</div>
+						</td></tr>
+						</table>
+					</div>
+					<table width="100%">
+						<tr>
+						<td class="bbs-preview-table-indent"> </td>
+						<td>
+							<{$smarty.const._MD_D3FORUM_COMMON_BACK_TRANSLATION}>
+							<div class="bbs-preview-back-translation-area" id="back-translation-textarea-<{$targetLanguageCode}><{$separator}><{$groupCode}>"></div>
+						</td>
+						<td class="bbs-preview-translation-button-area">
+							<span class="bbs-preview-now-translating-area" id="back-translation-status-area-<{$targetLanguageCode}><{$separator}><{$groupCode}>"></span>
+						</td>
+						</tr>
+					</table>
+				<{assign var=toggleId value=$toggleId+1}>
+				<{/foreach}>
+			</div>
+	<{/foreach}>
+</div>
+<table class="bbs-preview-cancel-post-buttons" width="100%">
+	<tr>
+		<td width="35%">
+		</td>
+		<td width="15%">
+			<button class="bbs-common-button-component" id="bbs-preview-form-post-button"><{$smarty.const._MD_D3FORUM_COMMON_POST}></button>
+		</td>
+		<td width="15%">
+			<button class="bbs-common-button-component" id="bbs-preview-form-cancel-button"><{$smarty.const._MD_D3FORUM_COMMON_CANCEL}></button>
+		</td>
+		<td width="35%">
+		</td>
+	</tr>
+</table>
+<div id="license-information">
+	<div id="license-information-title" class="table_title_bg">
+		<{$smarty.const._MD_D3FORUM_COMMON_LICENSE_INFORMATION}>
+	</div>
+	<div id="license-information-area">
+
+	</div>
+</div>
+<input type="hidden" name="phaze" value="post" />
+</form>
+
+<script>
+var sourceLanguageCode = '<{$selectedLanguageTag}>';
+var targetLanguageCodes = new Array();
+var languages = new Object();
+languages['<{$selectedLanguageTag}>'] = '<{$selectedLanguageName}>';
+<{foreach from=$toLanguages key=targetLanguageCode item=targetLanguageName}>
+targetLanguageCodes.push('<{$targetLanguageCode}>');
+languages['<{$targetLanguageCode}>'] = '<{$targetLanguageName}>';
+<{/foreach}>
+var groupCodes = new Array();
+var groups = new Object();
+<{foreach from=$parameters key=groupCode item=parameterValue}>
+groupCodes.push('<{$groupCode}>');
+groups['<{$groupCode}>'] = '<{$parameterValue.header}>';
+<{/foreach}>
+
+<{if $FileList}>
+	var FileListHash={
+		<{$bbsPreviewId}>:[
+			<{foreach from=$FileList item=list name=listLoop}>
+				{
+					ID:"<{$list.id}>",
+					FileName:"<{$list.file_name}>",
+					FileSize:"<{$list.file_size}>"
+			<{if $smarty.foreach.listLoop.last}>
+				}
+			<{else}>
+				},
+			<{/if}>
+			<{/foreach}>
+		]
+	};
+<{/if}>
+<{if $FileListCount}>
+	var FileListCount = <{$FileListCount}>;
+<{else}>
+	var FileListCount= 0;
+<{/if}>
+<{if $FileCountLimit}>
+	var FileCountLimit=<{$FileCountLimit}>;
+<{/if}>
+</script>
+
+<{if $NotUploadedFiles}>
+	<script type="text/javascript">
+		var notExistFiles="";
+		var overLimitFiles="";
+		var limitSize=<{$limitSize}>;
+		<{foreach from=$NotUploadedFiles item=nfile name=fileLoop}>
+			var fn="\n<{$nfile.fileName}>";
+			var size=<{$nfile.fileSize}>;
+			if(size<=0) notExistFiles+=fn;
+			else overLimitFiles+=fn;
+		<{/foreach}>
+		var errFileMsg="";
+		if(notExistFiles) errFileMsg=Const.Message.errorFileNotExist+":\n"+notExistFiles;
+		if(overLimitFiles) errFileMsg=Const.Message.errorFileOverLimit.replace('{0}', limitSize)+overLimitFiles;
+		alert(errFileMsg);
+	</script>
+<{/if}>
+
+<{include file="db:`$mydirname`_base_footer.html"}>

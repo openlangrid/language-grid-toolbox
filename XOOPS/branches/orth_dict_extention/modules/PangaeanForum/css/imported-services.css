@@ -1,0 +1,277 @@
+/**
+ * Button
+ */
+.langrid-imported-services-button-area {
+	margin: 10px 0;
+}
+.langrid-imported-services-button-area p {
+	float: left;
+}
+.langrid-imported-services-button-area div {
+	float: right;
+}
+.langrid-imported-services-button-area div button {
+	display: inline;
+}
+button.langrid-common-button {
+	font-family:arial,Tahoma,helvetica,clean,verdana,"ƒqƒ‰ƒMƒmŠpƒS Pro W3","Hiragino Kaku Gothic Pro",Osaka,"‚l‚r ‚oƒSƒVƒbƒN","MS PGothic",sans-serif;
+	font-size:small;
+	line-height:120%;
+	background: transparent url(../images/imported_services/button_gray.png) repeat-x scroll 0 0;
+	cursor: pointer;
+	border: 1px solid #BBBBBB;
+	display: block;
+	width: 110px;
+	padding: 4px 0;
+	color: #000099;
+	font-size: 110%;
+}
+button.langrid-common-button:hover {
+	background: transparent url(../images/imported_services/button_gray_o.png) repeat-x scroll 0 0;
+}
+button.langrid-common-button-disabled {
+	background: #DEE2E5;
+	border: 1px solid #b0b0b0 !important;
+	color: #999 !important;
+}
+button.langrid-common-button-disabled:hover {
+	background: #DEE2E5;
+}
+
+/**
+ * Table
+ */
+#langrid-imported-services-table-wrapper table thead tr {
+	background: #fff url(../images/imported_services/table_title_bg.jpg) repeat-x left bottom !important;	
+}
+#langrid-imported-services-table-wrapper table th {
+	padding: 5px;
+	border: 1px solid #C2D1DC;
+}
+#langrid-imported-services-table-wrapper table td {
+	padding: 5px;
+	border: 1px solid #C2D1DC;
+	cursor: pointer;
+}
+.imported-services-row-selected {
+	background: #CEDEFF !important;
+}
+#imported-services-table tr:hover {
+	background: #ffffce;
+}
+#imported-services-table {
+	width: 100%;
+}
+#imported-services-table th.service-name {
+	width: 140px;
+}
+#imported-services-table th.service-type {
+	width: 110px;
+}
+#imported-services-table th.service-url {
+	width: 200px;
+}
+#imported-services-table th.service-provider {
+	width: 160px;
+}
+#imported-services-table th.service-copyright {
+	width: 160px;
+}
+#imported-services-table th.service-registration {
+	width: 120px;
+}
+
+/**
+ * Popup
+ */
+#langrid-imported-services-light-popup-panel-wrapper {
+}
+#langrid-imported-services-light-popup-panel {
+	border:2px solid #0667B4;
+	padding:4px;
+	z-index: 10;
+	position : absolute;
+	width: 410px;
+	background: #f5f5f5;
+}
+.langrid-popup-container {
+	background: #fff;	
+}
+#langrid-imported-services-light-popup-mask {
+	background: #000;
+	position: absolute;
+	z-index: 5;
+}
+#langrid-imported-services-light-popup-panel table {
+	width: 99%;
+	margin: 7px 0;
+}
+#langrid-imported-services-light-popup-panel table td {
+	vertical-align: top;
+	text-align: left;
+	padding: 4px;
+}
+#langrid-imported-services-light-popup-panel table th {
+	vertical-align: top;
+	width: 150px;
+	text-align: left;
+	padding: 4px;
+}
+#langrid-imported-services-light-popup-panel h1 {
+	background: #fff url(../images/imported_services/table_title_bg.jpg) repeat-x left bottom;
+	border:1px solid #3cc;
+	font-size:110%;
+	margin:0;
+	padding: 2px;
+	text-align:center;
+}
+#langrid-imported-services-light-popup-panel table th h2 {
+	color : #003399;
+	border-left:8px solid #0667B4;
+	font-size:100%;
+	padding: 0 0 0 8px;
+}
+#langrid-imported-services-light-popup-panel table td input {
+	width: 100%;
+}
+#langrid-imported-services-light-popup-panel table td select {
+	width: 100%;
+}
+#langrid-imported-services-light-popup-language-area select {
+	margin: 4px 0;
+}
+#langrid-imported-services-light-popup-language-area span.link {
+	cursor: pointer;
+	color: #009BFE;
+	text-decoration: none;
+}
+#langrid-imported-services-light-popup-language-area span.link:hover {
+	color: #B60404;
+	text-decoration: underline;
+}
+#langrid-imported-services-light-popup-language-area span.notlink {
+	cursor: pointer;
+	color: #999;
+	text-decoration: none;
+}
+#langrid-imported-services-light-popup-add-language-button {
+	float: right;
+}
+#langrid-imported-services-light-popup-remove-language-button {
+	float: left;
+}
+#langrid-imported-services-light-popup-panel table td textarea {
+	width: 100%;
+	height: 80px;
+}
+.langrid-imported-services-popup-button-area {
+	padding: 10px;
+}
+.langrid-imported-services-popup-button-area div {
+	float: right;
+	max-width: 260px;
+}
+.langrid-imported-services-popup-button-area div button {
+	display: inline;
+	margin-left: 13px;
+}
+.langrid-message-area {
+	height: 20px;
+	margin: 10px;
+}
+#langrid-imported-services-light-error-message-area {
+	color: #f00;
+}
+#langrid-imported-services-light-popup-panel .langrid-path-select-area .langrid-path-select-area-link {
+	display: inline;
+}
+#langrid-imported-services-light-popup-panel .langrid-path-select-area .langrid-path-select-area-link select {
+	width: 50px;
+}
+#langrid-imported-services-light-popup-panel .langrid-path-select-area {
+	display: inline;
+}
+#langrid-imported-services-light-popup-panel .langrid-path-select-area select {
+	width: 90px;
+}
+.align-center {
+	text-align: center;
+}
+.float-left {
+	float: left;
+	display: block;
+}
+.float-right {
+	float: right;
+	display: block;
+}
+.langrid-popup-panel-attention {
+	text-align: left;
+	padding: 2px 0 0 4px;
+}
+
+
+.fileListTitles{
+	padding: 0 0 0 0;
+	/*border:1px solid #000000;*/
+	white-space: nowrap;
+}
+.fileListTitles h2{
+	margin-left: 0;
+	text-align: left;
+	/*border-bottom:2px solid #0667b4;*/
+	color : #003399;
+	font-size:100%;
+	padding: 0 0 0 8px;
+	font-weight:normal;
+}
+.fileListTableContainer table{
+	background: #fff;
+	padding: 0px;
+	border-collapse:collapse;
+	border-spacing:10px;
+	/*font-weight: bold;*/
+	width:400px;
+}
+
+.fileListTableContainer{
+	overflow:auto;
+	margin-left:10px;
+	/*margin-right:10px;*/
+	margin-top:20px;
+	margin-bottom:30px;
+
+}
+.fileListTableTitle{
+	background: #fff url(../images/imported_services/table_title_bg.jpg) repeat-x left bottom;
+	border:1px solid #3cc;
+	font-size:110%;
+	margin:0;
+	padding: 2px;
+	text-align:center;
+	font-weight: bold;
+}
+.fileListTableData{
+	margin-left: 0;
+	text-align: left;
+	padding: 0 0 0 8px;
+
+}
+.fileListTableTitleUnderLine{
+	border-bottom:2px solid #0667b4;
+	margin-bottom:5px;
+	margin-top:5px;
+}
+.fileListContainer{
+	background:#000000:
+	
+}
+.spaceButtom{
+	height:5px;
+}
+.file-list-size {
+	width: 100px;
+}
+.file-list-delete {
+	width: 60px;
+}

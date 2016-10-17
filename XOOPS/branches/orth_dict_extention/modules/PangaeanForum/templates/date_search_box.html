@@ -1,0 +1,46 @@
+<{* Please include css/protocatendar.css and js/lib/protocalendar.js *}>
+<div id="date_search_box">
+<form method="get" name="searchForm" action="" target="">
+<a id="date_search_submit"><{$smarty.const._MD_D3FORUM_RECENTLY_POST_SEARCH}></a>(<a id="date_search_option_toggle"><{$smarty.const._MD_D3FORUM_RECENTLY_POST_SEARCH_OPTION}></a>)
+<div id="date_search_option" style="display: none">
+<{if $topicId != null}>
+	<input type="hidden" name="topicId" value="<{$topicId|escape}>" />
+<{elseif $forumId != null}>
+	<input type="hidden" name="forumId" value="<{$forumId|escape}>" />
+<{elseif $categoryId != null}>
+	<input type="hidden" name="categoryId" value="<{$categoryId|escape}>" />
+<{/if}>
+<input type="text" name="start_date" id="start_date" value="<{$smarty.const._MD_D3FORUM_PHP_DATE_DEFAULT_FORMAT|date:$smarty.now-86400}>" />
+-
+<input type="text" name="end_date" id="end_date" value="<{$smarty.const._MD_D3FORUM_PHP_DATE_DEFAULT_FORMAT|date}>" />
+</div>
+</form>
+</div>
+<br style="clear: both" />
+
+<{include file="db:`$mydirname`_protocalendar_resource.html"}>
+<script type="text/javascript">
+  (function() {
+    var submit = function(event) {
+        var url = './?search_result';
+        for (var key in dateSearchParams) {
+          var e = $(dateSearchParams[key]);
+  	  if (e)
+  	    url += '&'+key+'='+e.value;
+        }
+        document.location.href = url;
+      };
+    var dateSearchParams = {
+        startDate: 'start_date',
+	endDate: 'end_date',
+	topicId: 'topicId',
+	forumId: 'forumId',
+        categoryId: 'categoryId',
+      };
+    $('date_search_submit').observe('click', submit);
+    $('date_search_option_toggle').observe('click',
+        function(event){$('date_search_option').toggle();});
+  })();
+  InputCalendar.createOnLoaded('start_date', {lang: 'toolbox'});
+  InputCalendar.createOnLoaded('end_date', {lang: 'toolbox'});
+</script>

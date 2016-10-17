@@ -1,0 +1,87 @@
+
+<link rel="stylesheet" type="text/css" media="all" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" media="all" href="../css/button.css" />
+<link rel="stylesheet" type="text/css" media="all" href="../css/communication.css" />
+
+<script type="text/javascript">
+<!--
+
+
+function changeMode(id) {
+
+	var tabs = new Array("upload_from_pc", "upload_url");
+	
+	for (i = 0; i < tabs.length; i++) {
+		if (id == tabs[i]) {
+			$(id).style.display = "block";
+			document.forms["content_upload_form"].action = "index.php?action=create_from_pc";
+		} else {
+			$(tabs[i]).style.display = "none";
+			document.forms["content_upload_form"].action = "index.php?action=create_from_url";
+		}
+	}
+
+	if (id == tabs[0]) {
+		document.forms["content_upload_form"].action = "index.php?action=create_from_pc";
+	} else if (id == tabls[1]) {
+		document.forms["content_upload_form"].action = "index.php?action=create_from_url";
+	}
+}
+
+function uploadAImage() {
+	alert(document.forms["content_upload_form"].action);
+	document.forms["content_upload_form"].submit();
+}
+
+//-->
+</script>
+
+<div style="background-color:#777;">
+<div class="area-popup" style="width:600px;">
+  <div class="area-fr"><a href="../index.php?action=list" class="btn-popup-close">x</a></div>
+  <br class="clear" />
+  <form name="content_upload_form" method="post" enctype="multipart/form-data" action="index.php?action=create_from_pc">
+    <p>Content Title
+      <input type-"text" name="content_title" value="" style="width:24em;" />
+    </p>
+    <!-- Tab area -->
+    <div class="tab-part-bg">
+      <ul class="tab-part">
+        <li><a href="javascript: changeMode('upload_from_pc');" title="upload file from local pc"><span>PC</span></a></li>
+        <li class="non-act"><a href="javascript: changeMode('upload_url');"><span>URL</span></a></li>
+        <li class="non-act"><a href="#test"><span>Server</span></a></li>
+      </ul>
+    
+      <br class="clear" />
+      <!-- Tab main content -->
+      <div id="upload_from_pc" class="tab-pain" style="display: block">
+        <div style="margin:24px;">
+        
+            select upload file:
+            <input type=file name="upfile">
+        
+        </div>
+      </div>
+      
+      
+      <!-- Tab main content -->
+      <div id="upload_url" class="tab-pain" style="display: none">
+        <div style="margin:24px;">
+        
+            <p>URL
+            <input type="text" name="image_url" value="" style="width:32em;" />
+            </p>
+        </div>
+      </div>
+    
+    </div>
+    <div class="area-fr" style="padding-top:8px;">
+
+    <a href="javascript:uploadAImage();" class="btn-s"><span class="btn-upload">upload</span></a>
+
+    <a href="../index.php?action=list" class="btn"><span class="btn-cancel">cancel</span></a> </div>
+
+  </form>
+  <br class="clear" />
+</div>
+</div>

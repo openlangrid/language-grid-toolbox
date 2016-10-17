@@ -1,0 +1,58 @@
+<div id="contents-part2" class="contents-part" style="position: relative;">
+
+	<{include file="db:%s_contents__header.html"|sprintf:$mod_name content_form=true}>
+	<!-- Contents image -->
+	<div class="contents-preview-area" id="markerContainer">
+		<img id="point_marker" style="display:none;" src="<{$mod_url}>/images/marker/marker_A.png" />
+	  	<div class="contentsShowContainer">
+	  	<{if $content}>
+	  		<{include file="db:%s_contents__show.html"|sprintf:$mod_name}>
+	  		<script type="text/javascript">
+	  		(function(){ 
+		  		$("unselect_link").show();
+				if($("contents-part2").down(".googlemap-area")) {
+		  			window.contentMap = new GoogleMapWrapper($("contents-part2"));
+				} 
+		  	}).defer();
+	  		</script>
+	  	<{/if}>
+	  	</div>
+  	</div>
+  	
+    <!-- Contents operation -->
+    <div class="area-fl-p8 contents-operation">
+		<a href="javascript: void(0);" onclick="showZoom(this)" class="btn-disable">
+			<span class="btn-zoom"><{$smarty.const.COM_BTN_ZOOM}></span>
+		</a>    
+				
+        <a href="javascript: void(0);" onclick="downloadContent(this)" class="btn-disable">
+        	<span class="btn-download"><{$smarty.const.COM_BTN_DOWNLOAD}></span>
+        </a>
+
+        
+		<{if $marker}>
+		<a href="javascript:void(0)" id="markerSet" class="btn" onclick="setMarker(this);" style="display: none;">
+			<span class="btn-marker"><{$smarty.const.COM_BTN_SET_MARKER}></span>
+		</a>
+		<a href="javascript:void(0)" id="markerDelete" class="btn" onclick="delMarker(this);">
+			<span class="btn-marker"><{$smarty.const.COM_BTN_DEL_MARKER}></span>
+		</a>
+		<{else}>
+		<a href="javascript:void(0)" id="markerSet" class="btn" onclick="setMarker(this);">
+			<span class="btn-marker"><{$smarty.const.COM_BTN_SET_MARKER}></span>
+		</a>
+		<a href="javascript:void(0)" id="markerDelete" class="btn" onclick="delMarker(this);" style="display: none;">
+			<span class="btn-marker"><{$smarty.const.COM_BTN_DEL_MARKER}></span>
+		</a>
+		<{/if}>
+		
+    </div>
+    
+    <br class="clear" />
+    
+	<input id="marker[x_coordinate]" type="hidden" name="marker[x_coordinate]" />
+	<input id="marker[y_coordinate]" type="hidden" name="marker[y_coordinate]" />
+	
+</div>
+
+

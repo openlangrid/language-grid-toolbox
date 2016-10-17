@@ -1,0 +1,86 @@
+/**
+ * Document
+ */
+#translate-button-area {
+	text-decoration: none;
+	width : 150px;
+	margin-right:auto;
+	margin-left:auto;
+}
+#back-translate-button-area {
+	text-decoration: none;
+	width : 150px;
+	margin-top: 10px;
+	margin-right:auto;
+	margin-left:auto;
+}
+
+#translation-workspace-table textarea {
+	height: 220px;
+}
+
+#original-textarea_toolbar{
+	display:none;
+}
+
+#translation-textarea_toolbar{
+	display:none;
+}
+
+#backtranslation-textarea_toolbar{
+	display:none;
+}
+
+.editor-head {
+	width : 99%;
+	font-size : 92%;
+}
+
+*:first-child+html .editor-head {
+	margin-left: 1px;
+}
+
+/* Place the border around the editor */
+.yui-skin-sam .yui-editor-container {
+	border: solid 1px #C1DAD7;
+}
+
+#clear-button-area {
+	text-decoration: none;
+	width : 150px;
+	margin-right:auto;
+	margin-left:auto;
+	margin-top:10px;
+}
+
+.btn_gray01{
+	cursor:default !important;
+}
+/*
+#clear-button span{
+	margin-top:5px;
+}
+*/
+.license-information-with-border {
+	border-top: 1px solid #C1DAD7;
+	margin: 15px 0 0 0;
+	padding: 15px 0 0 0;
+}
+#license-information-area {
+	padding: 10px;
+	max-height: 160px;
+	height: 160px;
+	overflow-y: auto;
+	border: 1px solid #C1DAD7;
+	background: #ffffe7;
+	text-align: left;
+	margin: 0 9px 0 0;
+}
+#license-information-area .license-title {
+	color: #005AAA;
+	border-left: 6px solid #005AAA;
+	padding: 1px 0 1px 7px;
+}
+#license-information-area .license-body {
+	margin: 5px 0 5px 25px; 
+}

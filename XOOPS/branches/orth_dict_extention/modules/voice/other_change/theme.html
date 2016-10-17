@@ -1,0 +1,272 @@
+<{php}>
+	$this->assign( 'xoops_user_groups' , is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array() ) ;
+<{/php}>
+<{include_php file="$xoops_rootpath/themes/$xoops_theme/hd_assign.php"}>
+<?xml version="1.0" encoding="<{$xoops_charset}>"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+	<meta http-equiv="Content-Type"			content="text/html; charset=<{$xoops_charset}>" />
+	<meta http-equiv="content-language"		content="<{$xoops_langcode}>" />
+	<meta http-equiv="content-script-type"	content="text/javascript" />
+	<meta http-equiv="content-style-type"	content="text/css" />
+	<meta name="robots"						content="<{$xoops_meta_robots|upper}>" />
+	<meta name="keywords"					content="<{$xoops_meta_keywords}>" />
+	<meta name="description"				content="<{$xoops_meta_description}>" />
+	<meta name="rating"						content="<{$xoops_meta_rating}>" />
+	<meta name="author"						content="<{$xoops_meta_author|replace:"@":"&#x40;"}>" />
+	<meta name="copyright"					content="<{$xoops_meta_copyright}>" />
+	<meta name="generator"					content="XOOPS Cube Legacy" />
+	<title><{$xoops_sitename}><{if $xoops_pagetitle}> - <{$xoops_pagetitle}><{elseif $xoops_slogan}> - <{$xoops_slogan}><{/if}></title>
+	<link href="<{$xoops_url}>/favicon.ico" rel="SHORTCUT ICON" />
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="<{$xoops_imageurl}>common/css/import.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_imageurl}>css/default.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_imageurl}>css/style.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_imageurl}>css/module.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_imageurl}>css/user_style.css" />
+	<!-- JS -->
+	<script language="JavaScript" type="text/javascript">/*@cc_on _d=document;eval('var document=_d')@*/</script>
+	<script language="JavaScript" type="text/javascript" src="<{$xoops_url}>/common/lib/prototype.js"></script>
+	<script language="JavaScript" type="text/javascript" src="<{$xoops_imageurl}>common/js/rollover.js"></script>
+	<script language="JavaScript" type="text/javascript"><{$xoops_js|regex_replace:"/(\/\/\-\->|<!\-\-)/":""}></script>
+	<{if $xoops_module_header}><{$xoops_module_header}><{/if}>
+	<{if $xoops_block_header}><{$xoops_block_header}><{/if}>
+	<{if $user_define_header}><{$user_define_header}><{/if}>
+</head>
+<{if substr_count($xoops_requesturi,"/user/search/") > 0}>
+<body id ="user_search">
+<{elseif $xoops_dirname}>
+	<{if $xoops_dirname == "langrid"}>
+<body id ="settings">
+	<{else}>
+<body id="<{$xoops_dirname}>">
+	<{/if}>
+<{else}>
+<body id="top">
+<{/if}>
+	<div id="body_bg">
+		<div id="wrap">
+			<div id="container">
+				<div id="head">
+					<h1 id="logo"><img src="<{$xoops_imageurl}>common/img/logo.gif" alt="tool box" width="206" height="103" /></h1>
+					<div id="font-box">
+						<dl style="display:none;">
+							<dt>font&nbsp;size</dt>
+							<dd>
+								<a href="<{$xoops_url}>/admin.php"><img src="<{$xoops_imageurl}>common/img/icon_font_s.jpg" width="18" height="24" class="imgover" /></a>
+							</dd>
+							<dd>
+								<a href="#"><img src="<{$xoops_imageurl}>common/img/icon_font_m.jpg" width="21" height="24" class="imgover" /></a>
+							</dd>
+							<dd>
+								<a href="#"><img src="<{$xoops_imageurl}>common/img/icon_font_l.jpg" width="24" height="24" class="imgover" /></a>
+							</dd>
+						</dl>
+						<span style="margin-right:10px;">
+							<{if in_array(XOOPS_GROUP_ADMIN,$xoops_user_groups) || in_array(XOOPS_GROUP_USERS,$xoops_user_groups) }>
+								<{if $uname != ''}><{$welcome}>&nbsp;|&nbsp;<a href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._THEME_TOP_LOGOUT_LB}></a><{/if}>
+							<{elseif in_array(XOOPS_GROUP_ANONYMOUS,$xoops_user_groups)}>
+								<a href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._THEME_TOP_LOGIN_LB}></a>
+							<{/if}>
+							&nbsp;<{if $xoops_crblocks}>
+							<!-- (UI Language Selection) -->
+								<{foreach item=block from=$xoops_crblocks name=lbloop}>
+										<{$block.content}>
+								<{/foreach}>
+							<{/if}>
+							</span>
+					</div>
+					<ul id="navi_set">
+					<{*<{if $xoops_isuser}>*}>
+					<{if in_array(XOOPS_GROUP_ADMIN,$xoops_user_groups) || in_array(XOOPS_GROUP_USERS,$xoops_user_groups) }>
+						<li class="navi_line">
+						</li>
+						<li id="navi_t">
+							<a href="<{$xoops_url}>/"><{$smarty.const._THEME_MENU_TEXT00_LB}></a>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_c01" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_COMMUNICATION}></a>
+							<ol>
+								<li><a href="<{$xoops_url}>/modules/forum/"><span><{$smarty.const._THEME_MENU_TEXT01_LB}></span></a></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_d01" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_TEXT02_LB}></a>
+							<ol>
+								<li><a href="<{$xoops_url}>/modules/document/"><span><{$smarty.const._THEME_MENU_TEXT_TRANSLATION}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/voice/"><span><{$smarty.const._THEME_MENU_VOICE}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/web_translation/"><span><{$smarty.const._THEME_MENU_TRANSLATION_WEB}></span></a></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_d02" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_TEXT03_LB}></a>
+							<ol>
+								<li><a href="<{$xoops_url}>/modules/dictionary/"><span><{$smarty.const._THEME_MENU_TEXT_DICTIONARY}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/dictionary/?mode=parallel_text"><span><{$smarty.const._THEME_MENU_TEXT_PARALLEL_TEXT}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/webtrans/"><span><{$smarty.const._THEME_MENU_WEB_TRANSLATION}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/qa/"><span><{$smarty.const._THEME_MENU_QA}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/glossary/"><span><{$smarty.const._THEME_MENU_GLOSSARY}></span></a></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_community" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_COMMUNITY}></a>
+							<ol>
+								<li><a href="<{$xoops_url}>/modules/user/search/index.php"><span><{$smarty.const._THEME_MENU_USER_SEARCH}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/filesharing/"><span><{$smarty.const._THEME_MENU_TEXT_FILE_MANAGEMENT}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/task/"><span><{$smarty.const._THEME_MENU_TASK_MANAGEMENT}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/collabtrans/"><span><{$smarty.const._THEME_MENU_COLLABORATION_TRANSLATION}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/communication/"><span><{$smarty.const._THEME_MENU_DISUCSSION}></span></a></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_special" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_SPECIAL}></a>
+							<ol>
+								<li><a href="<{$xoops_url}>/modules/storefront/"><span><{$smarty.const._THEME_MENU_RECEPTION}></span></a></li>
+								<li><a href="<{$xoops_url}>/webqa/"><span><{$smarty.const._THEME_MENU_WEB_QA}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/showroombbs/"><span><{$smarty.const._THEME_MENU_SHOWROOM_BBS}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/showroomcom/"><span><{$smarty.const._THEME_MENU_SHOWROOM_DISUCSSION}></span></a></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_p" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_SETTING}></a>
+							<ol>
+								<li><a href="<{$xoops_url}>/user.php"><span><{$smarty.const._THEME_MENU_TEXT04_LB}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/langrid/?mode=bbs"><span><{$smarty.const._THEME_MENU_SETTING_BBS}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/langrid/?mode=text"><span><{$smarty.const._THEME_MENU_SETTING_TEXT_TRANSLATION}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/langrid/?mode=web"><span><{$smarty.const._THEME_MENU_SETTING_WEB_TRANSLATION}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/langrid/?mode=collabtrans"><span><{$smarty.const._THEME_MENU_COLLABORATION_TRANSLATION}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/langrid/?mode=communication"><span><{$smarty.const._THEME_MENU_DISUCSSION}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/langrid/imported_services.php"><span><{$smarty.const._THEME_MENU_IMPORTED_SERVICES}></span></a></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+					<{else}>
+						<li class="navi_line">
+						</li>
+						<li id="navi_t">
+							<{if in_array(XOOPS_GROUP_ANONYMOUS,$xoops_user_groups) }>
+								<a href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._THEME_MENU_TEXT00_LB}></a>
+							<{else}>
+								<a href="<{$xoops_url}>/"><{$smarty.const._THEME_MENU_TEXT00_LB}></a>
+							<{/if}>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_c01" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_COMMUNICATION}></a>
+							<ol>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_TEXT01_LB}></span></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_d01" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_TEXT02_LB}></a>
+							<ol>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_TEXT_TRANSLATION}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_TRANSLATION_WEB}></span></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_d02" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_TEXT03_LB}></a>
+							<ol>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_TEXT_DICTIONARY}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_TEXT_PARALLEL_TEXT}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_WEB_TRANSLATION}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_QA}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_GLOSSARY}></span></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_community" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_COMMUNITY}></a>
+							<ol>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_USER_SEARCH}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_TEXT_FILE_MANAGEMENT}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_TASK_MANAGEMENT}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_COLLABORATION_TRANSLATION}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_DISUCSSION}></span></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_special" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_SPECIAL}></a>
+							<ol>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_RECEPTION}></span></li>
+								<li><a href="<{$xoops_url}>/webqa/"><span><{$smarty.const._THEME_MENU_WEB_QA}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/showroombbs/"><span><{$smarty.const._THEME_MENU_SHOWROOM_BBS}></span></a></li>
+								<li><a href="<{$xoops_url}>/modules/showroomcom/"><span><{$smarty.const._THEME_MENU_SHOWROOM_DISUCSSION}></span></a></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+						<li id="navi_p" class="menu_off" onmouseover="this.className='menu_on'" onmouseout="this.className='menu_off'">
+							<a href="javascript:void(0);" onclick="return false;"><{$smarty.const._THEME_MENU_SETTING}></a>
+							<ol>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_TEXT04_LB}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_SETTING_BBS}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_SETTING_TEXT_TRANSLATION}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_SETTING_WEB_TRANSLATION}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_COLLABORATION_TRANSLATION}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_DISUCSSION}></span></li>
+								<li class="disable"><span><{$smarty.const._THEME_MENU_IMPORTED_SERVICES}></span></li>
+							</ol>
+						</li>
+						<li class="navi_line">
+						</li>
+					<{/if}>
+					</ul>
+				</div>
+				<div style="clear: both; height: 1px;"></div>
+				<{if $howToUse }>
+				<button id="how-to-use-button" onclick="window.open('<{$howToUse|escape}>', '_blank'); return false; location.href='<{$howToUse|escape}>'; return false;"><{$smarty.const._THEME_HOW_TO_USE}></button>
+				<{/if}>
+				<{if $xoops_contents}>
+					<{$xoops_contents}>
+				<{else}>
+					<{include file="$xoops_rootpath/themes/$xoops_theme/top.html"}>
+				<{/if}>
+				<div id="footer_inner">
+					<address>
+						<{php}>
+							if(defined('_MD_COPYRIGHT_LB')){
+								echo _MD_COPYRIGHT_LB;
+							}else{
+								echo _THEME_COPYRIGHT_LB;
+							}
+						<{/php}>
+					</address>
+					<div class="poweredby">
+					<a href="<{$smarty.const._THEME_POWERED_BY_URL}>">
+						<img src="<{$xoops_imageurl}>common/img/pb_icon_Langrid02.gif" alt="Powered by Language Grid" width="80" height="30" />
+					</a>
+					</div>
+					<div class="poweredby">
+					<a href="<{$smarty.const._THEME_POWERED_BY_TOOLBOX_URL}>">
+						<img src="<{$xoops_imageurl}>common/img/pb_icon_toolbox.gif" alt="Powered by Language Grid Toolbox" width="80" height="30" />
+					</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

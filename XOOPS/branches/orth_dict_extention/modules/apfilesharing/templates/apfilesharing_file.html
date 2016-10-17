@@ -1,0 +1,173 @@
+<table width="100%" cellspacing="0" class="outer">
+function getCheck(obj){
+	    var count;
+    var all_cid = document.getElementsByName("cid[]");
+        
+    for(count = 0; count < all_cid.length; count++){
+        all_cid[count].checked = obj.checked;
+    }
+    var all_lid = document.getElementsByName("lid[]");
+    for(count = 0 ; count < all_lid.length; count++){
+        all_lid[count].checked = obj.checked;
+    }
+}
+
+	<tr>
+		<td alien="left">
+			<input type="checkbox" onclick="getCheck(this)">
+		</td>
+		<td class="even">
+			<br />
+			<{include file="db:filesharing_header.html"}>
+			<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+				<tr>
+					<td align='left'>
+						<span style="font-weight:bold;"><a href='index.php'><{$lang_album_main}></a>&nbsp;:&nbsp;<{$album_sub_title}>&nbsp;<{$file.title}></span>
+					</td>
+					<td align='right'>
+						<{if $lang_add_file}><a href="?page=submit"><{$lang_add_file}><img src="<{$mod_url}>/images/pictadd.gif" border="0" alt="<{$lang_add_file}>" title="<{$lang_add_file}>" /></a><{/if}>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+<p align='center'>
+		<{$file_nav}>
+</p>
+<table width="100%" cellspacing="0" cellpadding="10" border="0">
+	<tr>
+		<td align="center">
+
+			<{*<a href="<{$file.ahref_file}>" target="_blank" onClick="window.open('<{$file.ahref_file}>','','width=<{$file.window_x}>,height=<{$file.window_y}>');return(false);"><img src="<{$file.imgsrc_file}>" border="0" align="center" vspace="3" hspace="7" alt="<{$file.title}>" title="<{$file.title}>" <{$file.width_height}> /></a>*}>
+			<a href="?page=file_dl&amp;lid=<{$file.lid}>&amp;cid=<{$file.cid}>" target="_blank">
+				<img src="<{$file.imgsrc_file}>" border="0" align="center" vspace="3" hspace="7" alt="<{$file.title}>" title="<{$file.title}>"/>
+			</a>
+			<br />
+			<table width="100%" cellspacing="0" cellpadding="10" border="0">
+				<tr>
+					<td align="left">
+
+
+	 <{* 1ST LINE OF INFORMATION *}>
+
+		<{* EDIT ICON *}>
+		<{if $file.can_edit}>
+			<a href='<{$mod_url}>/?page=editfile&lid=<{$file.lid}>'><img src='<{$mod_url}>/images/editicon2.gif' border='0' alt='<{$lang_editthisfile}>' title='<{$lang_editthisfile}>' /></a>
+		<{/if}>
+
+		<{* FILE'S SUBJECT *}>
+		<a name='<{$file.lid}>'></a><a href='<{$mod_url}>/?page=file&amp;lid=<{$file.lid}>&amp;cid=<{$file.cid}>'><b><{$file.title}></b></a>
+
+		<{* POPULAR ICON *}>
+		<{if $file.is_popularfile}>
+			<img src='<{$mod_url}>/images/pop.gif' border='0' alt='<{$lang_popular}>' title='<{$lang_popular}>' />
+		<{/if}>
+		<br />
+
+
+	 <{* 2ND LINE OF INFORMATION *}>
+
+		<{* SUBMITTER *}>
+		<{if $file.submitter > 0}>
+			<a href='<{$xoops_url}>/userinfo.php?uid=<{$file.submitter}>'>
+				<{$file.submitter_name}>
+			</a>
+			<a href='<{$mod_url}>/?page=viewcat&uid=<{$file.submitter}>'><img src='<{$mod_url}>/images/myfiles.gif' width='16' height='16' alt='<{$file.info_morefiles}>' title='<{$file.info_morefiles}>' border='0' /></a>
+		<{else}>
+			<{$file.submitter_name}>
+		<{/if}>
+		&nbsp; &nbsp; 
+
+		<{* CATEGORY *}>
+		<{if $file.cat_title}>
+			<a href='<{$mod_url}>/?page=viewcat&cid=<{$file.cid}>'><img src='<{$mod_url}>/images/folder16.gif' width='16' height='16' alt='<{$lang_category}>' title='<{$lang_category}>' border='0' /><{$file.cat_title}></a> &nbsp; &nbsp;
+		<{/if}>
+
+		<{* LAST UPDATED *}>
+		<{$file.datetime}> &nbsp; &nbsp;
+
+		<{* TELL A FRIEND *}>
+		<{if $cantellafriend}>
+			<a href='<{$xoops_url}>/modules/tellafriend/index.php?target_uri=<{$mod_url|escape:"url"}>/?page=file&amp;lid%3D<{$file.lid}>&amp;subject=<{$lang_subject4taf|escape:"url"}>'><img src='<{$mod_url}>/images/tellafriend.gif' width='24' height='16' alt='<{$lang_tellafriend}>' title='<{$lang_tellafriend}>' /><{$lang_tellafriend}></a>
+		<{/if}>
+
+		<br />
+
+
+	 <{* 3RD LINE OF INFORMATION *}>
+
+		<{* HIT COUNTS *}>
+		<img src='<{$mod_url}>/images/hits.gif' width='16' height='16' alt='<{$lang_hitsc}>' title='<{$lang_hitsc}>' /><{$file.hits}> &nbsp; 
+
+		<{* COMMENT COUNTS *}>
+		<img src='<{$mod_url}>/images/comments.gif' width='16' height='16' alt='<{$lang_commentsc}>' title='<{$lang_commentsc}>' /><{$file.comments}> &nbsp; &nbsp;
+
+		<{* RANK & RATING *}>
+		<{if $canrateview}>
+			<{if $file.rating > 0}>
+				<img src='<{$mod_url}>/images/rank<{$file.rank}>.gif' alt='<{$file.rating}>' title='<{$file.rating}>' border='0' /><{$file.info_votes}>
+			<{else}>
+				<img src='<{$mod_url}>/images/rank_none.gif' alt='<{$file.info_votes}>' title='<{$file.info_votes}>' border='0' /><{$file.info_votes}>
+			<{/if}>
+		<{/if}>
+
+		<{* VOTE BUTTON *}>
+		<{if $canratevote}>
+			<a href='<{$mod_url}>/ratefile.php?lid=<{$file.lid}>'><img src='<{$mod_url}>/images/vote.gif' alt='<{$lang_ratethisfile}>' title='<{$lang_ratethisfile}>' border='0' /><{$lang_ratethisfile}></a>
+		<{/if}>
+
+		<br />
+
+
+	 <{* DESCRIPTION *}>
+
+		<{if $file.description}>
+			<table border='0' cellpadding='0' cellspacing='0' width='100%' class='outer'>
+				<tr>
+					<td class='odd'>
+						<{$file.description}>
+					</td>
+				</tr>
+			</table>
+		<{/if}>
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+</table>
+
+<p align='center'>
+		<{$file_nav}>
+</p>
+
+<div style="text-align: center; padding: 3px; margin: 3px;">
+	<{$commentsnav}>
+	<{$lang_notice}>
+</div>
+
+<div style="margin: 3px; padding: 3px;">
+<!-- start comments loop -->
+<{if $comment_mode == "flat"}>
+	<{include file="db:system_comments_flat.html"}>
+<{elseif $comment_mode == "thread"}>
+	<{include file="db:system_comments_thread.html"}>
+<{elseif $comment_mode == "nest"}>
+	<{include file="db:system_comments_nest.html"}>
+<{/if}>
+<!-- end comments loop -->
+</div>
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		<td align="center">
+			<br />
+			<{include file='db:system_notification_select.html'}>
+			<br />
+			<{include file="db:filesharing_footer.html"}>
+		</td>
+	</tr>
+</table>

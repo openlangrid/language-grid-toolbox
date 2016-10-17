@@ -1,0 +1,93 @@
+<tr>
+	<td  class="col-checkbox">
+		<{if $file_for_tpl.ftype == 1}>
+			<input type="checkbox" name="cid[]" value='<{$file_for_tpl.id}>'>
+			</td>
+			<td class="col-title">
+			<img src='<{$mod_url}>/img/icon_dir.png' border='0' />
+			<{if $file_for_tpl.can_read }>
+				<a href='<{$mod_url}>/?page=viewcat&cid=<{$file_for_tpl.id}>'>
+				<b><{$file_for_tpl.title|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'}></b>
+				</a>
+			<{else}>
+				<b><{$file_for_tpl.title|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'}></b>
+			<{/if}>
+			&nbsp;&nbsp;
+			<{if $file_for_tpl.can_edit}>
+				<a href='<{$mod_url}>/?page=createfolder&cid=<{$file_for_tpl.id}>'><img src='<{$mod_url}>/images/editicon2.gif' border='0' alt='<{$lang_editthisfile}>' title='<{$lang_editthisfile}>' /></a>
+			<{/if}>
+			<{if $file_for_tpl.can_delete}>
+				<a href='<{$mod_url}>/?page=createfolder&conf_delete=1&cid=<{$file_for_tpl.id}>'><img src='<{$mod_url}>/img/icon_delete.png' border='0' alt='<{$lang_delthisfile}>' title='<{$lang_delthisfile}>' /></a>
+			<{/if}>
+		<{else}>
+			<input type="checkbox" name="lid[]" value='<{$file_for_tpl.id}>'>
+			</td>
+			<td class="col-title">
+			<img src='<{$mod_url}>/img/icon_file.png' border='0' />
+			<{if $file_for_tpl.can_read }>
+				<a href='<{$mod_url}>/?page=file_dl&lid=<{$file_for_tpl.id}>' target="_blank">
+				<b><{$file_for_tpl.title|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'}></b>
+				</a>
+			<{else}>
+				<b><{$file_for_tpl.title|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'}></b>
+			<{/if}>
+			&nbsp;&nbsp;
+			<{if $file_for_tpl.can_edit}>
+				<a href='<{$mod_url}>/?page=editfile&lid=<{$file_for_tpl.id}>'><img src='<{$mod_url}>/images/editicon2.gif' border='0' alt='<{$lang_editthisfile}>' title='<{$lang_editthisfile}>' /></a>
+			<{/if}>
+			<{if $file_for_tpl.can_delete}>
+				<a href='<{$mod_url}>/?page=editfile&conf_delete=1&lid=<{$file_for_tpl.id}>'><img src='<{$mod_url}>/img/icon_delete.png' border='0' alt='<{$lang_delthisfile}>' title='<{$lang_delthisfile}>' /></a>
+			<{/if}>
+			
+			<{if $file_for_tpl.can_read }>
+				<{if stripos($file_for_tpl.title|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2',".pdf")+4 == 
+					strlen($file_for_tpl.title|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2')}>
+						<a href='<{$mod_url}>/?page=autogenerate&lid=<{$file_for_tpl.id}>'>
+						<img src='<{$mod_url}>/img/pdf_small.gif' title='convert to jpg' alt='convert to jpg' border='0'/>
+						</a>
+				<{/if}>
+			<{/if}>
+		<{/if}>
+	</td>
+	<td class="col-desc">
+		<{if $file_for_tpl.description}>
+			<{$file_for_tpl.description|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'}>
+		<{/if}>
+		&nbsp;
+	</td>
+	<td class="col-perm">
+		<{if $file_for_tpl.can_read}>
+			<img src='<{$mod_url}>/img/icon_check.png' border='0' />
+		<{else}>
+			-
+		<{/if}>
+		&nbsp;
+	</td>
+	<td class="col-perm">
+		<{if $file_for_tpl.can_edit}>
+			<img src='<{$mod_url}>/img/icon_check.png' border='0' />
+		<{else}>
+			-
+		<{/if}>
+		&nbsp;
+	</td>
+	
+	<td class="col-date">
+		<{*
+		<{if $file_for_tpl.submitter > 0}>
+			<a href='<{$xoops_url}>/userinfo.php?uid=<{$file_for_tpl.submitter}>'>
+				<{$file_for_tpl.submitter_name}>
+			</a>
+			<a href='<{$mod_url}>/?page=viewcat&uid=<{$file_for_tpl.submitter}>'>
+			<img src='<{$mod_url}>/images/myfiles.gif' width='16' height='16' alt='<{$file_for_tpl.info_morefiles}>' title='<{$file_for_tpl.info_morefiles}>' border='0' />
+			</a>
+		<{else}>
+			<{$file_for_tpl.submitter_name}>
+		<{/if}>
+		*}>
+		<a href="<{$file_for_tpl.submitter_info}>">
+		<{$file_for_tpl.submitter_name|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'}>
+		</a>
+		<br><{$file_for_tpl.datetime}>
+	</td>
+</tr>

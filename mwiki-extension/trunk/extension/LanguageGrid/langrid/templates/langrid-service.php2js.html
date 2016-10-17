@@ -1,0 +1,67 @@
+<!-- langrid-service.php2js.html start -->
+<script language="javascript" type="text/javascript">
+<!--
+var LanguageGridServices = {
+	SupportedLanguage : {
+		sourceLanguages : ({<{foreach from=$supportLangs.sourceLanguages key=code item=name name=p}>'<{$code|escape:javascript}>':"<{$name|escape:javascript}>"
+			<{if $smarty.foreach.p.last == false}>, <{/if}><{/foreach}>}),
+		targetLanguages : ({<{foreach from=$supportLangs.targetLanguages key=code item=name name=p}>'<{$code|escape:javascript}>':"<{$name|escape:javascript}>"
+			<{if $smarty.foreach.p.last == false}>, <{/if}><{/foreach}>})
+	},
+	TranslatorServices : [
+		<{foreach from=$translationServices key=key item=item name=name}>
+		{
+			'service_id': "<{$item.service_id}>",
+			'service_type': "<{$item.service_type}>",
+			'service_name': "<{$item.service_name}>",
+			'endpont_url': "<{$item.endpoint_url}>",
+			'supported_languages_paths': "<{$item.supported_languages_paths|strip:""}>",
+			'organization': "<{$item.organization}>",
+			'copyright': "<{$item.copyright|escape:javascript}>",
+			'license': "<{$item.license|escape:javascript}>",
+			'description': "<{$item.description|escape:javascript}>",
+			'registered_date': "<{$item.registered_date}>",
+			'langPare': "<{$item.langPare|escape:javascript}>"
+		}
+		<{if $smarty.foreach.name.last == false}>, <{/if}>
+		<{/foreach}>
+	],
+	AnalyzerServices : [
+		<{foreach from=$analyzerServices key=key item=item name=name}>
+		{
+			'service_id': "<{$item.service_id}>",
+			'service_type': "<{$item.service_type}>",
+			'service_name': "<{$item.service_name}>",
+			'endpont_url': "<{$item.endpoint_url}>",
+			'supported_languages_paths': "<{$item.supported_languages_paths|strip:"str"}>",
+			'organization': "<{$item.organization}>",
+			'copyright': "<{$item.copyright|escape:javascript}>",
+			'license': "<{$item.license|escape:javascript}>",
+			'description': "<{$item.description|escape:javascript}>",
+			'registered_date': "<{$item.registered_date}>"
+		}
+		<{if $smarty.foreach.name.last == false}>, <{/if}>
+		<{/foreach}>
+	],
+	DictionaryServices : [
+		<{foreach from=$dictionaryServices key=key item=item name=name}>
+		{
+			'service_id': "<{$item.service_id}>",
+			'service_type': "<{$item.service_type}>",
+			'service_name': "<{$item.service_name}>",
+            'resource_url': "<{$item.resource_url}>",
+			'endpont_url': "<{$item.endpoint_url}>",
+			'supported_languages_paths': "<{$item.supported_languages_paths}>",
+			'organization': "<{$item.organization}>",
+			'copyright': "<{$item.copyright|escape:javascript}>",
+			'license': "<{$item.license|escape:javascript}>",
+			'description': "<{$item.description|escape:javascript}>",
+			'registered_date': "<{$item.registered_date}>"
+		}
+		<{if $smarty.foreach.name.last == false}>, <{/if}>
+		<{/foreach}>
+	]
+};
+-->
+</script>
+<!-- langrid-service.php2js.html _end_ -->

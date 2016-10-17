@@ -1,0 +1,176 @@
+#contents_body {
+	display:block;
+	clear:both;
+	width:94%;
+	height:auto;
+	min-height:400px;
+	margin:20px auto;
+	padding:0;
+	text-align:left;
+}
+
+#contents_body input.btn_blue01 {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../img/btn_blue01.jpg) repeat-x scroll 0 0;
+	border:1px solid #025DAD;
+	color:#FFFFFF;
+	cursor:pointer;
+	padding:4px 2px;
+	text-align:center;
+	/*margin-bottom:3px;*/
+}
+
+#contents_body input.btn_blue01:hover {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../img/btn_blue01_o.jpg) repeat-x scroll 0 0;
+}
+
+#contents_body table.list-table {
+	border:0 none;
+	border-collapse:collapse;
+	border-spacing:0;
+	width:100%;
+}
+
+#contents_body table.list-table tr.table_title_bg td {
+	vertical-align:middle !important;
+	text-align:center;
+	white-space:nowrap;
+}
+
+#contents_body table.list-table td {
+	padding:2px 4px;
+	vertical-align:top;
+}
+#contents_body table.body_title td {
+	border:1px solid #C2D1DC;
+	padding:4px 6px 2px 12px;
+	text-align:left;
+}
+
+#contents_body table.list-table img{
+	vertical-align:top;
+}
+
+#contents_body table.list-table .col-checkbox{
+	width:50px !important;
+	text-align:center;
+	word-break:break-all;
+}
+
+#contents_body table.list-table .col-title{
+	width:250px !important;
+	word-break:break-all;
+}
+#contents_body table.list-table .col-desc{
+	/*width:350px !important;*/
+	word-break:break-all;
+}
+#contents_body table.list-table .col-perm{
+	width:30px !important;
+	text-align:center;
+	vertical-align:middle;
+	word-break:break-all;
+}
+#contents_body table.list-table .col-date{
+	width:150px !important;
+	text-align:center;
+	word-break:break-all;
+}
+
+
+
+a.btn:hover {
+	background-image:url(../img/btn_bg_rev.png);
+	text-decoration:none;
+}
+
+a.btn-file {
+	width:180px;
+	margin-left:5px;
+}
+a.btn {
+	background-color:#DEE2E5;
+	background-image:url(../img/btn_bg.png);
+	background-repeat:repeat-x;
+	border:1px solid #BBBBBB;
+	color:#000099;
+	cursor:pointer;
+	display:inline-block;
+	padding:2px;
+	text-align:center;
+}
+
+a.btn img {
+	border:0 none;
+	float:left;
+	padding-left:2px;
+	padding-top:2px;
+}
+
+a.btn-tgr {
+	vertical-align:top;
+	width:16px;
+	height:16px;
+	margin-right:3px;
+	margin-bottom:3px;
+}
+a.btn-tgr img{
+	padding:0px;
+}
+
+a.btn-disable {
+	background-color:#DEE2E5;
+	background-repeat:repeat-x;
+	border:1px solid #BBBBBB;
+	cursor:default;
+	display:inline-block;
+	padding:2px;
+	text-align:center;
+}
+a.btn-disable img {
+	border:0 none;
+}
+
+div.folder_sel{
+	display:inline;
+	width:auto;;
+}
+
+
+.title_m {
+	font-size:110%;
+	font-weight:bold;
+}
+
+
+#contents_body #file-pager {
+	text-align:center;
+	margin-top:10px;
+	margin-left : auto ;
+	margin-right : auto ;
+}
+
+#contents_body #file-pager ul {
+	margin:0 auto;
+	text-align:center;
+	white-space:nowrap;
+	display:block;
+}
+
+#contents_body #file-pager ul li {
+	float:left;
+	margin:0 3px;
+}
+
+
+#contents_body #file-pager ul li a, #file-pager ul li span {
+	border:1px solid #CCCCCC;
+	display:block;
+	font-size:110%;
+	padding:3px 8px;
+}

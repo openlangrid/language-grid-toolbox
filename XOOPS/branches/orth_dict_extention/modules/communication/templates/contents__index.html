@@ -1,0 +1,39 @@
+<div id="contents-part" class="contents-part" style="position: relative;">
+
+	<{include file="db:%s_contents__header.html"|sprintf:$mod_name content_form=false}>
+	
+	<!-- Contents image -->
+	<div class="contents-preview-area">
+	  	<div id="contentShowContainer" class="contentsShowContainer">
+	  	<{if $content}>
+	  		<{include file="db:%s_contents__show.html"|sprintf:$mod_name}>
+	  		<script type="text/javascript">
+	  		(function(){ 
+				if($("contents-part").down(".googlemap-area")) {
+		  			new GoogleMapWrapper($("contents-part"));
+				} 
+		  	}).defer();
+	  		</script>
+	  	<{/if}>
+	  	</div>
+  	</div>
+  	
+    <!-- Contents operation -->
+    <div class="area-fl-p8 contents-operation">
+		<a href="javascript: void(0);" onclick="showZoom(this)" class="btn-disable">
+			<span class="btn-zoom"><{$smarty.const.COM_BTN_ZOOM}></span>
+		</a>
+				
+        <a href="javascript: void(0);" onclick="downloadContent(this)" class="btn-disable">
+        	<span class="btn-download"><{$smarty.const.COM_BTN_DOWNLOAD}></span>
+        </a>
+
+		<a href="javascript: void(0);" onclick="deleteContent(this)" class="btn-disable">
+			<span class="btn-delete"><{$smarty.const.COM_BTN_CONTENT_DELETE}></span>
+		</a>
+
+    </div>
+    
+    <br class="clear" />
+	
+</div>

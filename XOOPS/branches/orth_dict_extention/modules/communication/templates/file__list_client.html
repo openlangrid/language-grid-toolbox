@@ -1,0 +1,88 @@
+<style type="text/css">
+.fileListContainer {
+	height: 200px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+#dialog_loading_icon {
+	left:460px;
+	position:absolute;
+	top:180px;
+}
+</style>
+
+
+<div id="glayer" class="glayer" style="display: none;">
+	<img id="dialog_loading_icon" src="<{$xoops_imageurl}>common/img/loading.gif" style="display: none;" />	
+</div>
+	
+<div id="fileDialog" style="position:absolute; display: none; z-index: 1000; text-align: left;">
+</div>
+
+
+<script type="text/javascript">
+function getScrollPosition() {
+	var x = document.documentElement.scrollLeft || document.body.scrollLeft;
+	var y = document.documentElement.scrollTop || document.body.scrollTop;
+	return {"x": x, "y": y};
+}
+
+function getScreenSize() {
+	var w = document.documentElement.clientWidth || document.body.clientWidth || document.body.scrollWidth;
+	var h = document.documentElement.clientHeight || document.body.clientHeight || document.body.scrollHeight;
+	return {"h": h, "w": w, "mh": parseInt(h/2), "mw": parseInt(w/2)};
+}
+
+function getDocumentSize() {
+	var w = document.documentElement.scrollWidth || document.body.scrollWidth;
+	var h = document.documentElement.scrollHeight || document.body.scrollHeight;
+	return {"h": h, "w": w};
+}
+
+function glayerShow() {
+	
+	Glayer.show("glayer");
+	var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+	var windowHeight = document.documentElement.clientHeight || document.body.clientHeight || document.body.scrollHeight;
+	$("dialog_loading_icon").show();
+}
+
+function clearLoading() {
+	$("dialog_loading_icon").hide();
+}
+
+function hideFileDialog() {
+	$("fileDialog").hide();
+	Glayer.hide("glayer");
+}
+
+/*
+ * options
+ *	fileDialogURL
+ *	parameters
+ */
+function openFileDialog(options) {
+	options = options || {};
+	
+	$("dialog_loading_icon").show();
+	
+	new Ajax.Updater(
+		"fileDialog", 
+		options["fileDialogURL"] || "<{$mod_url}>/files/", {
+			method : "get",
+			onSuccess: clearLoading, 
+			evalScripts: true,
+			parameters: options["parameters"],
+			onComplete: function() {
+				$("fileDialog").show();
+			}
+		}
+	);
+	
+	var containerWidth = $("tbx-body").getDimensions().width / 2;
+	$("fileDialog").setStyle({
+		top: getScrollPosition().y+'px',
+		left: (containerWidth - 450) + 'px'
+	});
+}
+</script>

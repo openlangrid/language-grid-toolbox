@@ -1,0 +1,29 @@
+書式サンプル
+{
+"path":[
+	{"source_lang":"ja","target_lang":"en",
+		"exec":[
+			{"source_lang":"ja","target_lang":"en","service_type":"0","service_id":"NICTJServer","dictionary_flag":1,
+				"bind":[
+					{"bind_type":9,"bind_value":"Mecab"}
+				]
+			}
+			]
+	},
+	{"source_lang":"en","target_lang":"ja",
+		"exec":[
+			{"source_lang":"en","target_lang":"ja","service_type":"0","service_id":"NICTJServer","dictionary_flag":1,
+				"bind":[
+					{"bind_type":9,"bind_value":"TreeTagger"}
+				]
+			}
+			]
+	}
+]
+}
+
+読み込み時は、ページ表示の際に
+タイトル.jsonが存在すれば
+データベースの一旦削除を行い、登録を行う。
+その後ファイルを日時でリネームをする。
+全てこのディレクトリ直下に置くこととする。

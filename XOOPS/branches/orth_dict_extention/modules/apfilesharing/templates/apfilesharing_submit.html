@@ -1,0 +1,170 @@
+<{include file="db:filesharing_base_top.html"}>
+	<{*include file="db:filesharing_header.html"*}>
+	<div class="list_table02" style="width:600px;">
+		<{if $error_msg != ""}>
+			<ul class="errorMsg" style="color:red;">
+				<li><{$error_msg}></li>
+			</ul>
+		<{/if}>
+		<FORM id="uploadfile" encType="multipart/form-data" onsubmit="return xoopsFormValidate_uploadfile();" method="post" name="uploadfile" action="?page=submit"  >
+			<TABLE style="text-align:left;" class="outer" cellSpacing="1">
+				<tr>
+					<th colSpan=2><{$smarty.const._MD_ALBM_FILEUPLOAD}></th>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_SELECTFILE}></td>
+					<td>
+						<INPUT value="<{$filesharing_fsize_byte|string_format:"%.0f"}>" type="hidden" name="MAX_FILE_SIZE[]"class="multi" >
+						<INPUT id="upload_file" size="70" type="file" name="upload_file[]"class="multi" >
+						<INPUT id="xoops_upload_file[]" value="upload_file" type="hidden" name="xoops_upload_file[]"class="multi" >
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FILEDESC}></td>
+					<td>
+						<INPUT id="desc_text" maxLength="255" size="50" type="text" name="desc_text" value="<{$file.description|escape}>">
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_FOLDER}></td>
+					<td>
+						<{$folder_select}>
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_READ_PERMISSION}></td>
+					<td class="check_list">
+						<label><input type="checkbox" name="read_permission[]" value="public"  <{if $parent_folder.read_type == "public"}> checked <{/if}> onClick="check_control(this),disabled_control()" /><{$smarty.const.MD_apfilesharing_ALL_USER}></label>
+						<{foreach key=group_id item=group_name from=$groups}>
+							<label><input type="checkbox"  name="read_permission[]" value="<{$group_id}>" <{if $parent_folder.read_type == "public"||in_array($group_id, $parent_read_permission)}> checked <{/if}> onClick="check_control(this),disabled_control()" /><{$group_name}></label>
+						<{/foreach}>
+					</td>
+				</tr>
+				<tr>
+					<td class="list_line03"><{$smarty.const._MD_ALBM_EDIT_PERMISSION}></td>
+					<td class="check_list">
+						<label><input type="checkbox"  name="edit_permission[]" value="public" <{if $parent_folder.read_type == "public"}> checked <{/if}> disabled onClick="check_control(this)"/><{$smarty.const.MD_apfilesharing_ALL_USER}></label>
+						<{foreach key=group_id item=group_name from=$groups}>
+							<label><input type="checkbox"  name="edit_permission[]" value="<{$group_id}>" <{if $parent_folder.read_type == "public"||in_array($group_id, $parent_read_permission)}> checked <{/if}> disabled onClick="check_control(this)" /><{$group_name}></label>
+						<{/foreach}>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:left;border-left:none;border-right:none;border-bottom:none;">
+					<{$smarty.const._MD_ALBM_MAXSIZE}>:&nbsp;<{$maxfilesize}> <{$smarty.const._MD_ALBM_FILESIZE_UNIT}>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:center;border:none;">
+						<INPUT id="back"   class="btn_blue01" value="<{$smarty.const._MD_ALBM_BTN_BACK}>"   type="button" name="back" onclick="page_back();" style="width:70px;"> &nbsp; 
+						<INPUT id="submit" class="btn_blue01" value="<{$smarty.const._MD_ALBM_BTN_OK}>" type="submit" name="submit" style="width:70px;"> &nbsp; 
+					</td>
+				</tr>
+		</TABLE>
+			<INPUT id="ref" value="<{$ref}>" type="hidden" name="ref">
+			<INPUT id="fieldCounter"   value="1"   type="hidden" name="fieldCounter">
+			<INPUT id="op"             value="submit" type="hidden" name="op">
+			<INPUT id="test"             value="test" type="hidden" name="test">
+			<{$gticket}>
+		</FORM>
+	</div>
+	<SCRIPT type="text/javascript">
+	<!--//
+		window.onload = function() {
+			disabled_control();
+		
+		}
+		
+		function xoopsFormValidate_uploadfile() {
+			myform = window.document.uploadfile;
+			if (myform.cid.value == "") {
+				window.alert("<{$smarty.const._MD_ALBM_INPUT_ALERT_JS|replace:"%1":$smarty.const._MD_ALBM_FILECAT}>");
+				myform.cid.focus();
+				return false;
+			}else{
+				<{if $my_uid == $file_for_tpl.user_id || $isadmin}>
+				var read_check_box = document.getElementsByName("read_permission[]");
+				var edit_check_box = document.getElementsByName("edit_permission[]");
+				var read_count = 0;
+				var edit_count = 0;
+	
+				var confirm_message = "";
+				for(count = 0; count < read_check_box.length; count++){
+					if(read_check_box[count].checked==true){
+						read_count++;
+					}
+				}
+				for(count = 0; count < edit_check_box.length; count++){
+					if(edit_check_box[count].checked==true){
+						edit_count++;
+					}
+				}
+				
+				if(read_count==0){
+					confirm_message += "<{$smarty.const.MD_FSA_SUBMIT_DIALOG_RP}>\n";
+				}
+				
+				if(edit_count==0){
+					confirm_message += "<{$smarty.const.MD_FSA_SUBMIT_DIALOG_EP}>\n";
+				}
+				
+				if(confirm_message==""){
+					return true;
+				}else{
+					confirm_message += "<{$smarty.const.MD_FSA_SUBMIT_DIALOG}>\n";
+				}
+				
+				var flag = confirm (confirm_message);
+				
+				return flag;
+				
+				<{else}>
+				return true;
+				<{/if}>
+			}
+			
+		}
+		
+		function check_control(cb_element){
+			var check_box_array = document.getElementsByName(cb_element.name);
+			if(cb_element.value==check_box_array[0].value){
+				for(count = 0; count < check_box_array.length; count++){
+					check_box_array[count].checked = check_box_array[0].checked;
+				}
+			}else if(!cb_element.checked){
+				check_box_array[0].checked = false;
+			}
+		}
+		
+		function disabled_control(){
+			var read_check_box = document.getElementsByName("read_permission[]");
+			var edit_check_box = document.getElementsByName("edit_permission[]");
+			
+			for(count = 0; count < read_check_box.length; count++){
+				if(read_check_box[count].checked){
+					edit_check_box[count].disabled=false;
+				}else{
+					edit_check_box[count].disabled=true;
+					edit_check_box[count].checked=false;
+				}
+			}
+			
+		}
+		
+		
+		function page_back(){
+			document.location = "<{$ref}>";
+		}
+		
+		function reset_form(){
+			$("desc_text").value="";
+			$("cid").value="";
+			$("upload_file").value="";
+		}
+
+		
+		
+	//-->
+	</SCRIPT>
+	<{*include file="db:filesharing_footer.html"*}>
+<{include file="db:filesharing_base_footer.html"}>

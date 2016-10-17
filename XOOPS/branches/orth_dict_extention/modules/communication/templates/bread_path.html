@@ -1,0 +1,10 @@
+<div id="bread-path">
+<a href="<{$mod_url}>/"><{$smarty.const.COM_DISCUSSION_TOP}></a> &gt;
+<{foreach from=$bread_pathes item=item key=key}>
+	<{if $item->last}>
+	<{$item->label|escape}>	
+	<{else}> 
+  	<a href="<{$mod_url}>/?<{$item->href}>"><{$item->label|escape}></a> &gt;
+  	<{/if}> 
+<{/foreach}>
+</div>

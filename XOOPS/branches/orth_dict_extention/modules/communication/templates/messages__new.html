@@ -1,0 +1,124 @@
+<script type="text/javascript">
+
+window.changeModeToTranslate = function(button) {
+	$$(".tranlationsView").each(Element.show);
+	$$(".btn-s-disable").each(function(e) {
+		e.removeClassName("btn-s-disable");
+		if(!e.hasClassName("btn-s"))	e.addClassName("btn-s");
+	});
+	//$(button).up().hide();
+};
+
+window.progressBar = function(element, totalCount, label) {
+	element = $(element);
+	var width = Element.getDimensions(element).width;
+	
+	function __construct() {
+		if(label) $(label).update(0);
+		element.down(".gage-bar").style.width = "0%";
+	}
+	
+	return {
+		init: __construct,
+		
+		update: function(count) {
+			element.down(".gage-bar").style.width = 
+				Math.ceil(count / totalCount * 100) + "%";
+			if(label) $(label).update(count);
+		}
+	}
+};
+
+window.postButtonHandler = function(btn){
+	if($(btn).hasClassName("btn-s-disable")) return;
+
+	var errorMessages = new Array();
+	$$('.com-required').each(function(element){
+		if (!element.value) {
+			errorMessages.push(element.title + " <{$smarty.const.COM_IS_REQUIRED}>");
+		}
+	});
+	if (errorMessages.length > 0) {
+		alert(errorMessages.join("\n"));
+	} else {
+		document.forms['main'].submit();
+	}
+	return false;
+};
+</script>
+
+<form name="main" method="post" action="<{$mod_url}>/messages/?action=create&topicId=<{$smarty.get.topicId}>">
+
+
+<{if $smarty.get.parentId }>
+	<strong class="h-pagetitle"><{$smarty.const.COM_REPLY_TO_MESSAGE|sprintf:$smarty.get.postOrder|escape}></strong>
+	<input type="hidden" name="parentId" value="<{$smarty.get.parentId}>" />
+	<!-- 
+	<div class="area-fr">
+		<a href="javascript: newMessage()" class="btn-s">
+			<span class="btn-new"><{$smarty.const.COM_BTN_NEW_MESSAGE}></span>
+		</a>
+	</div>
+	 -->
+<{else}>
+	<strong class="h-pagetitle"><{$smarty.const.COM_NEW_MESSAGE}></strong>
+<{/if}>
+
+
+<div class="popup-pain" style="margin-top:8px;">
+
+	<div id="message-part2">
+		<div class="header-part"><{$smarty.const.COM_LABEL_MESSAGE}>&nbsp;(<{$selectedLanguageName}>)</div>
+	
+		<div>
+			
+			<br />
+			<textarea class="form_title_help" id="sourse-message" style="width:98%; height:6em; " title="<{$smarty.const.COM_MESSAGE}>" class="com-required" name="message&#91;<{$selectedLanguageTag}>&#93;"></textarea>
+			<br />
+		
+			<div class="area-fl-p4">
+			  <a href="javascript: translateAll(); void(0)" onclick="changeModeToTranslate(this)" class="btn-s">
+			  	<span class="btn-translate"><{$smarty.const.COM_BTN_TRANSLATE}></span>
+			  </a>
+			</div>
+			
+			<div class="area-fr-p4">
+				<a href="javascript: void(0);" onclick="postButtonHandler(this);" class="btn-s-disable" style="padding-left:20px; padding-right:20px;">
+					<span class="btn-post"><{$smarty.const.COM_BTN_POST}></span>
+				</a>
+				<a href="javascript: cancelNewMessage(); void(0);" class="btn">
+					<span class="btn-cancel"><{$smarty.const.COM_BTN_CANCEL}></span>
+				</a>
+			</div>
+		</div>
+		
+		<!-- Progress gauge ======================================================================== -->
+		<div class="area-fl-p8 tranlationsView" style="margin-top: 24px; display: none;">
+			<{$smarty.const.COM_NOW_TRANSLATION_REMAIN}> 
+			<span id="translated-count">0</span>/<span id="translate-total-count"><{$toLanguages|@count}></span>
+			<{$smarty.const.COM_LANGUAGES}>
+			<div id="progressionArea" class="gage-base">
+				<div class="gage-bar"></div>
+			</div>
+			<div id="backProgressionArea" class="gage-base" style="display: none;">
+				<div class="gage-bar" style="background: #EFBB5E"></div>
+			</div>
+			<span style="color:#ff0000;"><{$smarty.const.COM_SUBMITTED_BY_POST_BUTTON|replace:'%s':$smarty.const.COM_BTN_POST}></span>
+		</div>
+		<div class="area-fr-p8 tranlationsView" style="display: none;">
+		</div>
+	</div>
+
+	<{include file="db:%s_contents__related.html"|sprintf:$mod_name}>
+
+	<br class="clear">
+	<br >
+	
+	<div id="translationsNewContainer" class="tranlationsView" style="display: none;">
+		<{include file="db:%s_translations__new.html"|sprintf:$mod_name}>
+	</div>
+
+</div>
+
+</form>
+

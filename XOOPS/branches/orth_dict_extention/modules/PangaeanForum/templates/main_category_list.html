@@ -1,0 +1,165 @@
+<{*<{include file="db:`$mydirname`_base_top.html" forums=$forums categories=$categories forumId=$forumId categoryId=$categoryId activeTab=2}>*}>
+<{include file="db:`$mydirname`_base_top.html" titles=$titles forumId=$forumId categoryId=$categoryId activeTab=2}>
+<input type='hidden' id='moduleId' value='forum'>
+<input type='hidden' id='screenId' value='category_list'>
+<{include file="db:`$mydirname`_posted_notice_box.html"}>
+<{include file="db:`$mydirname`_jump_box.html"}>
+<{include file="db:`$mydirname`_search_box.html" forumId=$forumId categoryId=$categoryId}>
+<{include file="db:`$mydirname`_date_search_box.html" forumId=$forumId categoryId=$categoryId}>
+<div class="contents_title">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="19" class="title_l"></td>
+			<td class="title_m"><{$smarty.const._MD_D3FORUM_BBS_TOP}></td>
+			<td width="19" class="title_r"></td>
+		</tr>
+	</table>
+</div>
+<{if $permission->categoryCreate()}>
+	<form action="<{$mod_url}>/?page=preview" method="post" name="createLinkForm">
+	<input type="hidden" name="type_code" value="category_create" />
+	<p class="bbs-create-composite-link">
+		<a href="#" onclick="document.createLinkForm.submit(); return false;">
+			<{$smarty.const._MD_D3FORUM_CREATE_A_NEW_CATEGORY}>
+		</a>
+	</p>
+	</form>
+<{*
+<div class="bbs-composite-descritpion-box clearfix">
+	<h2 class="bbs-composite-descritpion-area"></h2>
+		<ul class="btn_set01" style="margin-bottom: 0;">
+			<li>
+				<a href="<{$mod_url}>/?page=category-create">
+					<div class="btn_blue02">
+						<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_CREATE}></span>
+					</div>
+				</a>
+			</li>
+	</ul>
+</div>
+*}>
+<{/if}>
+<{assign var='myurl' value="$mod_url/?lang=$selectedLanguageTag"}>
+
+<{if $pager->getTotalPages() >= 2}>
+<div class="page_index">
+	<div class="bbs-pager">
+		<ul class="clearfix" style="width: <{$pager->getTotalPages()*40+200}>px;">
+			<{if $pager->hasPreview()}>
+				<li><a href="<{$myurl}>&page=<{$pager->getPreviewNumber()}>&sortkey=<{$sortheader->getCurrentKey()}>">&lt;&lt; Previous</a></li>
+			<{/if}>
+			<{foreach from=$pager->toArray() key=key item=item}>
+				<li>
+				<{if $item == 'CURRENT'}>
+					<span><{$pager->getCurrentPage()}></span>
+				<{elseif $item == 'SKIP'}>
+					<span>...</span>
+				<{else}>
+					<a href="<{$myurl}>&page=<{$item}>&sortkey=<{$sortheader->getCurrentKey()}>"><{$item}></a>
+				<{/if}>
+				</li>
+			<{/foreach}>
+			<{if $pager->hasNext()}>
+				<li><a href="<{$myurl}>&page=<{$pager->getNextNumber()}>&sortkey=<{$sortheader->getCurrentKey()}>">Next &gt;&gt;</a></li>
+			<{/if}>
+		</ul>
+	</div>
+</div>
+<{/if}>
+
+<table class="body_title list-table">
+	<tr class="table_title_bg">
+		<td class="list-composite-title">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(1)}>">
+			<{$smarty.const._MD_D3FORUM_CATEGORY}>
+			</a>
+			<{$sortheader->getLabel(1)}>
+		</td>
+		<td>
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(2)}>">
+			<{$smarty.const._MD_D3FORUM_DESCRIPTION}>
+			</a>
+			<{$sortheader->getLabel(2)}>
+		</td>
+		<td class="list-composite-entries">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(3)}>">
+			<{$smarty.const._MD_D3FORUM_TOTALFORUMSCOUNT}>
+			</a>
+			<{$sortheader->getLabel(3)}>
+		</td>
+		<td class="list-composite-entries">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(4)}>">
+			<{$smarty.const._MD_D3FORUM_TOTALTOPICSCOUNT}>
+			</a>
+			<{$sortheader->getLabel(4)}>
+		</td>
+		<td class="list-composite-entries">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(5)}>">
+			<{$smarty.const._MD_D3FORUM_TOTALPOSTSCOUNT}>
+			</a>
+			<{$sortheader->getLabel(5)}>
+		</td>
+		<td class="list-latest-post">
+			<a href="<{$myurl}>&page=<{$pager->getCurrentPage()}>&sortkey=<{$sortheader->getNextKey(6)}>">
+			<{$smarty.const._MD_D3FORUM_LASTPOST}>
+			</a>
+			<{$sortheader->getLabel(6)}>
+		</td>
+	</tr>
+	<{foreach from=$categories item=category}>
+		<{assign var='params' value=$category->getParams()}>
+		<tr>
+			<td class="list-composite-title">
+			<{strip}>
+				<a href="<{$mod_url}>/?categoryId=<{$category->getId()}>">
+					<{$category->getTitle()|escape}>
+				</a>
+			<{/strip}>
+			<{if $category->hasNewPost() }>
+	        	<span class="bbs-new-mark"><{$smarty.const._MD_D3FORUM_NEW_MARK}></span>
+	        <{/if}>
+			</td>
+			<td>
+			<{$category->getDescription()|mb_substr:0:300:"utf-8"|escape}>
+			<{if mb_strlen($category->getDescription(), "utf-8") > 301 }>
+				...
+			<{/if}>
+			</td>
+			<td class="list-composite-entries"><{$params.cat_forums_count}></td>
+			<td class="list-composite-entries"><{$params.cat_topics_count}></td>
+			<td class="list-composite-entries"><{$params.cat_posts_count}></td>
+			<td class="list-latest-post">
+				<a href="<{$xoops_url}>/userinfo.php?uid=<{$params.uid}>"><{$params.uname}></a><br />
+				<{$params.cat_last_post_time_f}>
+			</td>
+		</tr>
+	<{/foreach}>
+</table>
+
+<{if $pager->getTotalPages() >= 2}>
+<div class="page_index">
+	<div class="bbs-pager">
+		<ul class="clearfix" style="width: <{$pager->getTotalPages()*40+200}>px;">
+			<{if $pager->hasPreview()}>
+				<li><a href="<{$myurl}>&page=<{$pager->getPreviewNumber()}>&sortkey=<{$sortheader->getCurrentKey()}>">&lt;&lt; Previous</a></li>
+			<{/if}>
+			<{foreach from=$pager->toArray() key=key item=item}>
+				<li>
+				<{if $item == 'CURRENT'}>
+					<span><{$pager->getCurrentPage()}></span>
+				<{elseif $item == 'SKIP'}>
+					<span>...</span>
+				<{else}>
+					<a href="<{$myurl}>&page=<{$item}>&sortkey=<{$sortheader->getCurrentKey()}>"><{$item}></a>
+				<{/if}>
+				</li>
+			<{/foreach}>
+			<{if $pager->hasNext()}>
+				<li><a href="<{$myurl}>&page=<{$pager->getNextNumber()}>&sortkey=<{$sortheader->getCurrentKey()}>">Next &gt;&gt;</a></li>
+			<{/if}>
+		</ul>
+	</div>
+</div>
+<{/if}>
+
+<{include file="db:`$mydirname`_base_footer.html"}>

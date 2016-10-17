@@ -1,0 +1,45 @@
+<table style="width:98%;text-align:left;">
+	<tr>
+	<{assign var=cnt value=0}>
+	<{foreach from=$subcategories item=cat key=count}>
+		<{assign var=cnt value=$cnt+1}>
+		<td style="width:32px;height:32px;padding:0;text-align:center;">
+			<a href="<{$mod_url}>/?page=viewcat&cid=<{$cat.cid}>">
+				<{if $cat.imgurl != ""}>
+					<img src="<{$cat.imgurl}>" width="32" height="32" border="0" alt="" />
+				<{else}>
+					<img src="<{$mod_url}>/images/folder32.gif" width="32" height="32" border="0" alt="" />
+				<{/if}>
+			</a>
+		</td>
+		<td style="vertical-align:text-top; text-align:left; width:33%;padding-top:5px;">
+			<a href="<{$mod_url}>/?page=viewcat&cid=<{$cat.cid}>">
+				<span style="font:bold 150%;"><{$cat.title}></span></a>&nbsp;<{$lang_total}><{$cat.file_total_sum}>&nbsp;(<{$cat.file_small_sum}>)
+			</a>
+			<br />
+			<{foreach from=$cat.subcategories item=subcat}>
+				<a href="<{$mod_url}>/?page=viewcat&cid=<{$subcat.cid}>" style="margin-left:5px;">
+					<img src="<{$mod_url}>/images/folder16.gif" width="16" height="16" alt="" />
+					<{$subcat.title}>
+					<{if $subcat.number_of_subcat}>
+						<img src='<{$mod_url}>/images/subcat.gif' width='15' height='15' /></a>
+					<{else}>
+						</a>&nbsp;(<{$subcat.file_small_sum}>)
+					<{/if}>
+					<br />
+			<{/foreach}>
+		</td>
+		<{if ($count+1) is div by 3}>
+			</tr><tr>
+		<{/if}>
+	<{/foreach}>
+
+	<{if $cnt is not div by 3}>
+		<{assign var=loopcnt value=$cnt%3*-1+3}>
+		<{section name=num start=0 loop=$loopcnt}>
+			<td></td>
+			<td style="width:33%;"></td>
+		<{/section}>
+	<{/if}>
+	</tr>
+</table>

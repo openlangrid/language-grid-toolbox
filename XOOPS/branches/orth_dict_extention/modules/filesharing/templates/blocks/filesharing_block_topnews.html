@@ -1,0 +1,5 @@
+<ul>
+  <{foreach item=file from=$block.file}>
+    <li><a href="<{$block.mod_url}>/?page=file&lid=<{$file.lid}>&amp;cid=<{$file.cid}>"><{$file.title}></a> (<{$file.date}>)</li>
+  <{/foreach}>
+</ul>

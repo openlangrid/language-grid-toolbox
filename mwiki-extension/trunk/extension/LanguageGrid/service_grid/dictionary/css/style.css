@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*contents_body*/
+#contents_body {
+	clear:both;
+	display:block;
+	height:auto;
+	width:98%;
+	margin: 0px 0px;
+	min-height: 400px;
+}
+
+/*table*/
+.table_title_bg {
+	background:url(table_title_bg-1.jpg) repeat-x bottom;
+	/*text-transform:capitalize;*/
+}
+
+#contents_body {
+	margin: 0px 12px;
+}
+
+#contents_body table.body_title td {
+	border:1px solid #C2D1DC;
+	padding:4px 6px 2px 12px;
+	text-align:left;
+}
+.dictionary_label {
+	width:100%;
+	clear:both;
+}
+#disclaimer {
+	display:block;
+	width:96%;
+	height:140px;
+	overflow:auto;
+	border:1px solid #b0b7bf;
+	margin-bottom:5px;
+}

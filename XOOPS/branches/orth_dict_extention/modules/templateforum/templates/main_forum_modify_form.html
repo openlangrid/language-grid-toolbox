@@ -1,0 +1,101 @@
+<{include file="db:`$mydirname`_base_top.html" forums=$forums categories=$categories forumId=$forumId categoryId=$categoryId activeTab=2 changeLanguageDisabled=true}>
+<input type='hidden' id='moduleId' value='forum'>
+<input type='hidden' id='screenId' value='forum_modify'>
+<div id="topic_path">
+	<ol>
+		<li><a href="./"><{$smarty.const._MD_D3FORUM_RETURN_COMMUNITY_TOP}></a></li>
+		<li><a href="./?categoryId=<{$category->getId()|escape}>"><{$category->getTitle()|escape}></a></li>
+		<li><a href="./?forumId=<{$forum->getId()|escape}>"><{$forum->getTitle()|escape}></a></li>
+		<li><{$smarty.const._MD_D3FORUM_CATEGORY_MODIFY_TITLE}></li>
+	</ol>
+</div>
+<div class="bbs-modification-base-pane">
+	<form name="modifyForm" action="<{$mod_url}>/?page=forum-modify" method="post">
+	<input type="hidden" name="forumId" value="<{$forum->getId()|escape}>" />
+	<table class="bbs-modification-component-table">
+		<tr>
+			<th><{$smarty.const._MD_D3FORUM_MODIFY_COMMON_ORIGINAL_INFORMATION}></th>
+			<td class="blank-cell"> </td>
+			<th><{$smarty.const._MD_D3FORUM_MODIFY_COMMON_TRANSLATION}></th>
+		</tr>
+		<tr>
+			<td>
+				<h3 class="bbs-modification-mode-composite-header">
+					<{$smarty.const._MD_D3FORUM_TH_FORUMTITLE}>
+				</h3>
+				<p class="bbs-modification-composite-box bbs-modification-mode-composite-title">
+					<{$forum->getOriginalTitle()|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'|nl2br}>
+				</p>
+				<h3 class="bbs-modification-mode-composite-header">
+					<{$smarty.const._MD_D3FORUM_TH_FORUMDESC}>
+				</h3>
+				<p class="bbs-modification-composite-box bbs-modification-mode-composite-body">
+					<{$forum->getOriginalDescription()|escape|regex_replace:"/((?:\G|;)[^&]*?)([0-9a-zA-Z])/":'$1$2<wbr>'|nl2br}>
+				</p>
+			</td>
+			<td class="blank-cell"> </td>
+           	<td>
+				<h3 class="bbs-modification-mode-composite-header">
+					<{$smarty.const._MD_D3FORUM_TH_FORUMTITLE}>
+				</h3>
+           		<textarea title="<{$smarty.const._MD_D3FORUM_TH_FORUMTITLE}>" class="bbs-required bbs-modification-composite-box bbs-modification-mode-composite-title" name="title&#91;<{$selectedLanguageTag}>&#93;" cols="60" rows="1"><{$forum->getTitle()|escape}></textarea>
+				<h3 class="bbs-modification-mode-composite-header">
+					<{$smarty.const._MD_D3FORUM_TH_FORUMDESC}>
+				</h3>
+           		<textarea title="<{$smarty.const._MD_D3FORUM_TH_FORUMDESC}>" class="bbs-required bbs-modification-composite-box bbs-modification-mode-composite-body" name="description&#91;<{$selectedLanguageTag}>&#93;" cols="60" rows="10"><{$forum->getDescription()|escape}></textarea>
+           		<div class="post-button">
+	            	<div class="btn_blue04">
+	                   	<a href="#" onclick="history.back(); return false;"><{$smarty.const._MD_D3FORUM_CANCEL}></a>
+	                </div>
+                </div>
+           		<div class="post-button">
+	            	<div class="btn_blue04">
+	                   	<a href="#" onclick="modifySubmit(); return false;"><{$smarty.const._MD_D3FORUM_MODIFY_OK}></a>
+	                </div>
+                </div>
+           	</td>
+		</tr>
+	</table>
+	</form>
+</div>
+<{if count($modifyHistory.title) >= 2 }>
+<div class="title_bg01" style="margin: 15px 0;"><{$smarty.const._MD_D3FORUM_POST_MODIFICATION_HISTORIES}></div>
+<div class="list_table01">
+<table cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<{foreach from=$modifyHistory.title item=item key=key}>
+<tr style="font-size: 110%;">
+<td style="" class="list_line01">
+<{$key+1}>: <a href="<{$xoops_url}>/userinfo.php?uid=<{$item->getUserId()|escape}>"><{$item->getUserName()|escape}></a>
+<{if $item->getProcessTypeCode() == 1}>
+	<{$smarty.const._MD_D3FORUM_POSTED_ON|sprintf:$item->getCreateDate()|escape}>
+<{elseif $item->getProcessTypeCode() == 2}>
+	<{$smarty.const._MD_D3FORUM_MODIFIED_ON|sprintf:$item->getCreateDate()|escape}>
+<{elseif $item->getProcessTypeCode() == 3}>
+	<{$smarty.const._MD_D3FORUM_EDITED_ON|sprintf:$item->getCreateDate()|escape}>
+<{/if}>
+</td>
+	        </tr>
+			<tr>
+				<td class="list_line02"><{$item->getBBSText()|escape|nl2br}></td>
+			</tr>
+			<tr>
+				<td><{$modifyHistory.description[$key]->getBBSText()|escape|nl2br}></td>
+			</tr>
+<{/foreach}>
+</tbody></table>
+</div>
+<{/if}>
+</div>
+<script>
+Event.observe(window, 'load', function() {
+	if (Prototype.Browser.WebKit) {
+		$$('textarea').each(function(element){
+			element.setStyle({
+				fontSize : '140%'
+			});
+		});
+	}
+});
+</script>
+<{include file="db:`$mydirname`_base_footer.html"}>

@@ -1,0 +1,4 @@
+<option value=""><{$smarty.const.COM_SELECT_ATTACHEMENT_CONTENT}></option>
+<{foreach from=$contentList->datas() item="con"}>
+<option value="<{$con->getContentId()}>" <{$con->selectedForHtmlOption($smarty.get.contentId)}>><{$con->getLabelForOption()}></option>
+<{/foreach}>

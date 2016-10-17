@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+.clearfix:after { content: ""; display: block; clear: both; }
+
+.area-fl {
+	float: left;
+}
+.area-fr {
+	float: right;
+}
+
+div.popup-dialog .button {
+	color: #ffffff;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	margin-left: 2px;
+}
+
+/* ダイアログヘッダ */
+div.dialog-head {
+	padding: 4px;
+	text-align: left;
+	clear: both;
+}
+/* 閉じるボタン */
+div.dialog-head .button-close {
+	background-image: url('../images/button/silver_bg.png');
+	background-repeat: repeat-x;
+	display: block;
+	text-align: center;
+	width: 40px;
+	border: 1px solid #bbbbbb;
+	color: #232323;
+}
+/* ダイアログタイトル */
+div.dialog-head h2 {
+	margin-left: 10px;
+	margin-top: 5px;
+	padding-left: 10px;
+	border-left: 8px solid #0362AF;
+	font-size: 140%;
+}
+
+div.dialog-body {
+	padding: 4px;
+	margin: 2px 20px 10px 20px;
+	text-align: left;
+	clear: both;
+	background-color: #ffffff;
+	border: 1px solid #bbbbbb;
+}
+
+div.dialog-body .scroll-wrapper {
+	height: 180px;
+	overflow: auto;
+}
+
+/* ファイル・フォルダのアイコン */
+div.dialog-body tbody h4 {
+	padding-left: 20px;
+	background-repeat: no-repeat;
+}
+div.dialog-body tbody h4.folder-icon {
+	background-image: url('../images/icon/folder.png');
+}
+div.dialog-body tbody h4.file-icon {
+	background-image: url('../images/icon/file.png');
+}
+div.dialog-body .button-upload {
+	background-image: url('../images/button/blue_bg.png');
+	background-repeat: repeat-x;
+	display: block;
+	text-align: center;
+	width: 150px;
+	border: 1px solid #bbbbbb;
+}
+div.dialog-body .button-upload-dis {
+	background-image: url('../images/button/silver_bg.png');
+	background-repeat: repeat-x;
+	display: block;
+	text-align: center;
+	width: 150px;
+	border:1px solid #B0B0B0;
+	color:#444444;
+	cursor:default;
+}
+
+div.dialog-foot {
+	margin: 1px 10px 15px 20px;
+	clear: both;
+	text-align: right;
+}
+
+div.dialog-foot table {
+	width: 520px;
+}
+div.dialog-foot table th {
+	width: 150px;
+}
+div.dialog-foot table td {
+	text-align: left;
+}
+
+/* OKボタン */
+div.dialog-foot .button-ok {
+	background-image: url('../images/button/blue_bg.png');
+	background-repeat: repeat-x;
+	display: block;
+	text-align: center;
+	width: 100px;
+	border: 1px solid #bbbbbb;
+}
+div.dialog-foot .button-cancel {
+	background-image: url('../images/button/blue_bg.png');
+	background-repeat: repeat-x;
+	display: block;
+	text-align: center;
+	width: 100px;
+	border: 1px solid #bbbbbb;
+}
