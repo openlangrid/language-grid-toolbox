@@ -1,0 +1,44 @@
+<div id="forum-selectbox" style="height: 280px; overflow: auto; overflow-x: hidden;">
+<table border="0" cellspacing="0" cellpadding="0" style="width:97%; font-size:90%;">
+  <thead class="table-sortable-head">
+    <tr>
+      <th><{$smarty.const._MD_TASK_FORUM_NAME}></th>
+      <th><{$smarty.const._MD_TASK_POSTS_COUNT}></th>
+      <th><{$smarty.const._MD_TASK_LATEST_POST_DATE}></th>
+      <th><{$smarty.const._MD_TASK_LATEST_POSTED_USER}></th>
+    </tr>
+  </thead>
+  <tbody class="hover-on">
+    <{foreach from=$forumList item=forum}>
+    <tr>
+      <td class="cell-underlined">
+      	<{if !$smarty.get.forum_id}>
+        <input id="forum<{$forum.id}>" type="radio" name="forumId" value="<{$forum.id}>"<{if $forum.id == $history->getForumId()}>checked="checked"<{/if}>/>
+      	<{else}>
+        <input id="forum<{$forum.id}>" type="radio" name="forumId" value="<{$forum.id}>" <{if $forum.id == $smarty.get.forum_id}>checked="checked"<{/if}>/>
+      	<{/if}>
+        <label for="forum<{$forum.id}>"><{$forum.title|escape}></label>
+      </td>
+      <td class="cell-underlined"><{$forum.postsCount|escape}></td>
+      <td class="cell-underlined"><{$forum.lastPostedDate|escape}></td>
+      <td class="cell-underlined"><{$forum.lastPostedUser|escape}></td>
+    </tr>
+    <{/foreach}>
+  </tbody>
+</table>
+</div>
+
+<script type="text/javascript">
+(function() {
+	$('forum-selectbox').select('input[type=radio]').each(function (radio) {
+		radio.observe('click', function (e) {
+			$('forum-selectbox').select("td").invoke("removeClassName", "cell-selected");
+			radio.up("tr").select("td").invoke("addClassName","cell-selected");
+		});
+	});
+
+	var checked = $('forum-selectbox').down('input[checked=checked]');
+	if(checked) checked.up("tr").select("td").invoke("addClassName","cell-selected");
+	
+}).defer();
+</script>

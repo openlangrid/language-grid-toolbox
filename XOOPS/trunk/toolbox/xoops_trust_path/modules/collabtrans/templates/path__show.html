@@ -1,0 +1,33 @@
+<strong>
+	<{$smarty.const.CT_LABEL_SETTING_OF|sprintf:$smarty.post.label}> 
+	(<{$path->getSourceLanguageAsName()}> - <{$path->getTargetLanguageAsName()}>)
+</strong>
+<div class="area-middle-p4 area-pathinfo-detail">
+	<div class="trans-path">
+		<table style="border: medium none ;">
+		<tbody>
+			<tr>
+				<td><div class="lang-cell lang-cell-strong"><{$path->getSourceLanguageAsName()}></div></td>
+				<{foreach from=$path->getExecs() item=exec key=index}>
+				<td><div class="allow-cell">&lt;&gt;</div></td>
+				<td><div class="lang-cell lang-cell-strong"><{$exec[0]}></div></td>
+				<{/foreach}>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<{foreach from=$path->getExecs() item=exec key=index}>
+				<td>&nbsp;</td>
+				<td><div class="service-cell"><span><{$exec[1]}></span></div></td>
+				<{/foreach}>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+	
+	<a href="javascript: setDefault(<{$smarty.post.pathId}>)" class="btn">
+		<{$smarty.const.CT_BTN_SET_DEFAULT_PATH}>
+	</a>
+	&nbsp;<img id="setDefaultIndicator" src="<{$xoops_imageurl}>common/img/loading.gif" style="display: none;" />	
+</div>
+
+

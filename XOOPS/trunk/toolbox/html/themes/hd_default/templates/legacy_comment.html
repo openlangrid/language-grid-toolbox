@@ -1,0 +1,24 @@
+<h3 class="XoopsCommentsTitle"><a id="comment<{$comment.id}>"><{$comment.image}><{$comment.title}></a></h3>
+<div class="XoopsCommentsSub">
+  <ul class="ctrl2">
+    <li class="prev"><{$comment.poster.uname}> <span title="<{$lang_updated}>: <{$comment.date_modified}>"><{$lang_posted}>: <{$comment.date_posted}></span></li>
+<{if $xoops_iscommentadmin == true}>
+  <li class="next">
+    <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$xoops_url}>/images/icons/edit.gif" alt="<{$lang_edit}>" title="<{$lang_edit}>" /></a>
+    <a href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$xoops_url}>/images/icons/delete.gif" alt="<{$lang_delete}>" title="<{$lang_delete}>" /></a>
+    <a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$xoops_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" title="<{$lang_reply}>" /></a>
+  </li>
+<{elseif $xoops_isuser == true && $xoops_userid == $comment.poster.id}>
+  <li class="next">
+    <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$xoops_url}>/images/icons/edit.gif" alt="<{$lang_edit}>" title="<{$lang_edit}>" /></a>
+    <a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$xoops_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" title="<{$lang_reply}>" /></a>
+  </li>
+<{elseif $xoops_isuser == true || ($xoops_isuser == false && $com_anonpost == true)}>
+  <li class="next">
+    <a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>"><img src="<{$xoops_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" title="<{$lang_reply}>" /></a>
+  </li>
+<{/if}>
+  </ul>
+</div>
+<div class="XoopsCommentsText"><{$comment.text}></div>
+<!-- end comment post -->

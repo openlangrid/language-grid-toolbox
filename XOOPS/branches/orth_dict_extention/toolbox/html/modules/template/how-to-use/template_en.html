@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Toolbox - How to use</title>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/common/css/import.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/css/import.css" />
+</head>
+<body id="howtouse">
+<div id="body_bg">
+    <div id="wrap">
+        <div id="container">
+            <div id="head">
+
+                <h1 id="logo"></h1>
+                </div>
+<div id="contents_body">
+            <h2>How to Use (Translation template)</h2>
+   <div class="inner_text">  
+
+<p>Translation template enables you to create parallel texts which contain parameters. Users can set a value to a parameter in a parallel text.</p>
+
+<p>On this page, you will find a brief description of how to use the translation template function, including</p>
+<ol><li>1. Create translation template</li>
+<li>2. Configure parameters</li>
+<li>3. Search for translation template</li>
+<li>4. Manage categories</li>
+<li>5. Import and export</li>
+</ol>
+
+<dl><dt>1. Create translation template</dt>
+
+<dd>You can create translation templates by the following steps.</dd>
+
+<dd>
+<ol class="step">
+<li>Click <span class="key_point">"Add translation template"</span> button.</li>
+<li>Check languages you want to use and enter the name of the translation template. A set of translation template is created after you click "OK".</li>
+<li>Load the set of translation templates by clicking its name shown in the table.</li>
+<li>Select languages you want to edit in the first row.</li>
+<li>You can add a row for a new translation template by clicking <span class="key_point">"Add translation template"</span> button.</li>
+<li>Enter a parallel text by clicking the new row.</li>
+</ol>
+</dd>
+</dl>
+
+<dl><dt>2. Configure parameters</dt>
+<dd>You can insert and configure parameters in a parallel text.</dd>
+
+<dd>
+<ol class="step">
+<li>Click a column of parameters and open a popup window.</li>
+<li>Click <span class="key_point">"Add parameter"</span> button to add a row in the list of parameters. You can identify parameters by their index. A parameter is inserted as a number in brackets like [0], [1].</li>
+<li>Select type of parameters. Some parameters are predefined. You can add a new type by the following steps.</li>
+<li>Click <span class="key_point">"Edit parameter"</span> button and open <span class="key_point">Edit word set"</span> popup window. You can name the new parameters.</li>
+<li>Click <span class="key_point">"Edit"</span> button and open <span class="key_point">"Edit word"</span> popup window. You can add words which you can select as a value for the parameter.</li>
+</ol>
+
+<dd>
+The following paremeters are predefined.
+<ul>
+<li>[month]: Number representing month or a month name</li>
+<li>[date] : Number representing date of month</li>
+<li>[hour] : Number representing hour</li>
+<li>[minute] : Number representing minute</li>
+<li>[number]: Any number</li>
+<li>[text]: Any text</li>
+</ul>
+</dd>
+</dl>
+
+<dl><dt>3. Search for translation template</dt>
+<dd>You can open a search interface by clicking <span class="key_point">"Search"</span> link.</dd>
+
+<dd>In a search result, parameters in a translation template are shown as a dropdown box or a text box. By selecting a word or entering text for the parameter in the source language, you can get a corresponding text in the target language.</dd>
+</dl>
+
+<dl><dt>4. Manage categories</dt>
+<dd>You can set a category for a translation template.</dd>
+
+<dd>
+<ol class="step">
+<li>Click the column of category and open a popup window.</li>
+<li>Check categories you want to set.</li>
+<li>Click <span class="key_point">"Edit categories"</span> link if there is no appropriate category. You can add a new category by clicking <span class="key_point">"Add category"</span> button.</li>
+</ol>
+</dd>
+</dl>
+
+<dl><dt>5. Import and export</dt>
+<dd>You can import translation templates from your local computer by clicking <span class="key_point">"Import"</span> button on the page of the list of translation template. You can also export translation templates by opening a menu from a button with a triangle icon and selection <span class="key_point">"Export"</span>. The file format is tab-separted text file defined as shown below.</dd>
+
+<dd>
+<table  border="1" width="600">
+<tr><td>id</td><td>type</td><td>cat/par</td><td>ja</td><td>en</td></tr>
+<tr><td>1</td><td>parallel_text</td><td>20,21</td><td>&lt;param id=&quot;0&quot; type=&quot;float&quot; /&gt;個より多くの&lt;param id=&quot;1&quot; domains=&quot;41&quot; /&gt;を採ってはいけません。</td><td>Picking more than &lt;param id=&quot;0&quot; type=&quot;float&quot; /&gt; &lt;param id=&quot;1&quot; domains=&quot;41&quot; /&gt; is prohibited.</td></tr>
+<tr><td>2</td><td>parallel_text</td><td>20</td><td>この付近には&lt;param id=&quot;0&quot; domains=&quot;40&quot; /&gt;が多く生息しています。</td><td>Many &lt;param id=&quot;0&quot; domains=&quot;40&quot; /&gt; inhabit in this Neighborhood.</td></tr>
+<tr><td colspan="6">... (省略)</td></tr>
+<tr><td>20</td><td>category</td><td></td><td>案内</td><td>Guide</td></tr>
+<tr><td>21</td><td>category</td><td></td><td>ルール</td><td>Rule</td></tr>
+<tr><td colspan="6">... (省略)</td></tr>
+<tr><td>40</td><td>parameter</td><td></td><td>動物</td><td>animal</td></tr>
+<tr><td>41</td><td>parameter</td><td></td><td>植物</td><td>plant</td></tr>
+<tr><td colspan="6">... (省略)</td></tr>
+<tr><td>60</td><td>word</td><td>40</td><td>ナマケモノ</td><td>sloth</td></tr>
+<tr><td>61</td><td>word</td><td>40</td><td>ゴリラ</td><td>gorilla</td></tr>
+<tr><td>62</td><td>word</td><td>41</td><td>百合</td><td>lily</td></tr>
+</table>
+</dd>
+
+<dd>
+The first row shows item names. The following rows represents parallel text, category, parameter or word. Each column contains the following contents.
+<ol>
+<li>Column 1: Data ID for each row</li>
+<li>Column 2: Data type (parallel_text, parameter or word</li>
+<ul style="margin-left: 10px;">
+<li>parallel_text: represents this row containts a parallel text. Its category is described in cat/par column</li>
+<li>category: Category name in multi languages.</li>
+<li>parameter: Parameter name in multi languages.</li>
+<li>word: A word for a parameter in multi languages. The corresponding parameters is described in cat/par column.</li>
+</ul>
+<li>Column 3: Categories to which a parallel text belongs, or parameter IDs to which a word belongs.</li>
+<li>Column 4 and the following columns: Expression in each language. (Refer to <a href="http://www.ethnologue.com/14/iso639/codes.asp">ISO 639</a> for language code in 1st row.</li>
+</ol>
+</dd>
+
+<dd>
+A parameter is described as a "param" tag. "id" attribute describes an index of a parameter, and "type" attribute describes a type of a parameter. For the compatibility with langauge services on the Language Grid, some attributes are translated as shown below.<ul style="margin-left: 10px;">
+<li>date -> day_of_month</li>
+<li>number -> float</li>
+</ul>
+</dd>
+</dl>
+
+<br />
+
+
+</dl>
+
+            <div id="footer_inner">
+                <address>
+                Copyright (C) 2010 Department of Social Informatics, Kyoto University. All rights reserved.
+                </address>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

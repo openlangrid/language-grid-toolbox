@@ -1,0 +1,577 @@
+---
+translation_path:
+  - source_lang: ja
+    target_lang: ko
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: ko
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ko
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: Klt
+  - source_lang: ja
+    target_lang: en
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: zh
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: zh
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: zh
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: ICTCLAS
+  - source_lang: en
+    target_lang: de
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: de
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: de
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: en
+    target_lang: fr
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: fr
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: fr
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: en
+    target_lang: it
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: it
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: it
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: en
+    target_lang: es
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: es
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: es
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: en
+    target_lang: pt-PT
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: pt-PT
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: pt-PT
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: en
+    target_lang: ru
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: ru
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: ru
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: de
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: de
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: de
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+          - bind_type: 9
+            bind_value: TreeTagger
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+  - source_lang: ja
+    target_lang: fr
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: fr
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: fr
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: it
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: it
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: it
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: es
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: es
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: es
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: pt-PT
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: pt-PT
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: pt-PT
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: ru
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: ru
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: ru
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+          - bind_type: 9
+            bind_value: TreeTagger
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+  - source_lang: en
+    target_lang: ar
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: ar
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: ar
+        target_lang: en
+  - source_lang: en
+    target_lang: th
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: th
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: th
+        target_lang: en
+  - source_lang: en
+    target_lang: ms
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: ms
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: ms
+        target_lang: en
+  - source_lang: en
+    target_lang: id
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: id
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: id
+        target_lang: en
+  - source_lang: en
+    target_lang: vi
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: vi
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: vi
+        target_lang: en
+  - source_lang: ja
+    target_lang: ar
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: ar
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: ar
+        target_lang: en
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: th
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: th
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: th
+        target_lang: en
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: ms
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: ms
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: ms
+        target_lang: en
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: id
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: id
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: id
+        target_lang: en
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+  - source_lang: ja
+    target_lang: vi
+    translation_exec_l2r:
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: ja
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: Mecab
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: en
+        target_lang: vi
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+    translation_exec_r2l:
+      - dictionary_flag: 1
+        service_id: GoogleTranslate
+        source_lang: vi
+        target_lang: en
+        translation_bind:
+          - bind_type: 9
+            bind_value: TreeTagger
+      - dictionary_flag: 1
+        service_id: NICTJServer
+        source_lang: en
+        target_lang: ja
+translation_set:
+  - set_name: COLLABTRANS
+    user_id: 1

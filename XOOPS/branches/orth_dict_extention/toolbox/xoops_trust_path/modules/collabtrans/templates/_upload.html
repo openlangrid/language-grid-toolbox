@@ -1,0 +1,19 @@
+
+<!-- Tab main content -->
+<form name="index_with_xml" method="post" enctype="multipart/form-data"
+	  action="<{$mod_url}>/?action=index_with_xml">
+
+<div style="margin:24px;">
+    <{$smarty.const.CT_SELECT_UPLOAD_FILE}>:
+    <input id="upload-file" type=file name="xml">
+</div>
+
+</form>
+
+<script type="text/javascript" src="/toolbox/html/common/lib/prototype.js"></script>
+<script type="text/javascript" src="<{$mod_url}>/js/trans_common.js"></script>
+<script type="text/javascript">
+function validateOnUpload() {
+	return !!$('upload-file').getValue();
+}
+</script>

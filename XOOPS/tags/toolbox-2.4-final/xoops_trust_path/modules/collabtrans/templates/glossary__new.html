@@ -1,0 +1,41 @@
+
+
+    <table border="0" cellspacing="0" cellpadding="0" style="width:97%;">
+      <!-- ****************************************** -->
+      <thead class="table-sortable-head">
+        <tr>
+          <th>&nbsp;</th>
+          <th colspan="2">in&nbsp;<{$sourceLang[1]}></th>
+          <th>in&nbsp;<{$targetLang[1]}></th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <!-- ****************************************** -->
+      <tbody>
+        <!-- ********** -->
+		<tr class="q-line" id="term">
+       		<td rowspan="2" class="q-label"><{$smarty.const.CT_LABEL_QA_Q}></td>
+       		<td colspan="2" class="q-cell source" id="regist_source">
+       			<span style="display:none"></span>
+       			<input type="text" size="42" name="term[<{$smarty.get.sourceLang}>]" />
+       		</td>
+       		<td class="q-cell target">
+       			<!-- 
+       			<input type="text" size="42" name="term[<{$smarty.get.targetLang}>]" />
+       			 -->
+       		</td>
+       		<td class="c-cell">&nbsp;</td>
+		</tr>
+			
+		<tr class="a-line">
+			<td class="a-label cell-toplined"><{$smarty.const.CT_LABEL_QA_A}></td>
+			<td class="a-cell cell-toplined">
+				<input type="text" size="42" name="dictionary[<{$smarty.get.sourceLang}>]" />
+			</td>
+			<td class="a-cell cell-toplined">
+       			<input type="text" size="42" name="dictionary[<{$smarty.get.targetLang}>]" />
+			</td>
+			<td class="cell-toplined">&nbsp;</td>
+		</tr>
+      </tbody>
+    </table>

@@ -1,0 +1,36 @@
+<h2><{$smarty.const._LOGIN}></h2>
+
+<form action="<{$smarty.const.XOOPS_URL}>/user.php" method="post">
+<{xoops_input type=hidden name=op value=login}>
+<{xoops_input type=hidden name=xoops_redirect value=$redirect_page}>
+<table class="outer">
+  <tr>
+    <td class="head"><label for="legacy_xoopsform_uname"><{$smarty.const._USERNAME}></label></td>
+    <td class="<{cycle values="odd,even"}>">
+      <{xoops_input type=text name=uname size=25 maxlength=25 value=$usercookie}>
+    </td>
+  </tr>
+  <tr>
+    <td class="head"><label for="legacy_xoopsform_pass"><{$smarty.const._PASSWORD}></label></td>
+    <td class="<{cycle values="odd,even"}>">
+     <{xoops_input type=password name=pass size=30 maxlength=32}>
+    </td>
+  </tr>
+  <tr>
+    <td class="head">&nbsp;</td>
+    <td class="<{cycle values="odd,even"}>">
+      <input type="checkbox" name="rememberme" value="On" /><{$smarty.const._CUBE_UTILS_REMEMBERME}><br />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="foot" style="text-align:center;">
+      <input type="submit" value="<{$smarty.const._LOGIN}>" />
+    </td>
+  </tr>
+</table>
+</form>
+
+<p style="text-align:center;"><a href="<{$xoops_url}>/lostpass.php"><{$smarty.const._MD_USER_LANG_LOSTPASS}></a></p>
+<{if $allowRegister}>
+<p style="text-align:center;"><a href="<{$xoops_url}>/register.php"><{$smarty.const._MD_USER_LANG_NOTREGISTERED}></a></p>
+<{/if}>

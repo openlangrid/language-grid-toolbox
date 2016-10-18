@@ -1,0 +1,34 @@
+<div id="<{$mod_url}>/lang/?action=_list&page=<{$page}>&perPage=<{$perPage}>" >
+	<ul>
+		<{foreach item=lang from=$languageArray}>
+			<li>
+				<a class="CategoryButton <{if $mainLang==$lang}>active<{/if}>" name="<{$lang}>" onClick="document.frm.mainLanguage.value=this.name;document.frm.submit();">
+					<span class="main"><{$languageNameMap[$lang]}></span>
+				</a>
+			</li>
+		<{/foreach}>
+	</ul>
+	<div id="PageSwitch" align="center">
+	      <table summary="send_page">
+	        <tr>
+	          <td>
+	          	<{if $page > 1}>
+	          		<a id="PagePrevButton" class = "pageLink" href="<{$mod_url}>/lang/?action=_list&resourceName=<{$resourceName}>&mainLang=<{$mainLang}>&page=<{$page-1}>&perPage=<{$perPage}>"> </a>
+	          	<{else}>
+	          		<a id="PagePrevButton" class="down" href="javascript:;"> </a>
+	          	<{/if}>
+	          </td>
+	          <td id="dispPage" class="PageCount">
+	          	<{$page}>/<{$lastPage}>
+	          </td>
+	          <td>
+	          	<{if $page < $lastPage}>
+ 	          		<a id="PageNextButton" class="pageLink" href="<{$mod_url}>/lang/?action=_list&resourceName=<{$resourceName}>&mainLang=<{$mainLang}>&page=<{$page+1}>&perPage=<{$perPage}>"> </a>        	
+				<{else}>
+					<a id="PageNextButton" class="down" href="javascript:;"> </a>
+				<{/if}>
+ 	          </td>
+	        </tr>
+	      </table>
+	</div>
+</div>

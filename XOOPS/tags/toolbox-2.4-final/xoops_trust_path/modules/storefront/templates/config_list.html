@@ -1,0 +1,622 @@
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="<{$mod_url}>/js/lib/tablesort/tablesort.js"></script>
+<script type="text/javascript" src="<{$mod_url}>/js/storefront_common.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/customize.css" />
+<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/button.css" />
+<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/qa.css" />
+<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/storefront.css" />
+<style type="text/css">
+div#tbx-body {
+	position: relative;
+}
+</style>
+
+
+<div id="tbx-body">
+	<button id="how-to-use-button" 
+		onclick="window.open('<{$mod_url}>/how-to-use/<{$smarty.const.STF_HOW_TO_USE_LINK}>', '_blank'); return false;">How to use
+	</button>
+
+<b><{$qa}></b>
+
+<a name="top"></a>
+
+  <!-- bread area -->
+  <div class="area-bread-crumb-path">
+    <a href="<{$mod_url}>/"><{$smarty.const.STF_LABEL_RECEPTION}></a> &gt; <{$smarty.const.STF_LABEL_CUSTOMIZE}>
+  </div>
+  <!-- page title -->
+  <h1 class="h-pagetitle" style="float:left;"><{$resourceName}> <{$smarty.const.STF_LABEL_QA}></h1>
+  <div class="master-property"> <strong><{$smarty.const.STF_LABEL_LANGUAGES}>:</strong>
+  	  <{foreach from=$langList item=lang name=langs}>
+  	  	<{$lang[1]|escape}><{if $smarty.foreach.langs.last}><{else}>,<{/if}>
+  	  <{/foreach}>
+  <br />
+    <strong><{$smarty.const.STF_LABEL_CATEGORIES}>:</strong>
+
+      <{foreach from=$shopCategoryList->getEntities() item=category name=catloop}>
+
+  		<{$category->getMainExpression()|escape}>
+
+  	  <{/foreach}>
+
+   	<br />
+    <div style="white-space:nowrap">
+      <strong><{$smarty.const.STF_LABEL_DICTIONARIES}>:</strong>
+      <ul id="glossaries">
+      <{foreach from=$dictionaries item=dictionary}>
+        <li><{$dictionary|escape}></li>
+      <{/foreach}>
+      </ul>
+      [<a href="javascript:glayerDictionaryShow('glayer', '<{$resourceName}>');"><{$smarty.const.STF_LABEL_LINK_DICTIONARY}></a>]
+    </div>
+  </div>
+
+  <div class="notification-part" style="visibility:hidden;" id="saveAlert"><{$smarty.const.STF_DESCRIPTION_SAVE}></div>
+
+  <div style="margin-bottom:8px;font-size: 80%;">
+    <div class="area-fl" style="margin-right:80px;"><{$smarty.const.STF_LABEL_SELECT_MENU}>
+    	<a href="javascript:void(0);" onclick="selectAll()"><{$smarty.const.STF_LABEL_SELECT_ALL}></a>
+    	 |
+    	<a href="javascript:void(0);" onclick="unSelectAll()"><{$smarty.const.STF_LABEL_UNSELECT_ALL}></a>
+    </div>
+    <div class="area-fl" style="margin-right:80px;"><{$smarty.const.STF_LABEL_DISPLAY_MENU}>
+		<a href="javascript:void(0);" onclick="displayAll()"><{$smarty.const.STF_LABEL_DISPLAY_ALL}></a>
+		 |
+		<a href="javascript:void(0);" onclick="displayChecked()"><{$smarty.const.STF_LABEL_DISPLAY_SELECTED}></a>
+	</div>
+    <div class="area-fr"><{$smarty.const.STF_LABEL_ANSWER_MENU}>
+    	<a href="javascript:void(0);" onclick="openAll();"><{$smarty.const.STF_LABEL_ANSWER_EXPAND_ALL}></a>
+    	 |
+    	<a href="javascript:void(0);" onclick="closeAll();"><{$smarty.const.STF_LABEL_ANSWER_COLLAPSE_ALL}></a>
+   	</div>
+    <br class="clear" />
+  </div>
+
+  <form name="qaUpdate" method="post" action="?action=update">
+  	<input type="hidden" value="<{$resourceName}>" name="resourceName">
+    <div id="qaListArea">
+      <{include file="db:storefront_config__list.html"}>
+    </div>
+  </form>
+
+  <div class="area-fr-p8">
+    <!-- -->
+    <a href="javascript:void(0);" onclick="updateQaForm();" class="btn-s">
+      <span class="btn-save"><{$smarty.const.STF_LABEL_SAVE}></span>
+    </a>
+    <!-- -->
+    <input id="currentPage" type="hidden" value="1" />
+    <a href="<{$mod_url}>/?action=list&page=<{$page}>" class="btn">
+      <span class="btn-cancel"><{$smarty.const.STF_LABEL_CANCEL}></span>
+    </a>
+  </div>
+
+  <div style="margin-top: 8px;"> <a href="#top" class="lnk-return2top"><{$smarty.const.STF_LABEL_TO_TOP}></a> </div>
+
+
+	<!--  over layer -->
+	<{include file="db:storefront_glayer_contents_upload.html"}>
+</div>
+
+<!-- ==================================================================================================== -->
+
+<script type="text/javascript" src="<{$mod_url}>/js/pager.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+/**
+ * Intialize binding of paging handler.
+ */
+Event.observe(window, "load", function() {
+		init_list();
+		closeAll();
+		// init paging links
+		var pager = new Pager("qaListArea", 5, init_list);
+
+		}
+);
+
+var Const = {
+		  Images : {
+		    loading : "<{$xoops_imageurl}>common/img/loading.gif?time=<{$smarty.now}>"
+		  }
+		};
+
+/**
+ * Post questions and answers available values.
+ */
+function updateQaForm() {
+	document.forms['qaUpdate'].submit();
+}
+
+function init_list() {
+}
+
+/**
+ * Set available value to hidden value,
+ * and control checkbox toggling by cascading model.
+ * @param qId qaQuestionId
+ */
+function handleQuestionValue(qId, myTd) {
+
+	// close warning display
+	if ($(qId).checked) {
+		warningElements = $$(".warning_" + qId);
+		for (i = 0 ;i < warningElements.length; i++) {
+			warningElements[i].style.display = "none";
+		}
+
+	}
+
+	// set hidden value for update.
+	// adding prefix indicates hidden parameter.
+	if ($(qId).checked) {
+		$("_" + qId).value = 0;// set hidden value
+		$(myTd).style.backgroundColor = "#CEDEFF";
+
+	}  else {
+		$("_" + qId).value = 1;// set hidden value
+		$(myTd).style.backgroundColor = "#f5f5f5";
+	}
+
+	elements = $$(".parentQaQuestionId_is_" + qId);
+	elementsTd = $$(".parentQaQuestionId_is_" + myTd);
+	for (j = 0 ;j < elements.length; j++) {
+		elements[j].checked = "checked";
+		if ($(qId).checked) {
+			elements[j].checked = "checked";
+			$("_" + elements[j].id).value = 0;// set hidden value
+			$(elementsTd[j].id).style.backgroundColor = "#CEDEFF";
+		} else {
+			elements[j].checked = "";
+			$("_" + elements[j].id).value = 1;// set hidden value
+			$(elementsTd[j].id).style.backgroundColor = "#f5f5f5";
+		}
+	}
+
+	showSaveAlert();
+
+}
+
+/**
+ * Count checked answers of a question.
+ * @param hrefObj anchor object
+ * @param qaQuestionId
+ * @param denominator of answers
+ */
+function countCheckedAnswers(qaQuestionId, denominator) {
+	var counter = 0;
+	var elements = $$(".parentQaQuestionId_is_" + qaQuestionId);
+	for (i = 0; i < elements.length; i++) {
+		if (elements[i].checked) {
+			counter++;
+		}
+	}
+	var linkId = "href_" + qaQuestionId;
+	$(linkId).innerHTML = "<{$smarty.const.STF_LABEL_ANSWER_COUNT}>(" + counter + "/" + denominator + ")";
+}
+
+
+/**
+ * Count checked answers of a question.
+ * @param hrefObj anchor object
+ * @param qaQuestionId
+ * @param denominator of answers
+ */
+function countCheckedAnswersRegExp(qaQuestionId,flag) {
+	var linkId = "href_" + qaQuestionId;
+
+	var ansStr = $(linkId).innerHTML;
+
+	var limitNum = ansStr.match(/\/\d+/i).toString();
+	var limitNum = limitNum.match(/\d+/i);
+
+	var htmlString = "<{$smarty.const.STF_LABEL_ANSWER_COUNT}>(0/" + limitNum + ")";
+
+	if (flag == "set"){
+		htmlString = "<{$smarty.const.STF_LABEL_ANSWER_COUNT}>(" + limitNum + "/" + limitNum + ")";
+	}
+
+	$(linkId).innerHTML = htmlString;
+}
+
+
+/**
+ * Set available value to hidden value.
+ *
+ * @para qId parent qaQuetionId
+ * @param aId qaAnswerId
+ * @param warningId id indicates warning display position
+ */
+function handleAnswerValue(qId, aId, warningId,myTd) {
+
+	// TODO if answer is checked when parent question is no checked,then show alert.
+	if(!validate(qId)) {
+		$(warningId).style.display = "block";
+		$(aId).checked = "";
+		return;
+	}
+
+	// set hidden value for update.
+	// adding prefix indicates hidden parameter.
+	if ($(aId).checked) {
+		$("_" + aId).value = 0;
+		$(myTd).style.backgroundColor = "#CEDEFF";
+	}  else {
+		$("_" + aId).value = 1;
+		$(myTd).style.backgroundColor = "#f5f5f5";
+	}
+
+	showSaveAlert();
+
+}
+
+/**
+ * When parameters are chenged.
+ * save alert look up.
+ *
+ */
+function showSaveAlert(){
+
+	if ($("saveAlert").style.visibility == "hidden"){
+
+		$("saveAlert").style.visibility = "visible";
+
+	}
+
+}
+
+
+/**
+ * Check if parent question is checked
+ * when answer is checked.
+ *
+ * @param qId qaQuestionId
+ */
+function validate(qId) {
+	return $(qId).checked ? true : false;
+}
+
+/**
+ * Toggle expression display.
+ */
+function toggleExpression() {
+
+}
+
+var ZOOM_WINDOW = $H({
+    left:0,
+    top:0,
+    width:940,
+    height:720,
+    status:0,
+    scrollbars:1,
+    menubar:0,
+    location:0,
+    toolbar:0,
+    resizable:0
+});
+
+
+/**
+ * Show image/google map on pop up window.
+ *
+ * @param int shopAnswerContentId
+ * @param string contentType image or google map
+ */
+function showZoom(shopAnswerContentId, contentType) {
+
+	var actionName;
+	if (contentType == "image") {
+		actionName = "image";
+	} else if (contentType == "google_map") {
+		actionName = "_map"
+	}
+
+    if(shopAnswerContentId) {
+      var params = $H({
+                    "action" : actionName,
+                    "contentId" : shopAnswerContentId
+      });
+      params = params.map(function(e) { return e[0] + "=" + e[1]; }).join("&");
+      var windowParam = ZOOM_WINDOW.map(function(e) { return e[0] + "=" + e[1]; }).join(",");
+      window.open("<{$mod_url}>/answer_content/?" + params, "zoomWindow", windowParam);
+    }
+}
+
+
+/**
+ * Check content area is ouupied or empty,
+ * if empty then show upload button,
+ * if occupied then diable upload button.
+ * @param contentUpdateAreaId
+ */
+function validateUpdatable(showAnswerId,contentUpdateAreaId,insertFlg) {
+	var contentAmount = 2;
+	var contentUpdateArea = contentUpdateAreaId.substr(0, contentUpdateAreaId.indexOf("-"));
+	var isEmpty = false;
+
+	// get available content update area
+	for (i = 1 ; i <= contentAmount; i++) {
+		if(! $(contentUpdateArea + "-" + i).down().visible()) {
+			// answer content is empty
+			isEmpty = true;
+		}
+	}
+
+	if (isEmpty) {
+		// set upload button abled
+		$(contentUpdateArea).className = "btn";
+		$(contentUpdateArea).disabled = false;
+		$(contentUpdateArea).href = "javascript:glayerShow(\'glayer\', \'" + showAnswerId +  "\', \'ac" + showAnswerId +"\');";
+	} else {
+		// set upload button disabled
+		$(contentUpdateArea).className = "btn-disable";
+		$(contentUpdateArea).disabled = true;
+		$(contentUpdateArea).href = "javascript:;"
+	}
+}
+
+/**
+ * Delete content identified by argument(shopAnswerContentId).
+ * @param shopAnswerContentId
+ * @param contentType image/google map
+ * @param contentUpdateAreaId content update area
+ */
+function deleteContent(shopAnswerContentId, contentType, contentUpdateAreaId) {
+	if (confirm("<{$smarty.const.STF_MESSAGE_DELETE}>")){
+
+		var shopAnswerId = contentUpdateAreaId.match(/ac\d+/i);
+		shopAnswerId = shopAnswerId.toString().match(/\d+/i);
+	    var params = "shopAnswerContentId=" + shopAnswerContentId + "&contentType=" + contentType;
+	    new Ajax.Updater(contentUpdateAreaId,
+	                     "<{$mod_url}>/answer_content/?action=_delete",
+	                     {method:"get",
+	                      parameters: params,
+	                      evalScripts:true,
+	                      onSuccess:function() {
+	                                    $(contentUpdateAreaId).innerHTML = ""; // set empty code in content update are
+	                                },
+                          onComplete:function () {
+	                                	validateUpdatable(shopAnswerId,contentUpdateAreaId,false);
+	                                }
+	                      });
+	}
+}
+
+/**
+ * Set all checkbox selected.
+ */
+function selectAll() {
+	var formElements = document.forms["qaUpdate"];
+
+	var idStr;
+
+	for (i = 0; i < formElements.length; i++) {
+		if(formElements[i].type == "checkbox") {
+
+			formElements[i].checked = true;
+			idStr = formElements[i].id;
+			$(idStr + "-td").style.backgroundColor = "#CEDEFF"
+
+			if (idStr.match(/q/g)){
+
+				countCheckedAnswersRegExp(idStr,'set');
+
+			}
+
+		}
+	}
+}
+
+/**
+ * Set all checkbox unselected.
+ */
+function unSelectAll() {
+	var formElements = document.forms["qaUpdate"];
+
+	var idStr;
+
+	for (i = 0; i < formElements.length; i++) {
+		if(formElements[i].type == "checkbox") {
+
+			formElements[i].checked = false;
+			idStr = formElements[i].id;
+			$(idStr + "-td").style.backgroundColor = "#F5F5F5"
+
+			if (idStr.match(/q/g)){
+
+				countCheckedAnswersRegExp(idStr,'unset');
+
+			}
+		}
+	}
+}
+
+/**
+ * Open(show) all answers.
+ */
+function openAll() {
+	var elements = $$("." + "lnk-close");
+	for (i = 0; i < elements.length; i++) {
+
+		// call bind function(showAnswers('each_q_qId'))
+		elements[i].onclick();
+	}
+}
+
+/**
+ * Close(hide) all answers.
+ */
+function closeAll() {
+	var elements = $$("." + "lnk-open");
+	for (i = 0; i < elements.length; i++) {
+
+		// call bind function(showAnswers('each_q_qId'))
+		elements[i].onclick();
+	}
+}
+
+/**
+ * Display all questions and answers.
+ */
+function displayAll() {
+	var formElements = document.forms["qaUpdate"];
+
+	var idStr;
+
+	for (i = 0; i < formElements.length; i++) {
+		if (formElements[i].type == "checkbox") {
+			if (formElements[i].checked == false) {
+				var qaElements = $$("." + formElements[i].id);
+				for (j = 0; j < qaElements.length; j++) {
+
+					// WANING if you set "block" value, then table design is collapsed.
+					qaElements[j].style.display = "";
+
+					idStr = formElements[i].id;
+					if(idStr.match(/q\d+/g)){
+
+						$("href_" + idStr).className = "lnk-open";
+
+					}else{
+						idStr = formElements[i].name;
+						if(idStr.match(/qa_answer/g)){
+							idStr = idStr.toString().match(/qa_answer\[\d+/i);
+							idStr = idStr.toString().match(/\d+/i);
+							$("href_q" + idStr).className = "lnk-open";
+
+						}
+					}
+
+				}
+			}
+		}
+	}
+}
+
+function showAnswer2(anchor) {
+	$(anchor).hide();
+	$(anchor).next(".lnk-close").show();
+	$(anchor).next(".answers-table").show();
+}
+
+function hideAnswer2(anchor) {
+	$(anchor).hide();
+	$(anchor).previous(".lnk-open").show();
+	$(anchor).next(".answers-table").hide();
+}
+
+function showAnswerAll() {
+	var pageContainer = $$(".list-page").detect(function(e){ return e.visible() });
+	pageContainer.select(".lnk-open").each(showAnswer2);
+}
+
+function hideAnswerAll() {
+	var pageContainer = $$(".list-page").detect(function(e){ return e.visible() });
+	pageContainer.select(".lnk-close").each(hideAnswer2);
+}
+
+
+/**
+ * Display checked questions and answers only.
+ */
+function displayChecked() {
+	var formElements = document.forms["qaUpdate"];
+
+	var idStr;
+
+	for (i = 0; i < formElements.length; i++) {
+		if (formElements[i].type == "checkbox") {
+			if (formElements[i].checked == false) {
+				var qaElements = $$("." + formElements[i].id);
+				for (j = 0; j < qaElements.length; j++) {
+					qaElements[j].style.display = "none";
+
+					idStr = formElements[i].name;
+					if(idStr.match(/qa_answer/g)){
+						idStr = idStr.toString().match(/qa_answer\[\d+/i);
+						idStr = idStr.toString().match(/\d+/i);
+						$("href_q" + idStr).className = "lnk-close";
+
+					}
+
+				}
+			}
+		}
+	}
+}
+
+/**
+ * Show or hide answers linked to a question.
+ * @param eachQQid identification of a question's answer
+ */
+function showAnswers(ob, eachQQid) {
+
+	var elements = $$("." + eachQQid);
+
+	if (ob.className == "lnk-open") {
+		ob.className = "lnk-close";
+
+		for (index = 0; index < elements.length; index++) {
+			Element.hide(elements[index]);
+		}
+
+	} else if (ob.className == "lnk-close") {
+		ob.className = "lnk-open";
+
+		for (index = 0; index < elements.length; index++) {
+			Element.show(elements[index]);
+		}
+
+	}
+/*
+	for (index = 0; index < elements.length; index++) {
+		Element.toggle(elements[index]);
+	}
+*/
+}
+
+/**
+ * Change main language
+ * @param page page number
+ * @param selectValue select language code
+ */
+function changeMainExpression(page, perPage, selectValue,lastValue) {
+
+	if($("saveAlert").style.visibility == "visible"){
+
+		if (confirm("<{$smarty.const.STF_MESSAGE_CHANGE_LANG}>")){
+			location.href = "?action=list&page=" + page + "&mainLanguage=" + selectValue + "&subLanguage=<{$subLanguage}>&resourceName=<{$resourceName}>&perPage=" + perPage;
+		}else{
+
+			$("mainLangSelectBox").value=lastValue;
+		}
+	}else{
+		location.href = "?action=list&page=" + page + "&mainLanguage=" + selectValue + "&subLanguage=<{$subLanguage}>&resourceName=<{$resourceName}>&perPage=" + perPage;
+	}
+}
+
+/**
+ * Change sub language
+ * @param page page number
+ * @param selectValue select language code
+ */
+function changeSubExpression(page, perPage, selectValue,lastValue) {
+	if($("saveAlert").style.visibility == "visible"){
+		if (confirm("<{$smarty.const.STF_MESSAGE_CHANGE_LANG}>")) {
+			location.href = "?action=list&page=" + page + "&mainLanguage=<{$mainLanguage}>&subLanguage=" + selectValue + "&resourceName=<{$resourceName}>&perPage=" + perPage;
+		}else{
+
+			$("subLangSelectBox").value=lastValue;
+
+		}
+	}else{
+		location.href = "?action=list&page=" + page + "&mainLanguage=<{$mainLanguage}>&subLanguage=" + selectValue + "&resourceName=<{$resourceName}>&perPage=" + perPage;
+	}
+}
+
+//]]>
+</script>
+

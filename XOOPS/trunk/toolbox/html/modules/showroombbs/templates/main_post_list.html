@@ -1,0 +1,313 @@
+<{include file="db:`$mydirname`_base_top.html" forumId=$forum->getId() categoryId=$category->getId() activeTab=0}>
+<script type="text/javascript">
+var topicId = <{$topic->getId()}>;
+var offset = <{$offset|escape}>;
+var limit = <{$limit|escape}>;
+var timestamp = <{$timestamp|escape}>;
+var results = <{$aResults}>;
+var users = [];
+<{foreach from=$onlineUsers key=key item=item}>
+users.push({
+	id : '<{$item.id}>'
+});
+<{/foreach}>
+</script>
+<input type='hidden' id='moduleId' value='forum'>
+<input type='hidden' id='screenId' value='post_list'>
+<div id="pull-refresh-controllers-wrapper">
+	<table class="pull-refresh-controllers">
+	<tr>
+		<td>
+			<button id="bbs-pull-refresh" class="toolbox-common-button toolbox-common-button-disabled"><{$smarty.const._MD_D3FORUM_COMMON_PULL_REFRESH}></button>
+			<label class="bbs-pull-radio-label"><input class="bbs-pull-radio-button" name="load_type" value="auto" type="radio" /> <{$smarty.const._MD_D3FORUM_COMMON_PULL_AUTO_UPDATE}></label>
+			<label class="bbs-pull-radio-label"><input class="bbs-pull-radio-button" name="load_type" value="manual" type="radio" checked="checked" /> <{$smarty.const._MD_D3FORUM_COMMON_PULL_MANUAL_UPDATE}></label>
+		</td>
+		<td>
+	<div id="bbs-online-users-area">
+		<{*assign var=width value=($onlineUsers|count)*120*}>
+		<table id="bbs-online-users-area-table" style="width: <{$userTableWidth}>px;"><tr>
+		<{foreach from=$onlineUsers key=key item=item}>
+			<td>
+				<{if $item.fullName}>
+					<{assign var=username value=$item.fullName}>
+				<{else}>
+					<{assign var=username value=$item.name}>
+				<{/if}>
+				<a target="_blank" href="<{$xoops_url}>/userinfo.php?uid=<{$item.id}>"><img title="<{$username|escape}>" alt="<{$username|escape}>" src="<{$item.icon}>" width="30" /></a>
+			</td>
+		<{/foreach}>
+		</tr></table>
+	</div>	</td>
+	</tr>
+	</table>
+</div>
+<div id="topic_path" style="float:left;">
+	<ol>
+		<li><a href="./"><{$smarty.const._MD_D3FORUM_RETURN_COMMUNITY_TOP}></a></li>
+		<li><a href="./?categoryId=<{$category->getId()|escape}>"><{$category->getTitle()|escape}></a></li>
+		<li><a href="./?forumId=<{$forum->getId()|escape}>"><{$forum->getTitle()|escape}></a></li>
+		<li><{$topic->getTitle()|escape}></li>
+	</ol>
+</div>
+<{include file="db:`$mydirname`_search_box.html" topicId=$topic->getId() forumId=$forumId categoryId=$categoryId}>
+<div class="contents_title">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="19" class="title_l"></td>
+			<td class="title_m"><{$topic->getTitle()|escape}></td>
+			<td width="19" class="title_r"></td>
+		</tr>
+	</table>
+</div>
+<div class="topic_title bbs-composite-descritpion-box clearfix"  style="width:100%;">
+	<h2 class="bbs-composite-descritpion-area"><{*$topic->getTitle()|escape*}></h2>
+		<ul class="btn_set01" style="margin-bottom: 0; margin-right:4px;">
+		<{if $permission->isAdmin()}>
+			<li>
+				<a href="./?page=topic-delete&topicId=<{$topic->getId()|escape}>">
+					<div class="btn_gray01">
+						<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_DELETE_TOPIC}></span>
+					</div>
+				</a>
+			</li>
+		<{/if}>
+		<{if $permission->topicEdit()}>
+			<li>
+				<form action="<{$mod_url}>/?page=preview" method="post" name="editLinkForm">
+				<input type="hidden" name="type_code" value="topic_edit" />
+				<input type="hidden" name="id" value="<{$topic->getId()|escape}>" />
+					<a href="#" onclick="document.editLinkForm.submit(); return false;">
+						<div class="btn_blue01">
+							<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_EDIT}></span>
+						</div>
+					</a>
+				</form>
+			</li>
+		<{elseif $permission->topicModify()}>
+			<li>
+				<a href="./?page=topic-modify&topicId=<{$topic->getId()|escape}>">
+					<div class="btn_blue01">
+						<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_MODIFY_TOPIC}></span>
+					</div>
+				</a>
+			</li>
+		<{/if}>
+	</ul>
+</div>
+<div class="bbs-pager-wrapper">
+<{if $pager->getTotalPages() >= 2}>
+<div class="page_index">
+	<div class="bbs-pager">
+		<ul class="clearfix" style="width: <{$pager->getTotalPages()*40+200}>px;">
+			<{if $pager->hasPreview()}>
+				<li><a href="./?topicId=<{$topic->getId()|escape}>&page=<{$pager->getPreviewNumber()}>&view=<{$view}>">&lt;&lt; Previous</a></li>
+			<{/if}>
+			<{foreach from=$pager->toArray() key=key item=item}>
+				<li>
+				<{if $item == 'CURRENT'}>
+					<span><{$pager->getCurrentPage()}></span>
+				<{elseif $item == 'SKIP'}>
+					<span>...</span>
+				<{else}>
+					<a href="./?topicId=<{$topic->getId()|escape}>&page=<{$item}>&view=<{$view}>"><{$item}></a>
+				<{/if}>
+				</li>
+			<{/foreach}>
+			<{if $pager->hasNext()}>
+				<li><a href="./?topicId=<{$topic->getId()|escape}>&page=<{$pager->getNextNumber()}>&view=<{$view}>">Next &gt;&gt;</a></li>
+			<{/if}>
+		</ul>
+	</div>
+</div>
+<{/if}>
+</div>
+<div class="list_table01 bbs-post-list-add-message-wrapper">
+		<table id="bbs-post-list-table" border="0" cellspacing="0" cellpadding="0">
+			<{foreach from=$posts item=post}>
+			<{assign var='user' value=$post->getUser()}>
+					<tr class="bbs-post-header" id="post-number-<{$post->getNumber()}>">
+						<td class="list_line01" style="padding:1px 0px; width:65%;">
+							<img width="30" src="<{$post->getAvatar()}>" style="vertical-align:middle;">
+							<{$post->getNumber()}>: <a href="<{$xoops_url}>/userinfo.php?uid=<{$user->getId()}>">
+				<{$user->getName()}>
+				</a> (<{$post->getOriginalLanguageName()|escape}>)
+							<{$smarty.const._MD_D3FORUM_ON}>
+							<{$post->getTime()}>
+				<{if $post->postedFiles}>
+					<a href="javascript:void(0)" class="DownloadFileButton" id="DownloadFileButton-<{$post->getId()}>">
+					<img src="images/attach_icon.gif" alt="<{$smarty.const._MD_D3FORUM_ATACCHED_FILELIST}>" id="DownloadImage-<{$post->getId()}>"  style="vertical-align:middle;" />
+					</a>
+				<{/if}>
+				<{if $post->isReply()}>
+					&nbsp;&nbsp;
+					<{if $post->getReplyPage($view) == $pager->getCurrentPage()}>
+						<a href="<{$xoops_requesturi}>#post-number-<{$post->getReplyNumber()}>">
+					<{else}>
+						<a href="?topicId=<{$post->getTopicId()}>&page=<{$post->getReplyPage($view)}>#post-number-<{$post->getReplyNumber()}>">
+					<{/if}>
+					&gt;&gt; <{$post->getReplyNumber()}></a>
+				<{/if}>
+
+				<span style="color: #f00;" id="bbs-update-<{$post->getId()}>"></span>
+							</td>
+				<td class="list_line01" style="padding:1px 0px; width:35%;">
+					<ul class="btn_set01"style="margin-bottom: 0;">
+						<{if $post->canDelete() && !$permission->isGuest()}>
+											<li>
+											<a href="<{$mod_url}>/?page=post-delete&postId=<{$post->getId()}>">
+													<div class="btn_gray01">
+															<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_POSTDELETE}></span>
+													</div>
+												</a>
+												</li>
+						<{/if}>
+						<{if false && $post->canEdit() && !$permission->isGuest()}>
+							<li>
+								<form action="<{$mod_url}>/?page=preview" method="post" name="editMessageLinkForm<{$post->getId()|escape}>">
+								<input type="hidden" name="type_code" value="post_edit" />
+								<input type="hidden" name="id" value="<{$post->getId()|escape}>" />
+									<a href="#" onclick="document.editMessageLinkForm<{$post->getId()|escape}>.submit(); return false;">
+										<div class="btn_blue01">
+											<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_POSTEDIT}></span>
+										</div>
+									</a>
+								</form>
+							</li>
+						<{/if}>
+						<{if false && $post->canModify() && !$permission->isGuest()}>
+						<li>
+						<a href="<{$mod_url}>/?page=post-modify&postId=<{$post->getId()}>">
+													<div class="btn_blue01">
+															<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_POST_TRANSLATION_MODIFY}></span>
+													</div>
+													</a>
+													</li>
+						<{/if}>
+						<{if false && $post->canReply() && !$permission->isGuest()}>
+											<li>
+								<form action="<{$mod_url}>/?page=preview" method="post" name="replyMessageLinkForm<{$post->getId()|escape}>">
+								<input type="hidden" name="type_code" value="post_reply" />
+								<input type="hidden" name="id" value="<{$post->getId()|escape}>" />
+									<a href="#" onclick="document.replyMessageLinkForm<{$post->getId()|escape}>.submit(); return false;">
+										<div class="btn_blue01">
+											<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_POSTREPLY}></span>
+										</div>
+									</a>
+								</form>
+
+											<{*
+											<a href="<{$mod_url}>/?page=post-reply&postId=<{$post->getId()}>">
+													<div class="btn_blue02">
+															<span style="text-align:center; width:60px; padding: 2px 0;"><{$smarty.const._MD_D3FORUM_POSTREPLY}></span>
+													</div>
+												</a>
+												*}>
+												</li>
+						<{/if}>
+									</ul>
+				</td>
+					</tr>
+			<tr id="post-body-number-<{$post->getNumber()}>">
+				<td colspan="2">
+					<{if $post->isDeleted() || $post->isNotTranslated() == false}>
+						<span class="bbs-invalid-post"><{$post->getBody()|escape|nl2br}></span>
+					<{else}>
+						<{$post->getBody()|escape|nl2br}>
+					<{/if}>
+				</td>
+			</tr>
+		<{/foreach}>
+		</table>
+</div>
+<div class="bbs-pager-wrapper">
+<{if $pager->getTotalPages() >= 2}>
+<div class="page_index" style="clear: both;">
+	<div class="bbs-pager" style="padding-top: 15px;">
+		<ul class="clearfix" style="width: <{$pager->getTotalPages()*40+200}>px;">
+			<{if $pager->hasPreview()}>
+				<li><a href="./?topicId=<{$topic->getId()|escape}>&page=<{$pager->getPreviewNumber()}>&view=<{$view}>">&lt;&lt; Previous</a></li>
+			<{/if}>
+			<{foreach from=$pager->toArray() key=key item=item}>
+				<li>
+				<{if $item == 'CURRENT'}>
+					<span><{$pager->getCurrentPage()}></span>
+				<{elseif $item == 'SKIP'}>
+					<span>...</span>
+				<{else}>
+					<a href="./?topicId=<{$topic->getId()|escape}>&page=<{$item}>&view=<{$view}>"><{$item}></a>
+				<{/if}>
+				</li>
+			<{/foreach}>
+			<{if $pager->hasNext()}>
+				<li><a href="./?topicId=<{$topic->getId()|escape}>&page=<{$pager->getNextNumber()}>&view=<{$view}>">Next &gt;&gt;</a></li>
+			<{/if}>
+		</ul>
+	</div>
+</div>
+<{/if}>
+</div>
+<div class="page_num03">
+		<a href="#"><{$smarty.const._MD_D3FORUM_RETURN_PAGE_TOP}></a>
+</div>
+<{*
+<div class="title_bg01"><{$smarty.const._MD_D3FORUM_POSTASCOMMENTTOP}></div>
+*}>
+<{if false && !$permission->isGuest() }>
+<div class="list_table02" style="width: 200px;">
+				<form action="<{$mod_url}>/?page=preview" method="post" name="createMessageLinkForm">
+			<input type="hidden" name="topicId" value="<{$topic->getId()|escape}>" />
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+					<tr>
+						<td style="border:0; background:#fff;">
+								<textarea style="display:none;" name="message" cols="60" rows="6" id="source-text-area"></textarea>
+					<div id="result-text-area">
+					</div>
+				</td>
+					</tr>
+			</table>
+<div class="clearfix">
+<div id="bbs-splash">
+	<span style="display: none;">
+		<img src="<{$xoops_imageurl}>common/img/loading.gif" /> <{$smarty.const._MD_D3FORUM_NOW_TRANSLATING}>
+	</span>
+</div>
+			<ul class="btn_set01" style="float: left !important; margin-bottom: 0;">
+										<li>
+				<input type="hidden" name="type_code" value="post_create" />
+				<input type="hidden" name="id" value="<{$topic->getId()|escape}>" />
+				<button style="margin-bottom: -50px; position: relative; top: -50px;" class="bbs-common-button-component" onclick="document.createMessageLinkForm.submit(); return false;">
+				<{$smarty.const._MD_D3FORUM_COMMON_NEW_POST}>
+				</button>
+							 </li>
+</ul>
+</div>
+</form>
+</div>
+<{/if}>
+</div>
+<script type="text/javascript">
+	var FileListHash={
+		<{foreach from=$posts item=post name=listLoop}>
+			<{$post->getId()}>:[
+			<{section name=dataLoop loop=$post->postedFiles}>
+
+						{
+							ID:"<{$post->postedFiles[dataLoop].id}>",
+							FileName:"<{$post->postedFiles[dataLoop].file_name}>",
+							FileSize:"<{$post->postedFiles[dataLoop].file_size}>"
+						<{if $smarty.section.dataLoop.last}>
+						}
+						<{else}>
+						},
+						<{/if}>
+			<{/section}>
+
+			<{if $smarty.foreach.listLoop.last}>
+				]
+			<{else}>
+				],
+			<{/if}>
+		<{/foreach}>
+	};
+</script>
+<{include file="db:`$mydirname`_base_footer.html"}>

@@ -1,0 +1,6 @@
+<?php
+class ServiceGridDefaultDictionarySetting{
+	private $settingId;	private $userId;	private $setId;	private $createDate;	private $editDate;	private $deleteFlag;
+	public function getSettingId() {		return $this->settingId;	}	public function getUserId() {		return $this->userId;	}	public function getSetId() {		return $this->setId;	}	public function getCreateDate() {		return $this->createDate;	}	public function getEditDate() {		return $this->editDate;	}	public function getDeleteFlag() {		return $this->deleteFlag;	}	public function setSettingId($settingId) {		$this->settingId = $settingId;	}	public function setUserId($userId) {		$this->userId = $userId;	}	public function setSetId($setId) {		$this->setId = $setId;	}	public function setCreateDate($createDate) {		$this->createDate = $createDate;	}	public function setEditDate($editDate) {		$this->editDate = $editDate;	}	public function setDeleteFlag($deleteFlag) {		$this->deleteFlag = $deleteFlag;	}
+}
+?>

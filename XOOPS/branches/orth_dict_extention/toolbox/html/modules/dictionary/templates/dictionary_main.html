@@ -1,0 +1,42 @@
+<script type="text/javascript">
+<{include file="db:php2js.html"}>
+</script>
+<style type="text/css">
+<{include file="db:resources_style.html"}>
+</style>
+<div id="tab_set">
+	<div id="tab_box">
+		<a>
+			<ul id="panetab1" class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$dictionary_type_name}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<div id="contents_body" class="<{$mode}>">
+	<div id="pane1">
+		<{include file="db:create_dictionary.html"}>
+	</div>
+	<div id="pane2" style="display: none;">
+		<{include file="db:search_dictionary.html"}>
+	</div>
+	
+
+	<!-- popup dialog frame -->
+	<div id="light-popup-panel-wrapper" style="display: none;">
+		<div class="contents-frame">
+			<div class="contents-container">
+			</div>
+		</div>
+		<div class="filter"></div>	
+	</div>
+	
+	<!-- supported Languages -->
+	<ul style="display: none;" id="supportedLanguages">
+		<{foreach from=$supportedLanguages item=langName key=langTag}>
+		<li><input type="hidden" name="<{$langTag}>" value="<{$langName}>"></li>
+		<{/foreach}>
+	</ul>
+</div>

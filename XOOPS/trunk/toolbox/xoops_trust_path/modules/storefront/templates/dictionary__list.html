@@ -1,0 +1,47 @@
+
+<div class="area-popup" style="width:300px;">
+  <div class="area-fl-p4"><{$smarty.const.STF_LABEL_DICTIONARY_SETTING}></div>
+  <div class="area-fr"><a href="javascript: glayerHidden('glayer');" class="btn-popup-close">x</a></div>
+  <br class="clear" />
+  <div class="popup-pain" style="height:120px; text-align: left; overflow:auto;">
+    <form id="glossaryList" method="post">
+      <{html_checkboxes name="user_dict_ids" output=$glossaryDictionaryList values=$glossaryDictionaryList
+          selected=$glossaryCheckedDictionaryList labels=true separator="<br/>"}>
+      
+      <input type="hidden" name="resourceName" value="<{$resourceName}>" />
+    </form>
+  </div>
+  <div class="area-fr" style="padding-top:8px;">
+    <!-- -->
+    <a href="javascript:goCategoryList();" class="btn-s"><span class="btn-save"><{$smarty.const.STF_LABEL_SAVE}></span></a>
+    <!-- -->
+    <a href="javascript: glayerHidden('glayer');" class="btn"><span class="btn-cancel"><{$smarty.const.STF_LABEL_CANCEL}></span></a> </div>
+  <br class="clear" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+	goCategoryList = function () {
+		var params = Form.serialize("glossaryList");
+		params += "&action=_save";
+		params += "&mode=STORE_FRONT";
+
+		new Ajax.Request(
+			"<{$smarty.const.XOOPS_MODULE_URL}>/storefront/dictionary/",
+			{
+				method : "post",
+				parameters : params,
+				evalScripts : true,
+				onSuccess : function(xhr) {
+					var glossaries = $("glossaries").update();
+
+					$A(xhr.responseText.split(",")).each(function(dictionary) {
+						glossaries.insert(new Element("li").update(dictionary));
+					});
+
+		            glayerHidden('glayer');
+				}
+			});
+	}
+//]]>
+</script>

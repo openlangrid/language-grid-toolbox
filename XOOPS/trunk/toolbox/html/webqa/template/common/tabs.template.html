@@ -1,0 +1,19 @@
+				<{if ! $howToUse}><div style="height: 26px; margin: 2px 0px;"> </div><{/if}>
+				<div id="tab_set">
+					<div id="tab_box">
+						<a href="./">
+							<ul class="<{if $tabLeftOn}>tab_on<{else}>tab_off<{/if}>">
+								<li class="tab_l"></li>
+								<li class="tab_m"><span><{$smarty.const.WQA_COMMON_TAB_NAME_LIST}></span></li>
+								<li class="tab_r"></li>
+							</ul>
+						</a>
+						<a href="#" onclick="post_question(); return false;">
+							<ul class="<{if $tabLeftOn}>tab_off<{else}>tab_on<{/if}>">
+								<li class="tab_l"></li>
+								<li class="tab_m"><span><{$smarty.const.WQA_COMMON_TAB_NAME_POST}></span></li>
+								<li class="tab_r"></li>
+							</ul>
+						</a>
+					</div>
+				</div>

@@ -1,0 +1,380 @@
+<!-- dictionaries view -->
+<div id="dictionaries-container">
+	<h1><{$dictionary_type_name}></h1>
+	<a class="change-view" href="javascript: void(0)" onclick="showSearchView()">&gt; <{$smarty.const._MI_DICTIONARY_DICTIONARY_SEARCH}></a>
+	<div class="clearfix"></div>
+	
+	<ul class="nav">
+		<li class="create"><button type='button'><span><{$smarty.const._MI_DICTIONARY_CREATE}></span></button></li>
+		<li class="upload"><button type='button'><span><{$smarty.const._MI_DICTIONARY_IMPORT}></span></button></li>
+	</ul>
+	
+	<table id="table-dictionaries" style="display:none;">
+		<thead>
+			<tr>
+				<th class="resouce-name"><{$smarty.const._MI_DICTIONARY_NAME2}></th>
+				<th class="languages"><{$smarty.const._MI_DICTIONARY_LANGUAGES}></th>
+				<th class="read"><{$smarty.const._MI_DICTIONARY_READ}></th>
+				<th class="edit"><{$smarty.const._MI_DICTIONARY_EDIT}></th>
+				<th class="service"><{$smarty.const._MI_DICTIONARY_SERVICE}></th>
+				<th class="creator"><{$smarty.const._MI_DICTIONARY_USER}></th>
+				<th class="last-update"><{$smarty.const._MI_DICTIONARY_LAST_UPDATE}></th>
+				<th class="entries"><{$smarty.const._MI_DICTIONARY_COUNTS}></th>
+				<th class="action">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+		<tfoot>
+			<tr>
+				<td colspan="9">
+					<span class="page-no">1 - 1 of 1</span>
+					<span class="limit-link">Number of results 5 | 10 | 20 | 50 | All</span>
+					<span class="page-link">&lt; Prev 1 Next &gt;</span>
+					<input type="hidden" name="perPage" value="10"/>
+					<input type="hidden" name="pageNo" value="1"/>
+				</td>
+			</tr>
+		<tfoot>
+	</table>
+	
+	<a class="return2top" href="#"><{$smarty.const._MI_DICTIONARY_RETURN_TO_TOP}></a>
+	
+	<p class="indicator" style="visibility: hidden;">
+		<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height="25" />
+	</p>
+	
+	<input type="hidden" name="typeId" value="<{$typeId}>">
+</div>
+<!-- /dictionaries view -->
+
+
+<!-- words view -->
+<div id="words-container" style="display: none;">
+	<a href="" style="text-align: left;"><{$dictionary_type_name}></a> &gt;<div class="clearfix"></div>
+	<h1>words</h1>
+	<a class="change-view" href="javascript: void(0)" onclick="if(WordsViewController.confirmDiscardChanges()){ showSearchView() }">&gt; <{$smarty.const._MI_DICTIONARY_DICTIONARY_SEARCH}></a>
+	<div class="clearfix"></div>
+	
+	<form onsubmit="return false;">
+	
+		<p class="dictionary-properties">
+			<label>languages:</label>
+			<span class="languages"></span>
+		</p>
+		
+		<div class="messages">
+			<p class="save-finished" style="display: none;"><{$smarty.const._MI_DICTIONARY_STATUS_DICTIONARY_SAVED}></p>
+			<p class="delete-record-finished" style="display: none;"><{$smarty.const._MI_DICTIONARY_STATUS_RECORD_DELETED}></p>
+		</div>
+		
+		<div class="clearfix"></div>
+		
+		<ul class="nav fleft">
+			<li class="save"><button type='button' class='disabled'><span><{$smarty.const._MI_DICTIONARY_SAVE}></span></button></li>
+			<li class="close"><button type='button'><span><{$smarty.const._MI_DICTIONARY_CLOSE}></span></button></li>
+		</ul>
+		
+		<ul class="nav">
+			<li class="create add"><button type='button' class='disabled'><span><{$smarty.const._MI_DICTIONARY_ADD_RECORD}></span></button></li>
+			<li class="create add-language"><button type='button' class='disabled'><span><{$smarty.const._MI_DICTIONARY_ADD_LANGUAGE}></span></button></li>
+			<!-- <li><a href="javascript: void(0);"><span id="de_lan_icon"><{$smarty.const._MI_DICTIONARY_DELETE_LANGUAGE}></span></a></li>-->
+		</ul>
+		
+		<table id="table-words">
+			<thead></thead>
+			<tbody></tbody>
+			<tfoot>
+				<tr>
+					<td>
+						<span class="page-no">1 - 1 of 1</span>
+						<span class="limit-link">Number of results 5 | 10 | 20 | 50 | All</span>
+						<span class="page-link">&lt; Prev 1 Next &gt;</span>
+						<input type="hidden" name="perPage" value="10"/>
+						<input type="hidden" name="pageNo" value="1"/>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		
+		<a class="return2top" href="#"><{$smarty.const._MI_DICTIONARY_RETURN_TO_TOP}></a>
+		
+		<input type="hidden" name="dictionaryId" value="">
+		<input type="hidden" name="typeId" value="<{$typeId}>">
+		<input type="hidden" name="updateDate" value="">
+		<p class="indicator" style="visibility: hidden;">
+			<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height="25" />
+		</p>
+		<button style="display: none;" onclick='WordsViewController.Table.afterEditCell()'></button>
+	</form>
+</div>
+<!-- /words view -->
+
+<!-- dummy frame for ajax file upload -->
+<iframe id="dummyframe" name="dummyframe" style="display: none;"></iframe>
+
+
+<!-- templates -->
+<div id="templates" style="display: none;">
+	<!-- pop-menu -->
+	<div class="dictionaries">
+		<ul class="pop-menu">
+			<li class="load enabled"><a href='javascript:DictionariesViewController.Table.load(#{id})'><{$smarty.const._MI_DICTIONARY_LOAD}></a></li>
+			<li class="load disabled"><span><{$smarty.const._MI_DICTIONARY_LOAD}></span></li>
+			<li class="download enabled"><a href='javascript:DictionariesViewController.Table.download(#{id})'><{$smarty.const._MI_DICTIONARY_EXPORT}></a></li>			
+			<li class="download disabled"><span><{$smarty.const._MI_DICTIONARY_EXPORT}></span></li>			
+			<li class="deploy enabled"><a href='javascript:DictionariesViewController.Table.deploy(#{id})'><{$smarty.const._MI_DICTIONARY_DEPLOY}></a></li>
+			<li class="deploy disabled"><span><{$smarty.const._MI_DICTIONARY_DEPLOY}></span></li>
+			<li class="undeploy enabled"><a href='javascript:DictionariesViewController.Table.undeploy(#{id})'><{$smarty.const._MI_DICTIONARY_UNDEPLOY}></a></li>
+			<li class="undeploy disabled"><span><{$smarty.const._MI_DICTIONARY_UNDEPLOY}></span></li>
+			<li class="remove enabled"><a href='javascript:DictionariesViewController.Table.remove(#{id})'><{$smarty.const._MI_DICTIONARY_REMOVE}></a></li>
+			<li class="remove disabled"><span><{$smarty.const._MI_DICTIONARY_REMOVE}></span></li>
+		</ul>
+	</div>
+	
+	<!-- create dialog -->
+	<div class="create-language-resource">
+	<form onsubmit='DialogViewController.CreateDictionary.create(); return false;'>
+		<h2><{$smarty.const._MI_DICTIONARY_CREATE_RESOURCE}></h2>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_COMMON_TYPE}></h3>
+		<p>
+			<span><{$dictionary_type_name}></span>
+			<input type="hidden" name="dictionaryTypeId" value="<{$typeId}>">
+		</p>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_COMMON_LANGUAGES}></h3>
+		<div class="clearfix">&nbsp;</div>
+		<ul>
+			<{foreach from=$selectableLanguages item=langName key=langTag}>
+			<li>
+				<label><span><input name="supportedLanguages[]" type="checkbox" value='<{$langTag}>' onChange="DialogViewController.CreateDictionary.toggleNormalizedLangs(this);" onClick="this.blur();this.focus();"> <{$langName}></span></label>
+				<input name="supportedLanguages[]" type="checkbox" value='<{$langTag}>-normalized' style="display: none;">
+			</li>
+			<{/foreach}>
+		</ul>
+	
+		<h3><{$smarty.const._MI_DICTIONARY_COMMON_RESOURCE_NAME}></h3>
+		<p><input type="text" name="dictionaryName" style="width: 280px;"></p>
+		<p><{$smarty.const._MI_DICTIONARY_COMMON_RESOURCE_NAME_RULE}></p>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_EDIT_PERMISSION}></h3>
+		<p>
+			<select name="editPermission" onchange='DialogViewController.CreateDictionary.onChangeEditPermission(this)' style="width: 280px;">
+				<option value="all" selected="selected"><{$smarty.const._MI_DICTIONARY_FOR_ALL_USERS}></option>
+				<option value="user"><{$smarty.const._MI_DICTIONARY_FOR_THE_CURRENT_USER_ONLY}></option>
+			</select>
+		</p>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_READ_PERMISSION}></h3>
+		<p>
+			<select name="viewPermission" class="edit-all" style="width: 280px;">
+				<option value="all"><{$smarty.const._MI_DICTIONARY_FOR_ALL_USERS}></option>
+				<option value="user" class="user"><{$smarty.const._MI_DICTIONARY_FOR_THE_CURRENT_USER_ONLY}></option>
+			</select>
+		</p>
+		
+		<div class="indicator" style="visibility: hidden;">
+			<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height="25" alt="" />
+			<{$smarty.const._MI_DICTIONARY_STATUS_CREATING_DICTIONARY}>
+		</div>
+		
+		<div class="action">
+			<button type="button" onclick='DialogViewController.CreateDictionary.create();'><{$smarty.const._MI_DICTIONARY_OK}></button>
+			<button type="button" onclick='DialogViewController.hide();'><{$smarty.const._MI_DICTIONARY_CANCEL}></button>
+		</div>
+	</form>
+	</div><!-- /.create-language-resource -->
+
+
+	<!-- import dialog -->
+	<div class="import-dictionary">
+	<form method="post" action="./?page=upload" enctype="multipart/form-data" target="dummyframe">
+		<h2><{$smarty.const._MI_DICTIONARY_IMPORT_RESOURCE}></h2>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_COMMON_FILE}></h3>
+		<p><input type="file" class="service-input2" name="dictfile" id="dictfile" size="34"></p>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_COMMON_TYPE}></h3>
+		<p>
+			<span><{$dictionary_type_name}></span>
+			<input type="hidden" name="dictionary_type" value="<{$typeId}>">
+		</p>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_COMMON_RESOURCE_NAME}></h3>
+		<p><input type="text" name="dictionary_name" style="width: 280px;"></p>
+		<p><{$smarty.const._MI_DICTIONARY_COMMON_RESOURCE_NAME_RULE}></p>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_EDIT_PERMISSION}></h3>
+		<p>
+			<select name="edit_permission" onchange='DialogViewController.ImportDictionary.onChangeEditPermission(this)' style="width: 280px;">
+				<option value="all" selected="selected"><{$smarty.const._MI_DICTIONARY_FOR_ALL_USERS}></option>
+				<option value="user"><{$smarty.const._MI_DICTIONARY_FOR_THE_CURRENT_USER_ONLY}></option>
+			</select>
+		</p>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_READ_PERMISSION}></h3>
+		<p>
+			<select name="view_permission" class="edit-all" style="width: 280px;">
+				<option value="all"><{$smarty.const._MI_DICTIONARY_FOR_ALL_USERS}></option>
+				<option value="user" class="user"><{$smarty.const._MI_DICTIONARY_FOR_THE_CURRENT_USER_ONLY}></option>
+			</select>
+		</p>
+		
+		<div class="indicator" style="visibility: hidden;">
+			<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height="25" alt="" />
+			<{$smarty.const._MI_DICTIONARY_STATUS_CREATING_DICTIONARY}>
+		</div>
+		
+		<div class="action">
+			<button type="button" onclick='DialogViewController.ImportDictionary.submit();'><{$smarty.const._MI_DICTIONARY_OK}></button>
+			<button type="button" onclick='DialogViewController.hide();'><{$smarty.const._MI_DICTIONARY_CANCEL}></button>
+		</div>
+	</form>
+	</div><!-- /.import-dictionary -->
+	
+	
+	<!-- save dialog -->
+	<div class="save-dictionary">
+	<form onsubmit='DialogViewController.SaveDictionary.save(); return false;'>
+		<h2><{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE}></h2>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_COMMON_RESOURCE_NAME}></h3>
+		<p class="dictionary-name"></p>
+		
+		<div class="permission">
+		<h3><{$smarty.const._MI_DICTIONARY_EDIT_PERMISSION}></h3>
+		<p>
+			<select name="editPermission" onchange='DialogViewController.SaveDictionary.onChangeEditPermission(this);' style="width: 280px;">
+				<option value="all" selected="selected"><{$smarty.const._MI_DICTIONARY_FOR_ALL_USERS}></option>
+				<option value="user"><{$smarty.const._MI_DICTIONARY_FOR_THE_CURRENT_USER_ONLY}></option>
+			</select>
+		</p>
+		
+		<h3><{$smarty.const._MI_DICTIONARY_READ_PERMISSION}></h3>
+		<p>
+			<select name="viewPermission" class="edit-all" style="width: 280px;">
+				<option value="all"><{$smarty.const._MI_DICTIONARY_FOR_ALL_USERS}></option>
+				<option value="user" class="user"><{$smarty.const._MI_DICTIONARY_FOR_THE_CURRENT_USER_ONLY}></option>
+			</select>
+		</p>
+		</div>
+		
+		<div class="indicator" style="visibility: hidden;">
+			<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height="25" alt="" />
+			<{$smarty.const._MI_DICTIONARY_STATUS_NOW_SAVING}>
+		</div>
+		
+		<div class="action">
+			<button type="button" onclick='DialogViewController.SaveDictionary.save();'><{$smarty.const._MI_DICTIONARY_OK}></button>
+			<button type="button" onclick='DialogViewController.hide();'><{$smarty.const._MI_DICTIONARY_CANCEL}></button>
+		</div>
+	</form>
+	</div><!-- /.save-dictionary -->
+	
+	
+	<!-- add language dialog -->
+	<div class="add-language">
+		<h2><{$smarty.const._MI_DICTIONARY_COMMON_ADD_LANGUAGE}></h2>
+	
+		<h3><{$smarty.const._MI_DICTIONARY_COMMON_LANGUAGES}></h3>
+		<div class="clearfix">&nbsp;</div>
+		<ul>
+			<{foreach from=$supportedLanguages item=langName key=langTag}>
+			<li><label><span><input name="supportedLanguages[]" type="checkbox" value='<{$langTag}>'> <{$langName}></span></label></li>
+			<{/foreach}>
+		</ul>
+		
+		<div class="action">
+			<button type="button" onclick='DialogViewController.AddLanguage.add();'><{$smarty.const._MI_DICTIONARY_OK}></button>
+			<button type="button" onclick='DialogViewController.hide();'><{$smarty.const._MI_DICTIONARY_CANCEL}></button>
+		</div>
+	</div><!-- /.add-language -->
+	
+	
+	<table class="table-dictionaries">
+		<tr class="columns">
+			<td class='name'>
+				<a class="enabled" href='javascript:DictionariesViewController.Table.load(#{id})'>#{resource_name}</a>
+				<span class="disabled">#{resource_name}</span>
+				<input type="hidden" name="resourceName" value="#{resource_name} ">
+			</td>
+			<td>#{languages}</td>
+			<td class='textcenter'>#{read}</td>
+			<td class='textcenter'>#{edit}</td>
+			<td class='textcenter wsdl'>#{service}</td>
+			<td>#{creator}</td>
+			<td>#{last_update}</td>
+			<td>#{entries}</td>
+			<td>
+				<button type='button' onclick='return DictionariesViewController.Table.showMenu(this)'>
+					<span>#{menuLabel}</span>
+				</button>
+				<div class="pop-menu-container" style='display: none;'><div>
+					<ul class='pop-menu'></ul>
+				</div></div>
+			</td>
+		</tr>
+	</table>
+	
+	<table class="table-words">
+		<tr class="headerCell">
+			<th class='#{langTag}'>in
+				<select onchange='WordsViewController.Table.onChangeDisplayLanguage(this)'><option></option></select>&nbsp;
+				<button type='button' onclick='return WordsViewController.onRemoveLanguage("#{langTag}");'>
+					<span>Delete</span>
+				</button>
+				<input type="hidden" name='valueToSave[0][#{langTag}]' value='#{langTag}'>
+			</th>
+		</tr>
+		<tr class="headerCellFix">
+			<th class='#{langTag} #{className}'>in
+				<span>#{langName}</span>
+				<input type="hidden" name='valueToSave[0][#{langTag}]' value='#{langTag}'>
+				<button type='button' onclick="WordsViewController.Table.add();"><span><{$smarty.const._MI_DICTIONARY_ADD_RECORD}></span></button>
+			</th>
+		</tr>
+		<tr class="headerRemoveCell">
+			<th class="remove">&nbsp;</th>
+		</tr>
+		<tr class="recordCell">
+			<td class='#{langTag}' onclick='WordsViewController.Table.editCell(this);'>
+				<span>#{wordDisp}</span>
+				<input style='display: none;' type='text' onblur='WordsViewController.Table.afterEditCell(this)' name='valueToSave[#{rowno}][#{langTag}]' value='#{word value}'>
+			</td>
+		</tr>
+		<tr class="newRecordCell">
+			<td class='#{langTag}' onclick='WordsViewController.Table.editCell(this);'>
+				<span>--</span>
+				<input style='display: none;' type="text" onblur='WordsViewController.Table.afterEditCell(this)' name='newRecord[#{tmpKey}][#{langTag}]' value='#{word value}'>
+			</td>
+		</tr>
+		<tr class="recordCellMulti">
+			<td class='#{langTag} #{className}'>
+				<ul>
+					<li onclick='WordsViewController.Table.editCell(this);'>
+						<span>#{wordDisp}</span>
+						<input style='display: none;' type='text' onblur='WordsViewController.Table.afterEditCellAndCopyToOther(this)' name='valueToSave[#{rowno}][#{langTag}]' value='#{word value}'>
+					</li>
+				</ul>
+				<button type='button' onclick='WordsViewController.Table.addMultiValue(this);'><span><{$smarty.const._MI_DICTIONARY_ADD_WORD}></span></button>
+			</td>
+		</tr>
+		<tr class="newRecordCellMulti">
+			<td class='#{langTag} #{className}'>
+				<ul>
+					<li onclick='WordsViewController.Table.editCell(this);'>
+						<span>--</span>
+						<input style='display: none;' type="text" onblur='WordsViewController.Table.afterEditCellAndCopyToOther(this)' name='newRecord[#{tmpKey}][#{langTag}]' value='#{word value}'>
+					</li>
+				</ul>
+				<button type='button' onclick='WordsViewController.Table.addMultiValue(this);'><span><{$smarty.const._MI_DICTIONARY_ADD_WORD}></span></button>
+			</td>
+		</tr>
+		<tr class="removeCell">
+			<td class="remove">
+				<button type='button' onclick='return WordsViewController.Table.remove(this);'><span>Delete</span></button>
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- /templates -->

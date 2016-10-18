@@ -1,0 +1,26 @@
+
+    <{if ($contentType == "image")}>
+      <td>
+        <a href="<{$xoops_url}>/modules/filesharing/?page=file_dl&lid=<{$content->getFileId()}>">
+          <span class='content-image-title'>
+            <{$contentTitle}>
+          </span>
+        </a>
+      </td>
+      <td>
+        <a class="btn" title="<{$smarty.const.STF_DESCRIPTION_DELETE}>" onclick="deleteContent('<{$shopAnswerContentId}>', '<{$contentType}>', '<{$contentUpdateAreaId}>');" href="javascript: void(0);">
+          <span class="btn-delete-mini"><{$smarty.const.STF_LABEL_DELETE}></span>
+        </a>
+      </td>
+	<{elseif $contentType == "google_map"}>
+      <td>
+        <span class='content-google-map-title'>
+          <{$contentTitle}>
+        </span>
+      </td>
+      <td>
+        <a class="btn" title="<{$smarty.const.STF_DESCRIPTION_DELETE}>" onclick="deleteContent('<{$shopAnswerContentId}>', '<{$contentType}>', '<{$contentUpdateAreaId}>');" href="javascript: void(0);">
+          <span class="btn-delete-mini"><{$smarty.const.STF_LABEL_DELETE}></span>
+        </a>
+      </td>
+	<{/if}>

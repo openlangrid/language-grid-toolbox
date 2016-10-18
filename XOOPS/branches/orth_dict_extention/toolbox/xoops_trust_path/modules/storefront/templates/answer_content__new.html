@@ -1,0 +1,253 @@
+
+
+<div class="area-popup" style="width:900px;">
+  <div class="area-fr"><a href="javascript: glayerHidden('glayer');" class="btn-popup-close">x</a></div>
+  <br class="clear" />
+  <strong class="h-pagetitle"><{$smarty.const.STF_LABEL_REGISTRATION_CONTENT}></strong>
+
+    <!-- Tab area -->
+    <div class="tab-part-bg">
+      <ul class="tab-part">
+        <li><a href="javascript:void(0);" onclick="changeMode(this,3)"><span>Server</span></a></li>
+        <li class="non-act"><a href="javascript:void(0);" onclick="changeMode(this,2)"><span>Google Maps</span></a></li>
+      </ul>
+
+      <br class="clear" />
+
+      <!-- Tab main content -->
+      <div id="content_server" class="tab-pain tab3">
+      	<form onsubmit="return validateContent()" id="create_from_server" name="create_from_server" method="post" target="postTargetFrame" action="<{$mod_url}>/answer_content/?action=create_from_server">
+      	  <p style="margin-bottom: 8px; font-weight: bold;"><{$smarty.const.STF_LABEL_FILE_TYPE}></p>
+      	  <input type="hidden" name="shopAnswerId" value="<{$shopAnswerId}>" />
+      	  <input type="hidden" name="contentUpdateAreaId" value="<{$contentUpdateAreaId}>" />
+
+      	  <input type="hidden" name="content_title" value="" />
+      	  <div id="folderShowContainer">
+			<{include file="db:storefront_folder__show.html"}>
+		  </div>
+        </form>
+      </div>
+
+      <!-- Tab main content -->
+      <div id="upload_url" class="tab-pain tab2" style="display: none;">
+      	<form onsubmit="return validateContent()" id="create_from_url" name="create_from_url" method="post" target="postTargetFrame" action="<{$mod_url}>/answer_content/?action=create_from_url">
+      		<input type="hidden" name="shopAnswerId" value="<{$shopAnswerId}>" />
+      		<input type="hidden" name="contentUpdateAreaId" value="<{$contentUpdateAreaId}>" />
+
+      		<input type="hidden" name="content_title" value="" />
+      		<input type="hidden" id="google_map_params_for_post" name="google_map_params" value=""/>
+	        <div style="margin:24px;">
+	            <p>URL
+	            <input type="text" id="google_map_params_orig" name="google_map_params_orig" value="" style="width:32em;" />
+	            <img id="input-url" src="" style="visibility: hidden" />
+	            </p>
+	        </div>
+	        <div><{$smarty.const.STF_ENTER_GOOGLEMAP_URL}></div>
+        </form>
+      </div>
+
+    </div>
+
+    <p class="area-fl" style="margin-top: 8px;">
+		<{$smarty.const.STF_CONTENT_TITLE}>
+		<input type="text" id="contentTitleText" name="content_title" style="width:24em; font-size:120%; font-weight: bold;" />
+	</p>
+
+    <div class="area-fr" style="padding-top:8px;">
+	    <a href="javascript:uploadAImage();" class="btn-s"><span class="btn-upload"><{$smarty.const.STF_LABEL_REGISTER}></span></a>
+
+	    <a href="javascript: glayerHidden('glayer');" class="btn"><span class="btn-cancel"><{$smarty.const.STF_LABEL_CANCEL}></span></a>
+    </div>
+
+  <br class="clear" />
+</div>
+
+
+<script type="text/javascript">
+window.changeMode = function(anchor,modeflag) {
+	var anchor = $(anchor);
+	var targetId = anchor.readAttribute("href").replace(/^#/, '');
+	$$('.tab-pain').each(function(e){ e.hide(); });
+	$$('ul.tab-part li').each(function(e){ e.addClassName('non-act') });
+
+	anchor.up('li.non-act').removeClassName('non-act');
+
+	if(modeflag == 1){
+		$$('.tab-pain').each(function(e){
+			if(e.className == "tab-pain tab1"){
+				e.show();
+			}
+		});
+	}else if(modeflag == 2){
+		$$('.tab-pain').each(function(e){
+			if(e.className == "tab-pain tab2"){
+				e.show();
+			}
+		});
+	}else if(modeflag == 3){
+		$$('.tab-pain').each(function(e){
+			if(e.className == "tab-pain tab3"){
+				e.show();
+			}
+		});
+	}
+
+	return false;
+};
+
+window.uploadAImage = function() {
+	var targetDiv = $$('.tab-pain').find(function(e) { return e.visible(); });
+	var targetForm = targetDiv.select('form')[0];
+
+	if(!validateContent()) {
+		return;
+	}
+
+	if (targetForm.name == "create_from_server") {
+		if (!validateUploadFile(targetForm)) {
+			alert("<{$smarty.const.STF_MESSAGE_SELECT_FILE}>");
+			return;
+		}
+
+		targetForm['content_title'].value = $('contentTitleText').value;
+
+		// upload
+        var params = Form.serialize("create_from_server");
+        params += "&action=create_from_server&time=<{$smarty.now}>";
+        var contentUpdateAreaId = '<{$contentUpdateAreaId}>';
+
+    	new Ajax.Updater(
+			{success : contentUpdateAreaId},
+			"<{$mod_url}>/answer_content/",
+			{
+    		    method : "post",
+				parameters: params,
+				onSuccess: function() {
+					clearGlayer();
+				},
+				onComplete: function() {
+					validateUpdatable(<{$shopAnswerId}>,contentUpdateAreaId,true);
+				},
+				evalScripts: true
+			}
+		);
+	} else if (targetForm.name == "create_from_url") {
+		if(!validateURL()) {
+			return;
+		}
+
+		targetForm['content_title'].value = $('contentTitleText').value;
+
+		googleParams = ($('google_map_params_orig').value).split("?");
+		if (googleParams.length > 1) {
+			googleParams.splice(0, 1);
+			$('google_map_params_for_post').value = googleParams.join("?");
+		}
+
+		checkGoogleMapUrl(targetForm);
+	} else if (targetForm.name == "create_from_pc") {
+		 var params = Form.serialize("create_from_pc");
+	}
+};
+
+function checkGoogleMapUrl(targetForm){
+	var cnt;
+	var arrayParameters = $('google_map_params_for_post').value.split("&");
+	var arrayValue = new Array();
+
+	var tmp;
+	var i;
+	for(i=0; i<arrayParameters.length; i++){
+		tmp = arrayParameters[i].split("=");
+		arrayValue[ tmp[0] ] = tmp[1];
+	}
+
+	if(!arrayValue['ll']){
+		if(!arrayValue['q']){
+			if(arrayValue['sll']){
+				$('google_map_params_for_post').value = $('google_map_params_for_post').value + '&ll=' + arrayValue['sll'];
+				googleMapUrlSubmit(targetForm);
+			}else{
+				alert('<{$smarty.const.STF_INVALID_GOOGLEMAP_URL|escape:"quote"}>');
+				return;
+			}
+		}
+		geocoder = new google.maps.Geocoder();
+		geocoder.geocode( { 'address': decodeURI(arrayValue['q'])}, function(results, status) {
+	        if (status == google.maps.GeocoderStatus.OK) {
+	          lat = results[0].geometry.location.lat();
+	          lng = results[0].geometry.location.lng();
+	          $('google_map_params_for_post').value = $('google_map_params_for_post').value + "&ll=" + lat + "," + lng;
+
+	          googleMapUrlSubmit(targetForm);
+	        } else {
+	          alert('<{$smarty.const.STF_INVALID_GOOGLEMAP_URL|escape:"quote"}>');
+	        }
+	    });
+	} else {
+		googleMapUrlSubmit(targetForm);
+	}
+}
+
+function googleMapUrlSubmit(targetForm){
+	// upload
+    var params = Form.serialize("create_from_url");
+    params += "&action=create_from_url&time=<{$smarty.now}>";
+    var contentUpdateAreaId = '<{$contentUpdateAreaId}>';
+
+	new Ajax.Updater({success : contentUpdateAreaId},
+	    	"<{$mod_url}>/answer_content/",
+			{method : "post",
+             parameters: params,
+			 onSuccess: function () {
+	                       clearGlayer();
+             },
+	    	 onComplete: function () {
+		                   validateUpdatable(<{$shopAnswerId}>,contentUpdateAreaId,true);
+	                    },
+			 evalScripts: true});
+
+	var img = $("input-url");
+	$("input-url").style.visibility = "visible";
+	img.src = Const.Images.loading;
+}
+
+function getActiveTabId() {
+	var li = $$('.tab-part li').detect(function(e) { return !e.hasClassName("non-act"); });
+	return li.select('a')[0].href.replace(/.*#/,'');
+}
+
+
+window.validateContent = function() {
+	var title = $('contentTitleText').value;
+
+	if(!title) {
+		alert("<{$smarty.const.STF_CONTENT_TITLE}>" + " <{$smarty.const.STF_IS_REQUIRED}>");
+		return false;
+	}
+	return true;
+};
+
+window.validateUploadFile = function(form) {
+	return !!form.getInputs("radio", "fileId").find(function(radio) {
+		return radio.checked;
+	});
+};
+
+window.validateURL = function() {
+	var googleParams = $('google_map_params_orig').value;
+	if(!googleParams) {
+		alert('<{$smarty.const.STF_REQUIRE_URL|escape:"quote"}>');
+		return false;
+	}
+	return true;
+};
+
+function params(form) {
+    if (typeof form == "string") {
+    	return Form.serialize($(document.forms[form])).toQueryParams();
+    } else {
+    	return Form.serialize(form? $(form) : document.forms["main"]).toQueryParams();
+    }
+}
+</script>

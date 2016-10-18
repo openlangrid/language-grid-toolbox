@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<{$header}>
+
+<body class="oneColFixCtrHdr">
+<div id="container">
+
+<{$divHeader}>
+
+  <div id="mainContent">
+    <div class="function_title">
+	    <h1>
+	      <span class="main"><{$smarty.const.STF_TITLE_LANG}></span>
+	      <span class="sub"></span>
+	    </h1>
+    </div>
+    <div class="clear"></div>
+    <form method="get" action="<{$mod_url}>/" name="frm">
+    	<input type="hidden" name="action" value="selectlang" />
+    	<input type="hidden" name="mainLanguage" value="" />
+    	<input type="hidden" name="url" value="<{$url}>" />
+	  	<div id="CategoryArea">
+	      <{include file="db:storefront_lang__list.html"}>
+	    </div>
+	</form>
+  </div>
+</div>
+</body>
+</html>

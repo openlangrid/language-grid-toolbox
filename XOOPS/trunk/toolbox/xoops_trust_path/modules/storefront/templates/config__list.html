@@ -1,0 +1,306 @@
+  <div id='<{$shopQuestionList->getCurrentPageUrl("$mod_url/$root_url")}>' class="list-page">
+    <table border="0" cellspacing="0" cellpadding="0" style="width:950px" summary="qa list">
+      <!-- ****************************************** -->
+      <thead class="table-sortable-head">
+        <tr>
+          <th style="width:16px;">&nbsp;</th>
+          <th style="width:350px;">
+                <!-- main language -->
+                <{$smarty.const.STF_LABEL_LANGUAGE_IN}>
+            <select id="mainLangSelectBox" onchange="changeMainExpression('<{$page}>','<{$perPage}>', this.value,'<{$mainLanguage}>');">
+              <{foreach from=$langList item="languageCode"}>
+                <{if strcmp($languageCode[0], $mainLanguage) == 0}>
+                      <{assign var=isSelectMain value="selected"}>
+                    <{else}>
+                      <{assign var=isSelectMain value=""}>
+                    <{/if}>
+
+                <option value="<{$languageCode[0]}>" <{$isSelectMain}>><{$languageCode[1]}></option>
+              <{/foreach}>
+            </select>
+          </th>
+          <th style="width:350px;">
+                <!-- sub language -->
+                <{$smarty.const.STF_LABEL_LANGUAGE_IN}>
+            <select id="subLangSelectBox" onchange="changeSubExpression('<{$page}>','<{$perPage}>', this.value,'<{$subLanguage}>');">
+              <{foreach from=$langList item="languageCode"}>
+
+                <{if strcmp($languageCode[0], $subLanguage) == 0}>
+                      <{assign var=isSelectSub value="selected"}>
+                    <{else}>
+                      <{assign var=isSelectSub value=""}>
+                    <{/if}>
+
+                <option value="<{$languageCode[0]}>" <{$isSelectSub}>><{$languageCode[1]}></option>
+              <{/foreach}>
+            </select>
+          </th>
+          <th style="width:200px;"><{$smarty.const.STF_LABEL_CATEGORY}></th>
+          <th style="width:40px;">&nbsp;</th>
+        </tr>
+      </thead>
+      <!-- ****************************************** -->
+      <tfoot>
+        <tr>
+          <td colspan="5">
+          	<!-- pageInfo -->
+            <div style="float:left;">
+            	<{$shopQuestionList->getFrom()}>-<{$shopQuestionList->getTo()}> of <{$shopQuestionList->getSum()}>
+            </div>
+            
+            <!-- perPages -->
+            <div style="float:left;margin-left:50px;">
+              <{$smarty.const.STF_LABEL_ITEMS}>:
+              <{$shopQuestionList->getPerPageLinks("$mod_url/$root_url", $perPages)}>
+            </div>
+            
+            <div style="float:right;">
+            	<!-- prev btn -->
+            	<{$shopQuestionList->getPrevPageLink("$mod_url/$root_url")}>
+            	
+            	<!-- first page btn -->
+            	<{$shopQuestionList->getFirstPageLink("$mod_url/$root_url")}>
+            	
+            	<!-- middle pages btn -->
+            	<{foreach from=$shopQuestionList->getPageNoListWithOutFirstAndLast() item=pageNo key=index}>
+            	&nbsp;
+            	<{$shopQuestionList->getPageLink("$mod_url/$root_url", $pageNo)}>
+            	<{/foreach}>
+            	
+            	<!-- last page btn -->
+				&nbsp;
+				<{if $shopQuestionList->getLastPageNo() > 1}>
+            	<{$shopQuestionList->getLastPageLink("$mod_url/$root_url")}>
+            	<{/if}>
+            	
+            	<!-- next btn -->
+            	<{$shopQuestionList->getNextPageLink("$mod_url/$root_url")}>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+      <!-- ****************************************** -->
+
+
+      <!-- Ajax update area start -->
+
+      <tbody class="qa-list">
+        <!-- ***************************** -->
+
+        <{foreach from=$shopQuestionList->getQuestions() item="shopQuestion"}>
+              <tr class="q-line-selected  q<{$shopQuestion->getId()}>">
+                <td rowspan="2" class="q-label" id="q<{$shopQuestion->getId()}>-td" >
+
+                  <{if $shopQuestion->getQuestionAvailable() == 1}>
+                    <{assign var=qflag value=""}>
+                  <{else}>
+                    <{assign var=qflag value="checked='checked'"}>
+                  <{/if}>
+
+                  <input type="checkbox" id="q<{$shopQuestion->getId()}>" name="qa_question[<{$shopQuestion->getId()}>]" value="<{$shopQuestion->getQuestionAvailable()}>" <{$qflag}> onclick="handleQuestionValue(this.id,'q<{$shopQuestion->getId()}>-td');countCheckedAnswers('q<{$shopQuestion->getId()}>', '<{$shopQuestion->countAnswers()}>');" />
+                  <input type="hidden" id="_q<{$shopQuestion->getId()}>" name="_qa_question[<{$shopQuestion->getId()}>]" value="<{$shopQuestion->getQuestionAvailable()}>" />
+                </td>
+                <td class="q-cell">
+                  <div class="expressionA">
+                    <{$shopQuestion->getMainExpression()|escape}>
+                  </div>
+
+                  <!-- synchronized with select box  -->
+                  <div class="expressionB">
+                    <{$shopQuestion->getSubExpression()|escape}>
+                  </div>
+                </td>
+                <td class="q-cell">
+
+                  <!-- synchronized with select box  -->
+                  <div class="expressionB">
+                    <{$shopQuestion->getMainExpression()|escape}>
+                  </div>
+
+                  <div class="expressionA">
+                    <{$shopQuestion->getSubExpression()|escape}>
+                  </div>
+                </td>
+                <td class="c-cell">
+                  <{$shopQuestion->getCategoryNamesByMainExpression()|escape}><br />
+                  <{$shopQuestion->getCategoryNamesBySubExpression()|escape}>
+                </td>
+                <td class="f-cell">&nbsp;</td>
+              </tr>
+              <tr class="a-line q<{$shopQuestion->getId()}>">
+            <td colspan="4" class="cell-underlined">
+              <a id="href_q<{$shopQuestion->getId()}>" href="javascript:void(0);" class="lnk-close" onclick="showAnswers(this, 'each_q_<{$shopQuestion->getId()}>');">
+                <{$smarty.const.STF_LABEL_ANSWER_COUNT}> (<{$shopQuestion->countAvailableAnswers()}>/<{$shopQuestion->countAnswers()}>)
+              </a>
+              <br class="clear" />
+
+                  <!-- Answers start -->
+                  <{if $shopQuestion->countAnswers() > 0}>
+                    <table border="0" cellspacing="0" cellpadding="0" style="width:100%;" summary="a list" >
+                      <tbody>
+                      <{foreach from=$shopQuestion->getAnswers() item="Answer"}>
+
+                      <{if $Answer->getAnswerAvailable() == 1}>
+                        <{assign var="aflag" value=""}>
+                      <{else}>
+                        <{assign var="aflag" value="checked='checked'"}>
+                      <{/if}>
+
+                        <!-- ********** -->
+                        <tr style="display: none;" class="a-line-selected  each_q_<{$shopQuestion->getId()}>  a<{$Answer->getQaAnswerId()}>">
+                          <td class="a-label cell-toplined parentQaQuestionId_is_q<{$shopQuestion->getId()}>-td" id="a<{$Answer->getQaAnswerId()}>-td">
+                            <input type="checkbox" id="a<{$Answer->getQaAnswerId()}>" class="parentQaQuestionId_is_q<{$shopQuestion->getId()}>" name="qa_answer[<{$shopQuestion->getId()}>][<{$Answer->getQaAnswerId()}>]" value="<{$Answer->getAnswerAvailable()}>" <{$aflag}> onclick="handleAnswerValue('q<{$shopQuestion->getId()}>', this.id, 'warning<{$Answer->getQaAnswerId()}>','a<{$Answer->getQaAnswerId()}>-td'); countCheckedAnswers('q<{$shopQuestion->getId()}>', '<{$shopQuestion->countAnswers()}>');" />
+                            <input type="hidden" id="_a<{$Answer->getQaAnswerId()}>"                                                           name="_qa_answer[<{$shopQuestion->getId()}>][<{$Answer->getQaAnswerId()}>]" value="<{$Answer->getAnswerAvailable()}>" />
+                          </td>
+                          <td class="a-cell cell-toplined">
+                            <div class="expressionA">
+                              <{$Answer->getMainExpression()|escape}>
+                            </div>
+
+                            <!-- synchronized with select box  -->
+                                <div class="expressionB">
+                                  <{$Answer->getSubExpression()|escape}>
+                                </div>
+
+                          </td>
+                          <td class="a-cell cell-toplined">
+
+                            <!-- synchronized with select box  -->
+                                <div class="expressionB">
+                                  <{$Answer->getMainExpression()|escape}>
+                                </div>
+
+                            <div class="expressionA">
+                              <{$Answer->getSubExpression()|escape}>
+                            </div>
+
+                          </td>
+                          <td class="cell-toplined">
+                            <{assign var=firstContent value=$Answer->getFirstContent()}>
+                            <{assign var=secondContent value=$Answer->getSecondContent()}>
+                            <table>
+                              <tbody>
+                                    <tr id="ac<{$Answer->getShopAnswerId()}>-1">
+                                      <{if $Answer->hasFirstContent() == true && $firstContent->getContentType() == 'image'}>
+                                        <td>
+                                          <a href="<{$xoops_url}>/modules/filesharing/?page=file_dl&lid=<{$firstContent->getFileId()}>">
+                                            <span class="content-image-title">
+                                              <{$firstContent->getContentTitle()|escape}>
+                                            </span>
+                                          </a>
+                                        </td>
+                                        <td>
+                                          <a class="btn" title="<{$smarty.const.STF_DESCRIPTION_DELETE}>" onclick="deleteContent('<{$firstContent->getShopAnswerContentId()}>', '<{$firstContent->getContentType()}>', 'ac<{$Answer->getShopAnswerId()}>-1');" href="javascript: void(0);">
+                                            <span class="btn-delete-mini"><{$smarty.const.STF_LABEL_DELETE}></span>
+                                          </a>
+                                        </td>
+                                      <{elseif $Answer->hasFirstContent() == true && $firstContent->getContentType() == 'google_map'}>
+                                        <td>
+                                          <span class="content-google-map-title">
+                                            <{$firstContent->getContentTitle()|escape}>
+                                          </span>
+                                        </td>
+                                        <td>
+                                          <a class="btn" title="<{$smarty.const.STF_DESCRIPTION_DELETE}>" onclick="deleteContent('<{$firstContent->getShopAnswerContentId()}>', '<{$firstContent->getContentType()}>', 'ac<{$Answer->getShopAnswerId()}>-1');" href="javascript: void(0);">
+                                            <span class="btn-delete-mini"><{$smarty.const.STF_LABEL_DELETE}></span>
+                                          </a>
+                                        </td>
+                                  <{elseif $Answer->hasFirstContent() == true && $firstContent->getContentType() == 'invalid' }>
+                                        <td>
+                                      <span class="content-invalid-image-title">
+                                            <{$firstContent->getContentTitle()|escape}>
+                                          </span>
+                                        </td>
+                                        <td>
+                                          <a class="btn" title="<{$smarty.const.STF_DESCRIPTION_DELETE}>" onclick="deleteContent('<{$firstContent->getShopAnswerContentId()}>', '<{$firstContent->getContentType()}>', 'ac<{$Answer->getShopAnswerId()}>-1');" href="javascript: void(0);">
+                                            <span class="btn-delete-mini"><{$smarty.const.STF_LABEL_DELETE}></span>
+                                          </a>
+                                        </td>
+                                  <{else}>
+                                    <td style="display: none;">&nbsp;</td><td>&nbsp;</td>
+                                  <{/if}>
+                                </tr>
+                                <tr id="ac<{$Answer->getShopAnswerId()}>-2">
+                                  <{if $Answer->hasSecondContent() == true && $secondContent->getContentType() == 'image'}>
+                                    <td>
+                                      <a href="<{$xoops_url}>/modules/filesharing/?page=file_dl&lid=<{$secondContent->getFileId()}>">
+                                        <span class="content-image-title">
+                                          <{$secondContent->getContentTitle()|escape}>
+                                        </span>
+                                      </a>
+                                    </td>
+                                    <td>
+                                      <a class="btn" title="<{$smarty.const.STF_DESCRIPTION_DELETE}>" onclick="deleteContent('<{$secondContent->getShopAnswerContentId()}>', '<{$secondContent->getContentType()}>', 'ac<{$Answer->getShopAnswerId()}>-2');" href="javascript: void(0);">
+                                        <span class="btn-delete-mini"><{$smarty.const.STF_LABEL_DELETE}></span>
+                                      </a>
+                                    </td>
+                                  <{elseif $Answer->hasSecondContent() == true && $secondContent->getContentType() == 'google_map'}>
+                                    <td>
+                                      <span class="content-google-map-title">
+                                        <{$secondContent->getContentTitle()|escape}>
+                                      </span>
+                                    </td>
+                                    <td>
+                                      <a class="btn" title="<{$smarty.const.STF_DESCRIPTION_DELETE}>" onclick="deleteContent('<{$secondContent->getShopAnswerContentId()}>', '<{$secondContent->getContentType()}>', 'ac<{$Answer->getShopAnswerId()}>-2');" href="javascript: void(0);">
+                                        <span class="btn-delete-mini"><{$smarty.const.STF_LABEL_DELETE}></span>
+                                      </a>
+                                    </td>
+                                  <{elseif $Answer->hasSecondContent() == true && $secondContent->getContentType() == 'invalid' }>
+                                        <td>
+                                      <span class="content-invalid-image-title">
+                                            <{$secondContent->getContentTitle()|escape}>
+                                          </span>
+                                        </td>
+                                        <td>
+                                      <a class="btn" title="<{$smarty.const.STF_DESCRIPTION_DELETE}>" onclick="deleteContent('<{$secondContent->getShopAnswerContentId()}>', '<{$secondContent->getContentType()}>', 'ac<{$Answer->getShopAnswerId()}>-2');" href="javascript: void(0);">
+                                        <span class="btn-delete-mini"><{$smarty.const.STF_LABEL_DELETE}></span>
+                                      </a>
+                                        </td>
+                                  <{else}>
+                                    <td style="display: none;">&nbsp;</td><td>&nbsp;</td>
+                                  <{/if}>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                          <td class="f-cell cell-toplined">
+                          <div class="area-fr">
+
+                        <{if $Answer->hasFirstContent() && $Answer->hasSecondContent()}>
+                                        <{assign var="availability" value="btn-disable"}>
+                                        <{assign var="glayerHref" value="javascript:;"}>
+                                <{else}>
+                                        <{assign var="availability" value="btn"}>
+                                        <{assign var="glayerHref" value="javascript:glayerShow('glayer', '"|cat:$Answer->getShopAnswerId()|cat:"', 'ac"|cat:$Answer->getShopAnswerId()|cat:"');"}>
+                                <{/if}>
+                          <a id="ac<{$Answer->getShopAnswerId()}>" href="<{$glayerHref}>" class="<{$availability}>">
+                            <span class="btn-update"><{$smarty.const.STF_LABEL_REGISTER}></span>
+                          </a>
+                          </div>
+                          </td>
+                        </tr>
+
+                        <!-- ********** WARNING ******************* -->
+                        <tr>
+                          <td colspan="5">
+                            <div id="warning<{$Answer->getQaAnswerId()}>" class="notification-alert-part warning_q<{$shopQuestion->getId()}>"><{$smarty.const.STF_LABEL_ANSWER_IS_NOT_SELECTED}></div>
+                          </td>
+                        </tr>
+                        <!-- ********** -->
+
+                  <{/foreach}>
+                  </tbody>
+                </table>
+              <{/if}>
+                  <!-- Answers end -->
+
+                </td>
+              </tr>
+            <{/foreach}>
+
+      </tbody>
+
+    </table>
+
+
+  </div>

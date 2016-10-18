@@ -1,0 +1,59 @@
+<style type="text/css">
+div.scl {
+	display:block;
+	width:190px;
+	height:150px;
+	padding: 0px;
+	background: #ffffff;
+	border:0px;
+	text-align:left;
+	line-height:130%;
+	overflow-y: scroll;}
+</style>
+
+<!-- Enabling User Access List -->
+<div id="community_left">
+<h2><{$smarty.const._MD_D3FORUM_ORGACCESS}></h2>
+<div  class=scl>
+<{if !count($titles) }>
+	<{$smarty.const._MD_D3FORUM_ERR_NOT_EXIST_MENU}>
+<{else}>
+	<{strip}>
+			<table cellspacing="10" cellpadding="5" >
+				<{foreach from=$org_list item=oacc}>
+				<tr>
+				<td width=30><img src= <{$xoops_url}>/uploads/<{$oacc.avatar}> width="30" /></td>
+				<td width=200 bgcolor=<{$oacc._bgc}>><{$oacc.org}></td>
+				</tr>
+				<{/foreach}>
+			</table>
+	<{/strip}>
+<{/if}>
+</div>
+</div>
+<br>
+
+
+<!-- Disableing User Access List by commenting-out -->
+<!-- 
+<div id="community_left">
+<h2><{$smarty.const._MD_D3FORUM_USERACCESS}></h2>
+<div  class=scl>
+<{if !count($titles) }>
+	<{$smarty.const._MD_D3FORUM_ERR_NOT_EXIST_MENU}>
+<{else}>
+	<{strip}>
+			<table cellspacing="10" cellpadding="5" >
+				<{foreach from=$user_list item=uacc}>
+				<tr>
+				<td width=30><img src= <{$xoops_url}>/uploads/<{$uacc.avatar}> width="30" /></td>
+				<td width=200 bgcolor=<{$uacc._bgc}>><{$uacc.name}></td>
+				<td width=200 bgcolor=<{$uacc._bgc}>><{$uacc.org}></td>
+				</tr>
+				<{/foreach}>
+			</table>
+	<{/strip}>
+<{/if}>
+</div>
+</div>
+-->

@@ -1,0 +1,6 @@
+<?php
+class ServiceGridDefaultDictionaryBind{
+	private $bindId;	private $settingId;	private $bindType;	private $bindValue;	private $createDate;	private $editDate;	private $deleteFlag;
+	public function getBindId() {		return $this->bindId;	}	public function getSettingId() {		return $this->settingId;	}	public function getBindType() {		return $this->bindType;	}	public function getBindValue() {		return $this->bindValue;	}	public function getCreateDate() {		return $this->createDate;	}	public function getEditDate() {		return $this->editDate;	}	public function getDeleteFlag() {		return $this->deleteFlag;	}	public function setBindId($bindId) {		$this->bindId = $bindId;	}	public function setSettingId($settingId) {		$this->settingId = $settingId;	}	public function setBindType($bindType) {		$this->bindType = $bindType;	}	public function setBindValue($bindValue) {		$this->bindValue = $bindValue;	}	public function setCreateDate($createDate) {		$this->createDate = $createDate;	}	public function setEditDate($editDate) {		$this->editDate = $editDate;	}	public function setDeleteFlag($deleteFlag) {		$this->deleteFlag = $deleteFlag;	}
+}
+?>

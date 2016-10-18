@@ -1,0 +1,35 @@
+<{include_php file="file:$xoops_rootpath/themes/$xoops_theme/hd_assign.php"}><?xml version="1.0" encoding="<{$xoops_charset}>"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+  <title><{$xoops_sitename}> - <{if $xoops_pagetitle}><{$xoops_pagetitle}><{else}><{$xoops_slogan}><{/if}></title>
+  <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
+  <meta http-equiv="content-language" content="<{$xoops_langcode}>" />
+  <meta http-equiv="content-script-type" content="text/javascript" />
+  <meta http-equiv="content-style-type" content="text/css" />
+  <meta name="robots" content="<{$xoops_meta_robots|upper}>" />
+  <meta name="generator" content="XOOPS Cube Legacy" />
+  <link href="<{$xoops_url}>/favicon.ico" rel="SHORTCUT ICON" />
+<{if $smarty.cookies.hd_view_mode == 'contrast' || $smarty.get.hd_view_mode == 'contrast' }>
+  <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_imageurl}>css_contrast.css" />
+<{elseif $smarty.cookies.hd_view_mode == 'print' || $smarty.get.hd_view_mode == 'print' }>
+  <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_imageurl}>css_print.css" />
+<{elseif $smarty.cookies.hd_view_mode == 'nostyle' || $smarty.get.hd_view_mode == 'nostyle' }>
+<{else}>
+  <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_imageurl}>css_layout.php" />
+<{/if}>
+  <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_imageurl}>css_style.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="<{$xoops_imageurl}>css_print.css" />
+  <{if $xoops_module_header}><{$xoops_module_header}><{/if}><{if $xoops_block_header}><{$xoops_block_header}><{/if}>
+  <script type="text/javascript">
+  <!--
+  <{$xoops_js}>
+  //-->
+  </script>
+</head>
+<body class="xoops_dialogue">
+<div id="dialogue_title"><{$xoops_pagetitle}></div>
+<{$xoops_contents}>
+
+</body>
+</html>

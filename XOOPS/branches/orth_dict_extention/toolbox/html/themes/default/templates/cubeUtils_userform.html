@@ -1,0 +1,58 @@
+<{*php}>
+header('Location:'.XOOPS_URL);
+exit();
+<{/php*}>
+<script>
+	location.href="<{$smarty.const.XOOPS_URL}>";
+</script>
+<div id="contents_body">
+	<div id='contents_user_login'>
+		<h2><{$smarty.const._LOGIN}></h2>
+		<div id="top_loginbox">
+			<form action="<{$smarty.const.XOOPS_URL}>/user.php" method="post" name="login_form">
+				<{xoops_input type=hidden name=op value=login}>
+				<{xoops_input type=hidden name=xoops_redirect value=$redirect_page}>
+
+				<table width="210" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="60"><label for="legacy_xoopsform_uname"><{$smarty.const._USERNAME}></label></td>
+						<td><{xoops_input type='text' name='uname' class='login_text'}></td>
+					</tr>
+					<tr>
+						<td><label for="legacy_xoopsform_pass"><{$smarty.const._PASSWORD}></label></td>
+						<td><{xoops_input type='password' name='pass' class='login_text'}></td>
+					</tr>
+				</table>
+				<table width="210" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="210" class="login_text02">
+					<{*
+							<{xoops_input type='checkbox' name='rememberme' value='On'}>
+							<label for="legacy_xoopsform_rememberme_On"><{$smarty.const._CUBE_UTILS_REMEMBERME}></label>
+					*}>
+						&nbsp;</td>
+					</tr>
+					<tr>
+						<td width="210" >
+							<div class="btn_gy01">
+								<a href="#" onclick="document.login_form.submit(); return false;"><{$smarty.const._LOGIN}></a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div id="lost_pass_box">
+			<div class="btn_gy01">
+				<a href="<{$xoops_url}>/lostpass.php"><{$smarty.const._MD_USER_LANG_LOSTPASS}></a>
+			</div>
+		</div>
+		<{if $allowRegister}>
+		<div id="new_user">
+			<span>
+				<a href="<{$xoops_url}>/register.php"><{$smarty.const._THEME_TOP_NEW_USER_LB}></a>
+			</span>
+		</div>
+		<{/if}>
+	</div>
+</div>

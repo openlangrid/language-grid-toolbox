@@ -1,0 +1,321 @@
+
+<script type="text/javascript">
+//<![CDATA[
+	function hideHoverMenu() {
+		$$("#mainForm .hover_menu").each(Element.hide);
+	}
+	
+	Event.observe(window, "load", function() {
+		var form = $("mainForm");
+		var hovers = $$("#mainForm .hover_menu");
+
+		// #mainForm
+		form
+			.getElements()
+			.each(function(element) {
+				element.observe("focus", hideHoverMenu);
+			});
+
+		// calendar
+		var calendarOptions = {
+			close : true,
+			mindate : "<{$smarty.now|date_format:'%m/%d/%Y'}>",
+			HIDE_BLANK_WEEKS : true,
+			LOCALE_WEEKDAYS : "medium"
+		};
+		
+		["smoothingCalendar", "checkCalendar"].each(function(prefix) {
+			var calendar = new YAHOO.widget.Calendar(prefix, prefix, calendarOptions);
+			var container = $(prefix);
+			var label = $(prefix + "Label");
+			var field = $(prefix + "Field");
+			$(prefix + "Link").observe("click", function(event) {
+				event.stop();
+				hideHoverMenu();
+				container.show();
+			});
+
+			calendar.selectEvent.subscribe(function(type, dateObject, cal) {
+				var date = dateObject.toString().replace(/,/g, "/");
+				label.innerHTML = date;
+				field.value = date;
+				hideHoverMenu();
+			}, calendar, true);
+			
+			calendar.render();
+		});
+
+		// time list
+		["smoothingTime", "checkTime"].each(function(prefix) {
+			var timeBox = $(prefix + "Box")
+				.observe("click", function(e){ e.stop()});
+			var textbox = $(prefix + "Text")
+				.observe(
+					"click",
+					function(event) {
+						event.stop();
+						hideHoverMenu();
+						timeBox.show();
+					}
+				);
+
+			// links in time list
+			timeBox.select("a").each(function(link) {
+				link.observe("click", function(event) {
+					event.stop();
+					textbox.value = link.innerHTML;
+					hideHoverMenu();
+				});
+			});
+		});
+
+		// change file button
+		$("selectFileButton").observe("click", openDialog);
+
+		$("changeForumButton").observe("click", changeForumButtonOnClickHandler);
+
+		// #submitButton
+		$("submitButton").observe("click", function(event) {
+			var message = validate();
+			if (message != null) {
+				alert(message);
+				return false;
+			}
+
+			form.submit();
+		});
+
+		function openDialog(event, params) {
+			params = params || {};
+			event.stop();
+
+			hideHoverMenu();
+			glayerShow();
+			openFileDialog({fileDialogURL : this.href, parameters: params});
+		}
+		
+		function changeForumButtonOnClickHandler(e) {
+			openDialog.apply(this, [e, {forum_id: $("forumIdField").getValue() }]);
+		}
+
+		function validate() {
+			var message;
+			var elements;
+
+			// validate not empty
+			elements = {
+				smoothingCalendarField : "<{$smarty.const._MD_TASK_SMOOTHING_LIMIT_DATE}>",
+				smoothingTimeText : "<{$smarty.const._MD_TASK_SMOOTHING_LIMIT_TIME}>",
+				smoothingWorkerText : "<{$smarty.const._MD_TASK_SMOOTHING_WORKER}>",
+				checkCalendarField : "<{$smarty.const._MD_TASK_CHECK_LIMIT_DATE}>",
+				checkTimeText : "<{$smarty.const._MD_TASK_CHECK_LIMIT_TIME}>",
+				checkWorkerText : "<{$smarty.const._MD_TASK_CHECK_WORKER}>"
+			};
+			message = doValidate(elements, "Required", "<{$smarty.const._MD_TASK_EMPTY_PREDICATE}>");
+			if (message.length > 0) {
+				return message;
+			}
+
+			// validate date
+			elements = {
+				smoothingCalendarField : "<{$smarty.const._MD_TASK_SMOOTHING_LIMIT_DATE}>",
+				checkCalendarField : "<{$smarty.const._MD_TASK_CHECK_LIMIT_DATE}>"
+			};
+			message = doValidate(elements, "Date", "<{$smarty.const._MD_TASK_INVALID_PREDICATE}>");
+			if (message.length > 0) {
+				return message;
+			}
+
+			// validate time
+			elements = {
+				smoothingTimeText : "<{$smarty.const._MD_TASK_SMOOTHING_LIMIT_TIME}>",
+				checkTimeText : "<{$smarty.const._MD_TASK_CHECK_LIMIT_TIME}>"
+			};
+			message = doValidate(elements, "Time", "<{$smarty.const._MD_TASK_INVALID_PREDICATE}>");
+			if (message.length > 0) {
+				return message;
+			}
+
+			// detect date changes
+			var smOrig = new Date($("smoothingCalendarBackup").value + " " + $("smoothingTimeBackup").value + ":00");
+			var ckOrig = new Date($("checkCalendarBackup").value + " " + $("checkTimeBackup").value + ":00");
+			
+			// compare datetime
+			var older = new Date($("smoothingCalendarField").value + " " + $("smoothingTimeText").value + ":00");
+			var newer = new Date($("checkCalendarField").value + " " + $("checkTimeText").value + ":00");
+			var now = new Date();
+
+			if (older.getTime() != smOrig.getTime()) {
+			
+				if(older < now) {
+					return "<{$smarty.const._MD_TASK_INVALID_SMOOSING_DATETIME_PASTTIME}>";
+				}
+			}
+
+			if (newer.getTime() != ckOrig.getTime()) {
+				if(newer < now) {
+					return "<{$smarty.const._MD_TASK_INVALID_CHECK_DATETIME_PASTTIME}>";
+				}
+			}
+
+			if (!(older <= newer)) {
+				return "<{$smarty.const._MD_TASK_INVALID_DATETIME_RELATION}>";
+			}
+
+			// passed all validations
+			return null;
+		}
+		
+		$(document.body).observe("click", hideHoverMenu);
+	});
+//]]>
+</script>
+
+<div id="tbx-body">
+	<button id="how-to-use-button" 
+		onclick="window.open('<{$mod_url}>/how-to-use/<{$smarty.const._MD_TASK_HOW_TO_USE_LINK}>', '_blank'); return false;">How to use
+	</button>
+  <{include file="db:task_file__list_client.html"}>
+  <div class="area-fl-p8">
+    <a href="<{$mod_url}>/"><{$smarty.const._MD_TASK_LIST_TITLE}></a>&gt;<{$smarty.const._MD_TASK_EDIT_TITLE}>
+  </div>
+  <br class="clear" />
+  <h1 class="h-pagetitle" style="float:left;"><{$smarty.const._MD_TASK_EDIT_TITLE}></h1>
+  <br class="clear" />
+  <form id="mainForm" action="<{$mod_url}>/?action=update" method="post">
+    <input type="hidden" name="id" value="<{$id}>"/>
+    <table border="0" cellspacing="12" cellpadding="0" class="setting-table" style="margin-top:16px;">
+      <tfoot>
+        <tr>
+          <th>&nbsp;</th>
+          <td colspan="2" style="background-color:#fff;">
+            <a id="submitButton" href="#" class="btn-s" style="width:80px;"><span class="btn-save"><{$smarty.const._MD_TASK_SAVE}></span></a>
+            <a href="<{$mod_url}>/" class="btn"><span><{$smarty.const._MD_TASK_CANCEL}></span></a>
+          </td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr>
+          <th><{$smarty.const._MD_TASK_NAME}></th>
+          <td><{$task->getName()|escape}></td>
+        </tr>
+      <tr>
+        <th><{$smarty.const._MD_TASK_CREATOR}></th>
+        <td><{$taskHistory->getCreator()|escape}></td>
+      </tr>
+      <tr>
+        <th><{$smarty.const._MD_TASK_LANG}></th>
+        <td><table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><{$smarty.const._MD_TASK_SOURCE_LANG}>&nbsp;:&nbsp;</td>
+              <td><{$task->getSourceLangAsString()|escape}></td>
+            </tr>
+            <tr>
+              <td><{$smarty.const._MD_TASK_TARGET_LANG}>&nbsp;:&nbsp;</td>
+              <td><{$task->getTargetLangAsString()|escape}></td>
+            </tr>
+          </table></td>
+      </tr>
+      
+	    <tr>
+	    	<th><{$smarty.const._MD_TASK_LIMIT}></th>
+	        <td>
+	        	<table cellpadding="0" cellspacing="0" border="0">
+		            <tr>
+		              <td><{$smarty.const._MD_TASK_SMOOTHING}></td>
+		              <td>
+		              	<{$smarty.const._MD_TASK_STATUS}>
+		              	<{html_options name="params[smoothing_achievement]" options=$achievementMap selected=$taskHistory->getSmoothingAchievement()}>
+		              </td>
+		              <td> <{$smarty.const._MD_TASK_CLOSING_DATE}>&nbsp;:&nbsp;
+		                  <input id="smoothingCalendarField" type="hidden" name="smoothing_date" value="<{$taskHistory->getSmoothingLimitDate()}>"/>
+		                  <input id="smoothingCalendarBackup" type="hidden" name="smoothing_date_bk" value="<{$taskHistory->getSmoothingLimitDate()}>"/>
+		                  <a id="smoothingCalendarLink" href="#">
+		                    <img id="smoothingCalendarButton" src="images/icon/icon_calendar.png" alt="<{$smarty.const._MD_TASK_CLICK_CALENDAR}>"/>
+		                    <span id="smoothingCalendarLabel"><{$taskHistory->getSmoothingLimitDate()}></span>
+		                  </a>
+		                  <div id="smoothingCalendar" class="hover_menu" style="display: none;"></div>
+		              </td>
+		              <td> <{$smarty.const._MD_TASK_CLOSING_TIME}>&nbsp;:&nbsp;
+		              	<input id="smoothingTimeText" type="text" name="smoothing_time" value="<{$taskHistory->getSmoothingLimitTime()}>" size="8" maxlength="5"/>
+		              	<input id="smoothingTimeBackup" type="hidden" name="smoothing_time_bk" value="<{$taskHistory->getSmoothingLimitTime()}>" />
+		              	
+		                  <div id="smoothingTimeBox" class="hover_menu" style="display: none;">
+		                    <table>
+		                      <tbody class="hover-on">
+		                      <{foreach from=$timeList item=time}>
+		                        <tr>
+		                          <td><a href="#"><{$time}></a></td>
+		                        </tr>
+		                      <{/foreach}>
+		                      </tbody>
+		                    </table>
+		                  </div>
+		              	
+		              </td>
+		              <td>&nbsp;&nbsp;<{$smarty.const._MD_TASK_WORKER}>&nbsp;:&nbsp;
+		                <input id="smoothingWorkerText" type="text" name="params[smoothing_worker]" value="<{$taskHistory->getSmoothingWorker()}>" size="12"/>
+		              </td>
+		            </tr>
+		            <tr>
+		              <td><{$smarty.const._MD_TASK_CHECK}></td>
+		              <td>
+		                  <{$smarty.const._MD_TASK_STATUS}>
+		                  <{html_options name="params[check_achievement]" options=$achievementMap selected=$taskHistory->getCheckAchievement()}>
+		              </td>
+		              <td><{$smarty.const._MD_TASK_CLOSING_DATE}>&nbsp;:&nbsp;
+		                  <input id="checkCalendarField" type="hidden" name="check_date" value="<{$taskHistory->getCheckLimitDate()}>"/>
+		                  <input id="checkCalendarBackup" type="hidden" name="check_date_bk" value="<{$taskHistory->getCheckLimitDate()}>"/>
+		                  <a id="checkCalendarLink" href="#">
+		                    <img id="checkCalendarButton" src="images/icon/icon_calendar.png" alt="<{$smarty.const._MD_TASK_CLICK_CALENDAR}>"/>
+		                    <span id="checkCalendarLabel"><{$taskHistory->getCheckLimitDate()}></span>
+		                  </a>
+		                  <div id="checkCalendar" class="hover_menu" style="display: none;"></div>
+		              </td>
+		              <td> <{$smarty.const._MD_TASK_CLOSING_TIME}>&nbsp;:&nbsp;
+						<input id="checkTimeText" type="text" name="check_time" value="<{$taskHistory->getCheckLimitTime()}>" size="8" maxlength="5"/>
+		                <input id="checkTimeBackup" type="hidden" name="check_time_bk" value="<{$taskHistory->getCheckLimitTime()}>" />
+		                <div id="checkTimeBox" class="hover_menu" style="display: none;">
+		                  <table>
+		                    <tbody class="hover-on">
+		                    <{foreach from=$timeList item=time}>
+		                      <tr>
+		                        <td><a href="#"><{$time}></a></td>
+		                      </tr>
+		                    <{/foreach}>
+		                    </tbody>
+		                  </table>
+		                </div>
+		              </td>
+		              <td>&nbsp;&nbsp;<{$smarty.const._MD_TASK_WORKER}>&nbsp;:&nbsp;
+		                <input id="checkWorkerText" type="text" name="params[check_worker]" value="<{$taskHistory->getCheckWorker()}>" size="12"/>
+		              </td>
+		            </tr>
+	          	</table>
+	        </td>
+		</tr>
+	    <tr>
+	        <th><{$smarty.const._MD_TASK_UPDATE_SUMMARY}></th>
+	        <td>
+	        	<textarea name="params[update_summary]" style="width:500px;height:4em;"><{$taskHistory->getUpdateSummary()}></textarea>
+	        </td>
+	    </tr>
+        <tr>
+          <th><{$smarty.const._MD_TASK_FILE}></th>
+          <td>
+            <img src="images/icon/icon_file.png" alt=""/><span id="fileNameLabel"><{if $file}><{$file->getName()}><{else}><{$smarty.const._MD_TASK_FILE_UNAVAILABLE}><{/if}></span>
+            <a id="selectFileButton" href="<{$mod_url}>/work_document/" class="btn"><{$smarty.const._MD_TASK_UPDATE_FILE}></a>
+            <input id="fileIdField" type="hidden" name="params[file_id]" value="<{if $file}><{$file->getId()}><{/if}>"/>
+          </td>
+        </tr>
+        <tr>
+          <th><{$smarty.const._MD_TASK_FORUM_FOR_THIS}></th>
+          <td>
+            <a id="changeForumButton" href="<{$mod_url}>/forum/?action=_change&amp;id=<{$task->getId()}>" class="btn"><{$smarty.const._MD_TASK_CHANGE_FORUM}></a>
+            <input id="forumIdField" type="hidden" name="params[forum_id]" value="<{$taskHistory->getForumId()}>"/>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>

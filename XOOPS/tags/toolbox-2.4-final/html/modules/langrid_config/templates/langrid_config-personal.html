@@ -1,0 +1,37 @@
+<{include file="db:langrid_config-script.html"}>
+<h2 style="text-align:left; padding: 10px 0 10px 40px; font-size: 18px;"><{$tabTitle}></h2>
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="#">
+			<ul class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m">
+					<span><{$smarty.const._MI_LANGRID_CONFIG_TAB_NAME_TRANSLATION}></span>
+				</li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+		<a href="./?action=voiceSetting&set=<{$set}>">
+			<ul class="tab_off">
+				<li class="tab_l"></li>
+				<li class="tab_m">
+					<span><{$smarty.const._MI_LANGRID_CONFIG_TAB_NAME_VOICE}></span>
+				</li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<div id="contents_body">
+	<span id="ruler" style="visibility:hidden;position:absolute;" class="setting_btn_off"></span>
+	<div>
+		<div class="contents-header-block clearfix">
+			<span id="setting_nowload"><img src="<{$xoops_imageurl}>/img/ajax.gif" border="0" alt="nowloading"/><{$smarty.const._MD_LANGRID_NOWLOADING}></span>
+			<span id="setting_error_message"></span>
+			<{if $xoopsUserIsAdmin != true && ($tab_page == "bbs" || $tab_page == "bbs_view")}>
+				<div id="div-page-message" style="display:none;"><img src="./images/icon/icn_lock.gif" /><{$smarty.const._MD_LANGRID_STG_MSG4}></div>
+			<{/if}>
+		</div>
+		<div id="translation-path-root-panel"></div>
+	</div>
+</div>

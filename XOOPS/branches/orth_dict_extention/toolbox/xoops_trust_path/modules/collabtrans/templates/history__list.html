@@ -1,0 +1,73 @@
+	
+	
+	<{if count($histories) > 0}>
+  	<div class="notification-part" id="search-result-message">
+		<{assign var=resultNum value=$histories|@count}>
+  		<{$smarty.const.CT_LABEL_SEARCH_RESULT|sprintf:$resultNum}> [<a onclick="$$('#searchForm select').invoke('setValue', ''); return false;" href="javascript: void(0);"><{$smarty.const.CT_LINK_CLEAR_SEARCHFORM}></a>]
+  	</div>
+  	<{/if}>
+  	
+  	<div id="historyTableContainer">
+    <table border="0" cellspacing="0" cellpadding="0" width="99%" summary="history list" style="font-size:85%;">
+      <!-- ****************************************** -->
+      <thead class="table-sortable-head">
+        <tr>
+          <th width="56"><{$smarty.const.CT_LABEL_EDIT_USER}></th>
+          <th><{$smarty.const.CT_LABEL_MODIFIED_AT}></th>
+          <th class="sourceLang"><{$smarty.const.CT_LABEL_SOURCE_LANGUAGE}>:<span><{$sourceLanguage}></span></th>
+          <th class="targetLang"><{$smarty.const.CT_LABEL_TARGET_LANGUAGE}>:<span><{$targetLanguage}></span></th>
+          <th><{$smarty.const.CT_LABEL_CHANGE_BEFORE}></th>
+          <th><{$smarty.const.CT_LABEL_CHANGE_AFTER}></th>
+        </tr>
+      </thead>
+      
+      <!-- ****************************************** -->
+      <{if false}>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+          	<div style="float:left;"><{$historyList->getFrom()}>-<{$historyList->getTo()}> of <{$historyList->getSum()}></div>
+            <div style="float:left;margin-left:50px; display: none;">items <a href="#test">5</a> | 10 </div>
+            <div style="float:right;">
+            	<!-- prev btn -->
+            	<{$historyList->getPrevPageLink("$mod_url/history?action=_list")}>
+            	
+            	<!-- first page btn -->
+            	<{$historyList->getFirstPageLink("$mod_url/history?action=_list")}>
+            	
+            	<!-- middle pages btn -->
+            	<{foreach from=$historyList->getPageNoListWithOutFirstAndLast() item=pageNo key=index}>
+            	&nbsp;
+            	<{$historyList->getPageLink("$mod_url/history?action=_list", $pageNo)}>
+            	<{/foreach}>
+            	
+            	<!-- last page btn -->
+				<{if $historyList->getLastPageNo()!=1}>
+				&nbsp;
+            	<{$historyList->getLastPageLink("$mod_url/history?action=_list")}>
+            	<{/if}>
+            	
+            	<!-- next btn -->
+            	<{$historyList->getNextPageLink("$mod_url/history?action=_list")}>
+            	
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+      <{/if}>
+      
+      <!-- ****************************************** -->
+      <tbody class="hover-on">
+        <{foreach from=$histories|@array_reverse item=history key=index}>
+        <tr class='<{cycle values="odd,even"}>'>
+          <td><{$history->getLoginId()}></td>
+          <td><{$history->getCreateDateAsFormatString()}></td>
+          <td><{$history->getSource()|mb_truncate:100}></td>
+          <td><{$history->getTarget()|mb_truncate:100}></td>
+          <td><{$history->getStatusBeforeAsLabel()}></td>
+          <td><{$history->getStatusAsLabel()}></td>
+        </tr>
+        <{/foreach}>
+      </tbody>
+    </table>
+    </div>

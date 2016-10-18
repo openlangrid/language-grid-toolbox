@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*---------------------------------------------------------------------------------------*/
+/* mainContent */
+/*---------------------------------------------------------------------------------------*/
+#mainContent h1 {
+	font-size:175%;
+}
+#CategoryArea ul {
+	
+	height:460px;
+	
+}
+#CategoryArea li {
+	display:block;
+	float:left;
+	width:450px;
+	height:50px;
+	list-style:none;
+	margin:10px 0px 0px 18px;
+	border:2px solid #b5b5b5;
+}
+
+#CategoryArea li {
+	display:block;
+	float:left;
+	width:450px;
+	height:50px;
+	list-style:none;
+	margin:10px 0px 0px 18px;
+	border:2px solid #b5b5b5;
+	background:#1D47A4;
+}
+
+#QuestionArea li {
+	display:block;
+	width:800px;
+	height:50px;
+	list-style:none;
+	margin:10px 0px 0px 18px;
+	border:2px solid #b5b5b5;
+	background:#1D47A4;
+}
+
+/*---------------------------------------------------------------------------------------*/
+/* Category の Button */
+/*---------------------------------------------------------------------------------------*/
+a.CategoryButton {
+	display:block;
+	width:450px;
+	height:50px;
+	background-image:url(../images/btn/button_background.png);
+	background-position:0px 0px;
+	background-repeat:repeat-x;
+	color:#fff;
+	text-align:center;
+}
+a.CategoryButton:hover {
+	background-position:0px -50px;
+}
+a.CategoryButton span {
+	float:left;
+	display:block;
+}
+a.CategoryButton span.main {
+	width:100%;
+	height:20px;
+	margin:5px 0px;
+	font-size:100%;
+	font-weight:bold;
+}
+a.CategoryButton span.sub {
+	width:100%;
+	height:20px;
+	font-size:70%;
+}

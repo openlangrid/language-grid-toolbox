@@ -1,0 +1,56 @@
+
+<div class="area-popup" style="width:600px; text-align: left;">
+
+	<div class="area-fr">
+		<a href="javascript: void(0);" onclick="hideTextDialog(); return false;" class="btn-popup-close">x</a>
+	</div>
+	<br class="clear" />
+  
+	<strong class="h-pagetitle"><{$smarty.const.CT_BTN_DISPLAY_TEXT}></strong>
+  
+    <div class="tab-part-bg">
+		<ul class="tab-part">
+		  <li>
+		  	<a href="#sourceAsText" onclick="changeTabPain(event, this); return false;"><span><{$smarty.const.CT_LINK_ORIGINAL_TEXT}></span></a>
+		  </li>
+		  <li class="non-act">
+		  	<a href="#targetAsText" onclick="changeTabPain(event, this); return false;"><span><{$smarty.const.CT_LINK_TRANSLATION}></span></a>
+		  </li>
+		</ul>
+		
+  
+		<br class="clear" />
+		<div id="sourceAsText" class="tab-pain" style="">
+			<textarea onfocus="$(this).select()"><{$document->getSourceAsText()|escape}></textarea>
+		</div>
+		
+		<div id="targetAsText" class="tab-pain" style="display: none;">
+			<textarea onfocus="$(this).select()"><{$document->getTargetAsText()|escape}></textarea>
+		</div>
+    	
+	</div>
+  
+	<div class="area-middle-p4">
+	  <a href="javascript: void(0);" onclick="hideTextDialog(); return false;" class="btn">
+	  	<span class="btn-close"><{$smarty.const.CT_BTN_CLOSE}></span>
+	  </a>
+	</div>
+	
+	<br class="clear" />
+</div>
+
+<script type="text/javascript">
+(function() {
+	
+window.changeTabPain = function(event, anchor) {
+	var anchor = $(anchor);
+	var targetId = anchor.readAttribute("href").replace(/^.*#/, '');
+	$$('.tab-pain').each(function(e){ e.hide(); });
+	$$('ul.tab-part li').each(function(e){ e.addClassName('non-act') });
+	anchor.up('li.non-act').removeClassName('non-act');
+	$(targetId).show();
+	Event.stop(event);
+	return false;
+};
+}).defer();
+</script>

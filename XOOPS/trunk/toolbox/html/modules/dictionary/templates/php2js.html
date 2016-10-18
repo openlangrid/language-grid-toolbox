@@ -1,0 +1,194 @@
+var Const = {
+	Mode : '<{$mode}>',
+	changeState : function(typeId) {
+		switch (parseInt(typeId)) {
+
+		// Dictionary
+		case 0:
+			this.Message.Error.noPermissionToLoad = '<{$smarty.const._MI_DICTIONARY_ERROR_NO_PERMISSION_TO_LOAD}>';
+			this.Message.Error.selectAtLeastTwoLanguages = '<{$smarty.const._MI_DICTIONARY_ERROR_SELECT_AT_LEAST_TWO_LANGUAGES}>';
+			this.Message.Status.creatingDictionary = '<{$smarty.const._MI_DICTIONARY_STATUS_CREATING_DICTIONARY}>';
+			this.Message.Warning.cannotDeleteLanguages = '<{$smarty.const._MI_DICTIONARY_WARNING_CANNOT_DELETE_LANGUAGES}>';
+			this.Message.Status.recordAdded = '<{$smarty.const._MI_DICTIONARY_STATUS_RECORD_ADDED}>';
+			this.Message.Status.languageAdded = '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGE_ADDED}>';
+			this.Message.Status.languagesAdded = '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGES_ADDED}>';
+			this.Message.Status.languageDeleted = '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGE_DELETED}>';
+			this.Message.Status.languagesDeleted = '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGES_DELETED}>';
+
+			this.Message.Label.dictionaryNameRule = '<{$smarty.const._MI_DICTIONARY_LABEL_DICTIONARY_NAME_RULE}>';
+			this.Message.Label.saveDictionaryToServer = '<{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE_TO_SERVER}>';
+			this.Message.Label.saveDictionary = '<{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE}>';
+			this.Message.Label.saveResource = '<{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE}>';
+			this.Message.Status.notLoaded = '<{$smarty.const._MI_DICTIONARY_STATUS_NOT_LOADED}>';
+			this.Message.Status.loaded = '<{$smarty.const._MI_DICTIONARY_STATUS_LOADED}>';
+			this.Message.Error.notSaved = '<{$smarty.const._MI_DICTIONARY_ERROR_NOT_SAVED}>';
+			this.Message.Status.resourceSaved = '<{$smarty.const._MI_DICTIONARY_STATUS_DICTIONARY_SAVED}>';
+			this.Message.Label.name = '<{$smarty.const._MI_DICTIONARY_DICTIONARY_NAME}>';
+			this.Message.Error.invalidDictionaryName = '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_NAME_INVALID}>';
+			this.Message.Error.dictionaryNameEmpty = '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_NAME_EMPTY}>';
+			this.Message.Error.atLeastTwoLanguages = '<{$smarty.const._MI_DICTIONARY_ERROR_SELECT_AT_LEAST_TWO_LANGUAGES}>';
+			this.Message.Status.dictionaryCreated = '<{$smarty.const._MI_DICTIONARY_STATUS_DICTIONARY_CREATED}>';
+			this.Message.Warning.discardChanges = '<{$smarty.const._MI_DICTIONARY_WARNING_DISCARD_CHANGES}>';
+
+			this.Message.Confirm.deployDictionary = '<{$smarty.const._MI_DICTIONARY_CONFIRM_DEPLOY_DICT}>';
+			this.Message.Confirm.undeployDictionary = '<{$smarty.const._MI_DICTIONARY_CONFIRM_UNDEPLOY_DICT}>';
+
+			this.Message.Confirm.resourceRemove = '<{$smarty.const._MI_DICTIONARY_WARNING_REMOVE_DICTIONARY}>';
+			this.Message.Warning.resourceRemove = '<{$smarty.const._MI_DICTIONARY_DICTIONARY_REMOVE_ERROR_NO_PERMISSION}>';
+
+			this.Message.Error.resourceIsNotDeployed = '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_IS_NOT_DEPLOYED}>';
+			this.Message.Error.resourceIsAlreadyDeployed = '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_IS_ALREADY_DEPLOYED}>';
+			this.Message.Error.resourceDeployIsNotPermitted = '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_DEPLOY_IS_NOT_PERMITTED}>';
+			this.Message.Error.resourceUnDeployIsNotPermitted = '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_UNDEPLOY_IS_NOT_PERMITTED}>';
+			
+			this.Message.Error.recordNoSelected = '<{$smarty.const._MI_DICTIONARY_ERROR_RECORD_NO_SELECTED}>';
+
+			break;
+
+		// Parallel text
+		case 1:
+			this.Message.Error.noPermissionToLoad = '<{$smarty.const._MI_DICTIONARY_ERROR_NO_PERMISSION_TO_LOAD_P}>';
+			this.Message.Error.selectAtLeastTwoLanguages = '<{$smarty.const._MI_DICTIONARY_ERROR_SELECT_AT_LEAST_TWO_LANGUAGES_P}>';
+			this.Message.Status.creatingDictionary = '<{$smarty.const._MI_DICTIONARY_STATUS_CREATING_DICTIONARY_P}>';
+			this.Message.Warning.cannotDeleteLanguages = '<{$smarty.const._MI_DICTIONARY_WARNING_CANNOT_DELETE_LANGUAGES_P}>';
+			this.Message.Status.recordAdded = '<{$smarty.const._MI_DICTIONARY_STATUS_RECORD_ADDED_P}>';
+			this.Message.Status.languageAdded = '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGE_ADDED_P}>';
+			this.Message.Status.languagesAdded = '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGES_ADDED_P}>';
+			this.Message.Status.languageDeleted = '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGE_DELETED_P}>';
+			this.Message.Status.languagesDeleted = '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGES_DELETED_P}>';
+
+			this.Message.Label.dictionaryNameRule = '<{$smarty.const._MI_DICTIONARY_LABEL_DICTIONARY_NAME_RULE_P}>';
+			this.Message.Label.saveDictionaryToServer = '<{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE_TO_SERVER_P}>';
+			this.Message.Label.saveDictionary = '<{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE_P}>';
+			this.Message.Label.saveResource = '<{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE_P}>';
+			this.Message.Status.notLoaded = '<{$smarty.const._MI_DICTIONARY_STATUS_NOT_LOADED_P}>';
+			this.Message.Status.loaded = '<{$smarty.const._MI_DICTIONARY_STATUS_LOADED_P}>';
+			this.Message.Error.notSaved = '<{$smarty.const._MI_DICTIONARY_ERROR_NOT_SAVED_P}>';
+			this.Message.Status.resourceSaved = '<{$smarty.const._MI_DICTIONARY_STATUS_PARALLEL_TEXT_SAVED}>';
+			this.Message.Label.name = '<{$smarty.const._MI_DICTIONARY_PARALLEL_TEXT_NAME}>';
+			this.Message.Error.invalidDictionaryName = '<{$smarty.const._MI_DICTIONARY_ERROR_PARALLEL_TEXT_NAME_INVALID}>';
+			this.Message.Error.dictionaryNameEmpty = '<{$smarty.const._MI_DICTIONARY_ERROR_PARALLEL_TEXT_NAME_EMPTY}>';
+			this.Message.Error.atLeastTwoLanguages = '<{$smarty.const._MI_DICTIONARY_ERROR_SELECT_AT_LEAST_TWO_LANGUAGES_P}>';
+			this.Message.Status.dictionaryCreated = '<{$smarty.const._MI_DICTIONARY_STATUS_PARALLEL_TEXT_CREATED}>';
+			this.Message.Warning.discardChanges = '<{$smarty.const._MI_DICTIONARY_WARNING_PARALLEL_TEXT_DISCARD_CHANGES}>';
+
+			this.Message.Confirm.resourceRemove = '<{$smarty.const._MI_DICTIONARY_WARNING_REMOVE_DICTIONARY_P}>';
+			this.Message.Confirm.deployDictionary = '<{$smarty.const._MI_DICTIONARY_CONFIRM_DEPLOY_PARALLEL}>';
+			this.Message.Confirm.undeployDictionary = '<{$smarty.const._MI_DICTIONARY_CONFIRM_UNDEPLOY_PARALLEL}>';
+
+			this.Message.Warning.resourceRemove = '<{$smarty.const._MI_DICTIONARY_PARALLEL_TEXT_REMOVE_ERROR_NO_PERMISSION}>';
+
+			this.Message.Error.resourceIsNotDeployed = '<{$smarty.const._MI_DICTIONARY_ERROR_PARALLEL_TEXT_IS_NOT_DEPLOYED}>';
+			this.Message.Error.resourceIsAlreadyDeployed = '<{$smarty.const._MI_DICTIONARY_ERROR_PARALLEL_TEXT_IS_ALREADY_DEPLOYED}>';
+			this.Message.Error.resourceDeployIsNotPermitted = '<{$smarty.const._MI_DICTIONARY_ERROR_PARALLEL_TEXT_IS_NOT_PERMITTED}>';
+			this.Message.Error.resourceUnDeployIsNotPermitted = '<{$smarty.const._MI_DICTIONARY_ERROR_PARALLEL_TEXT_UNDEPLOY_IS_NOT_PERMITTED}>';
+			this.Message.Error.recordNoSelected = '<{$smarty.const._MI_DICTIONARY_ERROR_RECORD_NO_SELECTED_P}>';
+			break;
+		}
+	},
+	URL : {
+		theme : '<{$xoops_imageurl}>'
+	},
+	Images : {
+		loading : '<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height"25" alt="" />'
+	},
+	Message : {
+		Label : {
+			addLanguage : '<{$smarty.const._MI_DICTIONARY_COMMON_ADD_LANGUAGE}>',
+			deleteLanguage : '<{$smarty.const._MI_DICTIONARY_COMMON_DELETE_LANGUAGE}>',
+			resourceNameRule : '<{$smarty.const._MI_DICTIONARY_COMMON_RESOURCE_NAME_RULE}>',
+			resourceName : '<{$smarty.const._MI_DICTIONARY_COMMON_RESOURCE_NAME}>',
+			deploy : '<{$smarty.const._MI_DICTIONARY_DEPLOY}>',
+			selectLanguagesToAdd : '<{$smarty.const._MI_DICTIONARY_SELECT_LANGUAGES_TO_ADD}>',
+			selectLanguagesToDelete : '<{$smarty.const._MI_DICTIONARY_SELECT_LANGUAGES_TO_DELETE}>',
+			languages : '<{$smarty.const._MI_DICTIONARY_COMMON_LANGUAGES}>',
+			file : '<{$smarty.const._MI_DICTIONARY_COMMON_FILE}>',
+			type : '<{$smarty.const._MI_DICTIONARY_COMMON_TYPE}>',
+			createResource : '<{$smarty.const._MI_DICTIONARY_CREATE_RESOURCE}>',
+			importResource : '<{$smarty.const._MI_DICTIONARY_IMPORT_RESOURCE}>',
+			name : '<{$smarty.const._MI_DICTIONARY_DICTIONARY_NAME}>',
+			userDictionary : '<{$smarty.const._MI_DICTIONARY_USER_DICTIONARY}>',
+			userParallelText : '<{$smarty.const._MI_DICTIONARY_USER_PARALLEL_TEXT}>',
+			editPermission : '<{$smarty.const._MI_DICTIONARY_EDIT_PERMISSION}>',
+			readPermission : '<{$smarty.const._MI_DICTIONARY_READ_PERMISSION}>',
+			forAllUsers : '<{$smarty.const._MI_DICTIONARY_FOR_ALL_USERS}>',
+			forTheCurrentUserOnly : '<{$smarty.const._MI_DICTIONARY_FOR_THE_CURRENT_USER_ONLY}>',
+			dictionaryNameRule : '<{$smarty.const._MI_DICTIONARY_LABEL_DICTIONARY_NAME_RULE}>',
+			saveResource : '<{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE}>',
+			saveDictionaryToServer : '<{$smarty.const._MI_DICTIONARY_SAVE_RESOURCE_TO_SERVER}>'
+		},
+		Status : {
+			nowRemoving : '<{$smarty.const._MI_DICTIONARY_NOW_REMOVING}>',
+			loaded : '<{$smarty.const._MI_DICTIONARY_STATUS_LOADED}>',
+			notLoaded : '<{$smarty.const._MI_DICTIONARY_STATUS_NOT_LOADED}>',
+			uploaded : '<{$smarty.const._MI_DICTIONARY_STATUS_NOT_UPLOADED}>',
+			recordAdded : '<{$smarty.const._MI_DICTIONARY_STATUS_RECORD_ADDED}>',
+			recordDeleted : '<{$smarty.const._MI_DICTIONARY_STATUS_RECORD_DELETED}>',
+			languageAdded : '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGE_ADDED}>',
+			languagesAdded : '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGES_ADDED}>',
+			languageDeleted : '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGE_DELETED}>',
+			languagesDeleted : '<{$smarty.const._MI_DICTIONARY_STATUS_LANGUAGES_DELETED}>',
+			creatingDictionary : '<{$smarty.const._MI_DICTIONARY_STATUS_CREATING_DICTIONARY}>',
+			dictionaryCreated : '<{$smarty.const._MI_DICTIONARY_STATUS_DICTIONARY_CREATED}>',
+			nowLoading : '<{$smarty.const._MI_DICTIONARY_STATUS_NOW_LOADING}>',
+			resourceSaved : '<{$smarty.const._MI_DICTIONARY_STATUS_DICTIONARY_SAVED}>'
+		},
+		Error : {
+			noPermissionToDownload : '<{$smarty.const._MI_DICTIONARY_ERROR_NO_PERMISSION_TO_DOWNLOAD_RESOURCE}>',
+			noPermissionToLoad : '<{$smarty.const._MI_DICTIONARY_ERROR_NO_PERMISSION_TO_LOAD}>',
+			failedToLoadSupportedLanguage : '<{$smarty.const._MI_DICTIONARY_ERROR_FAILED_TO_LOAD_SUPPORTED_LANGUAGE}>',
+			failedToRemove : '<{$smarty.const._MI_DICTIONARY_ERROR_FAILED_TO_LOAD_SUPPORTED_LANGUAGE}>',
+			dictionaryFileError : '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_FILE_ERROR}>',
+			dictionaryWasNotUploaded : '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_WAS_NOT_UPLOADED}>',
+			dictionaryIsEmpty : '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_IS_EMPTY}>',
+			invalidLanguageTag : '<{$smarty.const._MI_DICTIONARY_ERROR_INVALID_LANGUAGE_TAG}>',
+			multipleRows : '<{$smarty.const._MI_DICTIONARY_ERROR_MULTIPLE_ROWS}>',
+			wordTooLong : '<{$smarty.const._MI_DICTIONARY_ERROR_WORD_TOO_LONG}>',
+			unknownError : '<{$smarty.const._MI_DICTIONARY_ERROR_UNKNOWN_ERROR_OCCURED}>',
+			serverError : '<{$smarty.const._MI_DICTIONARY_ERROR_SERVER_ERROR}>',
+			wordTooLongEdit : '<{$smarty.const._MI_DICTIONARY_ERROR_WAS_TOO_LONG_EDIT}>',
+			selectAtLeastTwoLanguages : '<{$smarty.const._MI_DICTIONARY_ERROR_SELECT_AT_LEAST_TWO_LANGUAGES}>',
+			dictionaryNameEmpty : '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_NAME_EMPTY}>',
+			fileRequired : '<{$smarty.const._MI_DICTIONARY_ERROR_FILE_REQUIRED}>',
+			invalidDictionaryName : '<{$smarty.const._MI_DICTIONARY_ERROR_INVALID_DICTIONARY_NAME}>',
+			saveFailured : '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_FAILURED}>',
+			notSaved : '<{$smarty.const._MI_DICTIONARY_ERROR_NOT_SAVED}>',
+			atLeastTwoLanguages : '<{$smarty.const._MI_DICTIONARY_ERROR_AT_LEAST_TWO_LANGUAGES}>',
+			dictionaryNotFound : '<{$smarty.const._MI_DICTIONARY_ERROR_DICTIONARY_NOT_FOUND}>',
+			cannotBeDownloaded : '<{$smarty.const._MI_DICTIONARY_ERROR_CANNOT_BE_DOWNLOADED}>',
+			recordNoSelected : '<{$smarty.const._MI_DICTIONARY_ERROR_RECORD_NO_SELECTED}>',
+			keywordEmpty : '<{$smarty.const._MI_DICTIONARY_ERROR_KEYWORD_IS_EMPTY}>',
+			selectLanguage : '<{$smarty.const._MI_DICTIONARY_ERROR_SELECT_A_LANGUAGE}>',
+			tooMuchSelectedLanguages : '<{$smarty.const._MI_DICTIONARY_ERROR_TOO_MUCH_SELECTED_LANGUAGES}>'
+		},
+		Confirm : {
+			deployDictionary : '<{$smarty.const._MI_DICTIONARY_CONFIRM_DEPLOY_DICT}>',
+			undeployDictionary : '<{$smarty.const._MI_DICTIONARY_CONFIRM_UNDEPLOY_DICT}>',
+			deleteSelectedColumns : '<{$smarty.const._MI_DICTIONARY_CONFIRM_DELETE_SELECTED_COLUMNS}>',
+			deleteSelectedRows : '<{$smarty.const._MI_DICTIONARY_CONFIRM_DELETE_LANGUAGE_ROWS}>',
+			resourceRemove : '<{$smarty.const._MI_DICTIONARY_WARNING_REMOVE_DICTIONARY}>'
+		},
+		Warning : {
+			Dictionary : {
+				searchNotFound : '<{$smarty.const._MI_DICTIONARY_SEARCH_DICTIONARY_NOT_FOUND}>'
+			},
+			ParallelText : {
+				searchNotFound : '<{$smarty.const._MI_DICTIONARY_SEARCH_PARALLEL_TEXT_NOT_FOUND}>'
+			},
+			noMoreLanguagesToBeAdded : '<{$smarty.const._MI_DICTIONARY_WARNING_NO_MORE_LANGUAGES}>',
+			discardChanges : '<{$smarty.const._MI_DICTIONARY_WARNING_DISCARD_CHANGES}>',
+			dictionaryRemove : '<{$smarty.const._MI_DICTIONARY_WARNING_REMOVE_DICTIONARY}>',
+			parallelTextRemove : '<{$smarty.const._MI_DICTIONARY_WARNING_REMOVE_DICTIONARY_P}>',
+			cannotDeleteLanguages : '<{$smarty.const._MI_DICTIONARY_WARNING_CANNOT_DELETE_LANGUAGES}>'
+		}
+	}
+};
+if (Const.Mode == 'Dictionary') {
+	Const.changeState(0);
+} else if (Const.Mode == 'ParallelText') {
+	Const.changeState(1);
+} else if (Const.Mode == 'ParaphraseDictionary') {
+	Const.changeState(5);
+} else if (Const.Mode == 'NormalizeDictionary') {
+	Const.changeState(6);
+}

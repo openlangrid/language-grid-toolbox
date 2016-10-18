@@ -1,0 +1,133 @@
+
+
+<div id="webqa">
+	<div id="input_wrapper" class="borderbox clearfix">
+		<form name="searchform">
+		<div class="box1 clearfix">
+			<script type="text/javascript"><!--
+				function onchange_uselang(selObj) {
+					window.location.href = './?name=<{$context.name}>&action=<{$action}>&id=<{$qa.id}>&' + selObj.name + '=' + selObj.options[selObj.selectedIndex].value;
+				}
+				function jumpLang(selObj) {
+					window.location.href = './?name=<{$context.name}>&action=<{$action}>&id=<{$qa.id}>&ml_lang=' + selObj.options[selObj.selectedIndex].value;
+				}
+				//function onchange_uselang(selObj) {
+					//window.location.href = './?action=<{$action}>&use_lang=' + selObj.options[selObj.selectedIndex].value;
+				//}
+				function on_form_cancel() {
+					document.location.href = './';
+				}
+			--></script>
+			<div class="box1_title">
+				<h1><{$smarty.const.WQA_LB_QA_Q_AND_A}></h1>
+			</div>
+			<{$smarty.const.WQA_LB_QA_LANGUAGE_LABEL}>
+			<select id="view_lang" name="view_lang" onchange="onchange_uselang(this)">
+			<{foreach from=$useLangs key=key item=item}>
+				<option value="<{$key}>" <{if $view_lang == $key}>selected<{/if}>><{$item}></option>
+			<{/foreach}>
+			</select>
+		</div>
+		</form>
+	</div>
+	<div id="wrapper" class="clearfix">
+		<div class="questionbox">
+			<div class="title clearfix">
+				<h3><{$smarty.const.WQA_LB_QA_Q}></h3>
+				<span class="date">
+					<{if $qa.author != ''}><span class="qainfo"><{$smarty.const.WQA_LB_QA_POST_AUTHOR}>: <{$qa.author}></span><{/if}>
+					<{if $qa.categories != ''}><span class="qainfo"><{$smarty.const.WQA_LB_INPUT_CATEGORY}>: <{$qa.categories}></span><{/if}>
+					<{if $qa.language != ''}><span class="qainfo"><{$smarty.const.WQA_LB_QA_POST_LANGUAGE}>: <{$qa.language}></span><{/if}>
+					<span class="qainfo"><{$smarty.const.WQA_LB_QA_DATETIME}>:<{$qa.postdate}></span>
+				</span>
+			</div>
+			<p>
+				<{if $qa.question == ''}>
+					<{$smarty.const.WQA_LB_QA_NO_DATA}>
+				<{else}>
+					<{$qa.question|escape|nl2br}>
+				<{/if}>
+			</p>
+		</div>
+	<{foreach from=$qa.answers item=i}>
+		<div class="qaspace"></div>
+		<div class="answerbox">
+			<div class="title clearfix">
+				<h3><{$smarty.const.WQA_LB_QA_A}></h3>
+				<span class="date">
+					<{if $i.author != ''}><span class="qainfo"><{$smarty.const.WQA_LB_QA_POST_AUTHOR}>: <{$i.author}></span><{/if}>
+					<{if $i.language != ''}><span class="qainfo"><{$smarty.const.WQA_LB_QA_POST_LANGUAGE}>: <{$i.language}></span><{/if}>
+					<span class="qainfo"><{$smarty.const.WQA_LB_QA_DATETIME}>: <{$i.date}></span></span>
+			</div>
+			<p>
+				<{if $i.text == ''}>
+					<{$smarty.const.WQA_LB_QA_NO_DATA}>
+				<{else}>
+					<{$i.text|escape|nl2br}>
+				<{/if}>
+			</p>
+		</div>
+	<{foreachelse}>
+		<div class="no_answer">
+			<{$smarty.const.WQA_LB_QA_NO_ANSWER}>
+		</div>
+	<{/foreach}>
+
+		<div style="clear:both; display:block; height:1px;"></div>
+		<span class="totop"><a name="top" href="#" onclick="/*window.scroll(document.viewport.getScrollOffsets().left, 0);*/"><{$smarty.const.WQA_LB_QA_TOP}></a></span>
+		<div class="qa_button_area">
+<{*			<span class="toback"><button class="common_blue_button" onclick="location.href = './'; return false; history.back(); return false;"><{$smarty.const.WQA_LB_QA_BACK}></button></span>*}>
+			<span class="toback"><button class="common_blue_button" onclick="location.href = './?action=search&back=yes'; return false;"><{$smarty.const.WQA_LB_QA_BACK}></button></span>
+		</div>
+		
+		<{if $authorized}>
+		<div class="box1_title">
+			<h1 style="text-align: left;"><{$smarty.const.WQA_LB_QA_POST_A}></h1>
+		</div>
+		<div><!-- answer -->
+			<{if $error_message_list}>
+			<div id="error_message_wrapper" class="borderbox">
+				<ul>
+					<{foreach from=$error_message_list item=i}>
+						<li><{$i}></li>
+					<{/foreach}>
+				</ul>
+			</div>
+			<{/if}>
+			<form name="searchform">
+				<div class="box1" style="width: 610px; text-align: right;">
+				<{$smarty.const.WQA_LB_INPUT_ANSWER_LANGUAGE_LABEL}>
+				<select id="use_lang" name="use_lang" onchange="onchange_uselang(this)">
+				<{foreach from=$useLangs key=key item=item}>
+					<option value="<{$key}>" <{if $use_lang == $key}>selected<{/if}>><{$item}></option>
+				<{/foreach}>
+				</select>
+				<div class="clear"></div>
+				</div>
+			</form>
+			<div id="contents_wrapper" class="borderbox">
+			<form name="qa_form" method="post" action="./?action=confirmAnswer&name=<{$name}>&id=<{$form.id}>">
+				<table class="add_qa_table">
+					<tr>
+						<th><label><{$smarty.const.WQA_LB_QA_A_BODY}><span class="input_require">*</span></label></th>
+						<td>
+							<textarea name="answer" rows="9" cols="50"><{$form.answer}></textarea>
+							<div class="input_desc"><{$smarty.const.WQA_LB_INPUT_FORM_BODY_D}></div>
+						</td>
+					</tr>
+					</table>
+					<p>
+						<span class="input_require"><{$smarty.const.WQA_LB_INPUT_REQUIRE}></span>
+					</p>
+					<div class="button_area">
+						<button type="submit" class="common_blue_button"><{$smarty.const.WQA_LB_INPUT_FORM_SUBMIT}></button>
+						<button class="common_blue_button" onclick="on_form_cancel(); return false;"><{$smarty.const.WQA_LB_INPUT_FORM_CANCEL}></button>
+					</div>
+			</form>
+			</div>
+		</div><!-- /answer -->
+		<{/if}>
+		
+	</div>
+</div>
+

@@ -1,0 +1,157 @@
+
+<div id="webqa">
+	<div id="input_wrapper" class="borderbox clearfix">
+		<form name="searchform" method="get" action="./">
+		<input type="hidden" name="action" value="search">
+		<div class="box1 clearfix">
+			<script type="text/javascript"><!--
+				function onchange_uselang(selObj) {
+					var query = location.search.toQueryParams(); 
+					//if (query.action && query.action == 'search') {
+						query.view_lang = $F('view_lang');
+						window.location.href = './?' + Object.toQueryString(query);
+					//}
+				}
+				Event.observe(window, 'load', function() {
+					$('catSelect').observe('click', function() {
+						var area = $('catArea');
+						var img = $('catSelectImg'); 
+						area.toggle();
+
+						if (area.visible()) {
+							img.src = './img/icon/icon_minus.png';
+						} else {
+							img.src = './img/icon/icon_plus.png';
+						}
+					});
+
+					$$('.other-category').each(function(e) {
+						e.observe('change', function() {
+							$('other-category').checked = true;
+						});
+					});
+				});
+			--></script>
+			<{*<div class="box1_title">
+				<h1><{$smarty.const.WQA_LB_SEARCHFORM_WEB_QA_TOP_PAGE}></h1>
+			</div>*}>
+		</div>
+		<div class="box2 clearfix">
+			<div id="search_form">
+				<{$smarty.const.WQA_LB_SEARCHFORM_KEYWORD}>:
+				<{strip}>
+				<input class="common_input" type="text" name="word" size="40" value="<{$form.word}>" <{if $search_exist == 0}>disabled<{/if}>>
+				<button type="submit" name="search" <{if $search_exist == 0}> class="common_disable_button" disabled<{else}>class="common_blue_button"<{/if}>>
+					<{$smarty.const.WQA_LB_SEARCHFORM_SEARCH_BUTTON}>
+				</button>
+				<{/strip}>
+				<{*<label><input type="checkbox" name="order" value="date" <{if $form.order}>checked="checked"<{/if}> <{if $search_exist == 0}>disabled<{/if}>> <{$smarty.const.WQA_LB_SEARCHFORM_DATEORDER}></label>*}>
+				<label><{$smarty.const.WQA_LB_SEARCHFORM_VIEWNUM}></label>
+				<select name="num" id="num" <{if $search_exist == 0}>disabled<{/if}>>
+					<option value="10" <{if $form.num == 10}>selected<{/if}>>10</option>
+					<option value="50" <{if $form.num == 50}>selected<{/if}>>50</option>
+					<option value="100" <{if $form.num == 100}>selected<{/if}>>100</option>
+					<option value="99999" <{if $form.num == 99999}>selected<{/if}>><{$smarty.const.WQA_LB_SEARCHFORM_VIEWNUM_ALL}></option>
+				</select>
+				<label><{$smarty.const.WQA_LB_SEARCHFORM_VIEWNUM2}></label>
+				<{$smarty.const.WQA_LB_SEARCHFORM_LANGUAGE_LABEL}>
+				<select name="view_lang" id="view_lang" onchange="onchange_uselang(); return;" <{if $search_exist == 0}>disabled<{/if}>>
+				<{foreach from=$useLangs key=key item=item}>
+					<option value="<{$key}>" <{if $view_lang == $key}>selected<{/if}>><{$item}></option>
+				<{/foreach}>
+				</select>
+			</div>
+			<{*<span id="new_qa_link">
+				<button onclick="location.href='./?action=question'; return false;"  <{if $post_exist == 0}> class="common_disable_button" style="width:auto;padding: 4px 10px;" disabled<{else}>class="common_liquid_blue_button"<{/if}> >
+					<{$smarty.const.WQA_LB_SEARCHFORM_NEWQA}>
+				</button>
+			</span>*}>
+		</div>
+		<{if $categories}>
+			<div class="category-area">
+				<{$smarty.const.WQA_LB_INPUT_CATEGORY}>:
+					<label><input id="all-category" name="type" type="radio" value="all" <{if $form.type == 'all'}>checked="checked"<{/if}> /> <{$smarty.const.WQA_LB_QA_ALL_CATEGORIES}></label>
+					<label><input id="other-category" name="type" type="radio" value="selected" <{if $form.type == 'selected'}>checked="checked"<{/if}> /> <{$smarty.const.WQA_LB_QA_SELECTED_CATEGORIES}></label>
+					[ <a href="#" id="catSelect"><img id="catSelectImg" src="./img/icon/icon_<{if $form.type == 'selected'}>minus<{else}>plus<{/if}>.png" /> <{$smarty.const.WQA_LB_QA_CATEGORY_SELECT}></a> ]
+					<div id="catArea"<{if $form.type != 'selected'}> style="display: none;"<{/if}>>
+						<{foreach from=$categories key=key item=item}>
+							<label><input class="other-category" name="cat[]" type="checkbox" value="<{$key}>" <{if is_array($form.cat) && in_array($key, $form.cat)}>checked="checked"<{/if}> /> <{$item}></label>
+						<{/foreach}>
+					</div>
+				</div>
+		<{/if}>
+		</form>
+	</div>
+
+	<{if $search_exist == 0}>
+		<div class="warning-message">
+			<{$smarty.const.WQA_LB_QA_NO_SEARCH_QA}>
+		</div>
+	<{/if}>
+	<{if $post_exist == 0}>
+		<div class="warning-message">
+			<{$smarty.const.WQA_LB_QA_NO_POSTING_QA}>
+		</div>
+	<{/if}>
+	
+	<{if isset($context.resultMessage)}>
+		<{if ! $authorized}>
+			<div id="result_note_for_guest">
+				<{$smarty.const.WQA_LB_SEARCHFORM_NOTICE_FOR_GUEST}>
+			</div>
+		<{/if}>
+		<{if $action == 'search'}>
+			<div id="result_message">
+				<{$context.resultMessage}> [<a href="./"><{$smarty.const.WQA_LB_SEARCHFORM_CLEAR_SEARCH_RESULT}></a>]
+			</div>
+		<{else}>
+			<div class="list_result_message">
+				<{$context.resultMessage}>
+			</div>
+		<{/if}>
+	<{/if}>
+	<div id="result_wrapper" class="borderbox clearfix">
+		<ul>
+		<{assign var=word value=$context.form.word}>
+		<{assign var=boldWord value='<b>'|cat:$context.form.word|cat:'</b>'}>
+		<{foreach from=$list key=id item=i}>
+			<li>
+				<div class="title">
+					<h3><a href="./?action=qa&id=<{$i.id}>&name=<{$i.resource}>&view_lang=<{$viewLang}>">
+						<{if $i.question == ''}>
+							<{$smarty.const.WQA_LB_SEARCHFORM_NO_DATA}>
+						<{elseif mb_strwidth($i.question, 'UTF-8') >= 130}>
+							<{$i.question|mb_strimwidth:0:126:' ...':'UTF-8'|escape}>
+						<{else}>
+							<{$i.question|escape}>
+						<{/if}>
+					</a></h3>
+				</div>
+				<{*<p class="question">
+					<{if $i.question == ''}>
+						<{$smarty.const.WQA_LB_SEARCHFORM_NO_DATA}>
+					<{elseif mb_strwidth($i.question, 'UTF-8') > 150}>
+						<{$i.question|mb_strimwidth:0:148:'...':'UTF-8'|escape|replace:$word:$boldWord}>
+					<{else}>
+						<{$i.question|escape|replace:$word:$boldWord}>
+					<{/if}>
+				</p>*}>
+				<div class="clearfix">
+					<div class="posted">
+						<{if $i.author != ''}><span class="qinfo"><{$smarty.const.WQA_LB_QA_POST_AUTHOR}>: <{$i.author}></span><{/if}>
+						<{if $i.categories != ''}><span class="qinfo"><{$smarty.const.WQA_LB_INPUT_CATEGORY}>: <{$i.categories}></span><{/if}>
+						<{if $i.language != ''}><span class="qinfo"><{$smarty.const.WQA_LB_QA_POST_LANGUAGE}>: <{$i.language}></span><{/if}>
+						<span class="qinfo"><{$smarty.const.WQA_LB_SEARCHRESULT_DATETIME}>: <{$i.postdate}></span>
+						<span class="qinfo"><{$i.answersnum|string_format:$smarty.const.WQA_LB_SEARCHRESULT_ANSNUM}></span>
+					</div>
+				</div>
+			</li>
+		<{/foreach}>
+		</ul>
+		<div id="pager_wrapper">
+			<div class="navi_box">
+				<{$context.navigation.all}>
+			</div>
+		</div>
+	</div>
+</div>

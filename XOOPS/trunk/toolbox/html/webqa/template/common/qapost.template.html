@@ -1,0 +1,10 @@
+	<script type="text/javascript">
+	function post_question() {
+		var lang = '';
+		try {
+			var lang = $('use_lang').value;
+		} catch (e) {}
+		location.href='./?action=question&use_lang='+lang;
+		return false;
+	}
+	</script>

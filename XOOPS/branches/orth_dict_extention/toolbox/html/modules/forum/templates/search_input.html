@@ -1,0 +1,53 @@
+<form method="get" name="searchForm" action="" target="">
+<div id="search_input">
+<table>
+	<tbody>
+		<tr>
+			<td class="param-name"><span><{$smarty.const._MD_D3FORUM_SEARCH_SCOPE}></span></td>
+			<td class="param-item">
+				<div id="topic_path" style="float:left;">
+				<script type="text/javascript">
+				var NaviSelectorConst = {
+					Resource : <{$naviSelectorResource}>,
+					Selected : {categoryId : '<{$categoryId}>', forumId : '<{$forumId}>', topicId : '<{$topicId}>'}
+				};
+				</script>
+					<ol>
+						<li>
+							<{$smarty.const._MD_D3FORUM_RETURN_COMMUNITY_TOP}>
+						</li>
+						<li>
+							<span>＞</span><select id="jumpbox_category"></select>
+						</li>
+						<li id="jumpbox_forum_wrapper">
+							<span>＞</span><select id="jumpbox_forum"></select>
+						</li>
+						<li id="jumpbox_topic_wrapper">
+							<span>＞</span><select id="jumpbox_topic"></select>
+						</li>
+					</ol>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="param-name"><span><{$smarty.const._MD_D3FORUM_SEARCH_KEYWORD}></span></td>
+			<td class="param-item">
+				<input type="text" name="word_text" id="word_text" value="<{$word}>" />
+			</td>
+		</tr>
+		<tr>
+			<td class="param-name"><span><{$smarty.const._MD_D3FORUM_SEARCH_TAG}></span></td>
+			<td class="param-item">
+				<{include file="db:`$mydirname`_tag_box.html"}>
+			</td>
+		</tr>
+		<tr>
+			<td class="param-name">
+				<input type="button" id="search_submit" name="search_submit" value="<{$smarty.const._MD_D3FORUM_BTN_SEARCH}>" class="btn_blue01" />
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+</form>
+</div>

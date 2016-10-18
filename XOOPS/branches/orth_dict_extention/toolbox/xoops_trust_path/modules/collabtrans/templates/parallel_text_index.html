@@ -1,0 +1,204 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<title><{$smarty.const.CT_BTN_PARALLEL_TEXT}></title>
+	<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/common.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/button.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/translate.css" />
+	<style type="text/css">
+	body {
+		font-family: arial,Tahoma,helvetica,clean,verdana,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",Osaka,"ＭＳ Ｐゴシック","MS PGothic",sans-serif;
+		line-height: 160%;
+	}
+	</style>
+</head>
+<body style="background-color:#fff;">
+
+<form name="main"  method="post" action="<{$mod_url}>/parallel_text/?action=_create">
+
+<div id="search" class="tab" style="width:700px;">
+  <div>
+    <div class="area-fr"><a href="javascript: window.close()" class="btn-popup-close">x</a></div>
+  </div>
+  <br class="clear" />
+  <strong class="h-pagetitle"><{$smarty.const.CT_LABEL_SEARCH_}></strong>
+  <br />
+  
+  <div style="margin-top:8px;margin-bottom: 8px;">
+  	<{$smarty.const.CT_LABEL_SEARCH_WORD}>
+  	<input type="text" name="keyword" />
+
+    <select name="sourceLang" onChange="changeTargetLanguage();">
+      <{foreach from=$langs item=lang key=index}>
+      <option value="<{$lang[0]}>"><{$lang[1]}></option>
+      <{/foreach}>
+    </select>
+    
+    <span id="targetLanguage">
+    	-&gt; <span><{$langs[1][1]}></span>
+    	<input type="hidden" name="targetLang" value="<{$langs[1][0]}>"/>
+    </span>
+    <select name="method">
+      <option value="COMPLETE"><{$smarty.const.CT_LABEL_OPTION_COMPLETE}></option>
+      <option value="PREFIX"><{$smarty.const.CT_LABEL_OPTION_PREFIX}></option>
+      <option value="PARTIAL" selected=selected><{$smarty.const.CT_LABEL_OPTION_PARTIAL}></option>
+      <option value="SUFFIX"><{$smarty.const.CT_LABEL_OPTION_SUFFIX}></option>
+    </select>
+    
+    <a href="javascript: search(); void(0);" onclick="" class="btn-s">
+    	<span class="btn-search"><{$smarty.const.CT_BTN_SEARCH}></span>
+    </a> 
+  </div>
+  
+  <div id="searchResultContainer">
+    <table border="0" cellspacing="0" cellpadding="0" style="width:97%;">
+      <!-- ****************************************** -->
+      <thead class="table-sortable-head">
+        <tr>
+          <th><{$smarty.const.CT_LABEL_RESOURCE_NAME}></th>
+          <th><{$smarty.const.CT_LABEL_TRANSLATIONS}></th>
+          <th><{$smarty.const.CT_LABEL_RESOURCE_NAME}></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="area-fl-p8">&gt; 
+  	<a href="javascript: switchSearchAdd()"><{$smarty.const.CT_LINK_REGIST_PARALLEL_TEXT}></a>
+  </div>
+  
+  <div class="area-fr-p4">
+    <!-- -->
+    <a href="javascript: window.close()" class="btn">
+    	<span class="btn-close"><{$smarty.const.CT_BTN_CLOSE}></span>
+    </a>
+  </div>
+  <br class="clear" />
+</div>
+
+
+<div class="tab" style="width:700px; display: none;">
+
+  <div>
+    <div class="area-fr"><a href="javascript: window.close()" class="btn-popup-close">x</a></div>
+  </div>
+  
+  <br class="clear" />
+  
+  <strong class="h-pagetitle"><{$smarty.const.CT_LABEL_REGISTRATION_PARALLEL_TEXT}></strong>
+  <br />
+  
+  <div style="margin-top:8px;margin-bottom: 8px;"> <{$smarty.const.CT_LABEL_TARGET_PARALLEL_TEXT}>
+    <select id="languageResources" name="dictionaryName">
+      <option value=""><{$smarty.const.CT_LABEL_OPTION_SELECT_PARALLEL_TEXT}></option>
+      <{include file="db:collabtrans_parallel_text__list.html"}>
+    </select>
+  </div>
+  
+  <div id="newformContainer" class="popup-pain" style="overflow:auto; height: 100px;" >
+  	<{include file="db:collabtrans_dictionary__new.html"}>
+  </div>
+	
+  <div class="area-fl-p8">&lt; 
+  	<a href="javascript: switchSearchAdd()"><{$smarty.const.CT_LINK_SEARCH_PARALLEL_TEXT}></a>
+  </div>
+  
+  <div class="area-fr-p4">
+    <a href="javascript: void(0)" onclick="submit(this);" class="btn-s" style="width:100px;">
+    	<span class="btn-save"><{$smarty.const.CT_BTN_REGIST}></span>
+    </a>
+    <a href="javascript: window.close()" class="btn">
+    	<span class="btn-close"><{$smarty.const.CT_BTN_CLOSE}></span>
+    </a> 
+  </div>
+  <br class="clear" />
+
+</div>
+</form>
+
+<script type="text/javascript" src="<{$mod_url}>/../../common/lib/prototype.js"></script>
+<script type="text/javascript" src="<{$mod_url}>/js/trans_common.js"></script>
+
+<script type="text/javascript">
+function submit(btn) {
+	if(!$(btn).btnDisabled())	document.forms['main'].submit()
+}
+
+function getLanguages() {
+	var source = params($("search"))["sourceLang"];
+	var options =$$("select[name=sourceLang] option");
+	return options.inject({}, function(accum, e){
+		if(source == e.value) accum.source = e 
+		else                  accum.target = e; 
+		return accum; 
+	});
+}
+
+function switchSearchAdd() {
+	//if(params()['keyword']) {
+		$$(".tab").each(Element.toggle);
+	//} else {
+	//	alert("<{$smarty.const.CT_MSG_REQUIRE_KEYWORD}>");
+	//}
+}
+
+function search() {
+	var param = params();
+	if(!param["keyword"]) return;
+	new Ajax.Updater("searchResultContainer",
+		"<{$mod_url}>/parallel_text/?action=_search",{
+			parameters: $H(param).toQueryString()
+		}
+	);
+}
+
+function getNewForm() {
+	var param = params();
+	new Ajax.Updater("newformContainer",
+		"<{$mod_url}>/parallel_text/?action=_new", {
+			method: 'get',
+			parameters: $H(param).toQueryString()
+		}
+	);
+}
+
+
+function changeTargetLanguage() {
+	var langs = getLanguages();
+	$("targetLanguage").down("span").innerHTML = langs.target.innerHTML;
+	$("targetLanguage").down("input").setValue($(langs.target).value);
+	getNewForm();
+}
+
+function updateBtns() {
+	var param = params("main");
+	var available = !!param["dictionaryName"];
+	available &= $(document.forms['main']).
+					select("input").
+					reject(function(e){ return e.name == "keyword" }).
+					all(function(e) { return !!e.getValue() });
+
+	var saveBtn = $(document.forms['main']).down(".btn-save").up();
+	
+	saveBtn.removeClassName("btn-s").removeClassName("btn-s-disable");
+	saveBtn.addClassName(available ? "btn-s" : "btn-s-disable");
+}
+
+Event.observe(window, 'load', function() {
+	
+	updateBtns();
+	
+	new Form.Observer(document.forms['main'], 0.5, updateBtns);
+	
+	new Form.Element.Observer($("search").down("input[name=keyword]"),0.5, function(e, value){
+		$("regist_source").down("input").setValue(value);
+		$("regist_source").down("span").update(value);
+	});
+});
+</script>
+</body>
+</html>

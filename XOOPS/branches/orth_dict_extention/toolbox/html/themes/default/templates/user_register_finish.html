@@ -1,0 +1,25 @@
+<{*
+<h1><{$smarty.const._HD_USER_REGISTRATION_SUCCEEDED}></h1>
+<p><a href="<{$xoops_url}>/"><{$smarty.const._MAIN}></a></p>
+*}>
+<div id="contents_body">
+	<h2><{$smarty.const._MD_USER_LANG_ACCOUNT_COMPLETION}></h2>
+	<div id="pass_box" style="padding:0px;text-align:left;border:none;">
+		<p><{$complete_message|xoops_escape}></p>
+	</div>
+	<div id="pass_box" style="display:none;">
+		<form action="<{$xoops_url}>/user.php" method="post" name='login_form'>
+			<{xoops_input type=hidden name=op value=login}>
+			<{xoops_input type=hidden name=xoops_redirect value=$redirect_page}>
+			<label for="legacy_xoopsform_uname"><{$smarty.const._MD_USER_LANG_USER_ID}>: </label>
+			<{xoops_input type='text' name='uname' class='login_text'}><br />
+			<label for="legacy_xoopsform_pass"><{$smarty.const._MD_USER_LANG_PASSWORD}>: </label>
+			<{xoops_input type='password' name='pass' class='login_text'}>
+			<a href="#" onclick="document.login_form.submit(); return false;">
+				<div class="btn_blue01">
+					<{$smarty.const._MB_USER_LOGIN}>
+				</div>
+			</a>
+		</form>
+	</div>
+</div>

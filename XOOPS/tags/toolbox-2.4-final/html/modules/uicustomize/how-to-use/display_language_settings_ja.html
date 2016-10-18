@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Toolbox - How to use</title>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/common/css/import.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/css/import.css" />
+<style type="text/css">
+    ol.step li { list-style-type: lower-roman; margin-left: 25px; }
+</style>
+</head>
+<body id="howtouse">
+<div id="body_bg">
+    <div id="wrap">
+        <div id="container">
+            <div id="head">
+                <h1 id="logo"></h1>
+                </div>
+<div id="contents_body">
+            <h2>How to Use (表示言語の設定)</h2>
+   <div class="inner_text">          
+<p>Toolboxは、画面右上のドロップダウンボックスで言語を選択することで、テキストラベル（Toolboxの画面上に表示されるメッセージやボタンのテキスト）の言語を変更できます。この言語を、Toolboxの表示言語と呼びます。表示言語の設定機能を使用すると、Toolboxに表示言語を追加したり、言語ごとにテキストラベルを設定することができます。</p>
+
+<p>このページでは、表示言語の設定機能を使用した、下記の手順を説明します。</p>
+<ol>
+<li>1. 表示言語の追加</li>
+<li>2. テキストラベルの変更</li>
+</ol>
+
+<dl><dt>1. 表示言語の追加</dt>
+<dd>以下の手順で表示言語を追加できます。</dd>
+<dd>
+<ol class="step">
+<li>Toolboxにインストールされたモジュールの一覧表上部にある<span class="key_point">「言語の選択」</span>リンクをクリックします。</li>
+<li>追加したい言語にチェックを入れて、OKを押します。</li>
+<li>モジュール一覧の上部にある表示言語のドロップダウンボックスから言語を選択します。<br />
+「ファイル」の列に、現在設定されているテキストラベルのファイルが表示されます。デフォルトのテキストラベルが設定されているモジュールについては、「デフォルト」と表示されます。インストールされた直後のモジュールは、全て「デフォルト」になります。また、新たに追加した言語についても、対応するテキストラベルのファイルがないため、「デフォルト」となります。「デフォルト」の場合，英語のテキストラベルが利用されます。</li>
+<li>テキストラベルを変更したいモジュールについて、表の右側の▽をクリックして、メニューを表示します。</li>
+<li><span class="key_point">「デフォルト設定をダウンロード」</span>リンクをクリックして、デフォルトとして設定された英語のテキストラベルをダウンロードします。<br />ダウンロードされたファイルは以下のタブ区切り形式のテキストファイルになっています。"define"の列は、テキストラベルの表示位置を示すIDです。変更すると表示位置を特定できなくなるため、変更しないでください。テキストラベルは"resource"の列に記述されています。変更したいテキストラベルを書き換えてください。<font color="red">ファイルの文字コードはUTF-16に設定してください。</font>
+</li>
+<table border="1" width="600" align="center" style="margin: 5px auto; ">
+<tr><td>define</td><td>resource</td></tr>
+<tr><td>_MI_DOCUMENT_TOOL_NAME</td><td>Text Translation</td></tr>
+<tr><td>_MI_DOCUMENT_TOOL_BUTTON_TRANSLATE</td><td>Translate</td></tr>
+<tr><td>_MI_DOCUMENT_TOOL_BUTTON_TRANSLATION_TIME</td><td>Translation time</td></tr>
+<tr><td>_MI_DOCUMENT_TOOL_BUTTON_TRANSLATE_CANCEL</td><td>Cancel</td></tr>
+<tr><td>...</td><td>...</td></tr>
+</tr>
+</table>
+<li>メニューから<span class="key_point">「ファイルを選択」</span>リンクをクリックします。</li>
+<li>ファイルダイアログが表示されますので、<span class="key_point">「ファイルをアップロード」</span>ボタンをクリックして、作成したファイルをアップロードします。アップロードしたファイルを選択することで、書き換えたテキストラベルが設定されます。</li>
+</dd>
+</ol>
+
+<dl><dt>2. テキストラベルの変更</dt>
+<dd>既存の表示言語のテキストラベルの変更は、以下の手順で行います。</dd>
+<dd>
+<ol class="step">
+<li>モジュール一覧の上部にある表示言語のドロップダウンボックスから，テキストラベルを変更したい言語を選択します。</li>
+<li>テキストラベルを変更したいモジュールについて、表の右側の▽をクリックして、メニューを表示します。</li>
+<li><span class="key_point">「ダウンロード」</span>リンクをクリックして、設定されているテキストラベルをダウンロードします。</li>
+<li>ダウンロードしたファイルの、変更したい箇所を書き換えます。</li>
+</dd><li>メニューから<span class="key_point">「ファイルを選択」</span>リンクをクリックします。</li>
+<li>ファイルダイアログが表示されますので、<span class="key_point">「ファイルをアップロード」</span>ボタンをクリックして、作成したファイルをアップロードします。アップロードしたファイルを選択することで、書き換えたテキストラベルメッセージが設定されます。</li>
+</ol>
+</dl>
+        </div>
+          </div>
+            <div id="footer_inner">
+                <address>
+                Copyright (C) 2009-2010 Language Grid Project, NICT. All rights reserved.
+                </address>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

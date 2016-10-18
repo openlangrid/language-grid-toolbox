@@ -1,0 +1,151 @@
+googlebot-mobile:
+    carrierid:7
+    mobile:true
+    bot:true
+    cookie:true
+    agent:
+        - "([a-zA-Z_0-9\/.;() -]+)(googlebot-mobile)([a-zA-Z_0-9\/.;() -]+)"
+    host:"[a-zA-Z_0-9-]\.googlebot\.com$"
+    uniqid:""
+    encoding:"sjis-win"
+    charset:"shift_jis"
+    doctype:""
+    plugin:
+        path:"plugins/user/Googlebot.class.php"
+        class:"Wizin_Plugin_User_Googlebot"
+
+yahoo-mobile:
+    carrierid:8
+    mobile:true
+    bot:true
+    cookie:true
+    agent:
+        - "y!j-srd\/1\.0"
+        - "y!j-mbs\/1\.0"
+    host:"search\.\w*\.yahoo\.co\.jp.$"
+    uniqid:""
+    encoding:"sjis-win"
+    charset:"shift_jis"
+    doctype:""
+    plugin:
+        path:""
+        class:""
+
+docomo:
+    carrierid:1
+    mobile:true
+    bot:false
+    cookie:false
+    agent:
+        - "^docomo\/.*"
+    host:"docomo\.ne\.jp$"
+    uniqid:"HTTP_X_DCMGUID"
+    encoding:"sjis-win"
+    charset:"shift_jis"
+    doctype:"<!DOCTYPE html PUBLIC \"-//i-mode group (ja)//DTD XHTML i-XHTML(Locale/Ver.=ja/2.3) 1.0//EN\" \"i-xhtml_4ja_10.dtd\">"
+    plugin:
+        path:"plugins/user/Docomo.class.php"
+        class:"Wizin_Plugin_User_Docomo"
+    inputmode:
+        kanji:' style="-wap-input-format:&quot;*&lt;ja:h&gt;&quot;;-wap-input-format:*M;" '
+        alpha:' style="-wap-input-format:&quot;*&lt;ja:en&gt;&quot;;-wap-input-format:*m;" '
+        number:' style="-wap-input-format:&quot;*&lt;ja:n&gt;&quot;;-wap-input-format:*N;" '
+
+au:
+    carrierid:2
+    mobile:true
+    bot:false
+    cookie:true
+    agent:
+        - "^up\.browser\/"
+        - "^kddi\-"
+    host:"(ezweb|ido|brew)\.ne\.jp$"
+    uniqid:"HTTP_X_UP_SUBNO"
+    encoding:"sjis-win"
+    charset:"shift_jis"
+    doctype:"<!DOCTYPE html PUBLIC \"-//OPENWAVE//DTD XHTML 1.0//EN\" \"http://www.openwave.com/DTD/xhtml-basic.dtd\">"
+    plugin:
+        path:"plugins/user/Au.class.php"
+        class:"Wizin_Plugin_User_Au"
+    inputmode:
+        kanji:' istyle="1" format="*M" mode="hiragana" '
+        alpha:' istyle="3" format="*m" mode="alphabet" '
+        number:' istyle="4" format="*N" mode="numeric" '
+
+softbank:
+    carrierid:3
+    mobile:true
+    bot:false
+    cookie:true
+    agent:
+        - "^j\-phone\/"
+        - "^vodafone\/"
+        - "^softbank\/"
+        - "^mot\-[vc]"
+        - "^vemulator\/"
+    host:"jp\-[kcqt]\.ne\.jp$"
+    uniqid:"HTTP_X_JPHONE_UID"
+    encoding:"utf-8"
+    charset:"utf-8"
+    doctype:"<!DOCTYPE html PUBLIC \"-//J-PHONE//DTD XHTML Basic 1.0 Plus//EN\" \"xhtml-basic10-plus.dtd\">"
+    plugin:
+        path:"plugins/user/Softbank.class.php"
+        class:"Wizin_Plugin_User_Softbank"
+    inputmode:
+        kanji:' istyle="1" format="*M" mode="hiragana" '
+        alpha:' istyle="3" format="*m" mode="alphabet" '
+        number:' istyle="4" format="*N" mode="numeric" '
+
+willcom:
+    carrierid:4
+    mobile:true
+    bot:false
+    cookie:true
+    agent:
+        - "(willcom|ddipocket)"
+    host:"prin\.ne\.jp$"
+    uniqid:""
+    encoding:"sjis-win"
+    charset:"shift_jis"
+    doctype:""
+    plugin:
+        path:"plugins/user/Willcom.class.php"
+        class:"Wizin_Plugin_User_Willcom"
+
+
+emobile:
+    carrierid:5
+    mobile:true
+    bot:false
+    cookie:true
+    agent:
+        - "emobile\/"
+        - "iemobile"
+    host:"emobile\.ad\.jp$"
+    uniqid:"HTTP_X_EM_UID"
+    encoding:"sjis-win"
+    charset:"shift_jis"
+    doctype:""
+    plugin:
+        path:""
+        class:""
+
+
+othermobile:
+    carrierid:6
+    mobile:true
+    bot:false
+    cookie:true
+    agent:
+        - "windows *ce"
+        - "jigbrowserweb"
+        - "netfront"
+        - "(y!j\-srd\/1|y!j\-mbs\/1)"
+    host:""
+    uniqid:""
+    encoding:"sjis-win"
+    charset:"shift_jis"
+    doctype:""
+    plugin:
+        path:""
+        class:""

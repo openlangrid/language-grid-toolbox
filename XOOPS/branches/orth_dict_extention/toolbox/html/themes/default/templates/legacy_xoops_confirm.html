@@ -1,0 +1,29 @@
+<h1><{$smarty.const._CM_DELETE_TITLE}></h1>
+<p><{$message}></p>
+<form method="post" action="<{$action|xoops_escape}>">
+  <{xoops_input type=hidden name=$tokenName value=$tokenValue}>
+  <ul class="nlm">
+  <{foreach key=key item=value from=$hiddens}>
+    <{if is_array($value)}>
+      <{foreach key=radioName item=radioValue from=$value}>
+        <li><label><{xoops_input type=radio name=$key value=$radioValue}><{$radioName|xoops_escape}></label></li>
+      <{/foreach}>
+    <{else}>
+      <{xoops_input type=hidden name=$key value=$value}>
+    <{/if}>
+  <{/foreach}>
+  </ul>
+  <p>
+    <{if $submit}>
+      <input type="submit" name="confirm_submit" value="<{$submit}>" />
+    <{else}>
+      <input type="submit" name="confirm_submit" value="<{$smarty.const._SUBMIT}>" />
+    <{/if}>
+      <script type="text/javascript">
+      <!--
+        document.write('<input type="button" name="confirm_back" value="<{$smarty.const._CANCEL}>"  onclick="javascript:history.go(-1);" />')
+      //-->
+      </script>
+      <noscript><a href="<{$sublink.url}>"><{$smarty.const._CANCEL}></a></noscript>
+  </p>
+</form>

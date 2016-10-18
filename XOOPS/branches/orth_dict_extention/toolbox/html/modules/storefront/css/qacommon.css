@@ -1,0 +1,359 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+html {
+	overflow:hidden;
+}
+body {
+	font: 100% "メイリオ", Verdana, Arial, Helvetica, sans-serif;
+	background: #333;
+	margin: 0; /* 複数の異なるブラウザの初期設定値に対応するため、body エレメントのマージンと余白を 0 にすることをお勧めします */
+	padding: 0;
+	text-align: center; /* これにより、IE 5* ブラウザではコンテナが中央揃えになります。そして、テキストは、#container セレクタの初期設定である左揃えに設定されます */
+	color: #333;
+}
+/*---------------------------------------------------------------------------------------*/
+/* container */
+/*---------------------------------------------------------------------------------------*/
+#container {
+	width:1024px;
+	height:768px;
+	background: #e5e5e5;
+	margin: 0px auto; /* 自動マージン（幅と連動）により、ページが中央揃えになります */
+	text-align:left;
+}
+h1 span.main {
+	display:block;
+	position:relative;
+	top:16px;	
+	font-size:100%;
+	font-weight:bold;
+}
+h1 span.sub {
+	display:none;
+	/*
+	font-size:70%;
+	font-weight:normal;
+	*/
+}
+#header h1 span.sub {
+	display:none;
+}
+a {
+	text-decoration:none;
+}
+div.clear {
+	clear:both;
+	height:0px;
+	border:none;
+}
+/*---------------------------------------------------------------------------------------*/
+/* Global な Button */
+/*---------------------------------------------------------------------------------------*/
+a.GlobalButton {
+	float:left;
+	display:block;
+	margin-left:10px;
+	width:200px;
+	height:50px;
+	color:#666;
+}
+a:hover.GlobalButton {
+	color:#000;
+}
+a.GlobalButton span {
+	float:left;
+	display:block;
+	color:#333;
+}
+a.GlobalButton.down span {
+	color:#fff;
+}
+/* [ */
+a.GlobalButton span.left {
+	width:5px;
+	height:50px;
+	background-image:url(../images/btn/button_left.png);
+	background-position:0px 0px;
+	background-repeat:no-repeat;
+}
+a.GlobalButton:hover span.left {
+	background-position:0px -50px;
+}
+a.GlobalButton.down span.left {
+	background-position:0px -100px;
+}
+a.GlobalButton span.center {
+	width:190px;
+	height:50px;
+	background-image:url(../images/btn/button_center.png);
+	background-position:0px 0px;
+	background-repeat:repeat-x;
+	text-indent:10px;
+}
+a.GlobalButton:hover span.center {
+	background-position:0px -50px;
+}
+a.GlobalButton.down span.center {
+	background-position:0px -100px;
+}
+a.GlobalButton span.main {
+	position:relative;
+	top:10px;	
+	width:158px;
+	height:20px;
+	margin:5px 0px;
+	font-size:100%;
+	font-weight:bold;
+}
+a.GlobalButton span.sub {
+	display:none;
+	/*
+	width:158px;
+	height:20px;
+	font-size:70%;
+	*/
+}
+/* ] */
+a.GlobalButton span.right {
+	width:5px;
+	height:50px;
+	background-image:url(../images/btn/button_right.png);
+	background-position:0px 0px;
+	background-repeat:no-repeat;
+}
+a.GlobalButton:hover span.right {
+	background-position:0px -50px;
+}
+a.GlobalButton.down span.right {
+	background-position:0px -100px;
+}
+/*----------------- アイコン --------------------*/
+#LanguageIcon {
+	width:32px;
+	height:50px;
+	background-image:url(../images/icn/icon_language.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+}
+.down #LanguageIcon {
+	background-position:0px -50px;
+}
+#HomeIcon {
+	width:32px;
+	height:50px;
+	background-image:url(../images/icn/icon_home.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+}
+.down #HomeIcon {
+	background-position:0px -50px;
+}
+#ReturnIcon {
+	width:32px;
+	height:50px;
+	background-image:url(../images/icn/icon_return.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+}
+#PrintIcon {
+	width:32px;
+	height:50px;
+	background-image:url(../images/icn/icon_print.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+}
+/*---------------------------------------------------------------------------------------*/
+/* header */
+/*---------------------------------------------------------------------------------------*/
+#header {
+	height:95px;
+	color:#fff;
+	background: #1d47a4;
+}
+#header h1 {
+	float:left;
+	position:relative;
+	top:10px;
+	left:20px;
+}
+#HeaderButtonArea {
+	float:right;
+	margin:20px 30px 0px 0px;
+}
+/*---------------------------------------------------------------------------------------*/
+/* mainContent */
+/*---------------------------------------------------------------------------------------*/
+#mainContent {
+	width:964px;
+	height:560px;
+	background: #FFFFFF;
+	margin: 0px auto; /* 自動マージン（幅と連動）により、ページが中央揃えになります */
+}
+#mainContent h1 {
+	position:relative;
+	top: 0px;
+	left:20px;
+	width:90%;
+	height: 50px;
+}
+#CategoryArea {
+	width:964px;
+	height:460px;
+}
+
+#CategoryArea {
+	width:964px;
+	height:auto;
+}
+
+/*marge from storefront.css */
+/* カテゴリ一覧 検索ボックス右よせ */
+.searchBox{
+
+	text-align:right;
+	padding-top:30px;
+	padding-right:50px;
+	
+}
+
+/* カテゴリ一覧 機能説明部 */
+.function_title{
+
+	float:left;
+	width:70%;
+
+}
+
+.expressionA {
+	display:block;
+}
+
+.expressionB {
+	display:none;
+}
+
+/*---------------------------------------------------------------------------------------*/
+/* ページ切り替え */
+/*---------------------------------------------------------------------------------------*/
+#PageSwitch {
+	width:964px;
+	height:auto;
+}
+#PageSwitch table {
+	height:40px;
+}
+#PageSwitch td {
+	padding:0px 5px;
+}
+#PageSwitch td.PageCount {
+	width:83px;
+	height:40px;
+	padding:0px;
+	background-image:url(../images/bg/page_switch_background.png);
+	background-position:0px 2px;
+	background-repeat:no-repeat;
+	text-align:center;
+	vertical-align:middle;
+	color:#fff;
+}
+/* <- */
+a#PagePrevButton {
+	display:block;
+	width:40px;
+	height:40px;
+	background-image:url(../images/btn/button_page_prev.png);
+	background-position:0px 0px;
+	background-repeat:no-repeat;
+}
+a#PagePrevButton:hover {
+	background-position:0px -40px;
+}
+a#PagePrevButton.down, a#PagePrevButton.down:hover {
+	background-position:0px -80px;
+}
+/* -> */
+a#PageNextButton {
+	display:block;
+	width:40px;
+	height:40px;
+	background-image:url(../images/btn/button_page_next.png);
+	background-position:0px 0px;
+	background-repeat:no-repeat;
+}
+a#PageNextButton:hover {
+	background-position:0px -40px;
+}
+a#PageNextButton.down, a#PageNextButton.down:hover {
+	background-position:0px -80px;
+}
+
+#PageSwitch {
+	width:964px;
+	height:auto;
+	clear:both;
+}
+
+#orderLinks {
+
+	float:right;
+	margin-top:-5px;
+	margin-right:10px;
+	margin-left:-220px;
+
+}
+
+/*---------------------------------------------------------------------------------------*/
+/* footer */
+/*---------------------------------------------------------------------------------------*/
+#footer {
+	height:73px;
+	background:transparent;
+}
+#BackButton {
+	margin:10px 0px 0px 30px;
+}
+#PrintButton {
+	float:right;
+	margin:10px 30px 0px 0px;
+}
+
+
+/* append for dictionary select 2010/2/5 */
+
+.area-fr {
+	float:right;
+}
+
+.area-fr-p4 {
+	float:right;
+	padding:4px;
+}
+
+/* popup base */
+div.area-popup {
+	border:1px solid #ddd;
+	padding:8px;
+	padding-top:0px;
+	margin:auto;
+	margin-top:100px;
+	background-color:#f1f1f1;
+}
+
+div.popup-pain {
+	margin:0px;
+	padding:8px;
+	padding-top:0px;
+	border:1px solid #ddd;
+	background-color:#fff;
+	position:relative;
+	top:-1px;
+}
+
+a.down {
+	cursor: default;
+}

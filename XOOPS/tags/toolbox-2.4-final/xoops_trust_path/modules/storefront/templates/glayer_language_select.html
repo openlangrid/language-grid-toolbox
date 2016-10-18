@@ -1,0 +1,56 @@
+<script language="JavaScript" type="text/javascript" src="js/glayer.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="css/glayer.css" />
+
+<div id="glayer" class="glayer" style="display: none;">
+	<img id="content_loading_icon" src="<{$xoops_imageurl}>common/img/loading.gif" style="position:absolute;top:180px; left: 460px; display: none;" />
+</div>
+
+<div id="content_select_dialog" style="position:absolute; top:120px; left: 260px; display: none; z-index: 1000">
+</div>
+
+<script type="text/javascript">
+
+var resName;
+function goStoreFront() {
+	location.href 
+	  = "<{$startUrl|escape}>&resourceName=" + resName + "&main_language=" + $("mainLanguage").value + "&sub_language=" + $("subLanguage").value;
+}
+
+/**
+ * Show dictionary select dialog.
+ * 
+ * @param id glayer area
+ * @param resourceName
+ */
+function glayerShow(id, resourceName) {
+
+	showProgress(id);
+
+    // TODO set topicId parameter variable
+	new Ajax.Updater({success : "content_select_dialog"}, 
+			"<{$mod_url}>/langs/?action=_list", 
+			{method : "get", parameters: "resourceName=" + resourceName +"&time=<{$smarty.now}>", 
+			onSuccess: showDialog,
+			evalScripts: true});
+}
+
+function showProgress(id) {
+	Glayer.show(id);
+	Element.show("content_loading_icon");
+}
+
+function showDialog() {
+	clearLoading();
+	Element.show("content_select_dialog");
+}
+
+function clearLoading() {
+	Element.hide("content_loading_icon");
+}
+
+function glayerHidden(id) {
+	Glayer.hide(id);
+	Element.hide("content_select_dialog");
+}
+
+</script>

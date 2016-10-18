@@ -1,0 +1,197 @@
+<script language="JavaScript" type="text/javascript" src="../js/glayer.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="../css/glayer.css" />
+<style type="text/css">
+#content_select_dialog {
+	text-align: left;
+	
+}
+.fileListContainer {
+	height: 200px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+#dialog_loading_icon {
+	left:460px;
+	position:absolute;
+	top:180px;
+}
+#fileList td.cell-underlined {
+	text-align: left;
+}
+</style>
+
+<div id="glayer" class="glayer" style="display: none;">
+	<img id="content_loading_icon" src="<{$xoops_imageurl}>common/img/loading.gif" style="position:absolute;top:180px; left: 460px; display: none;" />
+</div>
+
+<div id="content_select_dialog" style="position:absolute;  display: none; z-index: 1000">
+</div>
+
+
+<script type="text/javascript">
+function getScrollPosition() {
+	var x = document.documentElement.scrollLeft || document.body.scrollLeft;
+	var y = document.documentElement.scrollTop || document.body.scrollTop;
+	return {"x": x, "y": y};
+}
+
+function getScreenSize() {
+	var w = document.documentElement.clientWidth || document.body.clientWidth || document.body.scrollWidth;
+	var h = document.documentElement.clientHeight || document.body.clientHeight || document.body.scrollHeight;
+	return {"h": h, "w": w, "mh": parseInt(h/2), "mw": parseInt(w/2)};
+}
+
+function getDocumentSize() {
+	var w = document.documentElement.scrollWidth || document.body.scrollWidth;
+	var h = document.documentElement.scrollHeight || document.body.scrollHeight;
+	return {"h": h, "w": w};
+}
+
+function showGlayer() {
+	Glayer.show("glayer");
+	$("content_loading_icon").show();
+}
+
+function clearLoading() {
+	$("content_loading_icon").hide();
+}
+
+
+/**
+ * Show image/google map upload dialog.
+ * 
+ * @param id glayer area
+ * @param shopAnswerId shopAnswerId
+ * @param contentUpdateArea
+ */
+function glayerShow(id, shopAnswerId, contentUpdateArea) {
+	var screenSize = getScreenSize();
+	
+	var availableContentUpdateAreaId;
+	var contentAmount = 2;
+	
+	// get available content update area
+	for (i = 1 ; i <= contentAmount; i++) {
+		if($(contentUpdateArea + "-" + i).down().visible()) {
+			// answer content is occupied.
+		} else {
+			// answer content is empty
+			availableContentUpdateAreaId = contentUpdateArea + "-" + i;
+		}
+	}
+
+	showProgress(id);
+
+
+    // TODO set topicId parameter variable
+	new Ajax.Updater({success : "content_select_dialog"}, 
+			"<{$mod_url}>/answer_content/index.php", 
+			{method : "get", 
+             parameters: "action=_new&shopAnswerId=" + shopAnswerId + 
+                         "&contentUpdateAreaId=" + availableContentUpdateAreaId + 
+                         "&time=<{$smarty.now}>", 
+			onSuccess: showDialog,
+			onComplete: clearLoading,
+			evalScripts: true});
+	
+	
+	var containerWidth = $("tbx-body").getDimensions().width / 2;
+	$("content_select_dialog").setStyle({
+		top: getScrollPosition().y+'px',
+		left: (containerWidth - 450) + 'px'
+	});
+}
+
+function glayerDictionaryShow(id, resourceName) {
+
+	showProgress(id);
+	
+    // TODO set topicId parameter variable
+	new Ajax.Updater({success : "content_select_dialog"}, 
+			"<{$mod_url}>/dictionary/?action=_list", 
+			{method : "get", parameters: "resourceName=" + resourceName +"&time=<{$smarty.now}>", 
+				onSuccess: showDialog,
+				onComplete: clearLoading,
+				evalScripts: true});
+	
+	var containerWidth = $("tbx-body").getDimensions().width / 2;
+	$("content_select_dialog").setStyle({
+		top: getScrollPosition().y+'px',
+		left: (containerWidth - 150) + 'px'
+	});
+}
+
+function showProgress(id) {
+	Glayer.show(id);
+	Element.show("content_loading_icon");
+}
+
+function showDialog() {
+	Element.show("content_select_dialog");
+}
+
+function clearGlayer() {
+	glayerHidden('glayer');
+	Element.hide("content_loading_icon");
+}
+
+function glayerHidden(id) {
+	Glayer.hide(id);
+	Element.hide("content_select_dialog");
+}
+
+
+function openDirectory(event, element) {
+	Event.stop(event);
+	var url = $(element).readAttribute("href");
+	new Ajax.Updater(
+		"folderShowContainer",
+		url, {
+			evalScripts: true
+		}
+	);
+}
+
+
+function reloadFolder() {
+	var parentId = params($("folderShowContainer"))['parentId'];
+	new Ajax.Updater(
+		"folderShowContainer",
+		"<{$mod_url}>/folder/?action=_show&parentId=" + parentId, {
+			evalScripts: true	
+		}
+	);
+}
+
+var FILE_UPLOAD_WINDOW = $H({
+	left:0, 
+	top:0, 
+	width:920,
+	height:750,
+	status:	0,
+	scrollbars:1,
+	menubar:0,
+	location:0,
+	toolbar:0,
+	resizable:0
+});
+
+window.openUploadDialog = (function(){
+	var win;
+	return function(cid) {
+		if(win && !win.closed) {
+			win.focus();
+		} else {
+			var url = "<{$xoops_url}>/modules/filesharing/upload.php?cid=" + cid;
+			var windowParam = FILE_UPLOAD_WINDOW.map(function(e) { return e[0] + "=" + e[1]; }).join(",");
+			win = window.open(url,	"uploadDialog", windowParam);
+			Event.observe(window, 'focus', function() {
+				if(win.closed) {
+					reloadFolder();
+					Event.stopObserving(window, 'focus', arguments.callee);
+				}
+			});
+		}
+	}
+})();
+</script>

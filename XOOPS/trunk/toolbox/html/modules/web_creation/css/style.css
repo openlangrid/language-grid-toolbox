@@ -1,0 +1,509 @@
+body {
+}
+
+img {
+	vertical-align: middle;
+}
+
+td {
+	vertical-align: top;
+}
+
+textarea {
+	font-family:arial,Tahoma,helvetica,clean,verdana,"�q���M�m�p�S Pro W3","Hiragino Kaku Gothic Pro",Osaka,"�l�r �o�S�V�b�N","MS PGothic",sans-serif;
+	font-size:small;
+	line-height:160%;
+}
+
+.wc-red {
+	color: #f00;
+}
+
+/**
+ * Button
+ */
+.wc-basic-button {
+	text-align: center;
+	cursor: pointer;
+	background: #dee2e5 url(../image/button/blue.jpg) repeat-x;
+	border: 1px solid #bbb;
+	font-size: 90%;
+	font-weight: normal;
+	color:#fff;
+	display: block;
+	width: 130px;
+	padding: 2px 0;
+}
+
+.wc-basic-button:hover {
+	background-image: url(../image/button/blue_o.jpg);
+}
+
+.wc-basic-button-disabled {
+	text-align: center;
+	cursor: pointer;
+	background: #dee2e5;
+	border: 1px solid #b0b0b0;
+	font-size: 90%;
+	font-weight: normal;
+	display: block;
+	width: 140px;
+	color: #999;
+	padding: 2px 0;
+}
+
+.wc-toggle-button {
+	text-align: center;
+	cursor: pointer;
+	background: #dee2e5 url(../image/button/gray.jpg) repeat-x;
+	border: 1px solid #bbb;
+	font-size: 90%;
+	font-weight: normal;
+	color: #000;
+	display: block;
+	width: 25px;
+	padding: 2px 0;
+}
+
+.wc-toggle-button:hover {
+	background-image: url(../image/button/gray_o.jpg);
+}
+
+/**
+ * Dialog
+ */
+#wc-dialog {
+	text-align: left;
+}
+
+#wc-dialog-title {
+	background: #fff url(../image/background/light_blue.jpg) repeat-x left bottom;
+	border: 1px solid #3cc;
+	font-weight:bolder;
+	padding: 2px;
+	color: #005aaa;
+	text-align: center;
+}
+
+#wc-dialog-main {
+	border: 2px solid #0667B4;
+	padding: 4px;
+	background: #f5f5f5;
+}
+
+#wc-dialog-mask {
+	background: #000;
+}
+
+#wc-dialog-button-set {
+	text-align: center;
+	width: 310px;
+	margin: 10px auto;
+}
+
+#wc-dialog-button-set span {
+	float: left;
+	margin: 0 5px;
+}
+
+#wc-load-html-dialog, #wc-load-apply-template-dialog, #wc-load-template-dialog, #wc-load-workspace-dialog {
+	margin: 15px 10px;
+}
+
+#wc-load-html-dialog-file-name, #wc-load-apply-template-dialog-file-name, #wc-load-template-dialog-file-name, #wc-load-workspace-dialog-file-name {
+	border-left: 8px solid #0667B4;
+	color: #003399;
+	padding: 0 0 0 8px;
+	float: left;
+	width: 120px;
+}
+
+#wc-load-apply-template-dialog-file-name, #wc-load-template-dialog-file-name {
+	width: 140px;
+}
+
+#wc-load-html-dialog-select-area, #wc-load-apply-template-dialog-select-area, #wc-load-template-dialog-select-area, #wc-load-workspace-dialog-select-area {
+	float: right;
+	width: 250px;
+}
+
+#wc-load-apply-template-dialog-select-area, #wc-load-template-dialog-select-area {
+	width: 230px;
+}
+
+#wc-load-html-dialog-select-area select, #wc-load-workspace-dialog-select-area select {
+	width: 250px;
+}
+#wc-load-apply-template-dialog-select-area select, #wc-load-template-dialog-select-area select {
+	width: 230px;
+}
+
+#wc-load-html-dialog-status-area, #wc-load-apply-template-dialog-status-area, #wc-load-template-dialog-status-area, #wc-load-workspace-dialog-status-area {
+	margin: 15px;
+	height: 25px;
+}
+
+#wc-save-html-dialog, #wc-save-template-dialog, #wc-save-workspace-dialog {
+	margin: 15px 10px;
+}
+
+#wc-save-html-dialog-file-name, #wc-save-template-dialog-file-name, #wc-save-workspace-dialog-file-name {
+	border-left: 8px solid #0667B4;
+	color: #003399;
+	padding: 0 0 0 8px;
+	float: left;
+	width: 120px;
+}
+
+#wc-save-html-dialog-input-area, #wc-save-template-dialog-input-area, #wc-save-workspace-dialog-input-area {
+	float: right;
+	width: 250px;
+}
+
+#wc-save-html-dialog-input-area input, #wc-save-template-dialog-input-area input, #wc-save-workspace-dialog-input-area input {
+	width: 250px;
+}
+
+#wc-save-html-dialog-status-area, #wc-save-template-dialog-status-area, #wc-save-workspace-dialog-status-area {
+	margin: 15px;
+	height: 25px;
+}
+
+/**
+ * Wrapper
+ */
+#wc-wrapper {
+	text-align: left;
+}
+
+.wc-container {
+	border: 1px solid #C1DAD7;
+	margin: 20px 10px;
+	padding: 5px;
+}
+
+/**
+ * Title
+ */
+#wc-title-area {
+
+}
+#wc-title h2 {
+	float: left;
+}
+h2.wc-title {
+	border-left:7px solid #0667B4;
+	color:#444444;
+	font-size:17px;
+	vertical-align:middle;
+	padding:3px 8px;
+}
+#wc-workspace-controller {
+	float: right;
+}
+#wc-workspace-controller span {
+	float: left;
+	margin: 0 10px 0 0;
+}
+
+/**
+ * Url input
+ */
+#wc-url-area {
+	margin: 20px 0;
+}
+#wc-url-input-label {
+	width: 95px;
+}
+#wc-url-input {
+	width: 99%;
+}
+#wc-url-ajax {
+	width: 33px;
+	text-align: center;
+}
+#wc-url {
+	float: left;
+}
+#wc-url-controller {
+	width: 305px;
+}
+#wc-url-controller span {
+	float: left;
+	margin: 0 10px 0 0;
+}
+
+/**
+ * Apply Template
+ */
+#wc-apply-template-area {
+	padding: 10px 5px;
+	background: #deeaf1;
+}
+#wc-apply-template-title {
+	float: left;
+	width: 200px;
+	font-weight: bold;
+}
+#wc-apply-template-controller {
+	float: right;
+}
+#wc-display-button {
+
+}
+#wc-apply-template-body {
+
+}
+
+#wc-apply-template-body div div {
+	float: left;
+	margin: 0 10px 0 0;
+}
+#wc-apply-template-body div div img {
+	margin: 0 0 0 2px;
+	cursor: pointer;
+}
+
+/**
+ * Language selectors and Translation button area
+ */
+#wc-translation-controller-area {
+	background:none repeat scroll 0 0 #d9efaf;
+	margin:10px 0;
+	padding: 5px;
+}
+#wc-languages {
+	float: left;
+	padding: 3px 0 0 0;
+}
+#wc-source-language-selector, #wc-target-language-selector {
+	width: 160px;
+}
+#wc-translation-button-area {
+	float: right;
+	width: 180px;
+}
+#wc-translation-ajax-image {
+	float: left;
+}
+#wc-translation-button {
+	float: right;
+}
+
+/**
+ * Source and Target Title
+ */
+#wc-translation-area {
+	width: 100%;
+}
+#wc-source , #wc-target {
+	width: 50%;
+}
+#wc-source {
+	padding: 0 7px 0 0;
+}
+#wc-target {
+	padding: 0 0 0 7px;
+}
+#wc-source-title-area, #wc-target-title-area {
+	background: #fff url(../image/background/light_blue.jpg) repeat-x left bottom;
+	border:1px solid #b3c6d3;
+	color:#005aaa;
+	font-weight:bolder;
+	padding: 5px 4px 0;
+}
+#wc-source-title, #wc-target-title {
+	color:#005aaa;
+	font-weight:bolder;
+	float: left;
+}
+#wc-source-height-controllers, #wc-target-height-controllers {
+	float: right;
+}
+#wc-source-expand-button, #wc-source-contract-button,
+#wc-target-expand-button, #wc-target-contract-button {
+	cursor: pointer;
+}
+
+/**
+ * Source and Target Body
+ */
+#wc-source-body, #wc-target-body {
+	overflow: auto;
+	height: 200px;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
+#wc-source-body table, #wc-target-body table {
+	width: 100%;
+}
+
+#wc-source-body table tr td, #wc-target-body table tr td {
+	border-bottom: 1px solid #ccc;
+	cursor: pointer;
+}
+
+#wc-source-body table tr:hover, #wc-target-body table tr:hover {
+	background: #ffffce;
+}
+
+#wc-source-body table tr td, #wc-target-body table tr td {
+	padding: 3px;
+}
+
+#wc-source-controller-area, #wc-target-controller-area {
+	margin: 10px 0;
+	/*min-width: 460px;*/
+}
+#wc-source-controller-button-wrapper, #wc-target-controller-button-wrapper {
+	float: right;
+}
+#wc-source-controller-area span, #wc-target-controller-area span {
+	float: left;
+	margin: 0 0 10px 10px;
+}
+
+#wc-target-body table tr td input {
+	margin: 5px 0 0 0;
+}
+
+#wc-target-body table tr td.wc-editing-cell {
+	padding: 0;
+}
+
+#wc-target-body table tr td textarea {
+	margin: 1px;
+}
+
+/**
+ * Template
+ */
+#wc-template-container {
+}
+#wc-template-workspace-area h2 {
+	float: left;
+}
+#wc-template-controller-area {
+	float: right;
+}
+#wc-template-controller-area span {
+	float: left;
+	margin: 0 10px 0 0;
+}
+#wc-template-area {
+	min-height: 90px;
+	max-height: 200px;
+	overflow-y: auto;
+	margin: 15px 10px;
+}
+#wc-template-area table {
+	width: 100%;
+	margin: 20px 0;
+}
+#wc-template-area table tr td {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+#wc-template-area table tr td input {
+	margin: 10px;
+}
+#wc-template-area table tr td textarea {
+	margin: 6px;
+}
+#wc-template-area table tr td.wc-editable-cell {
+	cursor: pointer;
+	width: 50%;
+	padding: 8px;
+}
+#wc-template-area table tr td.wc-editable-cell:hover {
+	background: #ffffce url(../image/icon/edit.gif) no-repeat right bottom;
+	text-decoration: underline;
+}
+#wc-template-area table tr td.wc-editing-cell {
+	cursor: auto;
+	width: 50%;
+	padding: 0;
+}
+#wc-template-area table tr td.wc-editing-cell:hover {
+	background: transparent;
+	text-decoration: none;
+}
+#wc-template-area table tr td.wc-delete-button-cell {
+	width: 160px;
+	vertical-align: top;
+}
+#wc-template-area table tr td.wc-delete-button-cell span {
+	margin: 10px;
+}
+
+/**
+ * License information
+ */
+#wc-license-area {
+	margin: 10px;
+}
+
+#wc-license-area #wc-license-area-title {
+	background: url(../image/background/light_blue.jpg) repeat-x left bottom;
+	border: 1px solid #B3C6D3;
+	color: #005aaa;
+	font-weight: bolder;
+	padding: 5px;
+}
+
+#wc-license-area #wc-license-area-body {
+	border-bottom: 1px solid #B3C6D3;
+	border-left: 1px solid #B3C6D3;
+	border-right: 1px solid #B3C6D3;
+	max-height: 200px;
+	overflow-y: auto;
+	background: #ffffe7;
+	min-height: 90px;
+	max-height: 200px;
+	padding: 10px;
+}
+
+#wc-license-area #wc-license-area-body div.license-entry-no-border {
+	padding:15px 0 0;
+}
+
+#wc-license-area #wc-license-area-body div.license-entry {
+	border-top:1px solid #C1DAD7;
+	margin:15px 0 0;
+	padding:15px 0 0;
+}
+
+#wc-license-area #wc-license-area-body div .wc-license-title {
+	border-left: 6px solid #005AAA;
+	color: #005aaa;
+	padding: 1px 0 1px 7px;
+}
+
+#wc-license-area #wc-license-area-body div .wc-license-body {
+	margin: 5px 0 5px 25px;
+}
+
+/**
+ * Unit Test
+ */
+#wc-unit-test {
+	text-align: left;
+}
+#wc-unit-test h1 {
+	margin: 20px 0;
+	font-size: 22px;
+}
+#wc-unit-test h2 {
+	margin: 20px 0;
+	font-size: 20px;
+}
+#wc-unit-test h3 {
+	margin: 20px 0;
+	font-size: 18px;
+}
+#wc-unit-test li {
+	list-style-type: disc;
+	margin: 5px 25px;
+}

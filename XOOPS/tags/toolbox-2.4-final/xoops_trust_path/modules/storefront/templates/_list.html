@@ -1,0 +1,71 @@
+
+<div id="<{$pagerUrl}>&amp;page=<{$pager->getCurrentPage()}>&amp;perPage=<{$pager->getPerPage()}>">
+
+  <table border="0" cellspacing="0" cellpadding="0" width="99%" summary="<{$smarty.const.STF_LABEL_RECEPTION}>" style="clear:both;font-size:90%;">
+    <!-- ****************************************** -->
+    <thead class="table-sortable-head" style="font-size:90%;">
+      <tr>
+      	<{foreach from=$titles key=key item=value}>
+      		<th>
+      			<a href="<{$sorterUrl}>&amp;sortKey=<{$key}>&amp;sortOrder=<{$value.sortOrder}>" class="perPageLink">
+      				<{$value.label}><{$value.arrow}>
+      			</a>
+      		</th>
+      	<{/foreach}>
+        <th nowrap="nowrap">&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- ****************************************** -->
+    <tfoot>
+      <tr>
+        <td colspan="6">
+          <div style="float:left;">
+          	<{$entryNumOfFound}>
+          </div>
+          <div style="float:left;margin-left:50px;">
+            <{foreach from=$perPages key=key item=value}>
+              <{if $key == $pager->getPerPage()}>
+                <{$value}>
+              <{else}>
+                <a href="<{$pagerUrl|escape}>&amp;page=<{$pager->getCurrentPage()}>&amp;perPage=<{$key}>" class="perPageLink"><{$value}></a>
+              <{/if}>
+            <{/foreach}>
+          </div>
+          <div style="float:right;">
+            <{if $pager->getCurrentPage() > 1}><a href="<{$pagerUrl}>&amp;page=<{$pager->getPreviousPage()}>&amp;perPage=<{$pager->getPerPage()}>" class="pageLink"><{/if}>
+            	<{$smarty.const.STF_LINK_PREV}>
+			<{if $pager->getCurrentPage() > 1}></a><{/if}>
+
+            <{section name=pageSection start=0 loop=$pager->getLastPage()}>
+              <{if $smarty.section.pageSection.iteration == $pager->getCurrentPage()}>
+                <{$smarty.section.pageSection.iteration}>
+              <{else}>
+                <a href="<{$pagerUrl}>&amp;page=<{$smarty.section.pageSection.iteration}>&amp;perPage=<{$pager->getPerPage()}>" class="pageLink"><{$smarty.section.pageSection.iteration}></a>
+              <{/if}>
+            <{/section}>
+
+            <{if $pager->getCurrentPage() < $pager->getLastPage()}><a href="<{$pagerUrl}>&amp;page=<{$pager->getNextPage()}>&amp;perPage=<{$pager->getPerPage()}>" class="pageLink"><{/if}>
+            	<{$smarty.const.STF_LINK_NEXT}>
+            <{if $pager->getCurrentPage() < $pager->getLastPage()}></a><{/if}>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- ****************************************** -->
+    <tbody class="hover-on">
+    <{foreach name=iterator from=$receptions item=reception}>
+      <tr>
+        <td class="collect-left"><strong><{$reception->getName()|escape}></strong></td>
+        <td class="collect-left"><{$reception->getLanguageCollectionString()|escape}></td>
+        <td><{$reception->getCreator()|escape}></td>
+        <td><{$reception->getLastUpdateString()|escape}></td>
+        <td><{$reception->getEntryCount()|escape}></td>
+        <td nowrap="nowrap">
+          <a class="btn" href="<{$customizeUrl|escape}><{$reception->getName()|escape}>" title="<{$smarty.const.STF_LABEL_CUSTOMIZE}>"><{$smarty.const.STF_LABEL_CUSTOMIZE}></a>
+          <a class="btn" href="javascript:glayerShow('glayer', '<{$reception->getName()|escape}>');" title="<{$smarty.const.STF_LABEL_START}>"><{$smarty.const.STF_LABEL_START}></a>
+        </td>
+      </tr>
+    <{/foreach}>
+    </tbody>
+  </table>
+</div>

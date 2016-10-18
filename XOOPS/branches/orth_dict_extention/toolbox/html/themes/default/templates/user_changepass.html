@@ -1,0 +1,82 @@
+<style type="text/css">
+	/*
+	.ok-cancel-layout { 
+		margin: 0 0 0 0;
+	}
+	.ok-cancel-layout td {
+		border: 0 !important;
+	}
+	*/
+</style>
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="#">
+			<ul class="tab_on" id="ue_tab_1">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$smarty.const._MD_USER_LANG_PROFILE}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<div id="contents_body">
+		<div id="topic_path">
+			<ol>
+				<li><a href="<{$xoops_url}>/"><{$smarty.const._MD_USER_LANG_TOP}></a></li>
+				<li><a href="<{$xoops_url}>/userinfo.php?uid=<{$actionForm->get('uid')|xoops_escape}>"><{$smarty.const._MD_USER_LANG_PROFILE}></a></li>
+				<li><{$smarty.const._MD_USER_LANG_CHANGE_PASS}></li>
+			</ol>
+		</div>
+		<{*
+		<div>
+		<a href="<{$xoops_url}>/userinfo.php?uid=<{$actionForm->get('uid')|xoops_escape}>"><{$smarty.const._MD_USER_LANG_PROFILE}></a>
+		&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<{$smarty.const._MD_USER_LANG_CHANGE_PASS}>
+		</div>
+		*}>
+		<div id="profile_inner">
+			<div id="all_about_user">
+				<h2><{$smarty.const._MD_USER_LANG_CHANGE_PASS}></h2>
+				<div class="list_table02">
+					<{if $actionForm->hasError()}>
+					<ul class="errorMsg" style="color: #f00;">
+					  <{foreach item=message from=$actionForm->getErrorMessages()}>
+					    <li><{$message}></li>
+					  <{/foreach}>
+					</ul>
+					<{/if}>
+					<form action="#" method="post" name="cpassForm">
+						<{xoops_token form=$actionForm}>
+						<{xoops_input name=uid type=hidden value=$actionForm->get('uid')}>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td class="list_line03" width="140" ><label for="legacy_xoopsform_curpass"><{$smarty.const._MD_USER_LANG_CURRENTPASS}></label></td>
+								<td>
+									<{xoops_input type=password name=curpass maxlength=32 value=$actionForm->get('curpass')}>
+								</td>
+							</tr>
+							<tr>
+								<td class="list_line03"><label for="legacy_xoopsform_pass"><{$smarty.const._MD_USER_LANG_NEWPASS}></label></td>
+								<td>
+									<{xoops_input type=password name=pass maxlength=32 value=$actionForm->get('pass')}>
+								</td>
+							</tr>
+							<tr>
+								<td class="list_line03"><label for="legacy_xoopsform_vpass"><{$smarty.const._MD_USER_LANG_CONFIRMNEWPASS}></label></td>
+								<td>
+									<{xoops_input type=password name=vpass maxlength=32 value=$actionForm->get('pass')}>
+								</td>
+							</tr>
+						</table>
+						<div class="btnset_profile">
+							<div class="profile_btn" onclick="document.cpassForm.submit(); return false;">
+								<a href="#"><span><{$smarty.const._MD_USER_LANG_SAVECHANGES}></span></a>
+							</div>
+							<div class="profile_btn">
+								<a href="<{$xoops_url}>/userinfo.php?uid=<{$actionForm->get('uid')|xoops_escape}>"><span><{$smarty.const._MD_USER_REGCONFIRM_CANCEL}></span></a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+</div>

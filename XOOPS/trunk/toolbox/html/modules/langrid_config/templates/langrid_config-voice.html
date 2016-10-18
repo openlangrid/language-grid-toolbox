@@ -1,0 +1,66 @@
+<{include file="db:langrid_config-script.html"}>
+<h2 style="text-align:left; padding: 10px 0 10px 40px; font-size: 18px;"><{$tabTitle}></h2>
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="./?page=<{$page}>">
+			<ul class="tab_off">
+				<li class="tab_l"></li>
+				<li class="tab_m">
+					<span><{$smarty.const._MI_LANGRID_CONFIG_TAB_NAME_TRANSLATION}></span>
+				</li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+		<a href="#">
+			<ul class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m">
+					<span><{$smarty.const._MI_LANGRID_CONFIG_TAB_NAME_VOICE}></span>
+				</li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<div id="contents_body">
+	<div>
+		<{if isset($saveMessage)}>
+			<div class="div-message-box"><{$saveMessage}></div>
+		<{/if}>
+		<form method="post" action="" id="voice-form">
+		<div class="voices">
+			<{foreach from=$data item=item}>
+				<h3><{$item.language.name}></h3>
+				<{foreach from=$item.voices item=voice}>
+				<ul>
+					<{if $voice.selected}>
+						<{assign var='checked' value='checked="checked"'}>
+					<{else}>
+						<{assign var='checked' value=''}>
+					<{/if}>
+					<li><label><input name="<{$item.language.code}>" type="radio" value="<{$voice.code}>" <{$checked}> /> <{$voice.name}></label></li>
+				</ul>
+				<{/foreach}>
+			<{/foreach}>
+		</div>
+		<div>
+			<span id="save" class="btn">
+				<img src="./images/icon/icn_save.gif"> <{$smarty.const._MI_LANGRID_IMPORTED_SERVICES_SAVE}>
+			</span>
+			<span id="cancel" class="btn">
+				<img src="./images/icon/icn_cancel.gif"> <{$smarty.const._MD_LANGRID_DICT_POP_CANCEL}>
+			</span>
+		</div>
+		</form>
+	</div>
+</div>
+<script>
+Event.observe(window, 'load', function() {
+	$('save').observe('click', function() {
+		$('voice-form').submit();
+	});
+	$('cancel').observe('click', function() {
+		location.href="";
+	});
+});
+</script>

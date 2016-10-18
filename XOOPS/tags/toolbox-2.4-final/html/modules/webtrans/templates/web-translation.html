@@ -1,0 +1,342 @@
+<script charset="utf-8" type="text/javascript" language="javascript">
+<{include file="db:webtran_php2js.html"}>
+</script>
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="#">
+			<ul class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m">
+					<span><{$smarty.const._MI_WEBTRANS_TOOL_NAME}></span>
+				</li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<input type='hidden' id='moduleId' value='webtrans'>
+<input type='hidden' id='screenId' value='webtranslation'>
+<div id="contents_body">
+	<div id="workspace" class="workspace">
+		<div class="clearfix">
+			<div class="workspace-title"><h1><{$smarty.const._MI_WEBTRANS_LABEL_TRANSLATE}></h1></div>
+			<div class="toggle-button" id="img-open-translation" style="display:none;">+</div>
+			<div class="toggle-button" id="img-close-translation" style="display: block;">-</div>
+		</div>
+
+		<div id="translation-form-area">
+			<!--Setup-->
+			<div class='url-area'>
+				<table border="0" width="100%">
+					<tr>
+						<td width="95"><{$smarty.const._MI_WEBTRANS_LABEL_WEBPAGEURL}>:</td>
+						<td>
+							<input type="text" name="URL" value="http://" style="width:99%;font-size:14px;" id="url-input" />
+						</td>
+						<td width="26" align="right"><img src="<{$module_url}>/img/ajax.gif" id="NOW_IMPORTING" style="display:none;" /></td>
+						<td width="300">
+							<div class="button-box">
+								<input type="button" class="btn_blue01" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_IMPORT_WEBPAGE}>" id="setup-import-webpage" />&nbsp;
+								<input type="button" class="btn_blue01" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_DISPLAY_WEBPAGE}>" id="display-webpage" />
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<!-- /Setup -->
+			<!--Apply Template-->
+			<div id="Apply-template-area" class="clearfix">
+				<div style="float:left;">
+					<b><{$smarty.const._MI_WEBTRANS_LABEL_APPLY_TEMPLATE}></b>
+				</div>
+				<div style="float: right;">
+					<input type="button" id="loadTemplate" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_LOAD_TEMPLATE}>" class="btn_blue01" style="width:160px;" />&nbsp;
+					<input type="button" id="uploadTemplate" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_UPLOAD_TEMPLATE}>" class="btn_blue01" style="width:160px;" />
+				</div>
+				<br style='clear:both' />
+				<div id="templateLoadedTemplateTableListBase"></div>
+			</div>
+			<!--/Apply Template-->
+			<!--Translating-action -->
+			<div id="Translating-action" class="clearfix">
+				<div style="float:left;">
+					<select style="width: 90px;" id="sourceLang" name="sourceLang">
+					 <{$languages.source.tags}>
+					</select>
+					&nbsp;&gt;&nbsp;
+					<select style="width: 90px;" id="targetLang" name="targetLang">
+					 <{$languages.target.tags}>
+					</select>
+				</div>
+				<div style="float:left;vertical-align:middle;display:none;" id="now-translating">
+					<img src="<{$module_url}>/img/ajax_green.gif" />
+					<span id="now-translating-msg"><{$smarty.const._MI_WEBTRANS_TOOL_TRANSLATION_DOING}></span>
+					<{*<span id="now-translating-abort">cancel</span>*}>
+					<span id="now-translating-text"></span>
+				</div>
+				<div style="float:right;">
+					<input type="button" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_TRANSLATE}>" class="btn_blue01" id="translating-action-translated" />
+					<input type="button" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_CANCEL}>" class="btn_blue01" id="now-translating-abort" style="display:none;" />
+				</div>
+			</div>
+			<!--/Translating-action -->
+			<!--Original Webpage -->
+			<div id="Original-webpage" class="workspace-area">
+				<div class="title_bg02 editor-head clearfix">
+					<div style='float:left;'>
+						<h2><{$smarty.const._MI_WEBTRANS_LABEL_ORIGINAL_WEBPAGE}>
+						: <span id="workspace-area-original-language"></span>
+						</h2>
+					</div>
+					<div style='float:right;'>
+						<img src="<{$xoops_imageurl}>/img/textarea_larger.gif" id="original-webpage-editor-expansion-button" alt="expand" />
+						<img src="<{$xoops_imageurl}>/img/textarea_smaller.gif" id="original-webpage-editor-reduction-button" alt="reduce" />
+					</div>
+				</div>
+				<textarea id="original-webpage-editor" rows="5" class="editor"></textarea>
+				<div class='clearfix'>
+					<div style="float:right;">
+						<input type="button" id="originalWebpageUpload"    value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_UPLOAD}>"   class="btn_blue01" />&nbsp;
+						<input type="button" id="originalWebpageDownload"  value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_DOWNLOAD}>" class="btn_blue01" />&nbsp;
+						<input type="button" id="original-webpage-undo"    value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_UNDO}>"     class="btn_gray01" />&nbsp;
+						<input type="button" id="original-webpage-display" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_DISPLAY}>"  class="btn_blue01" />
+					</div>
+				</div>
+			</div>
+			<!--/Original Webpage -->
+
+			<!--Translated Webpage -->
+			<div id="Translated-webpage" class="workspace-area">
+				<div class="title_bg02 editor-head clearfix">
+					<div style='float:left;'>
+						<h2><{$smarty.const._MI_WEBTRANS_LABEL_TRANSLATED_WEBPAGE}>
+						: <span id="workspace-area-translated-language"></span>
+						</h2>
+					</div>
+					<div style='float:right;'>
+						<img src="<{$xoops_imageurl}>/img/textarea_larger.gif" id="translated-webpage-editor-expansion-button" alt="expand" />
+						<img src="<{$xoops_imageurl}>/img/textarea_smaller.gif" id="translated-webpage-editor-reduction-button" alt="reduce" />
+					</div>
+				</div>
+				<textarea id="translated-webpage-editor" rows="5" class="editor"></textarea>
+				<div class='clearfix'>
+					<div style="float:right;">
+						<input type="button" id="translatedWebpageUpload"    value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_UPLOAD}>"   class="btn_blue01" />&nbsp;
+						<input type="button" id="translatedWebpageDownload"  value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_DOWNLOAD}>" class="btn_blue01" />&nbsp;
+						<input type="button" id="translated-webpage-undo"    value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_UNDO}>"     class="btn_gray01" />&nbsp;
+						<input type="button" id="translated-webpage-display" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_DISPLAY}>"  class="btn_blue01" />
+					</div>
+				</div>
+			</div>
+			<!--/Translated Webpage -->
+
+			<!--BackTranslated Webpage -->
+			<div id="Backtranslated-webpage" class="workspace-area">
+				<div class="title_bg02 editor-head clearfix">
+					<div style='float:left;'>
+						<h2><{$smarty.const._MI_WEBTRANS_LABEL_BACK_TRANSLATED_WEBPAGE}>
+						: <span id="workspace-area-Backtranslated-language"></span>
+						</h2>
+					</div>
+					<div style='float:right;'>
+						<img src="<{$xoops_imageurl}>/img/textarea_larger.gif" id="back-translated-webpage-editor-expansion-button" alt="expand" />
+						<img src="<{$xoops_imageurl}>/img/textarea_smaller.gif" id="back-translated-webpage-editor-reduction-button" alt="reduce" />
+					</div>
+				</div>
+				<textarea id="back-translated-webpage-editor" rows="5" class="editor" readonly style="background:#C8DCE8;"><{$smarty.const._MI_WEBTRANS_TOOL_BACKTRANSLATION_MESSAGE}></textarea>
+			</div>
+<{*
+			<!-- License Information -->
+			<div class="workspace-area" id="license-information-area">
+				<div class="title_bg02 editor-head">
+					<h2><{$smarty.const._MI_WEBTRANS_LABEL_LICENSE_INFORMATION}></h2>
+				</div>
+				<div class="license_view">
+					<div id="service-information-form-area"></div>
+				</div>
+			</div>
+*}>
+		</div>
+	</div>
+
+	<!-- +++++++++++++++++++++++++++++++++++Create &amp; Edit Template+++++++++++++++++++++++++++++++++++ -->
+	<div id="workspace2" class="workspace">
+		<div  class="clearfix">
+			<div class="workspace-title"><h1><{$smarty.const._MI_WEBTRANS_LABEL_CREATEANDEDITTEMPLATE}></h1></div>
+			<div class="toggle-button" id="img-open-create-edit-template" style="display:none;">+</div>
+			<div class="toggle-button" id="img-close-create-edit-template" style="display: block;">-</div>
+		</div>
+
+		<div id='create-edit-template-form-area'>
+			<!--Create Pair -->
+			<div id="Create-pair" class="workspace-area clearfix">
+				<div><b><{$smarty.const._MI_WEBTRANS_LABEL_CREATE_PAIR}></b></div>
+				<div class="title_bg02 editor-head clearfix">
+					<div style='float:right;'>
+						<img src="<{$xoops_imageurl}>/img/textarea_larger.gif" id="template-pair1-editor-expansion-button" alt="expand" />
+						<img src="<{$xoops_imageurl}>/img/textarea_smaller.gif" id="template-pair1-editor-reduction-button" alt="reduce" />
+					</div>
+				</div>
+				<div id="Original-pair"><textarea id="template-pair1-editor" style="height:60px;" class="editor"></textarea></div>
+
+				<div class="title_bg02 editor-head clearfix">
+					<div style='float:right;'>
+						<img src="<{$xoops_imageurl}>/img/textarea_larger.gif" id="template-pair2-editor-expansion-button" alt="expand" />
+						<img src="<{$xoops_imageurl}>/img/textarea_smaller.gif" id="template-pair2-editor-reduction-button" alt="reduce" />
+					</div>
+				</div>
+				<div id="Translated-pair"><textarea id="template-pair2-editor" style="height:60px;background:#FDFFDC;" class="editor"></textarea></div>
+				<div class='clearfix'>
+					<div style="float:right;">
+						<input type="button" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_ADD_TEMPLATE}>" id="add-pair-to-template" class="btn_blue01" style="width:auto;"/>
+					</div>
+				</div>
+			</div>
+			<!--/Create Pair -->
+ 			<!-- Create Edit Template -->
+			<div id="Create-temp" class="workspace-area clearfix">
+				<div>
+					<div style="float: left; width: 250px;"><b><{$smarty.const._MI_WEBTRANS_LABEL_LIST_ALL_PAIR}></b></div>
+					<div style="float: right;">
+						<input type="button" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_LOAD_TEMPLATE}>"     class="btn_blue01" style="width:160px;" id="createEditLoadTemplate"/>
+						<input type="button" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_SAVE_TEMPLATE}>"     class="btn_blue01" style="width:160px;" id="createEditSaveTemplate"/>
+						<input type="button" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_UPLOAD_TEMPLATE}>"   class="btn_blue01" style="width:160px;" id="createEditUploadTemplate" />
+						<input type="button" value="<{$smarty.const._MI_WEBTRANS_TOOL_BUTTON_DOWNLOAD_TEMPLATE}>" class="btn_blue01" style="width:160px;" id="createEditDownloadTemplate"/>
+					</div>
+					<br style='clear:both;'>
+				</div>
+				<div id="createEditTemplateLoadedTemplateTableListBase"></div>
+				<div class="workspace-area" id="template-workspace-area">
+					<div style="display:none;">
+						<div class="title_bg02 editor-head clearfix">
+							<div style="float: right;">
+								<img src="<{$xoops_imageurl}>/img/textarea_larger.gif" id="active-pairs-expansion-button" alt="expand" />
+								<img src="<{$xoops_imageurl}>/img/textarea_smaller.gif" id="active-pairs-reduction-button" alt="reduce" />
+							</div>
+						</div>
+						<div id="active-pairs" class="pair"></div>
+					</div>
+					<{section name=i start=0 loop=7}>
+						<{assign var="i" value=$smarty.section.i.index+1 }>
+						<div style="display:none;" id="template-pair-block<{$i}>">
+							<div class="title_bg02 editor-head clearfix">
+								<div style="float: right;">
+									<img src="<{$xoops_imageurl}>/img/textarea_larger.gif" id="loaded-template-expansion-button<{$i}>" alt="expand" />
+									<img src="<{$xoops_imageurl}>/img/textarea_smaller.gif" id="loaded-template-reduction-button<{$i}>" alt="reduce" />
+								</div>
+							</div>
+							<div id="loaded-template-pairs<{$i}>" class="pair pair<{$i|string_format:"%02d"}>"></div>
+						</div>
+					<{/section}>
+				</div>
+			</div>
+			<!-- /Create Edit Template -->
+		</div>
+	</div>
+	<!-- /Create &amp; Edit Template -->
+
+	<!-- License Information -->
+	<div class="workspace-area" id="license-information-area">
+		<div class="title_bg02 editor-head">
+			<h2><{$smarty.const._MI_WEBTRANS_LABEL_LICENSE_INFORMATION}></h2>
+		</div>
+		<div class="license_view">
+			<div id="service-information-form-area"></div>
+		</div>
+	</div>
+
+</div>
+<!-- /dialog -->
+<div id="originalWebpageUploadWindow" style="display:none;">
+	<form action="<{$module_url}>/?page=upload-web-page" target="upload_iframe" method="post" enctype="multipart/form-data" id="original-webpage-upload-form">
+	<b><{$smarty.const._MI_WEBTRANS_POPUP_UPLOAD_HTML}></b><br/>
+	<input type="hidden" name="callback" value="original" />
+	<input type="file" size="40" class="service-input2" name="uploadFileName"/>
+	</form>
+	<div style="display:none;" id="original-webpage-upload-dummy-iframe-div"></div>
+</div>
+<div id="originalWebpageDownloadWindow" style="display:none;">
+	<form action="<{$module_url}>/?page=web-save-local" method="post" id="original-webpage-download-form">
+		<b><{$smarty.const._MI_WEBTRANS_POPUP_DOWNLOAD_HTML}></b><br />
+		<{$smarty.const._MI_WEBTRANS_POPUP_FILE_NAME}> :
+		<input type="text" name="downloadName" id="original-webpage-download-text" class="service-input" />
+		<input type="text" name="dmy" style="display:none;">
+		<input type="hidden" name="valueToDownload" id="original-webpage-download-value" />
+	</form>
+</div>
+<div id="loadTemplateWindow" style="display:none;">
+	<b><{$smarty.const._MI_WEBTRANS_POPUP_LOAD_TEMPLATE}></b><br />
+		<div id="translateTemplateWindowLoadAnotherBase">
+		</div>
+		<a style="cursor:pointer" _append_index="1" class="close_link" id="translateTemplateWindowLoadAnother"><i><{$smarty.const._MI_WEBTRANS_POPUP_LOAD_ANOTHER_TEMPLATE}></i></a>
+</div>
+<div id="uploadTemplateWindow" style="display:none;">
+	<form action="<{$module_url}>/?page=upload-template" target="apply-template-upload-iframe" method="post" enctype="multipart/form-data" id="apply-template-upload-form">
+	<div class="inner">
+		<b><{$smarty.const._MI_WEBTRANS_POPUP_UPLOAD_TEMPLATE}></b><br/>
+		<input type="hidden" name="callback" value="apply" />
+		<div id="translateTemplateWindowUploadAnotherItem1">
+			<input type="file" size="40" class="service-input2" name="uploadFileName[]"/>
+		</div>
+		<div id="translateTemplateWindowUploadAnotherBase">
+		</div>
+		<a style="cursor:pointer" _append_index="2" class="close_link" id="translateTemplateWindowUploadAnother"><i><{$smarty.const._MI_WEBTRANS_POPUP_UPLOAD_ANOTHER_TEMPLATE}></i></a>
+	</div>
+	</form>
+	<div style="display:none;" id="apply-template-upload-template-dummy-iframe-div"></div>
+</div>
+<div id="translatedWebpageUploadWindow" style="display:none;">
+	<form action="<{$module_url}>/?page=upload-web-page" target="upload_iframe" method="post" enctype="multipart/form-data" id="translated-webpage-upload-form">
+	<b><{$smarty.const._MI_WEBTRANS_POPUP_UPLOAD_HTML}></b>.<br/>
+	<input type="hidden" name="callback" value="translated" />
+	<input type="file" size="40" class="service-input2" name="uploadFileName"/>
+	</form>
+	<div style="display:none;" id="translated-webpage-upload-dummy-iframe-div"></div>
+</div>
+<div id="translatedWebpageDownloadWindow" style="display:none;">
+	<form action="<{$module_url}>/?page=web-save-local" method="post" id="translated-webpage-download-form">
+		<b><{$smarty.const._MI_WEBTRANS_POPUP_DOWNLOAD_HTML}></b>.<br />
+		<{$smarty.const._MI_WEBTRANS_POPUP_FILE_NAME}> :
+		<input type="text" name="downloadName" id="translated-webpage-download-text" class="service-input" />
+		<input type="text" name="dmy" style="display:none;">
+		<input type="hidden" name="valueToDownload" id="translated-webpage-download-value" />
+	</form>
+</div>
+<div id="createEditLoadTemplateWindow" style="display:none;">
+	<b><{$smarty.const._MI_WEBTRANS_POPUP_LOAD_TEMPLATE}></b><br/>
+	<div id="createEditLoadTemplateWindowLoadAnotherBase">
+	</div>
+	<a style="cursor:pointer" _append_index=1 class="close_link" id="createEditLoadTemplateWindowLoadAnother"><i><{$smarty.const._MI_WEBTRANS_POPUP_LOAD_ANOTHER_TEMPLATE}></i></a>
+</div>
+<div id="createEditSaveTemplateWindow" style="display:none;">
+	<b><{$smarty.const._MI_WEBTRANS_POPUP_SAVE_TEMPLATE}></b><br/>
+	<{$smarty.const._MI_WEBTRANS_POPUP_TEMPLATE_NAME}> :
+	<input type="text" class="service-input" name="textfield" id="createEditSaveTemplateWindowTemplateName"/>
+	<input type="text" name="dmy" style="display:none;">
+	<p><{$smarty.const._MI_WEBTRANS_POPUP_SAVE_MESSAGE}></p>
+</div>
+<div id="createEditUploadTemplateWindow" style="display:none;">
+	<form action="<{$module_url}>/?page=upload-template" target="create-edit-template-upload-iframe" method="post" enctype="multipart/form-data" id="create-edit-template-upload-form">
+	<div class="inner">
+		<b><{$smarty.const._MI_WEBTRANS_POPUP_UPLOAD_TEMPLATE}></b>.<br/>
+		<input type="hidden" name="callback" value="createEdit" />
+		<div id="createEditLoadTemplateWindowUploadAnotherItem1">
+			<input type="file" size="40" class="service-input2" name="uploadFileName[]"/>
+		</div>
+		<div id="createEditLoadTemplateWindowUploadAnotherBase">
+		</div>
+		<a style="cursor:pointer" _append_index="2" class="close_link" id="createEditLoadTemplateWindowUploadAnother"><i><{$smarty.const._MI_WEBTRANS_POPUP_UPLOAD_ANOTHER_TEMPLATE}></i></a>
+	</div>
+	</form>
+	<div style="display:none;" id="create-edit-template-upload-template-dummy-iframe-div"></div>
+</div>
+<div id="createEditDownloadTemplateWindow" style="display:none;">
+	<form action="<{$module_url}>/?page=create-edit-download-template" id="createEditDownloadTemplateForm" method="post">
+	<input type="text" name="dmy" style="display:none;">
+	<b><{$smarty.const._MI_WEBTRANS_POPUP_DOWNLOAD_TEMPLATE}></b><br/>
+		<{$smarty.const._MI_WEBTRANS_POPUP_FILE_NAME}> :
+		<input type="text" class="service-input" name="createEditDownloadTemplateFileName" id="createEditDownloadTemplateFileName"/>
+		<div id="download_template"></div>
+	</form>
+</div>
+<div id="mask-pane" style="z-index: 5; opacity: 0.4; position: absolute; top: 0px; left: 0px; width: 1239px; height: 578px; display: none;"></div>

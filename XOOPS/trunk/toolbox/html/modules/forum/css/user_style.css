@@ -1,0 +1,69 @@
+#addictionarybt input.ad_btn_blue01 {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/btn_blue01.jpg) repeat-x scroll 0 0;
+	border:1px solid #025DAD;
+	color:#FFFFFF;
+	cursor:pointer;
+	/*padding:4px 2px;*/
+	padding: 1px 2px 1px 2px;
+	margin-top:1px;
+	text-align:center;
+	width:150px;
+	/*margin-bottom:3px;*/
+}
+
+#addictionarybt input.ad_btn_blue01:hover {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/btn_blue01_o.jpg) repeat-x scroll 0 0;
+}
+
+
+
+#addictionary {
+	position : absolute;
+	visibility : hidden;
+	z-index : 99;
+}
+
+#addictionary input.ad_btn_blue01 {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/btn_blue01.jpg) repeat-x scroll 0 0;
+	border:1px solid #025DAD;
+	color:#FFFFFF;
+	cursor:pointer;
+	/*padding:4px 2px;*/
+	padding: 1px 2px 1px 2px;
+	margin-top:1px;
+	text-align:center;
+	width:150px;
+	/*margin-bottom:3px;*/
+}
+
+#addictionary input.ad_btn_blue01:hover {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/btn_blue01_o.jpg) repeat-x scroll 0 0;
+}
+
+#addictionary table.ad_tbl{
+	
+	height:120px;
+	width:550px;
+	border: 1px #ff0000 solid;
+    border-collapse:separate;
+    border-spacing:10px;
+	background-color:#eeeeff;
+}
+
+
+dict {
+	font-weight: bold;
+	color: #F00000;
+}

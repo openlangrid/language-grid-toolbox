@@ -1,0 +1,9 @@
+<?php
+//Used by Toolbox
+define('_THEME_TOP_MESSAGE_HTML', '<dl><dd><span class="main_text01">Language Grid Toolbox</span> is an open source multilingual communication tool, developed by the National Institute of Information and Communications Technology.</dd><dd class="main_text02">【About Language Grid Toolbox Trial Site】</dd><dd>■You can create an account by clicking the "Sign up" button on the right side of this page. You can also log into this site with the guest account (User ID: guest, Password: guest).</dd><dd>■After login, you can use a variety of functions including Text Translation, Multilingual BBS, Language Resource Creation, and so on.</dd><dd>■Currently, translation services among 15 languages are configured. From "Setting" menu, you can add or change languages, and combine translation services with your own dictionaries.</dd><dd class="main_text02">【Restrictions】</dd><dd>We will delete your accounts and data created on this site once a month.</dd></dl>');
+define('_THEME_TOP_BROWSER_INFO_LB', '* Language Grid Toolbox is tested with Internet Explorer 7 and 8, and Mozilla Firefox 3.5.');
+define('_THEME_TOP_INFOMATION_LB', 'Information');
+define('_THEME_INFORMATION_HTML', '<dl><dd>2010.10.4 Language Grid Toolbox version 2.4 has been released.</dd><dd>2010.4.1 Language Grid Toolbox version 2.3 has been released.</dd><dd>2010.2.26 Language Grid Toolbox version 2.2 has been released.</dd><dd>2010.1.29 Language Grid Toolbox version 2.1 has been released.</dd><dd>2009.11.30 Language Grid Toolbox Version 2.0 has been released.</dd><dd>&nbsp;</dd></dl>');
+define('_THEME_TOP_SUPPORT_SITE', 'Please visit the <a href="http://langrid.nict.go.jp/langrid-toolbox-wiki-en/">Toolbox Support Site</a> for the information of free hosting service and downloading the source code.');
+define('_THEME_COPYRIGHT_LB', 'Copyright(C) 2009-2010 Language Grid Project, NICT. All rights reserved.');
+?>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Toolbox - How to use</title>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/common/css/import.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/css/import.css" />
+</head>
+<body id="howtouse">
+<div id="body_bg">
+    <div id="wrap">
+        <div id="container">
+            <div id="head">
+
+                <h1 id="logo"></h1>
+                </div>
+<div id="contents_body">
+            <h2>How to Use (Q&A)</h2>
+   <div class="inner_text">  
+
+<p>Q&A機能では、質問と回答の組（Q&A）の作成や検索を行います。また、質問をカテゴリに分けて管理することができます。</p>
+
+<p>このページでは、下記の機能について説明します。</p>
+<ol><li>1. 作成・ロード・編集・削除</li>
+<li>2. カテゴリの管理</li>
+<li>3. インポート・エクスポート</li>
+</ol>
+
+<dl><dt>1. 作成・ロード・編集・削除</dt>
+<dd>Q&A機能のトップページで、<span class="key_point">「Q&A集を作成」</span>ボタンを押すと、新しいQ&A集を作成できます。Q&A集は、一覧から名前をクリックしてロードできます。新しい質問を追加するには、<span class="key_point">「質問の追加」</span>ボタンを押します。また、質問の回答を追加するには、<span class="key_point">「回答」</span>をクリックすると表示される<span class="key_point">「回答の追加」</span>ボタンをクリックします。質問や回答は、入力欄をクリックすると編集できます。また、各Q&A集の行の右端にあるメニューから、Q&A集の削除が行えます。</dd></dl>
+
+<dl><dt>2. カテゴリの管理</dt>
+<dd>質問のカテゴリを設定することができます．カテゴリの列をクリックして開いたポップアップで、設定したいカテゴリにチェックを入れます。
+適切なカテゴリがない場合には、<span class="key_point">「カテゴリの編集」</span>をクリックします。カテゴリの編集ポップアップで、<span class="key_point">「カテゴリの追加」</span>を押すと、新しいカテゴリを追加できます。また、Q&A集をロードすると表示される<span class="key_point">「カテゴリの編集」</span>を押すと、同様にカテゴリの編集のためのポップアップが開きます。</dd></dl>
+
+<dl><dt>3. インポート・エクスポート</dt>
+<dd>Q&A集一覧で<span class="key_point">「インポート」</span>ボタンを押すことで、ローカルのコンピュータのファイルからQ&A集のインポートができます。また、各Q&A集の行の右端にあるメニューから、<span class="key_point">「エクスポート」</span>を選択することで、ローカルのコンピュータへQ&A集をエクスポートできます。インポート・エクスポートで使用するファイルは、以下のような形式を持つExcelファイル (.xls) となります。</dd>
+
+<table  border="1" width="600">
+<tr><td>id</td><td>type</td><td>answers</td><td>categories</td><td>ja</td><td>en</td></tr>
+<tr><td>1</td><td>question</td><td>2,3</td><td>20</td><td>Toolboxはどうすれば利用できますか？</td><td>How can I use Toolbox?</td></tr>
+<tr><td>2</td><td>answer</td><td></td><td></td><td>ホスティングサービスに申し込んで下さい。</td><td>Apply for the hosting service of Toolbox.</td></tr>
+<tr><td>3</td><td>answer</td><td></td><td></td><td>お試しサイトでサインアップできます。</td><td>Sign up at the Trial Site.</td></tr>
+
+<tr><td>4</td><td>question</td><td>5</td><td>20,21</td><td>Toolboxのサポート情報はどこにありますか？</td><td>How can I get support information of Toolbox?</td></tr>
+<tr><td>5</td><td>answer</td><td></td><td></td><td>ToolboxサポートWikiを見て下さい。</td><td>Visit Toolbox Support Wiki.</td></tr>
+<tr><td colspan="6">... (省略)</td></tr>
+<tr><td>20</td><td>category</td><td></td><td></td><td>よくある質問</td><td>FAQ</td>
+<tr><td>21</td><td>category</td><td></td><td></td><td>サポート</td><td>Support</td>
+<tr>
+</tr>
+
+<dd>
+1行目は項目名です。2行目以降の各行には、質問・回答・カテゴリのいずれかが記載されます。各列に記述する内容は以下の通りです。
+<ol>
+<li>・1列目: 各行に記述されるデータのID</li>
+<li>・2列目: 各行に記述されるデータの種類（question, answer, categoryのいずれか）</li>
+<li>・3列目: 質問に対応する回答のID（2列目がquestionの場合のみ記述）</li>
+<li>・4列目: 質問の属するカテゴリのID（2列目がquestionの場合のみ記述）</li>
+<li>・5列目以降: 各言語での表現（1行目の項目名に記述される言語コードについては、<a href="http://www.ethnologue.com/14/iso639/codes.asp">ISO 639の言語コード</a>を参照して下さい）</li>
+</ol>
+</dd>
+
+
+<dd>以下に、インポート・エクスポートで用いるExcelファイルの形式の例を示します。</dd>
+
+</table>
+
+        </div>
+          </div>
+            <div id="footer_inner">
+                <address>
+                Copyright (C) 2010 CITY OF KYOTO. All rights reserved.
+                </address>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

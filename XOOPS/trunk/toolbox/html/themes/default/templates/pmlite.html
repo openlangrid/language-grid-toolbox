@@ -1,0 +1,61 @@
+<{* this window should be opened under JavaScript available environment. so no need 'noscript'. *}>
+
+<{if $actionForm->hasError()}>
+<div class="errorMsg">
+  <ul>
+    <{foreach item=message from=$actionForm->getErrorMessages()}>
+      <li><{$message|xoops_escape}></li>
+    <{/foreach}>
+  </ul>
+</div>
+<{/if}>
+
+<form action="pmlite.php" method="post" name="coolsus">
+  <{xoops_token form=$actionForm}>
+  <table width="300" align="center" class="outer">
+    <tr>
+    <{if $send_type==0}>
+      <th class="head" width="25%"><label for="to_userid"><{$smarty.const._MD_PM_LANG_TO}></label></th>
+    <{else}>
+      <th class="head" width="25%"><{$smarty.const._MD_PM_LANG_TO}></th>
+    <{/if}>
+      <td class="even">
+        <{if $send_type==0}>
+          <{if $actionForm->get('to_userid')}>
+            <{$actionForm->get('to_userid')|xoops_user:"uname"}>
+            <{xoops_input type=hidden name=to_userid value=$actionForm->get('to_userid')}>
+          <{else}>
+            <select name="to_userid" id=to_userid>
+              <{xoops_optionsArray id=to_userid value=uid label=uname from=$userList default=$actionForm->get('to_userid')}>
+            </select>
+          <{/if}>
+        <{else}>
+          <{xoops_input name=to_uname value=$actionForm->get('to_uname')}>
+        <{/if}>
+      </td>
+    </tr>
+    <tr>
+      <th class="head"><label for="Text1"><{$smarty.const._MD_PM_LANG_SUBJECTC}></label></th>
+      <td class="even">
+        <{xoops_input name=subject size=30 maxlength=255 id=Text1 value=$actionForm->get('subject')}>
+      </td>
+    </tr>
+    <tr valign="top">
+      <th class="head"><label for="message"><{$smarty.const._MD_PM_LANG_MESSAGEC}></label></th>
+      <td class="even">
+          <input type="checkbox" id="message_bbcode_onoff" onclick="if(this.checked){xoopsGetElementById('message_bbcode_buttons_pre').style.display='block';xoopsGetElementById('message_bbcode_buttons_post').style.display='block'}else{xoopsGetElementById('message_bbcode_buttons_pre').style.display='none';xoopsGetElementById('message_bbcode_buttons_post').style.display='none'};" /><label for="message_bbcode_onoff"><{$smarty.const._HD_INPUTHELPER}></label>
+          <{xoopsdhtmltarea name="message" id="message" cols="37" rows="8" value=$actionForm->get('message') pre_style="display:none;" post_style="display:none;"}>
+<{*        <{xoops_dhtmltarea cols=37 rows=8 name=message id=message value=$actionForm->get('message')}> *}>
+<{* the occasion of this window is called must be in the JavaScript available environment, so no need <noscript>  *}>
+      </td>
+    </tr>
+    <tr>
+      <td class="even" colspan="2">
+        <input type="hidden" name="op" value="submit" />
+        <input type="submit" class="formButton" name="submit" value="<{$smarty.const._MD_PM_LANG_SUBMIT}>" />&nbsp;
+        <input type="reset" class="formButton" value="<{$smarty.const._MD_PM_LANG_CLEAR}>" />&nbsp;
+        <input type="button" class="formButton" name="cancel" value="<{$smarty.const._MD_PM_LANG_CANCELSEND}>" onclick="javascript:window.close();" />
+      </td>
+    </tr>
+  </table>
+</form>

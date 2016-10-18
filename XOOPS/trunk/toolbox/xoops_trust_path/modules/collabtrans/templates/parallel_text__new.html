@@ -1,0 +1,24 @@
+
+
+    <table border="0" cellspacing="0" cellpadding="0" style="width:97%;">
+      <!-- ****************************************** -->
+      <thead class="table-sortable-head">
+        <tr>
+          <th><{$smarty.const.CT_LABEL_SOURCE_LANGUAGE}>:<{$sourceLang[1]}></th>
+          <th><{$smarty.const.CT_LABEL_TARGET_LANGUAGE}>:<{$targetLang[1]}></th>
+        </tr>
+      </thead>
+      <!-- ****************************************** -->
+      <tbody>
+        <!-- ********** -->
+        <tr>
+          <td id="regist_source">
+          	<span style="display:none"><{$sourceText}></span>
+          	<input type="text" name="dictionary[<{$sourceLang[0]}>]" value="<{$sourceText}>" />
+          </td>
+          <td id="regist_target">
+          	<input type="text" size="42" name="dictionary[<{$targetLang[0]}>]" />
+          </td>
+        </tr>
+      </tbody>
+    </table>

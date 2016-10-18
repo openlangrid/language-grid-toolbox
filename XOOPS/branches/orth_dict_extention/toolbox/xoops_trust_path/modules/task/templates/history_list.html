@@ -1,0 +1,66 @@
+
+<script type="text/javascript">
+//<![CDATA[
+	Event.observe(window, "load", function() {
+		var pager = new Pager("list_container", 10);
+
+		// #submitButton
+		$("submitButton").observe("click", function(event) {
+			var isChecked = false;
+
+			var radio = $("list_container")
+					.select("input[name=history_id]")
+					.filter(function(radio) {
+						return radio.checked;
+					});
+
+			if (radio.length != 1) {
+				alert("<{$smarty.const._MD_TASK_MSG_SELECT_HISTORY}>");
+				return false;
+			}
+
+			$("mainForm").submit();
+		});
+	});
+//]]>
+</script>
+
+<div id="tbx-body">
+	<button id="how-to-use-button" 
+		onclick="window.open('<{$mod_url}>/how-to-use/<{$smarty.const._MD_TASK_HOW_TO_USE_LINK}>', '_blank'); return false;">How to use
+	</button>
+  <div class="area-fl-p8">
+    <a href="<{$mod_url}>/"><{$smarty.const._MD_TASK_LIST_TITLE}></a>&gt;<{$smarty.const._MD_TASK_HISTORY_TITLE}>
+  </div>
+  <br class="clear" />
+  <h1 class="h-pagetitle" style="float:left;"><{$smarty.const._MD_TASK_HISTORY_TITLE}></h1>
+  <br class="clear" />
+  <table border="0" cellspacing="12" cellpadding="0"  class="setting-table" style="margin-top:16px;">
+    <tbody>
+      <tr>
+        <th><{$smarty.const._MD_TASK_NAME}></th>
+        <td>
+          <span style="font-size:130%;font-weight:bold;"><{$task->getName()|escape}></span>&nbsp;&nbsp;<{$smarty.const._MD_TASK_CREATOR}>:<{$task->getCreator()}>
+        </td>
+      </tr>
+      <tr>
+        <th><{$smarty.const._MD_TASK_LANG}></th>
+        <td><{$smarty.const._MD_TASK_SOURCE_LANG}>:<{$task->getSourceLangAsString()}>
+          &nbsp;&rarr;&nbsp;
+          <{$smarty.const._MD_TASK_TARGET_LANG}>:<{$task->getTargetLangAsString()}>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <form id="mainForm" action="<{$mod_url}>/history/?action=revert" method="post">
+    <input type="hidden" name="id" value="<{$task->getId()}>"/>
+    <div id="list_container">
+  	  <{include file="db:task_history__list.html"}>
+    </div>
+
+    <div class="area-fr-p8">
+      <a id="submitButton" href="#" class="btn-s" style="width:80px;"><span class="btn-fukugen"><{$smarty.const._MD_TASK_REVERT}></span></a>
+      <a id="cancelButton" href="<{$mod_url}>/" class="btn"><span class="btn-cancel"><{$smarty.const._MD_TASK_BTN_BACK}></span></a>
+    </div>
+  </form>
+</div>

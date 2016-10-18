@@ -1,0 +1,13 @@
+<p><{$block.online_total}></p>
+<dl class="flt w6">
+<dt><{$smarty.const._MB_USER_MEMBERS}>:</dt>
+	<dd><{$block.online_members}></dd>
+<dt><{$smarty.const._MB_USER_GUESTS}>:</dt>
+	<dd><{$block.online_guests}></dd>
+</dl>
+<ul class="il">
+<{foreach item=member from=$block.online_member_list}>
+	<li><a href="<{$smarty.const.XOOPS_URL}>/userinfo.php?uid=<{$member.uid}>"><{$member.uname}></a></li>
+<{/foreach}>
+	<li><a href="javascript:openWithSelfMain('<{$xoops_url}>/misc.php?action=showpopups&amp;type=online','Online',420,350);"><{$smarty.const._MB_USER_MORE}></a></li>
+</ul>

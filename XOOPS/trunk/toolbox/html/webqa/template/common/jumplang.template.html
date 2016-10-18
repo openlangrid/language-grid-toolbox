@@ -1,0 +1,17 @@
+							<script type="text/javascript"><!--
+								function jumpLang(selObj){
+									var action = '<{$action}>';
+									if (action == 'search') {
+										action = 'default';
+									}
+									window.location.href = './?action=' + action + '&ml_lang=' + selObj.options[selObj.selectedIndex].value;
+								}
+							--></script>
+							<form name="lgform" style="display: inline;">
+							<select name="lg" id="lg" onChange="jumpLang(this)">
+								<!-- <option value="zh-CN" <{if $ml_lang == "zh-CN"}>selected<{/if}>>Chinise (Simplified)</option> -->
+								<option value="en" <{if $ml_lang == "en"}>selected<{/if}>>English</option>
+								<option value="ja" <{if $ml_lang == "ja"}>selected<{/if}>>Japanese</option>
+								<!-- <option value="ko" <{if $ml_lang == "ko"}>selected<{/if}>>Korean</option> -->
+							</select>
+							</form>

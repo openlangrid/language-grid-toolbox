@@ -1,0 +1,220 @@
+
+<div id="tbx-body">
+  <div id="topicHeaderContainer">
+  	<{include file="db:%s__header.html"|sprintf:$mod_name}>
+  </div>
+  
+  <!-- ==================================================================================================== -->
+  <div id="message-part">
+  	<div class="header-part">
+		<div class="area-fl">
+			<img src="<{$mod_url}>/images/icon/icon_message.png" style="margin-top:4px;" alt="" />	
+			<{$smarty.const.COM_MESSAGES|sprintf:"<strong id=\"messageCount\">$messageCount</strong>"}>
+		</div>
+		
+		<!-- Font size control -->
+		<div class="area-fl area-fontsize-ctrl">
+	  		<!-- Font size minimize -->
+			<a href="javascript: fontResizer.toSmall(); void(0);" id="smallerButton" class="btn" title="set font size to smaller">
+				<{$smarty.const.COM_BTN_A_MINUS}><!-- A- -->
+			</a>
+			<!-- Font size maximum -->
+			<a href="javascript: fontResizer.toLarge(); void(0);" id="largerButton" class="btn" title="set font size to larger">
+				<{$smarty.const.COM_BTN_A_PLUS}><!-- A+ -->
+			</a>
+		</div>
+	</div>
+
+    
+    <{include file="db:%s_translations__edit.html"|sprintf:$mod_name}>
+    
+  </div>
+  
+  
+  
+  <div id="contentsIndexContainer">
+  	<div id="contents-part" class="contents-part" style="position: relative;">
+		<div class="header-part">
+			<div>
+				<img src="<{$mod_url}>/images/icon/icon_file.png" style="margin-top:4px;" />
+				<{assign var=rep value= $contentList->length()}>
+				<{$smarty.const.COM_CONTENTS|sprintf:"<strong>$rep</strong>"}>
+			</div>
+		</div>
+	  
+		<div class="area-fl-p4">
+		</div>
+
+		
+		<!-- Contents image -->
+		<div class="contents-preview-area">
+		  	<div id="contentShowContainer" class="contentsShowContainer">
+			<{if $content}>
+				<{include file="db:%s_contents__show.html"|sprintf:$mod_name}>
+				<input type="hidden" name="contentId" value="<{$content->getContentId()}>">
+			<{/if}>
+		  	</div>
+	  	</div>
+	  	
+	    <!-- Contents operation -->
+	    <div class="area-fl-p8 contents-operation">
+			<a href="javascript: void(0);" onclick="showZoom(this)" class="btn-disable">
+				<span class="btn-zoom"><{$smarty.const.COM_BTN_ZOOM}></span>
+			</a>
+				
+	        <a href="javascript: void(0);" onclick="downloadContent(this)" class="btn-disable">
+	        	<span class="btn-download"><{$smarty.const.COM_BTN_DOWNLOAD}></span>
+	        </a>
+	    </div>
+	    
+	    <br class="clear" />
+	
+	</div>
+  	
+  </div>
+  
+</div>
+<br class="clear" />
+<script type="text/javascript">
+Event.observe(window, 'load', function() {
+	$("bbs-language").setStyle({visibility: 'hidden'});
+	setInterval(showActiveUsers, 20000);
+	showActiveUsers.defer();
+});
+
+function showActiveUsers(){
+	new Ajax.Updater(
+		"bbs-active-member",
+		"<{$mod_url}>/active_users/?action=_show", {
+		method:'get',
+		evalScript: true,
+		parameters:'topicId=<{$topicId}>',  
+		onSuccess:function( transport ){
+			$('bbs-active-member').update(transport.responseText);
+		}
+	});
+}
+
+
+function postButtonHandler(){
+	var errorMessages = new Array();
+	$$('.com-required').each(function(element){
+		if (!element.getValue()) {
+			errorMessages.push(element.title + " <{$smarty.const.COM_IS_REQUIRED}>");
+		}
+	});
+	if (errorMessages.length > 0) {
+		alert(errorMessages.join("\n"));
+	} else {
+		document.forms['main'].submit();
+	}
+	return false;
+}
+
+var fontResizer = new FontResizer(
+	[".message-body", "textarea"],{	min: 10, max: 100, value: 2	}
+);
+var ZOOM_WINDOW = $H({
+	left:0, 
+	top:0, 
+	width:940,
+	height:720,
+	status:	0,
+	scrollbars:1,
+	menubar:0,
+	location:0,
+	toolbar:0,
+	resizable:0
+});
+
+function showZoom(anchor) {
+	var container = $(anchor).up(".contents-part");
+	var contentId = Form.serialize(container).toQueryParams()['contentId'];
+	if(contentId) {
+		
+		var messageId = container.down("input[name=messageId]").getValue();
+		var x = ($("marker[x_coordinate]") || $("marker[x]"));
+		var y = ($("marker[y_coordinate]") || $("marker[y]"));
+		
+		var params = $H({
+			"action" : "_zoom",
+			"contentId" : contentId,
+			"messageId" : messageId,
+			"x" : (x ? x.getValue() : ""),
+			"y" : (y ? y.getValue() : "")
+		});
+			
+		var windowParam = ZOOM_WINDOW.map(function(e) { return e[0] + "=" + e[1]; }).join(",");
+		window.open("<{$mod_url}>/contents/?" + params.toQueryString(),	"zoomWindow", windowParam);
+    }
+}
+
+function downloadContent(btn) {
+	if($(btn).hasClassName("btn-diable")) return;
+	var param = params($(btn).up(".contents-part"));
+	if (param['fileId'] && param['canRead']) {
+		document.location.href="<{$xoops_url}>/modules/filesharing/?page=file_dl&lid=" + param['fileId']; 
+	} else {
+		alert("<{$smarty.const.COM_PERMISSION_DENIED}>");
+	}
+}
+
+function updateOperationContentBtns(container) {
+	var param = params($(container));
+	container.select(".contents-operation a").each(function(e) {
+		e.removeClassName("btn").removeClassName("btn-disable");
+		e.addClassName(param["contentId"] ? "btn" : "btn-disable"); 
+	});
+}
+
+(function(){ updateOperationContentBtns($("contentsIndexContainer")); }).defer();
+</script>
+
+<!-- script for google map controll -->
+<script type="text/javascript">
+function GoogleMapWrapper(container) {
+	this.mapContainer = container.down(".googlemap-area");
+	var param = params(this.mapContainer);
+	var type = GoogleMapWrapper.TYPES[param["mapType"]] || google.maps.MapTypeId.ROADMAP;
+	
+	this.map = new google.maps.Map(this.mapContainer, {
+        zoom: parseInt(param['zoomValue']),
+        center: new google.maps.LatLng(
+			param['centerLat'], param['centerLng']
+        ),
+        mapTypeId: type,
+        scaleControl: true
+	});
+	
+    if(param["markerLat"] && param["markerLng"]) {
+		this.markerObj = new google.maps.Marker({
+	    	position: new google.maps.LatLng(param["markerLat"], param["markerLng"]), 
+	    	map: this.map,
+	    	icon: '<{$mod_url}>/images/marker/marker_A.png'
+		});
+    }
+    
+	
+	google.maps.event.addListener(this.map, "click", this.onClick.bind(this));
+}
+Object.extend(GoogleMapWrapper.prototype, {
+	onClick: function(event) {
+		this.mapContainer.next(".last_clicked_lat").setValue(event.latLng.lat());
+		this.mapContainer.next(".last_clicked_lng").setValue(event.latLng.lng());
+	}
+});
+GoogleMapWrapper.TYPES = {
+	m: google.maps.MapTypeId.ROADMAP,
+	d: google.maps.MapTypeId.SATELLITE,
+	h: google.maps.MapTypeId.HYBRID,
+	p: google.maps.MapTypeId.TERRAIN
+};
+</script>
+
+<script type="text/javascript">
+Event.observe(window, 'load', function(){
+	if($("contentShowContainer").down(".googlemap-area")) {
+		new GoogleMapWrapper($("contentShowContainer"));
+	}
+});
+</script>

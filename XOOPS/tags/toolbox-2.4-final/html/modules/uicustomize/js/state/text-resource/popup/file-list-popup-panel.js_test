@@ -1,0 +1,195 @@
+/**
+* $Id: file-list-popup-panel.js_test 3662 2010-06-16 02:22:17Z yoshimura $
+*/
+var FileListPopupPanel = Class.create();
+Object.extend(FileListPopupPanel.prototype, PopupPanel.prototype);
+Object.extend(FileListPopupPanel.prototype, {
+
+	WIDTH : '900',
+
+	module : null,
+	bodyPanel : null,
+
+	initialize : function() {
+		PopupPanel.prototype.initialize.apply(this, arguments);
+	},
+
+	initEventListeners : function() {
+//		this.addEvent('viewQuestionsClicked', this.Config.Id.VIEW_QUESTIONS, 'click', this.Event.viewQuestionsClicked.bindAsEventListener(this));
+//		this.addEvent('editClicked', this.Config.Id.EDIT, 'click', this.Event.editClicked.bindAsEventListener(this));
+//		this.addEvent('deleteClicked', this.Config.Id.DELETE, 'click', this.Event.deleteClicked.bindAsEventListener(this));
+//		this.addEvent('deployClicked', this.Config.Id.DEPLOY, 'click', this.Event.deployClicked.bindAsEventListener(this));
+//		this.addEvent('undeployClicked', this.Config.Id.UNDEPLOY, 'click', this.Event.undeployClicked.bindAsEventListener(this));
+//		this.addEvent('exportClicked', this.Config.Id.EXPORT, 'click', this.Event.exportClicked.bindAsEventListener(this));
+	},
+
+	getBody : function() {
+		var css = new Template(this.Templates.css).evaluate({});
+		var body = new Template(this.Templates.base).evaluate({
+			dialog_title : Global.Label.TextResource.FILE_DIALOG_TITLE,
+			col_file_name : Global.Label.FileDialog.COL_FILE_NAME,
+			col_file_desc : Global.Label.FileDialog.COL_FILE_DESC,
+			col_perm_read : Global.Label.FileDialog.COL_PERM_READ,
+			col_perm_edit : Global.Label.FileDialog.COL_PERM_EDIT,
+			col_updater : Global.Label.FileDialog.COL_UPDATER,
+			col_datetime : Global.Label.FileDialog.COL_DATETIME,
+		});
+		return css + body;
+	}
+});
+
+FileListPopupPanel.prototype.Config = {
+	Id : {
+	},
+	ClassName : {
+	}
+};
+
+FileListPopupPanel.prototype.Event = {
+//	viewQuestionsClicked : function(event) {
+//		Global.location = this.resource.name;
+//		this.hide();
+//		document.fire('state:edit');
+//	},
+//	editClicked : function(event) {
+//		this.hide();
+//		var popup = new QaEditQaPopupPanel();
+//		popup.resource = this.resource;
+//		popup.show();
+//		popup.onSavePanel = function(languages) {
+//			popup.resource.languages = languages;
+//			this.bodyPanel.draw();
+//		}.bind(this);
+//	},
+//	deleteClicked : function(event) {
+//		this.hide();
+//		if (!confirm(Global.Text.SURE_DELETE)) {
+//			return;
+//		}
+//		new Ajax.Request(Global.Url.DELETE_RESOURCE, {
+//			postBody : Object.toQueryString({
+//				name : this.resource.name
+//			})
+//		});
+//		// リソースを削除しておく
+//		var index = null;
+//		this.bodyPanel.resources.each(function(resource, i){
+//			if (this.resource == resource) {
+//				index = i;
+//			}
+//		}.bind(this));
+//		this.bodyPanel.resources.splice(index, 1);
+//		this.bodyPanel.draw();
+//	},
+//	deployClicked : function(event) {
+//
+//	},
+//	undeployClicked : function(event) {
+//
+//	},
+//	exportClicked : function(event) {
+//		this.hide();
+//		location.href = Global.Url.EXPORT_RESOURCE + '&name=' + this.resource.name;
+//	}
+};
+
+FileListPopupPanel.prototype.Templates = {
+	base : ''
+		+ '	<div style="width: 900px;" class="area-popup">'
+		+ '		<div class="area-fr">'
+		+ '			<a class="btn-popup-close" href="javascript: hideFileDialog();">x</a>'
+		+ '		</div>'
+		+ '		<br class="clear">'
+		+ '		<strong class="h-pagetitle">#{dialog_title}</strong>'
+		+ '		<div class="tab-part-bg">'
+		+ '			<div class="tab-pain" id="loadFromToolbox">'
+		+ '				<div id="folderShowContainer">'
+		+ '					<p class="area-fl">File sharing top</p>'
+		+ '					<p class="area-fr-p4">'
+		+ '							<a title="ファイルをアップロード" class="btn-s" onclick="openUploadDialog(1); return false;" href="javascript: void(0);">'
+		+ '							<span class="btn-new">ファイルをアップロード</span>'
+		+ '						</a>'
+		+ '					</p>'
+		+ '					<br class="clear">'
+		+ '					<div class="fileListContainer">'
+		+ '						<table cellspacing="0" cellpadding="0" border="0" style="clear: both; width: 100%; font-size: 85%;" id="fileList">'
+		+ '						<thead class="table-sortable-head">'
+		+ '							<tr>'
+		+ '								<th nowrap="nowrap" style="padding-left: 0px; display: none;" class="case">'
+		+ '									<a href="#Sort_5_0" title="Sort by this column">選択</a>'
+		+ '									<span>&nbsp;</span>'
+		+ '								</th>'
+		+ '								<th width="180" class="case">'
+		+ '									<a href="#Sort_5_1" title="Sort by this column">#{col_file_name}</a>'
+		+ '									<span>&nbsp;</span>'
+		+ '								</th>'
+		+ '								<th class="case">'
+		+ '									<a href="#Sort_5_2" title="Sort by this column">#{col_file_desc}</a>'
+		+ '									<span>&nbsp;</span>'
+		+ '								</th>'
+		+ '								<th nowrap="nowrap" class="case">'
+		+ '									<a href="#Sort_5_3" title="Sort by this column">#{col_perm_read}</a>'
+		+ '									<span>&nbsp;</span>'
+		+ '								</th>'
+		+ '								<th nowrap="nowrap" class="case">'
+		+ '									<a href="#Sort_5_4" title="Sort by this column">#{col_perm_edit}</a>'
+		+ '									<span>&nbsp;</span>'
+		+ '								</th>'
+		+ '								<th class="case">'
+		+ '									<a href="#Sort_5_5" title="Sort by this column">#{col_updater}</a>'
+		+ '									<span>&nbsp;</span>'
+		+ '								</th>'
+		+ '								<th width="130" class="case">'
+		+ '									<a href="#Sort_5_6" title="Sort by this column">#{col_datetime}</a>'
+		+ '									<span>&nbsp;</span>'
+		+ '								</th>'
+		+ '								<th>'
+		+ '								</th>'
+		+ '							</tr>'
+		+ '						</thead>'
+//		+ '						<tbody class="hover-on">'
+//		+ '							<tr class="">'
+//		+ '								<td style="display: none;" class="cell-underlined id">    		</td>'
+//		+ '								<td class="cell-underlined name">'
+//		+ '										<a onclick="openDirectory(event, this)" href="http://localhost/TBox/toolbox_trunk/html/modules/collabtrans/file/?action=_list&amp;parentId=2">'
+//		+ '										<img src="http://localhost/TBox/toolbox_trunk/html/modules/collabtrans/images/icon/icon_dir.png">'
+//		+ '										<span>UIText</span>'
+//		+ '									</a>'
+//		+ '								</td>'
+//		+ '								<td class="cell-underlined description">UI text</td>'
+//		+ '								<td class="cell-underlined readPermission">'
+//		+ '									<input type="hidden" value="">'
+//		+ '								</td>'
+//		+ '								<td class="cell-underlined writePermission">'
+//		+ '									<input type="hidden" value="">'
+//		+ '								</td>'
+//		+ '								<td class="cell-underlined userName">admin</td>'
+//		+ '								<td class="cell-underlined updateDate">2010/05/24 10:25</td>'
+//		+ '								<td class="cell-underlined download">    		</td>'
+//		+ '							</tr>'
+//		+ '						</tbody>'
+		+ '						</table>'
+		+ '					</div>'
+		+ '					<input type="hidden" name="parentId" value="1">'
+		+ '				</div>'
+		+ '			</div>'
+		+ '		</div>'
+		+ '		<div class="area-fr-p4">'
+		+ '			<a style="width: 100px;" class="btn-s" onclick="load(this);" href="javascript: void(0);">'
+		+ '				<span class="btn-save">選択</span>'
+		+ '			</a>'
+		+ '					&nbsp;'
+		+ '			<a class="btn" href="javascript: hideFileDialog();">'
+		+ '				<span class="btn-cancel">キャンセル</span>'
+		+ '			</a>'
+		+ '		</div>'
+		+ '		<br class="clear">'
+		+ '	</div>',
+	css : '<style type="text/css">'
+		+ '.area-popup {text-align: left;}'
+		+ '.area-fr {float: right;}'
+		+ '.btn-popup-close {'
+		+ '  background-image:url(./image/button/btn_bg.png);background-repeat:repeat-x;width:40px;'
+		+ '}'
+		+ '</style>'
+};

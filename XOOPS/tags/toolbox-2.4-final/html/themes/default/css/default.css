@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*Initialization*/
+html { overflow-y: scroll; }
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;
+}
+address, caption, cite, code, dfn, em, strong, th, var { font-style: normal; }
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+caption, th { text-align: left; }
+q:before, q:after { content: ''; }
+object, embed { vertical-align: top; }
+hr, legend { display: none; }
+h2, h3, h4, h5, h6 { font-size: 100%; }
+img, abbr, acronym, fieldset { border: 0; }
+li { list-style-type: none; }
+p { margin-bottom: 1em; }
+/*----------------------------------------------------
+	Base
+----------------------------------------------------*/
+
+body {
+	color: #232323;
+	font-size: small;
+	font-family:arial, Tahoma, helvetica, clean, verdana,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",Osaka,"ＭＳ Ｐゴシック","MS PGothic",sans-serif;
+	line-height: 160%;
+	text-align: center;
+	background:url(../img/body_bg.jpg) repeat-x;
+	background-position:top;
+}
+/*--
+* + html body {
+	font-family: "メイリオ","Meiryo";
+}
+--*/
+
+/*----------------------------------------------------
+	Link
+----------------------------------------------------*/
+
+a:link {
+	color:#009bfe;
+	text-decoration:none;
+}
+a:visited {
+	color:#009bfe;
+	text-decoration:none;
+}
+a:hover {
+	color:#b60404;
+	text-decoration:underline;
+}
+a:active {
+	color:#b60404;
+	text-decoration:underline;
+}
+/*----------------------------------------------------
+	Translation btn
+----------------------------------------------------*/

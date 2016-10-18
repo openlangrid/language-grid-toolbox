@@ -1,0 +1,23 @@
+<p id="siteclosemsg"><{$lang_siteclosemsg}></p>
+
+<{if $xoops_isuser}>
+  <div align="center"><a href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._LOGOUT}></a></div>
+<{else}>
+<h2><{$lang_login}></h2>
+<form action="<{$xoops_url}>/user.php" method="post">
+  <table id="loginformTable" cellspacing="0">
+    <tr>
+      <td><label for="legacy_xoopsform_block_uname"><{$lang_username}></label></td>
+      <td><input type="text" id="legacy_xoopsform_block_uname" name="uname" size="14" value="" /></td>
+    </tr>
+    <tr>
+      <td><label for="legacy_xoopsform_block_pass"><{$lang_password}></label></td>
+      <td><input type="password" id="legacy_xoopsform_block_pass" name="pass" size="14" /></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input type="hidden" name="xoops_login" value="1" /><input type="submit" value="<{$lang_login}>" /></td>
+    </tr>
+  </table>
+</form>
+<{/if}>

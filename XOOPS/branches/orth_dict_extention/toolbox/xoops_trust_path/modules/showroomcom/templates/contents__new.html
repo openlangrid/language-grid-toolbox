@@ -1,0 +1,256 @@
+
+<div class="area-popup" style="width:900px; text-align: left;">
+
+	<div class="area-fr"><a href="javascript: cancelContentSelect();" class="btn-popup-close">x</a></div>
+	<br class="clear" />
+  
+	<strong class="h-pagetitle"><{$smarty.const.COM_LABEL_REGISTRATION_CONTENT}></strong>
+    
+    <!-- Tab area -->
+    <div class="tab-part-bg">
+		<ul class="tab-part">
+			<li class=""><a href="#content_server" onclick="changeMode(event,this)"><span>Server</span></a></li>
+			<li class="non-act"><a href="#upload_url" onclick="changeMode(event,this)"><span>Google Map</span></a></li>
+		</ul>
+    
+		<br class="clear" />
+      
+
+		<!-- Tab main content -->
+		<div id="content_server" class="tab-pain" style="">
+			<form onsubmit="return validateContent()" method="post" action="<{$mod_url}>/contents/?action=_create_from_server&topicId=<{$smarty.get.topicId}>">
+				<p style="margin-bottom: 8px;font-weight: bold;"><{$smarty.const.COM_LABEL_SELECTABLE_FILE_TYPE}></p>
+	      		<input type="hidden" name="content_title" class="content_title" value="" />
+		      	<div id="folderShowContainer">
+					<{include file="db:%s_folder__show.html"|sprintf:$mod_name}>
+				</div>
+	        </form>
+		</div>
+      
+		<!-- Tab main content -->
+		<div id="upload_url" class="tab-pain" style="display: none;">
+			<form onsubmit="return validateContent()" id="create_from_url" method="post" action="<{$mod_url}>/contents/?action=create_from_url&topicId=<{$smarty.get.topicId}>">
+				<input type="hidden" name="content_title" class="content_title" value="0000" />
+				<input type="hidden" id="google_map_params_for_post" name="google_map_params" value=""/>
+				<p style="margin:24px;">URL
+					<input type="text" id="google_map_params_orig" name="google_map_params_orig" value="" style="width:32em;" />
+					<img id="input-url" src="" style="visibility: hidden" />
+				</p>
+				<div><{$smarty.const.COM_ENTER_GOOGLEMAP_URL}></div>
+			</form>
+		</div>
+	</div>
+	
+	<p class="area-fl" style="margin-top: 8px;">
+		<{$smarty.const.COM_CONTENT_TITLE}>
+		<input type="text" id="input_title" name="title" style="width:24em; font-size:120%; font-weight: bold;" />
+	</p>
+
+    <div class="area-fr" style="padding-top:8px;">
+	    <a href="javascript:createContent();" class="btn-s"><span class="btn-upload"><{$smarty.const.COM_BTN_ADD_CONTENT}></span></a>
+	
+	    <a href="javascript: cancelContentSelect();" class="btn"><span class="btn-cancel"><{$smarty.const.COM_BTN_CANCEL}></span></a>
+    </div>
+  
+	<br class="clear" />
+  
+</div>
+
+<script type="text/javascript">
+(function() {
+
+
+function _validate(tabId, params) {
+	
+	if(!params['content_title']) {
+		alert("<{$smarty.const.COM_CONTENT_TITLE}>" + " <{$smarty.const.COM_IS_REQUIRED}>");
+		return false;
+	}
+
+	if(tabId == "content_server") {
+		return _validateServerFile(params);
+	} else if(tabId == "upload_url") {
+		return _validateURL(params);
+	}
+	
+	return true;
+}
+
+function _validateServerFile(params) {
+	if(!params['fileId']) {
+		alert("<{$smarty.const.COM_REQUIRE_SELECT_UPLOAD_FILE}>");
+		return false;
+	}
+	return true;
+};
+
+function _validateURL(params) {
+	if(!params['google_map_params_orig']) {
+		alert('<{$smarty.const.COM_REQUIRE_URL|escape:"quote"}>');
+		return false;
+	}
+	
+	var googleParams = params['google_map_params_orig'].toQueryParams();
+	
+	if(!googleParams['ll'] && !googleParams['q'] && !googleParams['sll']) {
+		alert('<{$smarty.const.COM_INVALID_GOOGLEMAP_URL|escape:"quote"}>');
+		return false;
+	}
+	
+	return true;
+};
+
+function syncContentTitle(e) {
+	$$(".content_title").invoke("setValue", $("input_title").getValue());
+}
+
+function submitForm(form) {
+	
+	$("dialog_loading_icon").show();
+	$("fileDialog").hide();
+	
+	form.request({
+		onComplete: function(r) {
+			var res = r.responseText.evalJSON();
+			if(res.status) {
+				cancelContentSelect();
+				reloadContents();
+			} else {
+				alert(res.message);
+				$("fileDialog").show();
+			}
+		}
+	});
+}
+
+
+function checkGoogleMapUrl(form){
+	var googleParams = form.serialize(true)['google_map_params_orig'].toQueryParams();
+	var queries = $H(googleParams).map(function(e){ return e[0] + "=" + e[1]}).join("&");
+	
+	if(!googleParams['ll']){
+		if(googleParams['q']) {
+			
+			submitAfterGeocoding(form);
+		    
+		    return false;
+		    
+		} else {
+			if(googleParams['sll']) {
+				queries += "&ll=" + googleParams['sll'];
+			} else {
+          		alert('<{$smarty.const.COM_INVALID_GOOGLEMAP_URL|escape:"quote"}>');
+			}
+		}
+	}
+	$('google_map_params_for_post').setValue(queries);
+	return true;
+}
+
+function submitAfterGeocoding(form) {
+	var googleParams = form.serialize(true)['google_map_params_orig'].toQueryParams();
+	var queries = $H(googleParams).map(function(e){ return e[0] + "=" + e[1]}).join("&");
+	
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode( { 'address': decodeURI(googleParams['q'])}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+	          var lat = results[0].geometry.location.lat();
+	          var lng = results[0].geometry.location.lng();
+	          queries += "&ll=" + lat + "," + lng;
+	          $('google_map_params_for_post').setValue(queries);
+	          submitForm(form);
+        } else {
+        	alert('<{$smarty.const.COM_INVALID_GOOGLEMAP_URL|escape:"quote"}>');
+        }
+    });
+}
+
+window.changeMode = function(event, anchor) {
+	var anchor = $(anchor);
+	var targetId = anchor.readAttribute("href").replace(/^.*#/, '');
+	$$('.tab-pain').each(function(e){ e.hide(); });
+	$$('ul.tab-part li').each(function(e){ e.addClassName('non-act') });
+	anchor.up('li.non-act').removeClassName('non-act');
+	$(targetId).show();
+	Event.stop(event);
+	return false;
+};
+
+
+function createFromServer() {
+	var form = $("content_server").down("form");
+	submitForm(form);
+}
+
+function createFromUrl() {
+	var form = $("upload_url").down("form");
+	if(checkGoogleMapUrl(form)) {
+		submitForm(form);
+	}
+}
+
+window.createContent = function() {
+	var targetTab = $$(".tab-pain").detect(function(e){ return e.visible() });
+	var form = targetTab.down("form");
+	
+	if(!_validate(targetTab.id, form.serialize(true))) {
+		return;
+	}
+
+	if(targetTab.id == "upload_url") {
+		createFromUrl();
+	} else if(targetTab.id == "content_server") {
+		createFromServer();
+	}
+};
+
+window.openDirectory = function(event, element) {
+	Event.stop(event);
+	var url = $(element).readAttribute("href");
+	new Ajax.Updater(
+		"folderShowContainer",
+		url, {
+			evalScripts: true	
+		}
+	);
+
+};
+
+window.reloadFolder = function() {
+	var parentId = params($("folderShowContainer"))['parentId'];
+	new Ajax.Updater(
+		"folderShowContainer",
+		"<{$mod_url}>/folder/?action=_show&parentId=" + parentId, {
+			evalScripts: true	
+		}
+	);
+	
+};
+
+window.openUploadDialog = (function(){
+	var win;
+	return function(cid) {
+		if(win && !win.closed) {
+			win.focus();
+		} else {
+			var url = "<{$xoops_url}>/modules/filesharing/upload.php?cid=" + cid;
+			var windowParam = ZOOM_WINDOW.map(function(e) { return e[0] + "=" + e[1]; }).join(",");
+			win = window.open(url,	"uploadDialog", windowParam);
+
+			Event.observe(window, 'focus', function() {
+				if(win.closed) {
+					reloadFolder();
+					Event.stopObserving(window, 'focus', arguments.callee);
+				}
+			});
+		}
+	}
+})();
+
+//new Event.Form.Observer();
+new Form.Element.Observer("input_title", 0.5, syncContentTitle);
+//new Form.Element.EventObserver("content_title", syncContentTitle);
+
+})();
+</script>
+  	  

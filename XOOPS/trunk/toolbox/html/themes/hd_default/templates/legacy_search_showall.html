@@ -1,0 +1,48 @@
+<{capture name="searchResultshtml"}>
+
+  <{capture name="searchResultsCtrl"}>
+    <ul class="ctrl2 clear">
+    <{if $actionForm->get('start') > 0}>
+      <li class="prev"><a href="<{$smarty.const.XOOPS_URL}>/search.php?action=showall&amp;query=<{$actionForm->get('query')|escape:url}>&amp;mid=<{$searchResults.0.mid}>&amp;andor=<{$actionForm->get('andor')|xoops_escape}>&amp;start=<{$prevStart}>"><{$smarty.const._MD_LEGACY_LANG_PREV_PAGE}></a></li>
+    <{/if}>
+    <{if $searchResults.0.has_more}>
+      <li class="next"><a href="<{$smarty.const.XOOPS_URL}>/search.php?action=showall&amp;query=<{$actionForm->get('query')|escape:url}>&amp;mid=<{$searchResults.0.mid}>&amp;andor=<{$actionForm->get('andor')|xoops_escape}>&amp;start=<{$nextStart}>"><{$smarty.const._MD_LEGACY_LANG_NEXT_PAGE}></a></li>
+    <{/if}>
+    </ul>
+  <{/capture}>
+
+<{$smarty.capture.searchResultsCtrl}>
+<{if $searchResults.0.name != null}>
+  <!-- start results item loop -->
+  <table class="outer clear" summary="search results - show all">
+  <{foreach item=result from=$searchResults.0.results}>
+    <tr class="<{cycle values='odd,even'}>">
+      <th style="width:21px;"><img src="<{$result.image}>" alt="<{$searchResults.0.name}>" title="<{$searchResults.0.name}>" /></th>
+      <td><a href="<{$result.link}>"><{$result.title}></a><br />
+        <span class="whisper">
+          <{if $result.uid > 0}>
+            <a href="<{$smarty.const.XOOPS_URL}>/userinfo.php?uid=<{$result.uid|xoops_escape}>"><{$result.uid|xoops_user:uname}></a>
+          <{/if}>
+        (<{$result.time|xoops_formattimestampGMT:l}>)
+        </span>
+      </td>
+    </tr>
+  <{/foreach}>
+  </table>
+  <!-- end results item loop -->
+<{else}>
+  <p class="clear"><{$smarty.const._SR_SEARCHRESULTS_NO_RESULT}></p>
+<{/if}>
+
+<{$smarty.capture.searchResultsCtrl}>
+
+<{/capture}>
+
+<{if trim($smarty.capture.searchResultshtml)}>
+  <h1><{$smarty.const._SR_SEARCHRESULTS_SHOWALL}>: <{$searchResults.0.name}></h1>
+  <{$smarty.capture.searchResultshtml}>
+  <{include file=db:legacy_search_form.html caller="legacy_search_results"}>
+<{else}>
+  <{* needless? *}>
+  <{include file=db:legacy_search_form.html caller="legacy_search_results_no_match"}>
+<{/if}>

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Toolbox - How to use</title>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/common/css/import.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/css/import.css" />
+</head>
+<body id="howtouse">
+<div id="body_bg">
+    <div id="wrap">
+        <div id="container">
+            <div id="head">
+
+                <h1 id="logo"></h1>
+                </div>
+<div id="contents_body">
+            <h2>How to Use (用語集)</h2>
+   <div class="inner_text">
+<p><font color="red"><b>(この機能は現在テストバージョンです)</b></font></p>
+
+<p>用語集では、用語と定義の組の作成や検索を行います。また、用語をカテゴリに分けて管理することができます。</p>
+
+<p>このページでは、下記の機能について説明します。</p>
+<ol><li>1. 作成・ロード・編集・削除</li>
+<li>2. カテゴリの管理</li>
+<li>3. インポート・エクスポート</li>
+</ol>
+
+<dl><dt>1. 作成・ロード・編集・削除</dt>
+<dd>用語集のトップページで、<span class="key_point">「用語集を作成」</span>ボタンを押すと、新しい用語集を作成できます。用語集は、一覧から名前をクリックしてロードできます。新しい用語を追加するには、<span class="key_point">「用語の追加」</span>ボタンを押します。また、用語の定義を追加するには、<span class="key_point">「定義」</span>をクリックすると表示される<span class="key_point">「定義の追加」</span>ボタンをクリックします。用語や定義は、入力欄をクリックすると編集できます。また、各用語集の行の右端にあるメニューから、用語集の削除が行えます。</dd></dl>
+
+<dl><dt>2. カテゴリの管理</dt>
+<dd>用語のカテゴリを設定することができます．カテゴリの列をクリックして開いたポップアップで、設定したいカテゴリにチェックを入れます。
+適切なカテゴリがない場合には、<span class="key_point">「カテゴリの編集」</span>をクリックします。カテゴリの編集ポップアップで、<span class="key_point">「カテゴリの追加」</span>を押すと、新しいカテゴリを追加できます。また、用語集をロードすると表示される<span class="key_point">「カテゴリの編集」</span>を押すと、同様にカテゴリの編集のためのポップアップが開きます。</dd></dl>
+
+<dl><dt>3. インポート・エクスポート</dt>
+<dd>用語集一覧で<span class="key_point">「インポート」</span>ボタンを押すことで、ローカルのコンピュータのファイルから用語集のインポートができます。また、各用語集の行の右端にあるメニューから、<span class="key_point">「エクスポート」</span>を選択することで、ローカルのコンピュータへ用語集をエクスポートできます。インポート・エクスポートで使用するファイルは、以下のような形式を持つExcelファイル (.xls) となります。</dd>
+
+<table  border="1" width="600">
+<tr><td>id</td><td>type</td><td>definitions</td><td>categories</td><td>ja</td><td>en</td></tr>
+<tr><td>1</td><td>term</td><td>2,3</td><td>20</td><td>アクセス</td><td>access</td></tr>
+<tr><td>2</td><td>definition</td><td></td><td></td><td>記録メディアの読み込み・書き込み</td><td>To read, write data on some recording media.</td></tr>
+<tr><td>3</td><td>definition</td><td></td><td></td><td>Microsoftのデータベースアプリケーション</td><td>A database application by Microsoft</td></tr>
+
+<tr><td>4</td><td>term</td><td>5</td><td>20,21</td><td>ログイン</td><td>login</td></tr>
+<tr><td>5</td><td>definition</td><td></td><td></td><td>IDとパスワードの組み合わせを入力してシステムに入ること</td><td>process of entering a system with an ID and a password combination.</td></tr>
+<tr><td colspan="6">... (省略)</td></tr>
+<tr><td>20</td><td>category</td><td></td><td></td><td>ネットワーク</td><td>Network</td>
+<tr><td>21</td><td>category</td><td></td><td></td><td>操作</td><td>Operation</td>
+<tr>
+</tr>
+
+<dd>
+1行目は項目名です。2行目以降の各行には、用語・定義・カテゴリのいずれかが記載されます。各列に記述する内容は以下の通りです。
+<ol>
+<li>・1列目: 各行に記述されるデータのID</li>
+<li>・2列目: 各行に記述されるデータの種類（term, definition, categoryのいずれか）</li>
+<li>・3列目: 用語に対応する定義のID（2列目がtermの場合のみ記述）</li>
+<li>・4列目: 用語の属するカテゴリのID（2列目がtermの場合のみ記述）</li>
+<li>・5列目以降: 各言語での表現（1行目の項目名に記述される言語コードについては、<a href="http://www.ethnologue.com/14/iso639/codes.asp">ISO 639の言語コード</a>を参照して下さい）</li>
+</ol>
+</dd>
+
+
+<dd>以下に、インポート・エクスポートで用いるExcelファイルの形式の例を示します。</dd>
+
+</table>
+
+        </div>
+          </div>
+            <div id="footer_inner">
+                <address>
+                Copyright (C) 2010 CITY OF KYOTO. All rights reserved.
+                </address>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+
+	<div class="notification-part" id="search-result-message">
+		<{assign var=resultNum value=$dictionaries|@count}>
+		<{$smarty.const.CT_LABEL_SEARCH_RESULT|sprintf:$resultNum}> 
+		[<a href="javascript: $$('input[name=keyword]')[0].setValue(''); void(0)"><{$smarty.const.CT_LINK_CLEAR_SEARCHFORM}></a>]
+	</div>
+	
+	<div class="popup-pain" style="height:205px; overflow:auto;">
+	
+	    <table border="0" cellspacing="0" cellpadding="0" style="width:97%;">
+		<!-- ****************************************** -->
+		<thead class="table-sortable-head">
+			<tr>
+				<th style="width: 16px;" style="width:16px;">&nbsp;</th>
+				<th style="width: 200px;"><{$sourceLanguage}></th>
+				<th style="width: 200px;"><{$targetLanguage}></th>
+				<th style="width: 16px;">&nbsp;</th>
+			</tr>
+		</thead>
+		<!-- ****************************************** -->
+		<tbody>
+		<{foreach from=$dictionaries item=glosasryItem key=index}>
+			<tr class="q-line">
+        		<td rowspan="2" class="q-label"><{$smarty.const.CT_LABEL_QA_Q}></td>
+        		<td class="q-cell source"><{$glosasryItem->getTermForSourceLang()}>&nbsp;</td>
+        		<td class="q-cell target"><{$glosasryItem->getTermForTargetLang()}>&nbsp;</td>
+        		<td class="c-cell">&nbsp;</td>
+			</tr>
+			
+			<tr class="a-line">
+				<td colspan="4" class="cell-underlined">
+					<a href="javascript: void(0);" class="lnk-close" onclick="$(this).next('table').toggle();replaceClassName(this, 'lnk-close', 'lnk-open')"><{$smarty.const.CT_LABEL_QA_A}> (<{$glosasryItem->getDifinitionPairs()|@count}>)</a>
+					<table border="0" cellspacing="0" cellpadding="0" style="width:100%; display: none;" summary="a list">
+					<tbody>
+						<{foreach from=$glosasryItem->getDifinitionPairs() item=definition key=index}>
+						<tr class="a-line">
+							<td class="a-label cell-toplined"><{$smarty.const.CT_LABEL_QA_A}></td>
+							<td class="a-cell cell-toplined"><{$definition.source}>&nbsp;</td>
+							<td class="a-cell cell-toplined"><{$definition.target}>&nbsp;</td>
+							<td class="cell-toplined">&nbsp;</td>
+						</tr>
+						<{/foreach}>
+					</tbody>
+					</table>
+				</td>
+			</tr>
+		<{/foreach}>
+		  </tbody>
+		</table>
+    </div>

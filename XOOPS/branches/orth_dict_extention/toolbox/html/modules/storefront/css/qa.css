@@ -1,0 +1,158 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+
+/* セル背景灰色 */
+td.cell-bg-gray {
+	background-color:#efefef;
+}
+
+
+/* qa リストのマスタ */
+div#tbx-body div.master-property {
+	clear:both;
+	line-height:1.4;
+	padding-top:8px;
+}
+
+
+/* ------------------------------ */
+/* QA行 (検索結果) */
+
+div#tbx-body tr.qa-line td {
+	border-top:1px solid #fff;
+	background-color:#ededed;
+	border-bottom:1px solid #fff;
+}
+
+
+
+
+
+/* ------------------------------ */
+
+/* Qラベル */
+div#tbx-body tr.q-line td.q-label {
+	background-color:#efefef;
+	width: 16px;
+	vertical-align:top;
+	border-top:1px solid #fff;
+}
+
+/* Q 行が選択されている場合 */
+div#tbx-body tr.q-line-selected td.q-label {
+	background-color: #cedeff;
+	width: 16px;
+	vertical-align:top;
+	border-top:1px solid #fff;
+}
+
+/* Qセル */
+div#tbx-body td.q-cell {
+	width: 350px;
+	padding: 8px;
+	vertical-align:top;
+}
+
+	div#tbx-body td.q-cell a {
+		color:#000;
+	}
+
+
+
+
+/* ------------------------------ */
+
+/* Aラベル */
+div#tbx-body tr.a-line td.a-label {
+	background-color:#efefef;
+	width: 16px;
+	vertical-align:top;
+}
+
+/* A 行が選択されている場合 */
+div#tbx-body tr.a-line-selected td.a-label {
+	background-color: #cedeff;
+	width: 16px;
+	vertical-align:top;
+}
+
+/* Aセル */
+div#tbx-body td.a-cell {
+	width: 300px;
+	padding: 8px;
+	vertical-align:top;
+}
+
+	div#tbx-body td.a-cell a {
+		color:#000;
+	}
+
+/* ------------------------------ */
+
+/* カテゴリセル */
+div#tbx-body td.c-cell {
+	width: 150px;
+	padding: 4px;
+	vertical-align:top;
+}
+
+	div#tbx-body td.c-cell a {
+		color:#000;
+	}
+	
+/* 機能セル */
+td.f-cell {
+	padding: 4px;
+	vertical-align:top;
+}
+
+
+/* ------------------------------ */
+
+/* A 閉じている時 */
+div#tbx-body a.lnk-close {
+	background:url(../images/icon/icon_plus.png) no-repeat;
+	padding-left:18px;
+	background-position:0px 2px;
+}
+
+/* A 開いている時 */
+div#tbx-body a.lnk-open {
+	background:url(../images/icon/icon_minus.png) no-repeat;
+	padding-left:18px;
+	background-position:0px 2px;
+}
+
+/* テキストエリア */
+div#tbx-body  textarea.textarea-edit{
+	width:100%;
+	font-size:90%;
+	height:4em;
+}
+
+
+
+span.content-image-title {
+	padding-left:20px;
+	background:url(../images/icon/icon_file.png) no-repeat;
+}
+
+span.content-invalid-image-title {
+	padding-left:20px;
+	background:url(../images/icon/icon_missing_file.png) no-repeat;
+}
+
+span.content-google-map-title {
+	padding-left:20px;
+	background:url(../images/icon/icon_gmap.png) no-repeat;
+}
+
+/* --------------------------------- */
+/* infonic ajust */
+
+/* qa リストのマスタ */
+div#tbx-body div.master-property {
+	text-align:left;
+}

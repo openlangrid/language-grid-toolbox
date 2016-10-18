@@ -1,0 +1,47 @@
+
+	<div class="header-part">
+		<{if $content_form}>
+		<div class="area-fl"><{$smarty.const.COM_RELATED_CONTENTS}></div>
+		<div class="area-fr">
+			<a href="javascript: void(0);" onclick="showSelectContent(this);" class="btn-s">
+				<span class="btn-new"><{$smarty.const.CON_BTN_NEW_CONTENT}></span>
+			</a>
+		</div>
+	  	<{else}>
+		<div class="area-fl">
+			<img src="<{$mod_url}>/images/icon/icon_file.png" style="margin-top:4px;" />
+			<{assign var=rep value= $contentList->length()}>
+			<{$smarty.const.COM_CONTENTS|sprintf:"<strong>$rep</strong>"}>
+		</div>
+		<div class="area-fr">
+			<{if false}>
+			<a href="javascript: void(0);" onclick="showSelectContentWithGlayer(this);" class="btn-s">
+				<span class="btn-new"><{$smarty.const.CON_BTN_NEW_CONTENT}></span>
+			</a>
+			<{/if}>
+		</div>
+		<{/if}>
+	</div>
+	  
+	<div class="area-fl-p4">
+	  <select class="contents-select-popup" name="contentId" onchange="onChangeContent(this)">
+	  	<option value=""><{$smarty.const.COM_SELECT_ATTACHEMENT_CONTENT}></option>
+	    <{foreach from=$contentList->datas() item="con"}>
+	    <option value="<{$con->getContentId()}>" <{$con->selectedForHtmlOption($contentId)}>>
+	    	<{$con->getLabelForOption()}>
+	    </option>
+	    <{/foreach}>
+	  </select>
+	  
+	  <{if $content_form}>
+	  <a id="unselect_link" href="javascript: void(0);" onclick="unselect(this)" style="display: none;"><{$smarty.const.COM_UNSELECT}></a>
+	  <{/if}>
+	</div>
+	
+	<img class="indicator" src="<{$xoops_imageurl}>common/img/loading.gif" style="display: none; float: left;" />
+	
+   	<div class="area-fr-p4">
+		<a href="javascript: void(0);" onclick="showPrevContent(this)" class="btn showPrevBtn">&lt;</a>
+		<a href="javascript: void(0)"  onclick="showNextContent(this)" class="btn showNextBtn">&gt;</a>
+    </div>
+    

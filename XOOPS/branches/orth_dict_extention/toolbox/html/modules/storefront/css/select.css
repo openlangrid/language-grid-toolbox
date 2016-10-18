@@ -1,0 +1,67 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*---------------------------------------------------------------------------------------*/
+/* mainContent */
+/*---------------------------------------------------------------------------------------*/
+#mainContent h1 {
+	font-size:150%;
+}
+#CategoryArea {
+	width:964px;
+	height:auto;
+}
+#CategoryArea.main {
+	border-bottom:1px dotted #b5b5b5;
+}
+#CategoryArea ul {
+}
+#CategoryArea li {
+	display:block;
+	float:left;
+	width:214px;
+	height:50px;
+	list-style:none;
+	margin:10px 0px 0px 18px;
+	border:2px solid #b5b5b5;
+}
+
+#CategoryArea ul {
+	height:460px;
+}
+
+/*---------------------------------------------------------------------------------------*/
+/* Category の Button */
+/*---------------------------------------------------------------------------------------*/
+.CategoryButton {
+	display:block;
+	width:214px;
+	height:50px;
+	background-image:url(../images/btn/button_background.png);
+	background-position:0px 0px;
+	background-repeat:repeat-x;
+	color:#fff;
+	text-align:left;
+	text-indent:10px;
+}
+a.CategoryButton:hover {
+	background-position:0px -50px;
+	cursor: pointer;
+}
+.CategoryButton span {
+	float:left;
+	position:relative;
+	top:6px;
+	display:block;
+	width:100%;
+	height:auto;
+	margin:5px 0px;
+	font-size:125%;
+	font-weight:bold;
+	text-align:center;
+}
+.CategoryButton.active {
+	background-image:none;
+	background-color:#ff872c;
+	border:none;
+}

@@ -1,0 +1,162 @@
+			<div id="contents_body">
+				<div id="profile_inner">
+					<h2><{$smarty.const._MD_USER_LANG_CREATE_NEW_ACCOUNT}></h2>
+					<{if $actionForm->hasError()}>
+						<ul class="errorMsg" style="margin: 10px 0; color: #f00;">
+							<{foreach item=message from=$actionForm->getErrorMessages()}>
+								<li><strong><{$message}></strong></li>
+							<{/foreach}>
+						</ul>
+					<{/if}>
+					<div class="list_table02">
+						<form name="regForm" action="#" method="post">
+							<{xoops_token form=$actionForm}>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="110" class="list_line03">
+										<label for="legacy_xoopsform_uname">
+											<{$smarty.const._MD_USER_LANG_USER_ID}><{$smarty.const._MD_USER_LANG_REQUIRED_MARK}>
+										</label>
+									</td>
+									<td>
+										<{xoops_input maxlength=25 name=uname value=$actionForm->get('uname')}>
+										<{*$smarty.const._MD_USER_LANG_USERID_REGULATION*}>
+										<{php}>
+											$minlen = $this->_tpl_vars['actionForm']->mFieldProperties['uname']->mVariables['minlength'];
+											$maxlen = $this->_tpl_vars['actionForm']->mFieldProperties['uname']->mVariables['maxlength'];
+											$msg = XCube_Utils::formatMessage(_MD_USER_LANG_REGULATION,_MD_USER_LANG_USER_ID,$minlen,$maxlen);
+											echo $msg;
+										<{/php}>
+									</td>
+								</tr>
+								<tr>
+									<td class="list_line03">
+										<label for="legacy_xoopsform_name"><{$smarty.const._MD_USER_LANG_USER_NAME}></label>
+									</td>
+									<td>
+										<{xoops_input maxlength=60 name=name value=$actionForm->get('name')}>
+									</td>
+								</tr>
+								<tr>
+									<td class="list_line03">
+										<label for="legacy_xoopsform_email">
+											<{$smarty.const._MD_USER_LANG_EMAIL}><{$smarty.const._MD_USER_LANG_REQUIRED_MARK}>
+										</label>
+									</td>
+									<td>
+										<span class="ui_label">
+											<{xoops_input name=email maxlength=60 value=$actionForm->get('email')}>
+											<br />
+											<label>
+												<{xoops_input type=checkbox name=user_viewemail value=1 default=$actionForm->get('user_viewemail')}>
+												<{$smarty.const._MD_USER_LANG_USER_VIEWEMAIL}>
+											</label>
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="list_line03">
+										<label for="legacy_xoopsform_timezone_offset"><{$smarty.const._MD_USER_LANG_TIMEZONE_OFFSET}></label>
+									</td>
+									<td>
+										<select name="timezone_offset" id="legacy_xoopsform_timezone_offset">
+											<{xoops_optionsArray id=timezone_offset label=zone_name value=offset from=$timezones default=$actionForm->get('timezone_offset')}>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="list_line03">
+										<label for="legacy_xoopsform_display_language"><{$smarty.const._MD_USER_LANG_DISPLAY_LANGUAGE}></label>
+									</td>
+									<td>
+										<select name="display_language" id="legacy_xoopsform_display_language">
+											<{xoops_optionsArray id=display_language label=label value=value from=$displaylangs default=$actionForm->get('display_language')}>
+										</select>
+
+									</td>
+								</tr>
+								<tr>
+									<td class="list_line03">
+										<label for="legacy_xoopsform_pass">
+											<{$smarty.const._MD_USER_LANG_PASSWORD}><{$smarty.const._MD_USER_LANG_REQUIRED_MARK}>
+										</label>
+									</td>
+									<td>
+										<{xoops_input type=password name=pass value=$actionForm->get('pass') maxlength=32}>
+										<{*$smarty.const._MD_USER_LANG_PASSWORD_REGULATION*}>
+										<{php}>
+											$minlen = $this->_tpl_vars['actionForm']->mFieldProperties['pass']->mVariables['minlength'];
+											$maxlen = $this->_tpl_vars['actionForm']->mFieldProperties['pass']->mVariables['maxlength'];
+											$msg = XCube_Utils::formatMessage(_MD_USER_LANG_REGULATION,_MD_USER_LANG_PASSWORD,$minlen,$maxlen);
+											echo $msg;
+										<{/php}>
+									</td>
+								</tr>
+								<tr>
+									<td class="list_line03">
+										<label for="legacy_xoopsform_vpass">
+											<{$smarty.const._MD_USER_LANG_CONFIRMPASS}><{$smarty.const._MD_USER_LANG_REQUIRED_MARK}>
+										</label>
+									</td>
+									<td>
+										<{xoops_input type=password name=vpass value=$actionForm->get('vpass') maxlength=32}>
+										<{*$smarty.const._MD_USER_LANG_PASSWORD_REGULATION*}>
+										<{php}>
+											$minlen = $this->_tpl_vars['actionForm']->mFieldProperties['pass']->mVariables['minlength'];
+											$maxlen = $this->_tpl_vars['actionForm']->mFieldProperties['pass']->mVariables['maxlength'];
+											$msg = XCube_Utils::formatMessage(_MD_USER_LANG_REGULATION,_MD_USER_LANG_PASSWORD,$minlen,$maxlen);
+											echo $msg;
+										<{/php}>
+									</td>
+								</tr>
+								<{*
+								<tr>
+									<td class="list_line03">
+										<label for="legacy_xoopsform_vpass">
+											<{$smarty.const._MD_USER_LANG_GROUP_ID}><{$smarty.const._MD_USER_LANG_REQUIRED_MARK}>
+										</label>
+									</td>
+									<td>
+										<{xoops_input type=text name=group_id value=$actionForm->get('group_id')}>
+									</td>
+								</tr>
+								*}>
+								<{*
+								<tr>
+									<td class="list_line03">
+										<label for="legacy_xoopsform_group_key">
+											<{$smarty.const._MD_USER_LANG_GROUP_KEY}><{$smarty.const._MD_USER_LANG_REQUIRED_MARK}>
+										</label>
+									</td>
+									<td>
+										<{xoops_input maxlength=25 name=group_key value=$actionForm->get('group_key')}>
+									</td>
+								</tr>
+								*}>
+								<{if $enableAgree}>
+								<tr>
+									<td class="list_line03">
+										<label><{$smarty.const._MD_USER_LANG_DISCLAIMER}></label>
+									</td>
+									<td>
+										<div id="disclaimer"><{$disclaimer|nl2br}></div>
+										<span class="ui_label">
+											<label><{xoops_input type=checkbox name=agree value=1 default=$actionForm->get('agree')}>
+											<{$smarty.const._MD_USER_MESSAGE_IAGREE}></label>
+										</span>
+									</td>
+								</tr>
+								<{/if}>
+								<tr>
+									<td colspan="2" style="border:none;">
+										<{$smarty.const._MD_USER_LANG_INDICATEDY}>
+									</td>
+								</tr>
+							</table>
+							<div class="profile_btn" onclick="document.regForm.submit(); return false;">
+								<a href="#"><{$smarty.const._MD_USER_LANG_SUBMIT}></a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>

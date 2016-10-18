@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Toolbox - How to use</title>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/common/css/import.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/css/import.css" />
+<style type="text/css">
+    ol.step li { list-style-type: lower-roman; margin-left: 25px; }
+</style>
+</head>
+<body id="howtouse">
+<div id="body_bg">
+    <div id="wrap">
+        <div id="container">
+            <div id="head">
+                <h1 id="logo"></h1>
+                </div>
+<div id="contents_body">
+            <h2>How to Use (Web Creation)</h2>
+   <div class="inner_text">          
+<p>Web Creation supports creating multilingual Web contents. A user can edit Web contents translated by a machine translator and save the Web contents on the File Sharing function. Moreover, a user can apply a translation template, and the part corresponding to the template will be translated as specified by the user.</p>
+
+<p>On this page, you will find a brief description of how to use the Web Creation function, including</p>
+<ol><li>1. How to import and translate Web pages</li>
+<li>2. How to save/load translated Web contents</li>
+<li>3. How to create/apply templates</li>
+
+<dl><dt>1. How to import and translate Web pages</dt>
+
+<dd>
+Translation of a Web page is proceeded following the steps shown below.
+</dd>
+
+<dd>
+<ol class="step">
+<li>Enter a URL of Web page and click <span class="key_point">"Import"</span> button<br />
+The HTML of the Web page you entered is displayed in the area of original Web page.</li>
+<li>Set the source language and the target language, and click the <span class="key_point">"Translate"</span> button.<br />
+It might take time to finish the translation process. After translation, the translation result of the Web page  will be shown. You can display HTML tags by checking "Show HTML tag".</li>
+<li>Edit the result of the machine translation if needed.</li>
+</dl>
+
+
+<dl><dt>2. How to save/load translated Web contents</dt>
+
+<dd>
+You can save the translation result you are editing and settings on the File Sharing function. 
+</dd>
+
+<dd>
+By clicking <span class="key_point">"Save Web creation file"</span>, you can save the following information.
+<ul style="list-style-type: square">
+<li>- Source language</li>
+<li>- Target language</li>
+<li>- Original page</li>
+<li>- Translation result</li>
+<li>- Applied template</li>
+<li>- Template you are editing</li>
+</ul>
+</dd>
+
+<dd>
+You can restore the above information by clicking  <span class="key_point">"Load Web creation file"</span> and selecting the file you saved.
+</dd>
+
+<dl><dt>3. How to use templates</dt>
+
+<dd>If there are some parts of the Web page that are matched with the template, the HTML translation result of those parts will be replaced by using the template instead of the machine translation service. You can create and apply templates following the steps shown below.</dd>
+
+<ol class="step">
+<li>Click <span class="key_point">"Add template"</span> in the area of <span class="key_point">"Template"</span>.</li> 
+<li>Enter a translation of a template between the source language and the target language.</li>
+<li>Save the template on the File Sharing function from <span class="key_point">"Save template"</span> button.</dd>
+<li>Click <span class="key_point">"Apply template"</span> and select a template file to enable the templates.
+</li>
+
+<dd>
+Templates are applied on a row basis and can contain tags. Assume an HTML data in the source language is displayed as follows.
+<table  border="1" width="300" style="margin: 5px 0;">
+<tr><td>&lt;title&gt;</td></tr>
+<tr><td>Web Creation</td></tr>
+<tr><td>&lt;/title&gt;</td></tr>
+</table>
+
+The following template replace the above HTML description including tags (The fragment in a row such as "Web" cannot replaced using a template).
+
+<table  border="1" width="600" style="margin: 5px 0;">
+<tr><td>Source language</td><td>Target language</td></tr>
+<tr><td>&lt;title&gt;Web Creation&lt;/title&gt;</td><td>&lt;span&gt;Web Creation (in some other language)&lt;/span&gt;</td></tr>
+</table>
+</dd>
+
+<dd>The template saved on the File Sharing function follows the format shown below.</dd></dl>
+
+<div style="font-size: 12px; border: 1px solid gray;">
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;root app="template"&gt;
+&lt;pair&gt;
+&lt;source&gt;&lt;![CDATA[<font color="red"><i>description of the source text of the first template item</i></font>]]&gt;&lt;/source&gt;
+&lt;target&gt;&lt;![CDATA[<font color="red"><i>description of the target text of the first template item</i></font>]]&gt;&lt;/target&gt;
+&lt;/pair&gt;
+&lt;pair&gt;
+&lt;source&gt;&lt;![CDATA[<font color="red"><i>description of the source text of the second template item</i></font>]]&gt;&lt;/source&gt;
+&lt;target&gt;&lt;![CDATA[<font color="red"><i>description of the target text of the second template item</i></font>]]&gt;&lt;/target&gt;
+&lt;/pair&gt;
+...
+&lt;/root&gt;
+</pre>
+</div>
+<div id="footer_inner">
+<address>
+                Copyright (C) 2009-2010 Language Grid Project, NICT. All rights reserved.　
+                </address>
+            </div>
+</body>
+</html>

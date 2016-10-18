@@ -1,0 +1,186 @@
+@CHARSET "UTF-8";
+
+/* ------------------------------------------------------------------------- */
+/* 全体レイアウト */
+
+element.style  {
+	float:left;
+}
+.h-pagetitle {
+	border-left:8px solid #0362AF;
+	font-size:140%;
+	padding-left:8px;
+}
+
+/* ヘッダ(仮) */
+div#tbx-header {
+	width: 99%;
+	height: 64px;
+	border:0px solid #000;
+	margin-bottom: 8px;
+	background-color: #ddd;
+	background-position:-28px -24px;
+}
+
+/* 本体部分 */
+div#tbx-body {
+	clear:both;
+	width:98%;
+	margin:auto;
+}
+
+/* フッタ(仮) */
+div#tbx-footer {
+	clear:both;
+	width:980px;
+	margin:auto;
+	background-color: #ddd;
+	text-align:center;
+	font-size: 80%;
+	margin-top: 24px;
+}
+
+/* --------------------------------------- */
+/* テーブル・リスト */
+
+/* テーブルヘッダ部分 */
+thead.table-sortable-head th {
+	background:url(../images/bg/bg_table_header.jpg) repeat-x;
+	background-position:top;
+	background-color:#d5f1ff;
+	padding: 4px;
+	padding-right: 8px;
+	text-align:left;
+	font-size:95%;
+}
+
+/* 行・奇数偶数色分け */
+tr.odd {
+	background-color:#fff;
+}
+tr.even {
+	background-color:#f3f3f3;
+}
+
+/* 行・ロールオーバ */
+tbody.hover-on tr:hover {
+	background-color:#ffffce;
+}
+
+/* セル */
+tbody td {
+	padding:2px;
+	padding-right: 8px;
+	border: 0px;
+}
+
+/* セル下線付き */
+tbody td.cell-underlined {
+	border-bottom:1px solid #ddd;
+}
+
+/* セル上線付き */
+tbody td.cell-toplined {
+	border-top:1px solid #ddd;
+}
+
+/* セル編集可能 */
+td.cell-editable:hover {
+	background-color:#ffffce;
+	background-image:url(../images/icon/icon_edit.gif);
+	background-repeat:no-repeat;
+	background-position:right bottom;
+	cursor:pointer;
+}
+
+/* セル選択状態 */
+td.cell-selected {
+	background-color:#cedeff;
+}
+
+/* テーブルフッタ */
+tfoot td {
+	background-color:#d5f1ff;
+	padding: 4px;
+	padding-right: 8px;
+	text-align:left;
+	font-size:95%;
+}
+
+/* テーブルのテキストの左寄せ */
+td.collect-left {
+	text-align:left;
+
+}
+
+/* ---------------------------- */
+
+/* ページリンク */
+a.lnk-detail {
+	background:url(../images/icon/icon_arrow_mini.gif) no-repeat;
+	background-position:0px 8px;
+	padding-left: 16px;
+}
+
+/* ページの先頭へ */
+a.lnk-return2top {
+	margin-top:4px;
+	background:url(../images/icon/icon_pagetop.gif) no-repeat;
+	background-position:0px 0px;
+	padding-left: 20px;
+}
+
+/*---------------------------------------------------------------------------------------*/
+/* Global な Button */
+/*---------------------------------------------------------------------------------------*/
+
+.stf-button {
+	background: #DEE2E5 url(../img/btn/btn_bg.png) repeat-x left top;
+	border: 1px solid #ccc;
+	color:#06f;
+	font-size: 90%;
+	font-weight: normal;
+	margin-right: 8px;
+	padding:2px 8px;
+	cursor: pointer;
+}
+
+.stf-button:hover {
+	background-image:url(../img/btn/btn_bg_hover.png);
+	border:1px solid #999999;
+}
+
+/* append for dictionary select 2010/2/5 */
+
+.area-fr {
+	float:right;
+}
+
+.area-fr-p4 {
+	float:right;
+	padding:4px;
+}
+
+/* popup base */
+div.area-popup {
+	border:1px solid #ddd;
+	padding:8px;
+	padding-top:0px;
+	margin:auto;
+	margin-top:100px;
+	background-color:#f1f1f1;
+}
+
+div.popup-pain {
+	margin:0px;
+	padding:8px;
+	padding-top:0px;
+	border:1px solid #ddd;
+	background-color:#fff;
+	position:relative;
+	top:-1px;
+}
+
+a.down {
+	cursor: default;
+}

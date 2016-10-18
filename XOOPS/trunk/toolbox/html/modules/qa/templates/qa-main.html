@@ -1,0 +1,135 @@
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="javascript: void(0);" id="qa-to-top">
+			<ul id="panetab1" class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$smarty.const._MI_QA}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<div id="contents_body">
+	<div id="qa-main-frame">
+		<div id="qa-resources-state">
+			<div id="qa-resources-header-panel">
+				<div class="clearfix">
+					<div class="float-left">
+						<h1><{$smarty.const._MI_QA_QA_LIST}></h1>
+						<span id="qa-resources-search-qa-button" class="qa-common-clickable">&gt; <{$smarty.const._MI_QA_SEARCH}></span>
+					</div>
+					<div class="float-right">
+						<div class="float-right2">
+							<button id="qa-resources-add-qa-button" class="qa-common-button"><span><{$smarty.const._MI_QA_ADD_QA}></span></button>
+							<button id="qa-resources-import-qa-button" class="qa-common-button"><span><{$smarty.const._MI_QA_IMPORT}></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="qa-resources-body-panel">
+				
+			</div>
+		</div>
+		<div id="qa-edit-state" style="display: none;">
+			<div id="qa-edit-header-panel" class="clearfix">
+				<span id="qa-edit-top" class="qa-common-clickable"><{$smarty.const._MI_QA_QA_LIST}></span> &gt;
+				<div class="qa-edit-title-area">
+					<h1 id="qa-edit-title"></h1>
+					<span id="qa-edit-search-qa-button" class="qa-common-clickable">&gt; <{$smarty.const._MI_QA_SEARCH}></span>
+				</div>
+			</div>
+			<div id="qa-edit-panel">
+			</div>
+		</div>
+		<div id="qa-search-state" style="display: none;">
+			<div id="qa-search-panel">
+					<div class="clearfix">
+						<h1><{$smarty.const._MI_QA_SEARCH}></h1>
+						<span id="qa-search-top" class="qa-common-clickable">&gt; <{$smarty.const._MI_QA_QA_LIST}></span>
+					</div>
+					<div id="qa-search-loading-area"></div>
+					<div id="qa-search-wrapper" style="display: none;">
+						<div id="qa-search-condition">
+							<table id="qa-search-conditions-table">
+							<tr>
+								<td width="80"><{$smarty.const._MI_QA_KEYWORD}>:</td>
+								<td>
+									<input id="qa-search-condition-keyword" type="text" size="30" value="" />
+									<span id="qa-search-condition-keyword-language-wrapper">
+										<select id="qa-search-condition-keyword-language">
+											
+										</select>
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td><{$smarty.const._MI_QA_SEARCH_CONDITION}>:</td>
+								<td>
+									<select id="qa-search-condition-matching-method">
+										<option value="partial"><{$smarty.const._MI_QA_PARTIAL}></option>
+										<option value="prefix"><{$smarty.const._MI_QA_PREFIX}></option>
+										<option value="suffix"><{$smarty.const._MI_QA_SUFFIX}></option>
+										<option value="complete"><{$smarty.const._MI_QA_COMPLETE}></option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><{$smarty.const._MI_QA_SEARCH_SCOPE}>:</td>
+								<td>
+									<label class="qa-search-condition-scope-label"><input checked="checked" name="scope" class="qa-search-condition-scope" type="radio" value="all" /> <{$smarty.const._MI_QA_ALL_RESOURCES}></label>
+									<span id="qa-search-condition-specified-qa" style="display: none;"><label class="qa-search-condition-scope-label"><input class="qa-search-condition-scope" type="radio" value="qa" name="scope" /> <span id="qa-search-condition-qa"></span></label></span>
+									<label class="qa-search-condition-scope-label"><input name="scope" class="qa-search-condition-scope" type="radio" value="others" /> <{$smarty.const._MI_QA_OTHER}></label>
+									[<span id="qa-search-condition-scope" class="qa-common-clickable qa-common-openable"><{$smarty.const._MI_QA_CONFIRM}></span>]
+									<div class="qa-search-others-area" id="qa-search-condition-scope-others" style="display: none;"></div>
+								</td>
+							</tr>
+							<tr>
+								<td><{$smarty.const._MI_QA_CATEGORY}>:</td>
+								<td>
+									<label class="qa-search-condition-category-label"><input name="category" class="qa-search-condition-category" type="radio" value="all" /> <{$smarty.const._MI_QA_ALL_CATEGORIES}></label>
+									<label class="qa-search-condition-category-label"><input name="category" class="qa-search-condition-category" type="radio" value="others" /> <{$smarty.const._MI_QA_OTHER}></label>
+									[<span id="qa-search-condition-category" class="qa-common-clickable qa-common-openable"><{$smarty.const._MI_QA_CONFIRM}></span>]
+									<div class="qa-search-others-area" id="qa-search-condition-category-others" style="display: none;"></div>
+								</td>
+							</tr>
+							<tr>
+								<td><{$smarty.const._MI_QA_LANGUAGE}>:</td>
+								<td>
+									<label class="qa-search-condition-language-label"><input name="language" class="qa-search-condition-language" type="radio" value="all" /> <{$smarty.const._MI_QA_ALL_LANGUAGES}></label>
+									<label class="qa-search-condition-language-label"><input name="language" class="qa-search-condition-language" type="radio" value="others" /> <{$smarty.const._MI_QA_OTHER}></label>
+									[<span id="qa-search-condition-language" class="qa-common-clickable qa-common-openable"><{$smarty.const._MI_QA_CONFIRM}></span>]
+									<div class="qa-search-others-area" id="qa-search-condition-language-others" style="display: none;"></div>
+								</td>
+							</tr>
+							<tr>
+								<td><{$smarty.const._MI_QA_SORT}>:</td>
+								<td>
+									<label class="qa-search-condition-order-label"><input name="order" class="qa-search-condition-order" type="radio" value="update" /> <{$smarty.const._MI_QA_SEARCH_ORDER_UPDATE_DATE}></label>
+									<label class="qa-search-condition-order-label"><input name="order" class="qa-search-condition-order" type="radio" value="alphabet" /> <{$smarty.const._MI_QA_SEARCH_ORDER_ALPHABET}></label>
+									<span id="qa-search-condition-order-language-wrapper">
+										<select id="qa-search-condition-order-language">
+											
+										</select>
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td> </td>
+								<td>
+									<button id="qa-search-button">
+										<span><{$smarty.const._MI_QA_SEARCH}></span>
+									</button>
+									<span id="qa-search-status-area"></span>
+								</td>
+							</tr>
+							</table>
+						</div>
+						<div id="qa-search-condition-clear-area" style="display: none;"><span id="qa-search-result-number"></span> [<span id="qa-search-condition-clear-button" class="qa-common-clickable"><{$smarty.const._MI_QA_CLEAR_SEARCH_RESULTS}></span>]</span></div>
+						<div id="qa-search-records-panel">
+						</div>
+						<a class="qa-common-return2top" href="#"><{$smarty.const._MI_QA_RETURN_TO_TOP}></a>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

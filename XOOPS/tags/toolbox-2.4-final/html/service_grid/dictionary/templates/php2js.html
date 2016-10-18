@@ -1,0 +1,37 @@
+<?php $tpl = $this->assign; ?>
+<script language="javascript" type="text/javascript">
+<!--
+var Const = {
+	Message : {
+		'_MI_DICTIONARY_ERROR_SELECT_AT_LEAST_TWO_LANGUAGES' : "<?php echo wfMsg('lg:At_least_two_languages_are_required_in_the_dictionary.'); ?>",
+		'_MI_DICTIONARY_NO_SAVE_MOVE': "<?php echo wfMsg('lg:The_dictionary_was_not_saved_after_the_last_change.'); ?>",
+		'ErrorNoMoreSmallFont': '<?php echo wfMsg('lg:The_font_size_cannot_be_reduced_anymore.'); ?>',
+		'ErrorNoMoreSmallTextarea': '<?php echo wfMsg('lg:The_size_of_text_area_cannot_be_reduced_anymore.'); ?>',
+		'LicenseInformation': '<?php echo wfMsg('lg:License_Information'); ?>',
+		'ServiceName': '<?php echo wfMsg('lg:Service_Name'); ?>',
+		'Copyright': '<?php echo wfMsg('lg:Copyright'); ?>',
+		'Second': '<?php echo wfMsg('lg:%d_Sec.'); ?>',
+		'Translate': '<?php echo wfMsg('lg:Translate'); ?>',
+		'Stop': '<?php echo wfMsg('lg:Stop'); ?>',
+		'Import': '<?php echo wfMsg('lg:Import'); ?>',
+		'ImportDictionary': '<?php echo wfMsg('lg:Import_Dictionary'); ?>',
+		'Cancel': '<?php echo wfMsg('lg:Cancel'); ?>',
+		'Title': '<?php echo wfMsg('lg:Title'); ?>',
+		'NowImporting': '<?php echo wfMsg('lg:Now_Importing...'); ?>',
+		'Delete': '<?php echo wfMsg('lg:Delete'); ?>'
+	},
+
+	URL : {
+		UpLoad : '<?php echo $tpl->uploadurl; ?>'
+	},
+
+	Wiki: {
+		TitleDBKey: '<?php echo $tpl->titledbkey; ?>',
+		Title: '<?php echo $tpl->pageTitle; ?>'
+	}
+};
+
+var DictionaryLanguages = <?php echo json_encode(array_keys($tpl->language_array)); ?>
+
+-->
+</script>

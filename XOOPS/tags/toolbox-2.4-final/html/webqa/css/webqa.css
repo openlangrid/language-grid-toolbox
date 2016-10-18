@@ -1,0 +1,343 @@
+@charset "utf-8";
+
+/**
+ * Common
+ */
+#webqa {
+	padding: 0 10px;
+}
+#webqa h1 {
+	border-left: 7px solid #0667B4;
+	color: #444444;
+	font-size: 17px;
+	margin: 10px 0;
+	padding: 3px 10px;
+}
+
+/**
+ * Common Class
+ */
+ .common_button,  .common_blue_button,  .common_liquid_blue_button,  .common_gray_button , .common_disable_button {
+	font-family:arial,Tahoma,helvetica,clean,verdana,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",Osaka,"ＭＳ Ｐゴシック","MS PGothic",sans-serif;
+	padding: 2px 0;
+	cursor: pointer;
+	font-size:100%;
+	font-weight: normal;
+	line-height:120%;
+	padding: 4px 0;
+	width: 110px;
+}
+ .common_blue_button,  .common_liquid_blue_button {
+	border: 1px solid #bbb;
+	color:#fff;
+	background: #dee2e5 url(../img/button/btn_bg_s.png) repeat-x left top;
+}
+ .common_blue_button:hover,  .common_liquid_blue_button:hover {
+	background-image:url(../img/button/btn_bg_s_hover.png);
+}
+ .common_liquid_blue_button {
+	width: auto;
+	padding: 4px 10px;
+}
+ .common_gray_button {
+	border: 1px solid #ccc;
+	color:#06f;
+	background: #dee2e5 url(../img/button/btn_bg.png) repeat-x left top;
+}
+ .common_gray_button:hover {
+	background-image:url(../img/button/btn_bg_hover.png);
+	border: 1px solid #999;
+}
+
+ .common_disable_button {
+	background: transparent url(../img/button/btn_gray02.jpg) repeat-x scroll 0 0 !important;
+	border: 1px solid #b0b0b0 !important;
+	color: #000 !important;
+	cursor: default !important;
+}
+ .common_disable_button:hover {
+	background: transparent url(../img/button/btn_gray02_o.jpg) repeat-x scroll 0 0 !important;
+	border: 1px solid #999;
+}
+
+
+
+
+#webqa .common_input {
+	padding: 5px 0;
+	margin: 0 4px 0 0;
+	vertical-align: top;
+}
+/* for IE8 */
+html>/**/body #webqa .common_input {  
+	padding /*\**/: 3px 0\9;  
+}  
+#webqa .clear {
+	clear: both;
+}
+
+#webqa .borderbox {
+	margin: 1px;
+	padding: 1px;
+	display: block;
+}
+.how_to_use_box {
+	float: right;
+/*
+	position: relative;
+	top: 10px;
+	left: -20px;
+*/
+	margin: 10px 20px 0 0;
+	height: 20px;
+}
+
+/**
+ * add qa table
+ */
+.add_qa_table {
+	width: 600px;
+}
+.add_qa_table th, .add_qa_table td  {
+	padding: 5px;
+	border: 1px solid #ccc;
+}
+.add_qa_table th {
+	width: 150px;
+	background: #efefef;
+}
+.add_qa_table select {
+	min-width: 200px;
+}
+.add_qa_table input {
+}
+.add_qa_table textarea {
+}
+.button_area {
+	margin: 20px 0 20px 175px;
+}
+.button_area button {
+	margin: 0 15px 0 0;
+}
+.qa_button_area {
+	margin: 20px 0;
+}
+
+#webqa #input_wrapper .box1 {
+	text-align: right;
+}
+#webqa #input_wrapper .box1_title {
+	float: left;
+}
+#webqa #input_wrapper .box2 {
+	text-align: left;
+	margin: 15px 0;
+}
+
+#search_form {
+	float: left;
+}
+#new_qa_link {
+	float:right;
+}
+
+
+#webqa #result_message {
+	-moz-border-radius-bottomleft:4px;
+	-moz-border-radius-bottomright:4px;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;
+	background-color:#ff9;
+	border:1px solid #fc0;
+	clear:both;
+	font-size:90%;
+	font-weight:bold;
+	margin: 20px 4px;
+	padding:4px 14px;
+	text-align: left;
+}
+#webqa #result_note_for_guest {
+	color: red;
+	text-align: left;
+}
+#webqa #result_wrapper {
+	text-align: left;
+	min-height: 300px;
+	margin: 20px 0;
+}
+#webqa #result_wrapper ul li {
+	padding: 5px 5px 5px 0;
+	border-bottom: 1px solid #dddddd;
+}
+#webqa #result_wrapper .title h3{
+	font-size: 14px;
+}
+#webqa #result_wrapper .posted {
+	float: right;
+}
+
+#webqa #result_wrapper .posted .qinfo {
+	margin-left: 10px;
+}
+
+#webqa #result_wrapper p.question {
+	margin-bottom: 0.3em;
+}
+
+#webqa #wrapper {
+	margin: 10px;
+}
+#webqa #wrapper .questionbox {
+	border: 1px solid #cccccc;
+}
+#webqa #wrapper .questionbox .title {
+	border-bottom: 1px solid #cccccc;
+	background-color: #87CEFA;
+	padding: 4px;
+}
+#webqa #wrapper .questionbox .title h3 {
+	float: left;
+	font-size: 104%;
+}
+#webqa #wrapper .title .date {
+	float: right;
+}
+
+#webqa #wrapper .title .date .qainfo {
+	margin-left: 10px;
+}
+
+#webqa #wrapper .questionbox p {
+	text-align: left;
+	margin-bottom: 0.2em;
+	padding: 2px;
+}
+
+#webqa #wrapper .qaspace {
+	clear: both;
+	height: 5px;
+	border-bottom: 1px solid #cccccc;
+}
+
+#webqa #wrapper .answerbox {
+	border: 1px solid #cccccc;
+	border-top: none;
+	margin: 0px;
+	padding: 0px;
+}
+#webqa #wrapper .answerbox .title {
+	border-bottom: 1px solid #cccccc;
+	background-color: #FFE4B5;
+	padding: 4px;
+}
+#webqa #wrapper .answerbox .title h3 {
+	float: left;
+	font-size: 104%;
+}
+#webqa #wrapper .answerbox p {
+	text-align: left;
+	margin-bottom: 0.2em;
+	padding: 2px;
+}
+#webqa #wrapper .no_answer {
+	margin: 20px 0;
+	text-align: left;
+}
+
+#webqa #wrapper .totop {
+	float: left;
+}
+
+#webqa #contents_wrapper {
+	text-align: left;
+	padding: 10px;
+}
+#webqa #contents_wrapper table tr td {
+	padding-bottom: 2px;
+}
+#webqa #contents_wrapper .buttons {
+	text-align: center;
+}
+
+#webqa #contents_wrapper {
+	text-align: left;
+	padding: 10px;
+}
+#webqa #contents_wrapper table tr td {
+	padding-bottom: 2px;
+}
+#webqa #contents_wrapper .buttons {
+	text-align: center;
+}
+#webqa #contents_wrapper .input_value {
+	margin: 2px;
+}
+#webqa #contents_wrapper .textarea_value {
+	/*width: 419px;
+	max-height: 190px;
+	overflow-y: auto;*/
+}
+
+#webqa #error_message_wrapper {
+	text-align: left;
+	color: #ff0000;
+}
+#webqa #error_message_wrapper ul {
+	margin-left: 20px;
+}
+#webqa #error_message_wrapper ul li {
+}
+#webqa #pager_wrapper {
+	text-align: center;
+	margin: 20px 0;
+}
+
+#how-to-use-button {
+    display:block;
+    background:url(../img/btn_blue01.jpg) repeat-x;
+/*  clear: both; */
+    float: right;
+    position: relative;
+/*  top: -30px; */
+/*  margin-bottom: -30px; */
+/*  left: -10px;*/
+    cursor: pointer;
+    color: white;
+    border:1px solid #1C71A2;
+    text-decoration:none;
+    padding: 4px 10px;
+    margin: 2px 10px 2px 10px;
+}
+#how-to-use-button:hover {
+	background:url(../img/btn_blue01_o.jpg) repeat-x;
+}
+
+.warning-message {
+	color: red;
+	font-weight: bold;
+	text-align: left;
+}
+
+.list_result_message {
+	margin: 5px;
+	text-align: left;
+}
+
+.category-area {
+	text-align: left;
+}
+
+#catArea {
+	border: 1px solid #ccc;
+	margin: 3px 0 3px 40px;
+	padding: 5px;	
+}
+
+#top div#head {
+	display:block;
+	width:100%;
+	border-top:4px solid #003B70;
+	height:110px;
+	background:url(../img/header.jpg) repeat-x;
+	float: left;
+}

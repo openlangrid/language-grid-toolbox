@@ -1,0 +1,124 @@
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="#">
+			<ul class="tab_on" id="ue_tab_1">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$smarty.const._MD_USER_LANG_PROFILE}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<div id="contents_body">
+		<{*
+		<{if $user_ownpage == true && $enableSelfDelete == true && $xoops_isadmin == false}>
+			<div style="text-align:right;">
+				<a href="<{$xoops_url}>/user.php?op=delete"><{$smarty.const._MD_USER_LANG_DELACCOUNT}></a>
+			</div>
+		<{elseif $xoops_isadmin == true}>
+		*}>
+		<{*
+		<{if $xoops_isadmin == true}>
+			<div style="text-align:right;">
+				<a href="<{$xoops_url}>/edituser.php?uid=<{$thisUser->getShow('uid')}>"><{$smarty.const._MD_USER_LANG_EDITPROFILE}></a> -
+				<a href="<{$xoops_url}>/edituser.php?op=avatarform&amp;uid=<{$thisUser->getShow('uid')}>"><{$smarty.const._MD_USER_LANG_AVATAR_EDIT}></a> -
+				<a href="<{$xoops_url}>/modules/user/admin/index.php?action=UserDelete&amp;uid=<{$thisUser->getShow('uid')}>"><{$smarty.const._MD_USER_LANG_DELACCOUNT}></a>
+			</div>
+		<{/if}>
+		*}>
+		<div id="profile_inner">
+			<div id="all_about_user">
+				<h2 style="float:left;"><{$thisUser->getShow('uname')}></h2>
+				<span style="font-weight:bold;font-size:110%;margin-left:40px;">
+					(<{$smarty.const._MD_USER_LANG_LAST_LOGIN}> <{$thisUser->get('last_login')|xoops_formattimestamp:l}>)
+				</span>
+				<div class="list_table02">
+					<table style="width: 440px !important;" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="list_line03"><{$smarty.const._MD_USER_LANG_AVATAR}></td>
+							<td align="center">
+								<{if $thisUser->get('user_avatar') != "blank.gif" }>
+									<img src="<{$smarty.const.XOOPS_UPLOAD_URL}>/<{$thisUser->getShow('user_avatar')}>" alt="Avatar" title="Avatar" />
+								<{else}>
+									<img src="<{$smarty.const.XOOPS_URL}>/modules/user/images/no-image.jpg" width="80" height="80" alt="No Avatar" title="No Avatar" />
+								<{/if}>
+								<{if $user_ownpage == true}>
+									<a style="display: block; width: 100px;" href="<{$xoops_url}>/edituser.php?op=avatarform&amp;uid=<{$thisUser->getShow('uid')}>">
+										<div class="btn_blue01">
+											<span><{$smarty.const._MD_USER_LANG_AVATAR_CHANGE}></span>
+										</div>
+									</a>
+								<{/if}>
+							</td>
+						</tr>
+						<tr>
+							<td class="list_line03" width="55" ><{$smarty.const._MD_USER_LANG_USER_NAME}></td>
+							<td><{$thisUser->getShow('name')}></td>
+						</tr>
+						<{if $thisUser->get('user_viewemail') == 1 || $user_ownpage == true || $xoops_isadmin == true }>
+							<tr>
+								<td class="list_line03"><{$smarty.const._MD_USER_LANG_EMAIL}></td>
+								<td><{mailto address=$thisUser->get('email') encode="javascript"}></td>
+							</tr>
+						<{/if}>
+						<{*
+							<tr>
+								<td class="list_line03"><{$smarty.const._MD_USER_LANG_DISPLAY_LANGUAGE}></td>
+								<td><{$display_lang|capitalize|escape}></td>
+							</tr>
+						*}>
+
+		<{section name=tc loop=$title}>
+						<tr>
+							<td class="list_line03"><{$title[tc]|escape}></td>
+							<td><{$data[tc]|escape}></td>
+						</tr>
+		<{/section}>
+
+			<{foreach item=def from=$defArr}>
+			<tr>
+			  <td class="list_line03"><{$def->getShow('label')}></td>
+			  <td>
+			  	<{assign var="defkey" value=$def->getShow('field_name')}>
+			    <{$profile->showField($defkey)}>
+			  </td>
+			</tr>
+			<{/foreach}>
+
+
+					</table>
+
+					<{if $user_ownpage == true}>
+						<div class="btnset_profile">
+							<div class="profile_btn">
+								<a href="<{$xoops_url}>/edituser.php?uid=<{$thisUser->getShow('uid')}>">
+									<span><{$smarty.const._MD_USER_LANG_EDITPROFILE}></span>
+								</a>
+							</div>
+							<div class="profile_btn">
+								<a href="<{$xoops_url}>/edituser.php?op=changepass&amp;uid=<{$thisUser->getShow('uid')}>">
+									<span><{$smarty.const._MD_USER_LANG_CHANGE_PASS}></span>
+								</a>
+							</div>
+						</div>
+					<{/if}>
+				</div>
+			</div>
+			<{*
+			<br style="clear: both;">
+			<div id="statistics">
+				<h2><{$smarty.const._MD_USER_LANG_STATISTICS}></h2>
+				<table width="430px" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<th><{$smarty.const._MD_USER_LANG_USER_REGDATE}></th>
+						<td><{$thisUser->get('user_regdate')|xoops_formattimestamp:l}></td>
+					</tr>
+					<tr>
+						<th><{$smarty.const._MD_USER_LANG_LAST_LOGIN}></th>
+						<td><{$thisUser->get('last_login')|xoops_formattimestamp:l}></td>
+					</tr>
+				</table>
+			</div>
+			*}>
+		</div>
+</div>

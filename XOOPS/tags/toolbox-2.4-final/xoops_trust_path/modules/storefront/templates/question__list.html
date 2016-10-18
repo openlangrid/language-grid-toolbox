@@ -1,0 +1,84 @@
+<{if $myPager|@count>0}>
+  <{foreach item=myPage from=$myPager name=pager}>
+    <div id="<{$mod_url}>/question/?action=_list&resourceName=<{$resourceName}>&caId=<{$caId}>&page=<{$smarty.foreach.pager.iteration}>&keyWord=<{$keyWord|escape:'url'}>&sort=<{$sort}>" <{if $smarty.foreach.pager.iteration != $page}> style="display: none;" <{/if}> >
+      <ul>
+        <{foreach item=values from=$myPage}>
+          <li>
+            <{if $values->hasAnswer()}>
+              <{assign var="url" value=$mod_url|cat:"/answer/?action=show&resourceName="|cat:$resourceName|cat:"&questionId="|cat:$values->getId()}>
+              <{assign var="class" value=""}>
+            <{else}>
+              <{assign var="url" value="javascript:;"}>
+              <{assign var="class" value="nonActive"}>
+            <{/if}>
+            <a href="<{$url}>" class="CategoryButton <{$class}>">
+              <span class="main"><{$values->getMainExpression()|escape}></span>
+              <span class="sub"><{$values->getSubExpression()|escape}></span>
+            </a>
+          </li>
+        <{/foreach}>
+      </ul>
+      <div id="PageSwitch" align="center">
+        <div id="orderLinks">
+          <{if $sort == "desc"}>
+            <a class="pageLink GlobalButton" href="<{$mod_url}>/question/?action=_list&resourceName=<{$resourceName}>&caId=<{$caId}>&page=<{$smarty.foreach.pager.iteration}>&keyWord=<{$keyWord|escape:'url'}>&sort=asec">
+              <span class="left"> </span>
+              <span class="center">
+                <span class="main"><{$smarty.const.STF_LABEL_TIMESORT_CANCEL}></span>
+                <span class="sub"></span>
+              </span>
+              <span class="right"> </span>
+            </a>
+          <{else}>
+            <a class="pageLink GlobalButton" href="<{$mod_url}>/question/?action=_list&resourceName=<{$resourceName}>&caId=<{$caId}>&page=<{$smarty.foreach.pager.iteration}>&keyWord=<{$keyWord|escape:'url'}>&sort=desc">
+              <span class="left"> </span>
+              <span class="center">
+                <span class="main"><{$smarty.const.STF_LABEL_TIMESORT}></span>
+                <span class= "sub"></span>
+              </span>
+              <span class="right"> </span>
+            </a>
+          <{/if}>
+        </div>
+
+        <table>
+          <tr>
+            <td>
+              <{if ! $smarty.foreach.pager.first }>
+                <a id="PagePrevButton" class="pageLink" href="<{$mod_url}>/question/?action=_list&resourceName=<{$resourceName}>&caId=<{$caId}>&page=<{$smarty.foreach.pager.iteration-1}>&keyWord=<{$keyWord|escape:'url'}>&sort=<{$sort}>"> </a>
+              <{else}>
+                <a id="PagePrevButton" class="down" href="javascript:;"> </a>
+              <{/if}>
+            </td>
+            <td id="dispPage" class="PageCount"><{$smarty.foreach.pager.iteration}>/<{$myPager|@count + 1}></td>
+            <td>
+              <{if ! $smarty.foreach.pager.last }>
+                <a id="PageNextButton" class="pageLink" href="<{$mod_url}>/question/?action=_list&resourceName=<{$resourceName}>&caId=<{$caId}>&page=<{$smarty.foreach.pager.iteration+1}>&keyWord=<{$keyWord|escape:'url'}>&sort=<{$sort}>"> </a>
+              <{else}>
+                <a id="PageNextButton" class="down" href="javascript:;"> </a>
+              <{/if}>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <{/foreach}>
+<{else}>
+  <div id="<{$mod_url}>/question/?action=_list&resourceName=<{$resourceName}>&caId=<{$caId}>&page=0&keyWord=<{$keyWord|escape:'url'}>&sort=<{$sort}>" >
+    <ul><{$smarty.const.STF_LABEL_NOSEARCH_QUESTION}></ul>
+    
+    <div id="PageSwitch" align="center">
+      <table>
+        <tr>
+          <td>
+            <a id="PagePrevButton" class="down" href="javascript:;"> </a>
+          </td>
+          <td id="dispPage" class="PageCount">- / -</td>
+          <td>
+            <a id="PageNextButton" class="down" href="javascript:;"> </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+<{/if}>

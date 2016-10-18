@@ -1,0 +1,27 @@
+@CHARSET "utf-8";
+
+
+/* カテゴリ一覧 検索ボックス右よせ */
+.searchBox{
+
+	text-align:right;
+	padding-top:30px;
+	padding-right:50px;
+	
+}
+
+/* カテゴリ一覧 機能説明部 */
+.function_title{
+
+	float:left;
+	width:70%;
+
+}
+
+.expressionA {
+	display:block;
+}
+
+.expressionB {
+	display:none;
+}

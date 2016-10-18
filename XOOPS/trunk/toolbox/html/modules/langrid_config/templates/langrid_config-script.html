@@ -1,0 +1,84 @@
+<!-- This line after by template/langrid_config-script.html -->
+<script><!--
+jQuery.noConflict();
+//--></script>
+<script charset="utf-8" type="text/javascript">
+<!--
+
+var Resource = <{$resource}>;
+
+var Const = {
+	Label: {
+		CombinationCheckBox: '<{$smarty.const._MD_LANGRID_BBS_STG_CONBINATION_BTN}>',
+		DeleteButton: '<{$smarty.const._MD_LANGRID_BBS_STG_DELETE_BTN}>',
+		DictionaryButton: '<{$smarty.const._MD_LANGRID_BBS_STG_DICTIONARY_BTN}>',
+		Save: '<{$smarty.const._MD_LANGRID_BBS_STG_SUBMIT_BTN}>',
+		AddPath: '<{$smarty.const._MD_LANGRID_BBS_STG_ADD_PATH_BTN}>',
+		Default: '<{$smarty.const._MD_LANGRID_SETTING_DEFAULT_DICTIONARY}>',
+		Custom: '<{$smarty.const._MD_LANGRID_SETTING_CUSTOM_DICTIONARY}>',
+		Advanced: '<{$smarty.const._MD_LANGRID_SETTING_ADVANCED}>',
+		ViewDefaultDict: '<{$smarty.const._MD_LANGRID_SETTING_VIEW_DEFAULT_DICT}>',
+		CloseBtn: '<{$smarty.const._MD_LANGRID_SETTING_CLOSE_BUTTON}>',
+		FilterFrom: '<{$smarty.const._MD_LANGRID_SETTING_FILTER_FROM}>',
+		FilterTo: '<{$smarty.const._MD_LANGRID_SETTING_FILTER_TO}>',
+		Matches: '<{$smarty.const._MD_LANGRID_SETTING_MATCHES}>',
+		EditDefaultDict: '<{$smarty.const._MD_LANGRID_SETTING_EDIT_DEFAULT_DICT}>',
+		ReturnTop: '<{$smarty.const._MD_LANGRID_SETTING_RETURN_TOP}>',
+		DictSelect: '<{$smarty.const._MD_LANGRID_SETTING_DICT_SELECT}>',
+		DictNoSelect: '<{$smarty.const._MD_LANGRID_SETTING_DICT_NO_SELECT}>',
+		FlterButton: '<{$smarty.const._MD_LANGRID_SETTING_FILTER_BTN}>',
+		DispAllPath: '<{$smarty.const._MD_LANGRID_SETTING_DISPLAY_ALL_PATH}>',
+		AddButton: '<{$smarty.const._MD_LANGRID_SETTING_ADD_BUTTON}>'
+	},
+	Message: {
+		SaveOk:'<{$smarty.const._MD_LANGRID_STG_MSG1}>',
+		SaveBBSOk:'<{$smarty.const._MD_LANGRID_STG_MSG2}>',
+		ConfirmDeleteBBS: '<{$smarty.const._MD_LANGRID_STG_MSG3}>',
+		NoSelectedTranslator: '<{$smarty.const._MD_LANGRID_STG_ERR_MSG1}>',
+		NoSelectedLanguages: '<{$smarty.const._MD_LANGRID_STG_ERR_MSG2}>',
+		SaveOnError1: '<{$smarty.const._MD_LANGRID_STG_ERR_MSG3}>',
+		SaveOnError2: '<{$smarty.const._MD_LANGRID_STG_ERR_MSG4}>',
+		AddedMessage: '<{$smarty.const._MD_LANGRID_STG_ADDED_MESSAGE}>',
+		SavedMessage: '<{$smarty.const._MD_LANGRID_STG_SAVED_MESSAGE}>',
+		CancelConfirm: '<{$smarty.const._MD_LANGRID_CONFIRM_CANCEL}>',
+		NoSelectedDict: '<{$smarty.const._MD_LANGRID_DICT_POP_MSG_NO_DICT}>',
+		NoSelectedLocalDict: '<{$smarty.const._MD_LANGRID_DICT_POP_MSG_NO_IMP_DICT}>',
+		NoSelectedUserDict: '<{$smarty.const._MD_LANGRID_DICT_POP_MSG_NO_COM_DICT}>',
+		NoDictionaryLocal: '<{$smarty.const._MD_LANGRID_DICT_MSG_NO_DICTIONARY_LOCAL}>',
+		NoDictionaryTemporal: '<{$smarty.const._MD_LANGRID_DICT_MSG_NO_DICTIONARY_TEMPORAL}>',
+		OverMaxDictCount: "<{$smarty.const._MD_LANGRID_DICT_MSG_OVER_SELECT_DICTIONARY}>",
+		ParallelEBMTError: "<{$smarty.const._MI_LANGRID_CONFIG_EBMT_PARALLEL_TEXT_ERROR}>"
+	},
+	Popup: {
+		Title: '<{$smarty.const._MD_LANGRID_DICT_POP_TITLE}>',
+		Label1: '<{$smarty.const._MD_LANGRID_DICT_POP_T1}>',
+		Label2: '<{$smarty.const._MD_LANGRID_DICT_POP_T2}>',
+		Label3: '<{$smarty.const._MD_LANGRID_DICT_POP_T3}>',
+		BTN_OK: '<{$smarty.const._MD_LANGRID_DICT_POP_OK}>',
+		BTN_CANCEL: '<{$smarty.const._MD_LANGRID_DICT_POP_CANCEL}>',
+		MA_Title: '<{$smarty.const._MD_LANGRID_DICT_POP_MORPHOLOGICAL_ANALYZER}>',
+		LoadDefault: '<{$smarty.const._MD_LANGRID_DICT_POP_LOAD_DEFAULT}>'
+	},
+	Images: {
+		DefaultDict: '<{$module_img_url}>/icon/icn_default_dictionary.gif',
+		CustomDict: '<{$module_img_url}>/icon/icn_custom_dicttionary.gif',
+		AddPath: '<{$module_img_url}>/icon/icn_add.gif',
+		SaveOn: '<{$module_img_url}>/icon/icn_save.gif',
+		SaveOff: '<{$module_img_url}>/icon/icn_save_disable.gif',
+		Cancel: '<{$module_img_url}>/icon/icn_cancel.gif',
+		Close: '<{$module_img_url}>/icon/icn_close.gif'
+	},
+	URL: {
+		TopPage: '<{$xoops_url}>'
+	},
+	DEFINE:{
+		MaxDicts: '<{$max_dict_count}>'
+	}
+};
+var NowTab = '<{$tab_page}>';
+<{if isset($INIT_DATA) }>
+	var INIT_DATA = <{$INIT_DATA}>;
+<{/if}>
+-->
+</script>
+<!-- This line upper by template/langrid_config-script.html -->

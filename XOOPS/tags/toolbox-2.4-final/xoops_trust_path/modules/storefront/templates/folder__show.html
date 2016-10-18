@@ -1,0 +1,112 @@
+
+
+<p class="area-fl">
+	<{foreach from=$current->getParents() item=dir key=index}>
+	<a href="<{$mod_url}>/folder/?action=_show&parentId=<{$dir->getId()}>" onclick="openDirectory(event, this)"><{$dir->getName()}></a>&nbsp;&gt;
+	<{/foreach}>
+	<{$current->getName()}>
+</p>
+
+<p class="area-fr-p4">
+	<a href="javascript: void(0);" onclick="openUploadDialog(<{$current->getId()}>)" class="btn-s" title="<{$smarty.const.STF_BTN_UPLOAD_FILE}>">
+		<span class="btn-new"><{$smarty.const.STF_BTN_UPLOAD_FILE}></span>
+	</a>
+</p>
+
+<br class="clear"/>
+
+<div class="fileListContainer">
+<table id="fileList" border="0" cellspacing="0" cellpadding="0" style="clear:both; width:100%; font-size:85%;">
+	<!-- ****************************************** -->
+	<thead class="table-sortable-head">
+	  <tr>
+	    <th class="case" nowrap="nowrap" style="padding-left: 0px;"><{$smarty.const.STF_LABEL_FILE_SELECT}></th>
+	    <th class="case" width="180"><{$smarty.const.STF_LABEL_FILE_NAME}></th>
+	    <th class="case"><{$smarty.const.STF_LABEL_FILE_DESCRIPTION}></th>
+	    <th class="case" nowrap="nowrap"><{$smarty.const.STF_LABEL_FILE_VIEW}></th>
+	    <th class="case" nowrap="nowrap"><{$smarty.const.STF_LABEL_FILE_EDIT}></th>
+	    <th class="case"><{$smarty.const.STF_LABEL_FILE_UPDATER}></th>
+	    <th class="case" width="130"><{$smarty.const.STF_LABEL_FILE_LATEST_UPDATE}></th>
+	    <th></th>
+	  </tr>
+	</thead>
+	<!-- ****************************************** -->
+	<tbody class="hover-on">
+	<{foreach from=$current->getChilds() item=file key=index}>
+	  <tr>
+	    <td class="cell-underlined">
+	    	<{if $file|is_a:'File'}>
+			<input type="radio" name="fileId" value="<{$file->getId()}>" id="r<{$file->getId()}>" title="<{$file->getName()}>" />
+			<{/if}>
+	    </td>
+	    <td class="cell-underlined">
+	    	<{if $file|is_a:'Folder'}>
+	    	<a href="<{$mod_url}>/folder/?action=_show&parentId=<{$file->getId()}>" onclick="openDirectory(event, this)">
+	    		<img src="<{$mod_url}>/images/icon/icon_dir.png" /> <{$file->getName()}>
+	    	</a>
+	    	<{else}>
+	    	<label for="r<{$file->getId()}>">
+	    	<img src="<{$mod_url}>/images/icon/icon_file.png" /><{$file->getName()}>
+	    	</label>
+	    	<{/if}>
+	    </td>
+	    <td class="cell-underlined"><{$file->getDescription()}></td>
+	    <td class="cell-underlined">
+	    	<{if $file->canRead()}>
+	    	<img src="<{$mod_url}>/images/icon/icon_check.png" alt="" />
+	    	<{/if}>
+	    </td>
+	    <td class="cell-underlined">
+	    	<{if $file->canWrite()}>
+	    	<img src="<{$mod_url}>/images/icon/icon_check.png" alt="" />
+	    	<{/if}>
+	    </td>
+	    <td class="cell-underlined"><{$file->getUserName()}></td>
+	    <td class="cell-underlined"><{$file->getUpdateDateAsFormatString()}></td>
+	    <td class="cell-underlined">
+	    	<{if $file|is_a:'File'}>
+	    	<a target="_blank" href="<{$xoops_url}>/modules/filesharing/?page=file_dl&lid=<{$file->getId()}>" class="btn" title="title_download"><span class="btn-download-mini"><{$smarty.const.STF_LABEL_FILE_DOWNLOAD}></span></a>
+	    	<{/if}>
+	    </td>
+	  </tr>
+	  <{/foreach}>
+	</tbody>
+</table>
+</div>
+
+<input type="hidden" value="<{$current->getId()}>" name="parentId"></input>
+
+<script type="text/javascript">
+(function(){
+	TableSort.init("fileList");
+}).defer();
+
+/*
+ * Check whether File extension is available
+ */
+function checkFileExtension(element) {
+
+	isAvailable = false;
+
+	fileName = element.title.toLocaleLowerCase();
+	availableExtensions = [".jpeg", ".jpg", ".gif", ".png", ".bmp", "tiff", ".tif"];
+	
+	availableExtensions.each(function(availEx) {
+								if (fileName.indexOf(availEx) != -1) {
+										isAvailable = true;
+								}
+							});
+
+	if (isAvailable == false) {
+		alert("<{$smarty.const.STF_LABEL_FILE_TYPE}>");
+		element.checked=false;
+	}
+}
+
+// Bind Radio Button Event Listender
+$$("input").each(function(e) {
+				if (e.name == "fileId" && e.type == "radio") {
+					Event.observe(e, "click", function() {checkFileExtension(e);});
+				}
+			});
+</script>

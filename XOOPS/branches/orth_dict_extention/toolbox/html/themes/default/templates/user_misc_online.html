@@ -1,0 +1,32 @@
+<table class="outer" width="100%" cellspacing="1">
+<caption><{$smarty.const._MD_USER_LANG_WHOSONLINE}></caption>
+  <{foreach item=obj from=$objects}>
+    <tr class="<{cycle values="odd,even"}>" valign="middle" align="center">
+      <th>
+        <{if $obj->get('online_uid')}>
+          <a href="javascript:window.opener.location='<{$xoops_url}>/userinfo.php?uid=<{$obj->getShow('online_uid')}>';window.close();"><{$obj->getShow('online_uname')}></a>
+        <{else}>
+          <{$smarty.const._MD_USER_LANG_GUEST}>
+        <{/if}>
+      </th>
+      <td>
+        <{if $obj->mModule}>
+          <{$obj->mModule->getShow('name')}>
+        <{else}>
+          ---
+        <{/if}>
+      </td>
+      <td>
+        <{if $enableViewIP}>
+          <{$obj->getShow('online_ip')}>
+        <{/if}>
+      </td>
+    </tr>
+  <{/foreach}>
+</table>
+<br />
+<div style="text-align:center;"><{xoops_pagenavi pagenavi=$pageNavi}></div>
+
+<ul class="nlm">
+  <li><a href="javascript:window.close();"><{$smarty.const._HD_CLOSE_WINDOW}></a></li>
+</ul>

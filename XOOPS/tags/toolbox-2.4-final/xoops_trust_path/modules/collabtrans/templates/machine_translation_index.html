@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<title><{$smarty.const.CT_BTN_AUTO_TRANS}></title>
+	<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/common.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/button.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<{$mod_url}>/css/translate.css" />
+	<style type="text/css">
+	#indicator {
+		padding-left: 20px;
+	}
+	</style>
+	<style type="text/css">
+	.trans-path {
+		background-color:#E5E5E5;
+		clear:both;
+		margin-bottom:4px;
+		padding:4px 4px 1px;
+	}
+	.trans-path table td {
+		vertical-align:top;
+	}
+	.lang-cell-strong {
+		font-weight:bold;
+	}
+	.lang-cell {
+		background-color:#FFFFFF;
+		display:block;
+		font-size:100%;
+		margin-bottom:2px;
+		margin-left:2px;
+		padding:1px 1px 1px 4px;
+		width:195px;
+	}
+	.allow-cell {
+		color:#999999;
+		display:block;
+		font-weight:bold;
+		margin-bottom:2px;
+		padding:1px;
+		text-align:center;
+		width:15px;
+	}
+	.service-cell {
+		background-color:#EEEEEE;
+		color:#999999;
+		display:block;
+		font-size:95%;
+		line-height:1.3;
+		margin-bottom:2px;
+		margin-left:2px;
+		padding:1px 1px 1px 4px;
+		width:195px;
+	}
+	#setDefaultIndicator {
+		position: absolute;
+		vertical-align: bottom
+	}
+	</style>
+	<style type="text/css">
+	body {
+		font-family: arial,Tahoma,helvetica,clean,verdana,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",Osaka,"ＭＳ Ｐゴシック","MS PGothic",sans-serif;
+		line-height: 160%;
+	}
+	</style>
+</head>
+<body style="background-color:#fff;">
+
+<form name="main"  method="post" action="<{$mod_url}>/dictionary/?action=_create">
+<div id="tbx-body">
+  <div class="draggable-popup-bar">
+    <div class="area-fr"><a href="javascript: window.close()" class="btn-popup-close">x</a></div>
+  </div>
+  <br class="clear" />
+  <h1 class="h-pagetitle" style="float:left;"><{$smarty.const.CT_BTN_AUTO_TRANS}></h1>
+  <br class="clear" />
+  <div style="padding-left:8px;">
+    <div class="area-fr-p8"> <{$smarty.const.CT_LABEL_SIZE_OF_CHAR}>
+      <a href="javascript: fontResizer.toSmall()" class="btn" style="margin-right:0px;"><span>A-</span></a>
+      <a href="javascript: fontResizer.toLarge()" class="btn"><span>A+</span></a> <{$smarty.const.CT_LABEL_SIZE_OF_BLOCK}>
+
+      <a href="javascript: unwidenBlock()" class="btn" style="margin-right:0px;"><span>[-]</span></a>
+      <a href="javascript: widenBlock()" class="btn"><span>[+]</span></a>
+    </div>
+    <br class="clear" />
+    <!-- *********************************************** -->
+    <table>
+      <tbody>
+        <tr>
+          <td style="vertical-align:top;">
+          	From
+         	<select name="sourceLang" id="sourceLanguagesContainer" onchange="getTargetLanguages()" style="font-weight: bold; font-size: 16px;">
+               <{include file="db:collabtrans_path__target_languages.html"}>
+            </select>
+            <textarea name="sourceText" style="width:460px; height: 200px; overflow:auto; margin-top:4px; font-size: 12px;"></textarea>
+          </td>
+          <td style="vertical-align:top;">
+          	To
+            <select name="targetLang" id="targetLanguagesContainer" style="font-weight: bold; font-size: 16px;"></select>
+			
+            <div class="area-language-auto-trans-result" style="height:200px;">
+ 				<div id="indicator" style="display: none;"><img src="<{$xoops_imageurl}>common/img/loading.gif" style="" /></div>
+ 				<div id="translateResults">
+   					<{include file="db:collabtrans_machine_translation__translate.html"}>
+   				</div>            
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align:center;">→<br />
+            <a href="javascript: translate()" class="btn-s" style="width:100px;">
+            	<span class="btn-translate"><{$smarty.const.CT_BTN_TRANSLATE}></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    
+   	<div id="indicator2" style="display: none;">
+   		<img src="<{$xoops_imageurl}>common/img/loading.gif" style="" />
+   	</div>
+   	
+    <div id="pathShowContainer">
+    </div>  
+    
+    <br class="clear" />
+  </div>
+  
+  <div class="area-fr-p4">
+    <!-- -->
+    <a href="javascript: window.close()" class="btn">
+    	<span class="btn-close"><{$smarty.const.CT_BTN_CLOSE}></span>
+    </a>
+  </div>
+  <br class="clear" />
+</div>
+</form>
+
+<script type="text/javascript" src="<{$mod_url}>/../../common/lib/prototype.js"></script>
+<script type="text/javascript" src="<{$mod_url}>/js/trans_common.js"></script>
+<script type="text/javascript">
+var MIN_BLOCK_HEIGHT = 200;
+var MAX_BLOCK_HEIGHT = 800;
+var CHANGE_VALUE = 20;
+function widenBlock() {
+	$$("textarea, .area-language-auto-trans-result").each(function(e) {
+		var value = (parseInt(e.getStyle("height")) + CHANGE_VALUE)
+		if(value < MAX_BLOCK_HEIGHT) e.setStyle({height: value + "px"});
+	});
+}
+function unwidenBlock() {
+	$$("textarea, .area-language-auto-trans-result").each(function(e) {
+		var value = (parseInt(e.getStyle("height")) - CHANGE_VALUE);
+		if(MIN_BLOCK_HEIGHT < value ) e.setStyle({height: value + "px"});
+	});
+}
+var fontResizer = new FontResizer(
+	["textarea", ".auto-trans-block p"],{	min: 10, max: 100, value: 2	}
+);
+
+
+function getTargetLanguages(selected) {
+	var sourceLang = $("sourceLanguagesContainer").getValue();
+	if(sourceLang) {
+		new Ajax.Updater(
+			$("targetLanguagesContainer"), 
+			'<{$mod_url}>/path/?action=_target_languages',
+			{	parameters: 'sourceLang=' + sourceLang, 
+				method: "get",
+				onComplete: function() {
+					if(selected) $("targetLanguagesContainer").setValue(selected);
+				}
+			}
+		);
+	}
+}
+
+function translate() {
+	$("indicator").show();
+	$("translateResults").update("");
+	var pos = fontResizer.getPosition();
+	new Ajax.Updater(
+		$("translateResults"), 
+		'<{$mod_url}>/machine_translation/?action=_translate',
+		{	parameters: $H(params()).toQueryString(), 
+			onComplete: function() {
+				$("indicator").hide();
+				$("tbx-body").down("textarea[name=sourceText]").setStyle({fontSize: "12px"});
+				fontResizer.restorePosition(pos);
+			}
+		}
+	);
+}
+
+function toggleTargetText(link) {
+	$(link).up(".auto-trans-block").select("p").each(Element.toggle);
+	replaceClassName(link, "auto-trans-title-open", "auto-trans-title-close");
+	
+}
+
+function showTranslationPath(btn, pathId) {
+	var label = $(btn).up(".auto-trans-block").down(".orderLabel").innerHTML;
+	$("indicator2").show();
+	$("pathShowContainer").update(""); 
+	new Ajax.Updater(
+		$("pathShowContainer"), 
+		'<{$mod_url}>/path/?action=_show',
+		{	parameters: 'pathId=' + pathId + '&label=' + label, 
+			onComplete: function() {
+				$("indicator2").hide();
+			}
+		}
+	);
+}
+
+function setDefault(pathId) {
+	var param = params();
+	delete param["sourceText"];
+	param["pathId"] = pathId;
+	
+	$("setDefaultIndicator").show();
+	new Ajax.Request('<{$mod_url}>/path/?action=_set_default', {
+			parameters: $H(param).toQueryString(),
+			onSuccess: function(r) {
+				var res = r.responseText.evalJSON();
+				if(res.status) {
+					var span = $("default_label").remove();
+					$("result_" + res.pathId).insert({top: span});
+				} else {
+					alert(res.message);
+				}
+			},
+			onComplete: Element.hide.curry($("setDefaultIndicator"))	
+		}
+	);
+}
+
+Event.observe(window, 'load', function() {
+	$('sourceLanguagesContainer').setValue("<{$smarty.get.sourceLang}>");
+	getTargetLanguages("<{$smarty.get.targetLang}>");
+});
+
+</script>
+</body>
+</html>

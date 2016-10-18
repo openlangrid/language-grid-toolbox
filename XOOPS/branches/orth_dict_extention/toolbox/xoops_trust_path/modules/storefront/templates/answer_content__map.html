@@ -1,0 +1,74 @@
+<!-- Google Map Content -->
+<div id="googlemap-area<{$content->getShopAnswerId()}>" style="width:100%;height:100%">&nbsp;</div>
+
+<script type="text/javascript">
+
+	//Google Map parameters
+	var centerLatLng;//ll
+  	var zoomValue;//z
+  	var mapType;//t
+
+  	var startLat;//saddr
+  	var startLng;//saddr
+  	var endLat;//daddr
+  	var endLng;//daddr
+
+  	var travelMode;//dirflg(car..d, trafic.., walk..w)
+
+  	var routeSelect;//start
+
+  	//marker position
+  	var markerLat;
+  	var markerLng;
+
+  	var map;
+  	var marker;
+  	var directionsDisplay;
+  	var directionsService;
+
+	//google.maps.event.addDomListener(window, 'load', function() {
+	googleMapInit = function() {
+
+		centerLatLng = new google.maps.LatLng(<{$content->getLatitude()}>, <{$content->getLongitude()}>);
+		zoomValue = <{$content->getZoom()}>;
+
+	  	<{if $content->getMapType() == 'm'}>
+	  	mapType = google.maps.MapTypeId.ROADMAP;//t
+	  	<{elseif $content->getMapType() == 'd'}>
+	  	mapType = google.maps.MapTypeId.SATELLITE;
+	  	<{elseif $content->getMapType() == 'h'}>
+	  	mapType = google.maps.MapTypeId.HYBRID;
+	  	<{elseif $content->getMapType() == 'p'}>
+	  	mapType = google.maps.MapTypeId.TERRAIN;
+	  	<{else}>
+	  	mapType = google.maps.MapTypeId.ROADMAP;
+	  	<{/if}>
+
+  	  	startLat = <{$content->getStartAddrLatitude()}>;
+  	  	startLng = <{$content->getStartAddrLongitude()}>;
+  	  	endLat = <{$content->getEndAddrLatitude()}>;
+  	  	endLng = <{$content->getEndAddrLongitude()}>;
+
+  	  	<{if $content->getTravelMode() == 'd'}>
+  	  	travelMode = google.maps.DirectionsTravelMode.DRIVING;
+  	  	<{elseif $content->getTravelMode() == 'w'}>
+  	  	travelMode = google.maps.DirectionsTravelMode.WALKING;
+  	  	<{else}>
+  	  	travelMode = google.maps.DirectionsTravelMode.WALKING;
+  	  	<{/if}>
+
+  	  	routeSelect = <{$content->getRouteSelect()|default:0}>;
+
+	    var mapdiv = document.getElementById("googlemap-area<{$content->getShopAnswerId()}>");
+	    var myOptions = {
+			zoom: zoomValue,
+			center: centerLatLng,
+			mapTypeId: mapType,
+			scaleControl: true
+	    };
+
+	    map = new google.maps.Map(mapdiv, myOptions);
+	};
+
+	googleMapInit();
+</script>

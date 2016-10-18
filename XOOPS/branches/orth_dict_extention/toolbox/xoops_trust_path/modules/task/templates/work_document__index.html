@@ -1,0 +1,28 @@
+
+<div style="background-color:#777; text-align: left;">
+  <div class="area-popup" style="width:900px;">
+
+  	<div class="area-fr">
+  		<a href="javascript: hideFileDialog();" class="btn-popup-close">x</a>
+  	</div>
+  	<br class="clear" />
+
+  	<strong class="h-pagetitle"><{$smarty.const._MD_TASK_SELECT_FILE}></strong>
+
+      <div class="tab-part-bg">
+  		<div id="loadFromToolbox" class="tab-pain" >
+  			<div id="folderShowContainer">
+  				<{include file="db:collabtrans_file__list.html"}>
+  			</div>
+  		</div>
+      </div>
+
+  	<div class="area-fr-p4">
+  		<a href="javascript: void(0);" onclick="load(this);" class="btn-s" style="width:100px;"><span class="btn-save"><{$smarty.const._MD_TASK_SELECT}></span></a>
+  		&nbsp;
+  		<a href="javascript: hideFileDialog();" class="btn"><span class="btn-cancel"><{$smarty.const._MD_TASK_CANCEL}></span></a>
+  	</div>
+
+  	<br class="clear" />
+  </div>
+</div>

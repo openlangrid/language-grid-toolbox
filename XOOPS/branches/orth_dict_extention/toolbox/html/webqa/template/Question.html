@@ -1,0 +1,100 @@
+
+<script type="text/javascript"><!--
+	function onchange_uselang(selObj) {
+		var categories = '';
+		$$('input[name="category[]"]').findAll(function (e) {return e.checked;})
+			.each(function (e) { categories += '&' + e.name + '=' + e.value; });
+
+		window.location.href =
+			'./?action=<{$action}>&' + selObj.name + '=' + selObj.options[selObj.selectedIndex].value
+			+ categories;
+	}
+--></script>
+<div id="webqa">
+	<div id="input_wrapper" class="borderbox clearfix">
+		<div class="box1">
+			<div class="box1_title">
+				<h1><{$smarty.const.WQA_LB_INPUT_QUESTION_POST}></h1>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<{if $error_message_list}>
+	<div id="error_message_wrapper" class="borderbox">
+		<ul>
+			<{foreach from=$error_message_list item=i}>
+				<li><{$i}></li>
+			<{/foreach}>
+		</ul>
+	</div>
+	<{/if}>
+	<div id="contents_wrapper" class="borderbox">
+	<div class="add_qa_table" style="text-align: right; padding : 6px 0;">
+		<{$smarty.const.WQA_LB_INPUT_LANGUAGE_LABEL}>
+		<select id="use_lang" name="use_lang" onchange="onchange_uselang(this)">
+		<{foreach from=$useLangs key=key item=item}>
+			<option value="<{$key}>" <{if $use_lang == $key}>selected<{/if}>><{$item}></option>
+		<{/foreach}>
+		</select>
+	</div>
+	<form name="qa_form" method="post" action="./?action=confirm">
+		<table class="add_qa_table">
+			<tr>
+				<th><label><{$smarty.const.WQA_LB_INPUT_CATEGORY}></label></th>
+				<td>
+					<{foreach from=$categoryList key=id item=i}>
+						<label style="margin-right:30px;">
+						<input type="checkbox" name="category[]"  value="<{$i.id}>" <{if is_array($form.category) && in_array($i.id, $form.category) == true}>checked<{/if}>>
+						<{foreach from=$i.name key=lang item=name}>
+							<{if $lang == $use_lang}>
+								<{if $name == ''}>
+									<{$smarty.const.WQA_LB_INPUT_CATEGORY_NO_DATA}>
+								<{else}>
+									<{$name|escape}>
+								<{/if}>
+							<{/if}>
+						<{/foreach}>
+						</label>
+					<{foreachelse}>
+						<{$smarty.const.WQA_LB_QA_NO_CATEGORIES}>
+					<{/foreach}>
+				</td>
+			</tr>
+			<{*<tr>
+				<th><label><{$smarty.const.WQA_LB_INPUT_FORM_TITLE}><span class="input_require">*</span></label></th>
+				<td>
+					<input type="text" name="title" size="60" value="<{$form.title}>">
+					<div class="input_desc"><{$smarty.const.WQA_LB_INPUT_FORM_TITLE_D}></div>
+				</td>
+			</tr>*}>
+			<tr>
+				<th><label><{$smarty.const.WQA_LB_INPUT_FORM_BODY}><span class="input_require">*</span></label></th>
+				<td>
+					<textarea name="question" rows="9" cols="50"><{$form.question}></textarea>
+					<div class="input_desc"><{$smarty.const.WQA_LB_INPUT_FORM_BODY_D}></div>
+				</td>
+			</tr>
+			</table>
+			<p>
+				<span class="input_require"><{$smarty.const.WQA_LB_INPUT_REQUIRE}></span>
+			</p>
+			<div class="button_area">
+				<button type="submit" class="common_blue_button"><{$smarty.const.WQA_LB_INPUT_FORM_SUBMIT}></button>
+				<button class="common_blue_button" onclick="on_form_cancel(); return false;"><{$smarty.const.WQA_LB_INPUT_FORM_CANCEL}></button>
+			</div>
+			<{*<{if $forum_exist == 0}>
+				<div class="warning-message">
+					<{$smarty.const.WQA_LB_QA_NO_POST_FORUM}>
+				</div>
+			<{/if}>*}>
+	</form>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+function on_form_cancel() {
+	document.location.href = './';
+}
+-->
+</script>
+

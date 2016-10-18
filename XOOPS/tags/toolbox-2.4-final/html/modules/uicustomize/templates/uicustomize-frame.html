@@ -1,0 +1,37 @@
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="./?page=text_resource" id="">
+			<ul id="panetab1" class="<{if $pageConfig.pageType == 'text_resource'}>tab_on<{else}>tab_off<{/if}>">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$smarty.const._MI_UIC_TABNAME_1}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+		<a href="./?page=menu" id="" style="display:none;">
+			<ul id="panetab2" class="<{if $pageConfig.pageType == 'menu'}>tab_on<{else}>tab_off<{/if}>">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$smarty.const._MI_UIC_TABNAME_2}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+		<a href="./?page=logo" id="" style="display:none;">
+			<ul id="panetab3" class="<{if $pageConfig.pageType == 'logo'}>tab_on<{else}>tab_off<{/if}>">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$smarty.const._MI_UIC_TABNAME_3}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+		<a href="./?page=toppage" id="" style="display:none;">
+			<ul id="panetab4" class="<{if $pageConfig.pageType == 'toppage'}>tab_on<{else}>tab_off<{/if}>">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$smarty.const._MI_UIC_TABNAME_4}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<div id="contents_body">
+	<div id="uicustomize-main-frame">
+		<{include file=$subpagetemplate}>
+	</div>
+</div>

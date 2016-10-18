@@ -1,0 +1,128 @@
+
+<div id="<{$listUrl}>&amp;page=<{$pager->getCurrentPage()}>&amp;perPage=<{$pager->getPerPage()}>&amp;orderby=<{$orderby}>">
+  <div class="notification-part" style="display:none;">
+    <{assign var=resultNum value=$pager->countAll()}>
+    <{$smarty.const.CT_LABEL_SEARCH_RESULT|sprintf:$resultNum}>
+    [<a class="clearButton pageLink" href="<{$mod_url}>/?action=_list&amp;page=1&amp;perPage=<{$pager->getPerPage()}>&amp;orderby=<{$orderby}>"><{$smarty.const._MD_TASK_CLEAR_SEARCH_CONDITION}></a>]
+  </div>
+
+  <table border="0" width="98%" cellspacing="0" cellpadding="0" summary="<{$smarty.const._MD_TASK_LIST_TITLE}>" style="clear:both;font-size:90%;">
+    <!-- ****************************************** -->
+    <thead class="table-sortable-head" style="font-size:90%;">
+      <tr>
+      <{foreach from=$titles key=key item=value}>
+      	<th nowrap="true" <{if $value.label==$smarty.const._MD_TASK_SMOOTHING || $value.label==$smarty.const._MD_TASK_CHECK}>colspan="3"<{/if}> >
+      	    <a href="<{$mod_url}>/?action=_list&amp;page=1&amp;perPage=<{$pager->getPerPage()}>&amp;orderby=<{$key|lower}> <{$value.sortOrder}>" class="perPageLink">
+      			<{$value.label}>
+      		</a>
+      		<{$value.arrow}>
+      	</th>
+      <{/foreach}>
+        <th colspan="3">&nbsp;</th>
+      </tr>
+    </thead>
+    <!-- ****************************************** -->
+    <tfoot>
+      <tr>
+        <td colspan="14">
+          <div style="float:left;">
+            <{$itemCount}>
+          </div>
+          <div style="float:left;margin-left:50px;">
+            <{foreach from=$perPages key=key item=value}>
+              <{if $key == $pager->getPerPage()}>
+                <{$value}>
+              <{else}>
+                <a href="<{$listUrl}>&amp;page=<{$pager->getCurrentPage()}>&amp;perPage=<{$key}>&amp;orderby=<{$orderby}>" class="perPageLink"><{$value}></a>
+              <{/if}>
+            <{/foreach}>
+          </div>
+          <div style="float:right;">
+            <{if $pager->getCurrentPage() > 1}><a href="<{$listUrl}>&amp;page=<{$pager->getPreviousPage()}>&amp;perPage=<{$pager->getPerPage()}>&amp;orderby=<{$orderby}>" class="pageLink"><{/if}>
+            <{$smarty.const.TR_LINK_PREV}>
+            <{if $pager->getCurrentPage() > 1}></a><{/if}>
+
+            <{section name=pageSection start=0 loop=$pager->getLastPage()}>
+              <{if $smarty.section.pageSection.iteration == $pager->getCurrentPage()}>
+                <{$smarty.section.pageSection.iteration}>
+              <{else}>
+                <a href="<{$listUrl}>&amp;page=<{$smarty.section.pageSection.iteration}>&amp;perPage=<{$pager->getPerPage()}>&amp;orderby=<{$orderby}>" class="pageLink"><{$smarty.section.pageSection.iteration}></a>
+              <{/if}>
+            <{/section}>
+
+            <{if $pager->getCurrentPage() < $pager->getLastPage()}><a href="<{$listUrl}>&amp;page=<{$pager->getNextPage()}>&amp;perPage=<{$pager->getPerPage()}>&amp;orderby=<{$orderby}>" class="pageLink"><{/if}>
+            <{$smarty.const.TR_LINK_NEXT}>
+            <{if $pager->getCurrentPage() < $pager->getLastPage()}></a><{/if}>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- ****************************************** -->
+    <tbody class="hover-on">
+    <{foreach name=iterator from=$tasks item=task}>
+    <{assign var=history value=$task->getLatestTaskHistory()}>
+      <tr class="<{if $smarty.foreach.iterator.index % 2 == 0}>odd<{else}>even<{/if}>">
+        <td><strong><{$task->getName()|escape}></strong></td>
+        <td><{$task->getSourceLangAsString()|escape}></td>
+        <td><{$task->getTargetLangAsString()|escape}></td>
+        <td align="right"><{$history->getSmoothingAchievement()|escape}>%</td>
+        <td>
+          <{if $history->isSmoothingLimitExceeded() }>
+            <span style="color : #FF0000;">
+          <{elseif $history->isSmoothingLimitWarning() }>
+            <span style="color : #FF8C00;">
+          <{/if}>
+              <{$history->getSmoothingLimitDate()|escape}><br/>
+              <{$history->getSmoothingLimitTime()|escape}>
+          <{if $history->isSmoothingLimitExceeded() || $history->isSmoothingLimitWarning() }>
+            </span>
+          <{/if}>
+        </td>
+        <td><{$history->getSmoothingWorker()|escape}></td>
+        <td align="right"><{$history->getCheckAchievement()|escape}>%</td>
+        <td>
+          <{if $history->isCheckLimitExceeded() }>
+            <span style="color : #FF0000;">
+          <{elseif $history->isCheckLimitWarning() }>
+            <span style="color : #FF8C00;">
+          <{/if}>
+              <{$history->getCheckLimitDate()|escape}><br/>
+              <{$history->getCheckLimitTime()|escape}>
+          <{if $history->isCheckLimitExceeded() || $history->isCheckLimitWarning() }>
+            </span>
+          <{/if}>
+        </td>
+        <td><{$history->getCheckWorker()|escape}></td>
+        <td><{$task->getCreator()|escape}></td>
+        <td>
+          <{$history->getCreateDate()|escape}><br/>
+          <{$history->getCreateTime()|escape}>
+        </td>
+        <td>
+          <{if $history->hasForumId()}>
+          <a href="<{$smarty.const.XOOPS_MODULE_URL}>/communication/?forumId=<{$history->getForumId()}>" class="btn-go-communication" title="<{$smarty.const._MD_TASK_TO_TOPIC|escape}>"><img src="<{$mod_url}>/images/icon/btn_go_communication.gif"/></a>
+          <{else}>
+          <a href="<{$mod_url}>/forum/?id=<{$task->getId()}>" class="btn-go-communication" title="<{$smarty.const._MD_TASK_TO_TOPIC|escape}>"><img src="<{$mod_url}>/images/icon/btn_go_communication.gif"/></a>
+          <{/if}>
+        </td>
+        <td>
+          <{if $history->getFileId() }>
+          <a href="<{$smarty.const.XOOPS_MODULE_URL}>/collabtrans/?file_id=<{$history->getFileId()}>" class="btn-go-translation" title="<{$smarty.const._MD_TASK_TO_TRANS|escape}>"><img src="<{$mod_url}>/images/icon/btn_go_translation.gif"/></a>
+          <{else}>
+          <img src="<{$mod_url}>/images/icon/btn_go_translation_disabled.gif" alt="<{$smarty.const._MD_TASK_FILE_UNAVAILABLE}>" />
+          <{/if}>
+        </td>
+        <td>
+          <a href="#" class="btn" title="<{$smarty.const._MD_TASK_MENU}>"><span class="btn-option">▼</span></a>
+          <ul class="hover_menu" style="display: none;">
+          <{assign var=menus value=$pullDownMenus[$smarty.foreach.iterator.index]}>
+          <{foreach from=$menus item=menu}>
+            <li><{$menu}></li>
+          <{/foreach}>
+          </ul>
+        </td>
+      </tr>
+    <{/foreach}>
+    </tbody>
+  </table>
+</div>

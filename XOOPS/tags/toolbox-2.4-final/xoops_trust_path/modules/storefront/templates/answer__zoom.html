@@ -1,0 +1,109 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"	 content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all" href="../css/button.css" />
+<link rel="stylesheet" type="text/css" media="print" href="../css/print.css" />
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="<{$xoops_url}>/common/lib/prototype.js"></script>
+
+<style type="text/css">
+
+/* ----- for zoom ----------------------------*/
+body {
+	width: auto;
+}
+
+#contents-zoom-area {
+	background-color:#D0D0D0;
+	background-position:center center;
+	background-repeat:no-repeat;
+	border:1px solid #DDDDDD;
+	clear:both;
+	overflow:auto;
+	margin-top: 20px;
+	margin-left: 5px;	
+	margin-right: 5px;
+	position:relative;
+	float: left;
+}
+
+#contents-zoom-area img.preview-content {
+	margin: 16px auto auto;
+}
+#contents-zoom-area .point_marker{
+	width: 27px;
+	height: 27px;
+}
+.btn {
+	margin: 10px auto 20px;
+}
+
+.point_marker {
+	position: absolute;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	width: 27px;
+	height: 27px;
+	z-index: 95;
+}
+
+.clear {
+	clear: both;
+}
+
+</style>
+
+
+<{if $content->getContentType() == 'google_map'}>
+<style type="text/css">
+#contents-zoom-area {
+	text-align:center;
+	vertical-align:middle;
+	height:640px;
+	overflow:auto;
+	width:900px;
+}
+</style>
+<{/if}>
+
+
+</head>
+
+<body>
+
+	<h1 style="text-align: center"><{$content->getContentTitle()}></h1>
+	
+	<!-- Contents image -->
+	<div id="contents-zoom-area">
+
+    <{if $content->getContentType() == 'google_map'}>
+    <div id="map<{$content->getShopAnswerContentId()}>" class="mapBox" style="width: 100%; height: 100%;">&nbsp;</div>
+    <script type="text/javascript">
+    //<![CDATA[
+		new Ajax.Updater(
+			"map<{$content->getShopAnswerContentId()}>",
+			"<{$mod_url}>/answer_content/?action=_map&shopAnswerContentId=<{$content->getShopAnswerContentId()}>",
+			{
+				method: "get",
+				evalScripts: true
+			}
+		);
+
+	//]]>
+	</script>
+    <{else}>
+    <img src="<{$mod_url}>/answer_content/?action=image&shopAnswerContentId=<{$content->getShopAnswerContentId()}>" alt=""/>
+    <{/if}>
+    
+	</div>
+	
+	<br class="clear" />
+	<p style="text-align: center">
+		<a class="btn" href="javascript: self.close();"><{$smarty.const.STF_LABEL_CLOSE}></a>
+		<a class="btn" href="javascript: self.print();"><{$smarty.const.STF_LABEL_PRINT}></a>
+	</p>
+
+</body>
+</html>

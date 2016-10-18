@@ -1,0 +1,46 @@
+<?php
+//  ------------------------------------------------------------------------ //
+// This is a module for Language Grid Toolbox. This allows a user to
+// manage translation tasks.
+// Copyright (C) 2010  CITY OF KYOTO
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+//  ------------------------------------------------------------------------ //
+
+require '../../mainfile.php';
+require_once 'config.php';
+
+$mytrustdirname = basename(dirname(__FILE__));
+$mydirname = basename(dirname(__FILE__));
+
+// login check
+$userId = is_object(@$xoopsUser) ? $xoopsUser->getVar('uid') : 0 ;
+if (!$userId) {
+	redirect_header(XOOPS_URL.'/');
+}
+
+if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'set XOOPS_TRUST_PATH in mainfile.php' ) ;
+
+require_once dirname( __FILE__ ).'/mytrustdirname.php' ; // set $mytrustdirname
+require 'helper.php';
+require_all_classes($mytrustdirname);
+require_all_classes('collabtrans');
+
+$allow_actions = array(
+	"list", "new", "create", "delete", "_list", "update", "edit"
+);
+
+$delegator = get_delegator($allow_actions, "list");
+$delegator -> execute();

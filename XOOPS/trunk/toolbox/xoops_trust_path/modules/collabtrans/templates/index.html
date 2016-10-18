@@ -1,0 +1,1396 @@
+<style type="text/css">
+#tbx-body {
+	position: relative;
+}
+
+td .hover_menu {
+	position: absolute;
+	text-align:left;
+	padding:5px;
+	overflow:hidden;
+	border:1px;
+	border-style:solid;
+	background:white;
+	z-index:999;
+	clear: both;
+}
+	td .hover_menu a {
+		float: none;
+		width: 100px;
+		font-size: 11px;
+	}
+
+table.trans-sentence-area td p {
+	margin: 0;
+	width: 375px;
+	min-height: 15px;
+	font-size: 90%;
+	line-height: 1.6em;
+}
+table.trans-sentence-area td textarea {
+	min-height: 15px;
+	overflow: auto;
+	font-size: 12px;
+	line-height: 1.6em;
+}
+table.trans-sentence-area tr.working td.l-content textarea {
+	color: #ff6e00;
+}
+table.trans-sentence-area tr.work_out td.l-content textarea {
+	color: #a0a0a0;
+}
+table.trans-sentence-area tr.translating td {
+	background-color: #cedeff;
+}
+div#orikaeshi-area {
+	display: block;
+}
+	#dialog_loading_icon{
+		position:absolute;
+		top:180px;
+		left: 460px;
+	}
+div#history_dialog {
+	position:absolute;
+	z-index: 1000;
+	text-align: left;
+	width: 100%;
+	top: 0;
+}
+	div#history_dialog .popup-pain {
+		height: 280px;
+	}
+div#text_dialog {
+	position:absolute;
+	z-index: 1000;
+	text-align: left;
+	width: 100%;
+	top: 0;
+}
+	div#text_dialog .tab-part-bg {
+		text-align: center;
+	}
+	div#text_dialog textarea {
+		width: 580px;
+		height: 280px;
+	}
+div.processing_dialog {
+	position: absolute;
+	z-index: 800;
+	text-align: center;
+	width: 100%;
+	top: 250px;
+	margin: auto;
+}
+	div.processing_dialog span{
+		padding: 10px 20px;
+	}
+	
+#fileDialog {
+}
+
+#historyTableContainer {
+	overflow: auto;
+	overflow-x: hidden;
+	height: 200px;
+}
+
+tr.editing {
+	background-color: #FFFFCE;
+}
+</style>
+
+<div id="tbx-body">
+	<form name="main" action="<{$mod_url}>/work_document/?action=create" method="post">
+	<button id="how-to-use-button" onclick="window.open('<{$mod_url}>/how-to-use/<{$smarty.const.CT_HOW_TO_USE_LINK}>', '_blank'); return false;">
+	How to use
+	</button>
+	<br class="clear">
+
+	<h1 class="h-pagetitle" style="float:left;"><{$smarty.const.CT_LABEL_PAGE_TITLE}></h1>
+	<div class="area-fr-p8">
+		<a href="javascript: void(0);" class="btn" onclick="showLoadDialog(); return false;">
+			<span class="btn-import"><{$smarty.const.CT_BTN_OPEN_FILE}></span>
+		</a>
+	</div>
+	
+	<br class="clear" />
+  
+	<div style="border:1px solid #555; padding-left:8px;">
+		<div class="area-fr-p8">
+			<{$smarty.const.CT_LABEL_SIZE_OF_CHAR}>
+			<a href="javascript: void(0);" onclick="fontResizer.toSmall();autoFitAll(); return false;" class="btn" style="margin-right:0px;"><span>A-</span></a>
+			<a href="javascript: void(0);" onclick="fontResizer.toLarge();autoFitAll(); return false;" class="btn"><span>A+</span></a>
+			 <{$smarty.const.CT_LABEL_SIZE_OF_BLOCK}>
+			<a href="javascript: void(0)" onclick="unwidenBlock();return false;" class="btn" style="margin-right:0px;"><span>[-]</span></a>
+			<a href="javascript: void(0)" onclick="widenBlock();return false;" class="btn"><span>[+]</span></a>
+		</div>
+    	<br class="clear" />
+    	<!-- *********************************************** -->
+    
+		<table>
+		<tbody>
+        <tr>
+          <td style="vertical-align:top;"> From
+            <select name="sourceLang" style="font-weight: bold;font-size: 16px;" id="sourceLanguagesContainer" onChange="getTargetLanguages()">
+              <option value="">---<{$smarty.const.CT_LABEL_SELECT_LANGUAGE}>---</option>
+              <{include file="db:collabtrans_path__target_languages.html"}>
+            </select>
+            
+            <div class="language-bar">
+              <div style="width: 44px;float: left;text-align: right;">
+              	<input onClick="selectAll(this);" type="checkbox" />
+              </div>
+              &nbsp;&nbsp;
+              <select>
+                <option><{$smarty.const.CT_LABEL_CONTROL_FOR_SELECTED}></option>
+                <option value="remove"><{$smarty.const.CT_LABEL_OPTION_DELETE}></option>
+                <option value="translate"><{$smarty.const.CT_LABEL_OPTION_TRANSLATE}></option>
+                <option>---</option>
+                <option value="changeWorkStatusToNotWorking"><{$smarty.const.CT_LABEL_OPTION_SET_NOT_WORKING}></option>
+                <option value="changeWorkStatusToWorking"><{$smarty.const.CT_LABEL_OPTION_SET_WORKING}></option>
+                <option value="changeWorkStatusToWorkOut"><{$smarty.const.CT_LABEL_OPTION_SET_WORKED_OUT}></option>
+              </select>
+              <input type="button" value="<{$smarty.const.CT_BTN_EXECUTE}>" onclick="executeAllSource(this)" />
+            </div>
+            
+			<div class="trans-sentence-area-waku">
+				<table class="trans-sentence-area" cellspacing="0" id="sentences_source">
+                	<tbody class="hover-on"></tbody>
+              	</table>
+            </div>
+            
+          </td>
+          
+          <!-- *********************************************************************** -->
+          <td style="vertical-align:top;"> To
+            <select name="targetLang" style="font-weight: bold;font-size: 16px;" id="targetLanguagesContainer">
+            	<option value="">---<{$smarty.const.CT_LABEL_SELECT_LANGUAGE}>---</option>
+            </select>
+            
+            <div class="language-bar">
+            	<div style="width: 44px;float: left;text-align: right;">
+              		<input onclick="selectAll(this);" type="checkbox" />
+            	</div>
+              &nbsp;&nbsp;
+              <select>
+                <option><{$smarty.const.CT_LABEL_CONTROL_FOR_SELECTED}></option>
+                <option value="remove"><{$smarty.const.CT_LABEL_OPTION_DELETE}></option>
+                <option value="translate"><{$smarty.const.CT_LABEL_OPTION_BACK_TRANSLATE}></option>
+                <option>---</option>
+                <option value="changeWorkStatusToNotWorking"><{$smarty.const.CT_LABEL_OPTION_SET_NOT_WORKING}></option>
+                <option value="changeWorkStatusToWorking"><{$smarty.const.CT_LABEL_OPTION_SET_WORKING}></option>
+                <option value="changeWorkStatusToWorkOut"><{$smarty.const.CT_LABEL_OPTION_SET_WORKED_OUT}></option>
+              </select>
+              <input type="button" value="<{$smarty.const.CT_BTN_EXECUTE}>" onclick="executeAllTarget(this)" />
+            </div>
+            
+            <div class="trans-sentence-area-waku">
+				<table class="trans-sentence-area" cellspacing="0" id="sentences_target">
+                	<tbody class="hover-on"></tbody>
+              	</table>
+            </div>
+          </td>
+        </tr>
+        
+        <!-- *********************************************************************** -->
+        <tr>
+          <td style="text-align:center;" colspan="2"><img src="images/icon/icon_arrow.png" /><br />
+            <a href="javascript:void(0)" onClick="translateAllSource(this);return false;" class="btn-s translateBtn" style="width:100px;">
+            	<span class="btn-translate"><{$smarty.const.CT_BTN_TRANSLATE}></span>
+            </a>
+            <a href="javascript:void(0)" onClick="Translation.cancel();return false;" class="btn-s cancelBtn" style="width:100px; display: none;">
+            	<span><{$smarty.const.CT_BTN_CANCEL_TRANSLATE}></span>
+            </a>
+          </td>
+        </tr>
+        
+        <!-- *********************************************************************** -->
+        <tr>  
+          <td style="text-align:center; vertical-align:top;"  colspan="2"><img src="images/icon/icon_arrow2.png" /><br />
+			<a href="javascript: void(0)" class="btn-s translateBtn" style="width:100px;"  onClick="translateAllTarget(this);return false;">
+            	<span class="btn-translate"><{$smarty.const.CT_BTN_BACK_TRANSLATE}></span>
+            </a>
+            <a href="javascript: void(0)" onClick="Translation.cancel();return false;" class="btn-s cancelBtn" style="width:100px; display: none;">
+            	<span><{$smarty.const.CT_BTN_CANCEL_TRANSLATE}></span>
+            </a>
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td style="vertical-align:top;"><br />
+            <a href="javascript: void(0)" class="trans-orikaeshi-close" onClick="$('orikaeshi-area').toggle(); replaceClassName(this, 'trans-orikaeshi-close', 'trans-orikaeshi-open');autoFitAllBacktrans();autoFitAllBacktrans();return false;">
+            	<{$smarty.const.CT_LINK_BACK_TRANSLATE}>
+            </a>
+            
+            <div class="trans-sentence-area-waku" id="orikaeshi-area" style="display: none;">
+				<table class="trans-sentence-area" cellspacing="0" id="sentences_backtrans">
+                	<tbody class="hover-on"></tbody>
+				</table>
+            </div>
+          </td>
+        </tr>
+		</tbody>
+		</table>
+    
+    	<br class="clear" />
+	</div>
+  
+	<div id="histories" style="display: none;">
+	<{if $document}>
+		<{foreach from=$document->getHistories() item=history key=index}>
+		<div class="history">
+			<textarea name="history[<{$index}>][source]"> <{$history->getSource()}></textarea>
+			<textarea name="history[<{$index}>][target]"> <{$history->getTarget()}></textarea>
+			<input type="text" name="history[<{$index}>][loginId]" value="<{$history->getLoginId()}>"/>
+			<input type="text" name="history[<{$index}>][create_date]" value="<{$history->getCreateDateAsFormatString()}>"/>
+			<input type="text" name="history[<{$index}>][status_before]" value="<{$history->getStatusBefore()}>"/>
+			<input type="text" name="history[<{$index}>][status]" value="<{$history->getStatus()}>"/>
+		</div>
+		<{/foreach}>
+	<{/if}>
+	</div>
+	
+	</form>
+	
+
+	<div class="area-fl-p8">
+		<a href="javascript: void(0)" onclick="clearAll();return false;" class="btn"><span class="btn-clear"><{$smarty.const.CT_BTN_CLEAR_ALL}></span></a>
+		<{if $document && count($document->getHistories()) > 0}>
+			<a href="javascript: void(0);" onclick="showHistoryDialog(this);return false;" class="btn">
+				<span class="btn-history"><{$smarty.const.CT_BTN_SHOW_HISTORY}> (<{$document->getHistoriesCount()}>)</span>
+			</a>
+		<{else}>
+			<a href="javascript: void(0)" class="btn-disable" onclick="showHistoryDialog(this);return false;"><span class="btn-history"><{$smarty.const.CT_BTN_SHOW_HISTORY}> </span></a>
+		<{/if}>
+	</div>
+	
+	<div class="area-fr-p8">
+		<a href="javascript: void(0);" onclick="showTextDialog(this);return false;" class="btn save-btn"><span class="btn-save-tbx"><{$smarty.const.CT_BTN_DISPLAY_TEXT}></span></a>
+		<a href="javascript: void(0);" onclick="overwrite(this);return false;" class="btn overwrite-btn"><span class="btn-save-tbx"><{$smarty.const.CT_BTN_OVERWRITE}></span></a>
+		<a href="javascript: void(0);" onclick="showSaveDialog(this);return false;" class="btn save-btn"><span class="btn-save-tbx"><{$smarty.const.CT_BTN_SAVE_AT_TOOLBOX}></span></a>
+		<a href="javascript: void(0);" onclick="download(this);return false;" class="btn save-btn"><span class="btn-save-pc"><{$smarty.const.CT_BTN_SAVE_AT_LOCAL}></span></a>
+	</div>
+	
+	<br class="clear" />
+	
+	<div style="text-align:center;">
+		<a href="javascript: void(0);" onclick="openTool(this, 'dictionary');return false;" class="btn open-tool-btn"><span><{$smarty.const.CT_BTN_DICTIONARY}></span></a>
+		<a href="javascript: void(0);" onclick="openTool(this, 'parallel_text');return false;" class="btn open-tool-btn"><span><{$smarty.const.CT_BTN_PARALLEL_TEXT}></span></a>
+		<a href="javascript: void(0);" onclick="openTool(this, 'glossary');return false;" class="btn open-tool-btn"><span><{$smarty.const.CT_BTN_GLOSSARY}></span></a>
+		<a href="javascript: void(0);" onclick="openTool(this, 'machine_translation');return false;" class="btn open-tool-btn"><span><{$smarty.const.CT_BTN_AUTO_TRANS}></span></a> 
+	</div>
+	
+	
+	<div id="loading_dialog" class="processing_dialog" style="display: none;">
+		<span style='background-color: white;'><{$smarty.const.CT_LABEL_NOW_LOADING}></span>
+	</div>
+	
+	<div id="saving_dialog" class="processing_dialog" style="display: none;">
+		<span style='background-color: white;'><{$smarty.const.CT_LABEL_NOW_SAVING}></span>
+	</div>
+	
+	<{include file="db:collabtrans_file__list_client.html"}>
+	
+	<div id="history_dialog" style="display: none;"></div>
+	<div id="text_dialog" style="display: none;"></div>
+	
+	<{if $smarty.get.file_id}>
+	<input type="hidden" id="edittingFileId" value="<{$smarty.get.file_id}>">
+	<{/if}>
+</div>
+
+
+
+<div id="templates" style="display: none;">	
+	<!-- history -->
+	<div class="history">
+		<textarea name="history[#{rownum}][source]">#{source}</textarea>
+		<textarea name="history[#{rownum}][target]">#{target}</textarea>
+		<input type="text" name="history[#{rownum}][loginId]" value="<{$loginId}>"/>
+		<input type="text" name="history[#{rownum}][create_date]" value="#{create_date}"/>
+		<input type="text" name="history[#{rownum}][status_before]" value="#{status_before}"/>
+		<input type="text" name="history[#{rownum}][status]" value="#{status}"/>
+	</div>
+	<!-- /history -->
+	<!-- history table -->
+	<table>
+		<tr>
+			<td>#{loginId}</td>
+			<td>#{create_date}</td>
+			<td>#{source}</td>
+			<td>#{target}</td>
+		</tr>
+	</table>
+	<!-- history table -->
+	
+	<!-- sentence -->
+	<table class="sentences">
+		<tr class="source">
+			<td class="l-no">#{rownum}</td>
+			<td class="l-no"><input type="checkbox" /></td>
+			<td class="l-content">
+				<textarea onfocus="onEditTextStart(this)" name="sentence[rownum][source]">#{source}</textarea>
+			</td>
+			<td>
+				<a href="javascript: void(0)" onclick="toggleHoverMenu(event, this);return false;" class="btn" title="<{$smarty.const.CT_LABEL_TIP_CONTROL_FOR_LINE}>">
+					<span class="btn-option">▼</span>
+				</a>
+				<ul class="hover_menu" style="display: none;">
+					<li><a href="javascript:void(0);" onClick="divideRows(this); return false;"><{$smarty.const.CT_LINK_DIVIDE_ROW}> & <{$smarty.const.CT_LINK_TRANSLATE}></a></li>
+					<li><a href="javascript:void(0);" onClick="if(validateTargetlanguage()) Translation.reserve($(this).up('tr')); return false;"><{$smarty.const.CT_LINK_TRANSLATE}></a></li>
+					<li><a href="javascript:void(0);" onClick="combineRows(this); return false;"><{$smarty.const.CT_LINK_COMBINE_ROW}></a></li>
+					<li><a href="javascript:void(0);" onClick="removeRows(this); return false;"><{$smarty.const.CT_LINK_REMOVE_ROW}></a></li>
+					<li><a href="javascript:void(0);" onClick="insertNewRows(this); return false;"><{$smarty.const.CT_LINK_INSERT_NEW_ROW}></a></li>
+					<li>---------------------</li>
+					<li><a href="javascript:void(0);" onClick="changeWorkStatus('not_working', this); return false;"><{$smarty.const.CT_LINK_NOT_WORKING}></a></li>
+					<li><a href="javascript:void(0);" onClick="changeWorkStatus('working', this); return false;"><{$smarty.const.CT_LINK_WORKING}></a></li>
+					<li><a href="javascript:void(0);" onClick="changeWorkStatus('work_out', this); return false;"><{$smarty.const.CT_LINK_WORK_OUT}></a></li>
+				</ul>
+				<input name="sentence[rownum][work_status]" type="hidden" class="work_status" style="display:none;"  value="#{status}" />
+			</td>
+		</tr>
+		
+		<tr class="target">
+			<td class="l-no">#{rownum}</td>
+			<td class="l-no"><input type="checkbox" /></td>
+			<td class="l-content">
+				<textarea onfocus="onEditTextStart(this)" name="sentence[rownum][target]">#{source}</textarea>
+			</td>
+			<td>
+				<a href="javascript: void(0)" onclick="toggleHoverMenu(event, this);return false;" class="btn" title="<{$smarty.const.CT_LABEL_TIP_CONTROL_FOR_LINE}>">
+					<span class="btn-option">▼</span>
+				</a>
+				<ul class="hover_menu" style="display: none;">
+					<li><a href="javascript:void(0);" onClick="if(validateTargetlanguage()) Translation.reserve($(this).up('tr'));return false;"><{$smarty.const.CT_LINK_PULLDOWN_BACK_TRANSLATE}></a></li>
+					<li><a href="javascript:void(0);" onClick="combineRows(this);return false;"><{$smarty.const.CT_LINK_COMBINE_ROW}></a></li>
+					<li><a href="javascript:void(0);" onClick="removeRows(this);return false;" title=""><{$smarty.const.CT_LINK_REMOVE_ROW}></a></li>
+					<li><a href="javascript:void(0);" onClick="insertNewRows(this);return false;" title=""><{$smarty.const.CT_LINK_INSERT_NEW_ROW}></a></li>
+					<li>---------------------</li>
+					<li><a href="javascript:void(0);" onClick="changeWorkStatus('not_working', this);return false;"><{$smarty.const.CT_LINK_NOT_WORKING}></a></li>
+					<li><a href="javascript:void(0);" onClick="changeWorkStatus('working', this);return false;"><{$smarty.const.CT_LINK_WORKING}></a></li>
+					<li><a href="javascript:void(0);" onClick="changeWorkStatus('work_out', this);return false;"><{$smarty.const.CT_LINK_WORK_OUT}></a></li>
+				</ul>
+			</td>
+		</tr>
+           
+		<tr class="backtrans">
+		    <td class="l-no">#{rownum}</td>
+		    <td class="l-no"></td>
+			<td class="l-content">
+				<textarea readonly=readonly>#{source}</textarea>
+			</td>
+		</tr>
+	</table>
+	<!-- /sentence -->
+</div>
+
+
+<script type="text/javascript">
+function showLoadDialog(){
+	glayerShow();
+	openFileDialog({
+		"fileDialogURL" : "<{$mod_url}>/work_document/", 
+		"parameters" : {parentId : "<{$parentId}>"},
+		"mode": "r"});
+}
+
+function showSaveDialog(btn){
+	if($(btn).btnDisabled()) return;
+	glayerShow();
+	openFileDialog({
+		"fileDialogURL" : "<{$mod_url}>/work_document/?action=_edit", 
+		"parameters" : {parentId : "<{$parentId}>"},
+		"mode": "w"});
+}
+
+function cancelDialog() {
+	$("fileDialog").hide().update();
+	Glayer.hide("glayer");
+}
+
+function showHistoryDialog(btn){
+	if($(btn).btnDisabled()) return;
+
+	glayerShow();
+	
+	new Ajax.Updater(
+		"history_dialog", 
+		"<{$mod_url}>/history/?action=_index", {
+			method : "post",
+			evalScripts: true,
+			parameters: params(),
+			onComplete: function() {
+				$("history_dialog").show();
+				clearLoading();
+			}
+		}
+	);
+	
+	var containerWidth = $("tbx-body").getDimensions().width / 2;
+	$("history_dialog").setStyle({
+		top: document.viewport.getScrollOffsets().top+'px',
+		left: (containerWidth - 450) + 'px'
+	});
+}
+
+function hideHistoryDialog(btn){
+	Glayer.hide('glayer');
+	$("history_dialog").hide();	
+}
+
+function showTextDialog(btn) {
+	if($(btn).btnDisabled()) return;
+	
+	glayerShow();
+	
+	setSentenceIndex();
+	
+	new Ajax.Updater(
+		"text_dialog", 
+		"<{$mod_url}>/work_document/?action=_show&asText=true", {
+			method : "post",
+			evalScripts: true,
+			parameters: params(),
+			onComplete: function() {
+				$("text_dialog").show();
+				clearLoading();
+			}
+		}
+	);
+	
+	var containerWidth = $("tbx-body").getDimensions().width / 2;
+	$("text_dialog").setStyle({
+		top: document.viewport.getScrollOffsets().top+'px',
+		left: (containerWidth - 450) + 'px'
+	});
+	
+	(function(){ removeSentenceIndex();	}).delay(1);
+}
+function hideTextDialog(btn){
+	Glayer.hide('glayer');
+	$("text_dialog").hide();	
+}
+
+function showLoadingDialog() {
+	glayerShow();
+	clearLoading();
+	$("loading_dialog").show();
+}
+
+function hideLoadingDialog() {
+	Glayer.hide('glayer');
+	$("loading_dialog").hide();
+}
+function showSavingDialog() {
+	glayerShow();
+	clearLoading();
+	$("saving_dialog").show();
+}
+function hideSavingDialog() {
+	Glayer.hide('glayer');
+	$("saving_dialog").hide();
+}
+
+
+
+</script>
+
+<!-- script for message define -->
+<script type="text/javascript">
+var Const = {
+	REALLY : "<{$smarty.const.CT_MSG_CONFIRM_DELETE_AND_COMBINE}>",
+	CONFIRM_OVERWRITE : "<{$smarty.const.CT_MSG_CONFIRM_OVERWRITE}>",
+	REQUIRE_TARNS_TARGET_LANG : "<{$smarty.const.CT_MSG_CHOOSE_MESSAGE}>",
+	REQUIRE_FILENAME : "<{$smarty.const.CT_MSG_REQUIRE_FILENAME}>",
+	WORK_STATUSES : {
+		not_working: "<{$smarty.const.CT_LABEL_STATUS_WORKING}>",
+		working: "<{$smarty.const.CT_LABEL_STATUS_NOT_WORKING}>",
+		work_out: "<{$smarty.const.CT_LABEL_STATUS_WORKED_OUT}>"
+	},
+	CONFIRM_DISCARD: "<{$smarty.const.CT_MSG_CONFIRM_EDIT_DISCARD}>",
+	CONFIRM_DISCARD_FOR_LOAD: "<{$smarty.const.CT_MSG_CONFIRM_EDIT_DISCARD_FOR_OPEN_FILE}>"
+};
+</script>
+  
+<!-- script for sentence object -->
+<script type="text/javascript">
+function autoFitAll() {
+	var textareas = $$("#sentences_source textarea,#sentences_target textarea");
+	Deferred.loop(textareas.length, function(i) {
+		textareas[i].style.height = "auto";
+		autofitTextarea(textareas[i]);
+	});
+	
+	autoFitAllBacktrans();
+}
+
+function autoFitAllBacktrans() {
+	if($("orikaeshi-area").visible()) {
+		var textareas = $$("#sentences_backtrans textarea");
+		Deferred.loop(textareas.length, function(i) {
+			textareas[i].style.height = "auto";
+			autofitTextarea(textareas[i]);
+		});
+	}
+}
+
+var _SentenceHelper = {
+	getSentenceElementsByTargetElement: function(target) {
+		target = $(target).hasClassName("sentence") ? $(target) : $(target).up("tr");
+		var rownum = target.down("td.l-no", 0).innerHTML;
+		return this._getSentenceElementByRowNum(rownum);
+	},
+	_getSentenceElementByRowNum: function(rownum) {
+		var isEqualsRownum = function(tr){ return tr.down("td.l-no").innerHTML == rownum }
+		return {source: $$("#sentences_source tr").detect(isEqualsRownum),
+		    	target: $$("#sentences_target tr").detect(isEqualsRownum),
+		    	backtrans: $$("#sentences_backtrans tr").detect(isEqualsRownum)};
+	},
+	reIndex: function() {
+		this._getAllSentences().each(function(rows, index) {
+			rows.each(function(e){ e.down("td.l-no").innerHTML = index+1; });
+		});
+	},
+	_getAllSentences: function() {
+		return $$("#sentences_source tr").zip($$("#sentences_target tr"), $$("#sentences_backtrans tr"));	
+	},
+	insertSentence: function(options) {
+		options = options || {};
+		$H(_SentenceHelper.createSentenceElements(
+			options.source || "", options.target || "", options.status || "not_working"
+		)).each(function(entry) {
+            $("sentences_" + entry.key).down("tbody").insert(entry.value);
+        });
+	},
+	createSentenceElements: function(sourceText, targetText, workStatus) {
+		var tmplParams = _SentenceHelper._makeParamsForTemplate(sourceText, targetText, workStatus);
+		return $("templates").select(".sentences tr").inject({}, function(accum, tr) {
+			var tmpl = '<tr class="sentence #{status}">' + tr.innerHTML + "</tr>";
+			var html = tmpl.interpolate(tmplParams[tr.className]);
+			accum[tr.className] = html;
+			return accum;
+		});
+	},
+	_makeParamsForTemplate: function(sourceText, targetText, workStatus) {
+		return {
+			source: {source: sourceText||"", status: workStatus||"not_working"},
+			target: {source: targetText||"", status: workStatus||"not_working"},
+			backtrans: {source: "", status: workStatus||"not_working"}
+		};
+	},
+  	isLastRow: function(sentence) {
+		return !sentence.next("tr");
+  	},
+  	setValue: function(sentence, value) {
+		var t = sentence.down("textarea").setValue(value);
+    	t.setStyle({"height": t.scrollHeight + 'px'});
+		return sentence;
+  	},
+  	createHistoryElement: function(sourceText, targetText, workStatus, beforeStatus) {
+  	  	var tmpl = '<div class="history">' + $("templates").down(".history").innerHTML + "</div>";
+  	  	
+  	  	if(Prototype.Browser.IE) {
+			var newHistory = tmpl.interpolate({
+				rownum: $$("#histories .history").length,
+				source: sourceText || "",
+				target: targetText || "",
+				status: workStatus || "",
+				statusBefore: beforeStatus || "",
+				create_date: '"' + (new Date()).toUTCString() + '"'
+			});
+  	  	} else {
+			var newHistory = tmpl.interpolate({
+				rownum: $$("#histories .history").length,
+				source: sourceText || "",
+				target: targetText || "",
+				status: workStatus || "",
+				status_before: beforeStatus || "",
+				create_date: (new Date()).toUTCString()
+			});
+  	  	}
+  	  	return Object.toHTML(newHistory);
+  	}
+};
+  
+function Sentence(elementOrChildElement) {
+	var sentenceObject = {};
+	var helper = _SentenceHelper;
+	var targetElements = helper.getSentenceElementsByTargetElement(elementOrChildElement);
+	
+	function targetsAsArray() { 
+		return [targetElements.source, targetElements.target, targetElements.backtrans];
+	}
+    function unescapeDividedString(value) {
+        return value.replace(/&#039;/gi, "'")
+        			.replace(/ {2,}/gi, " ")
+        			.strip();
+    }
+    
+	sentenceObject.source = function(){ return targetElements.source };
+	sentenceObject.target = function(){ return targetElements.target };
+	sentenceObject.backtrans = function(){ return targetElements.backtrans };
+    
+	sentenceObject.remove = function() {
+		targetsAsArray().each(Element.remove);
+		if($$('#sentences_target .sentence').length == 0) helper.insertSentence();
+		helper.reIndex();
+		//targetsAsArray().each(function(e){ e.fade({ afterFinishInternal: Element.remove.curry(e) }); });
+		//helper.reIndex.delay(1.2);
+		return this;
+    };
+    sentenceObject.insertNewSentenceAfter = function() {
+        $H(helper.createSentenceElements("","","")).each(function(e) {
+            targetElements[e.key].insert({after: e.value});
+        });
+        helper.reIndex();
+        return $S(targetElements.source.next("tr"));
+    };
+    sentenceObject.combine = function() {
+    	if(helper.isLastRow(targetElements.source)) return;
+    	if(!confirm(Const.REALLY)) return;
+		targetsAsArray().each(function(e) {
+	  	  	var next_row = e.next("tr");
+	  	  	var t = e.down("textarea"); 
+	  	  	t.setValue(t.getValue() + " " +next_row.down("textarea").getValue());
+    		t.setStyle({"height": t.scrollHeight + 'px'});
+	  	  	next_row.remove();
+		});
+        helper.reIndex();
+    	return this;
+    };
+    sentenceObject.changeStatus = function(status, noHistory) {
+        var workStatus = targetElements.source.down(".work_status");
+        var cur_status = workStatus.getValue();
+        if(cur_status == status) return;
+		targetsAsArray().each(function(e) {
+			if(cur_status) e.removeClassName(cur_status);
+			e.addClassName(status);
+		});
+		workStatus.setValue(status);
+
+		if(!noHistory) {
+			$("histories").insert(helper.createHistoryElement(
+				targetElements.source.down("textarea").getValue(),
+				targetElements.target.down("textarea").getValue(),
+				status,
+				cur_status)
+			);
+			
+			var btn = $("tbx-body").down(".btn-history");
+			btn.innerHTML = btn.innerHTML.sub(/([^(]+)(\(\d+\))?/, function(reg){
+				return RegExp.$1 + "(" + $$("#histories div").length + ")";
+			});
+			updateBtns();
+		}
+    };
+    sentenceObject.divide = function() {
+        if(!$("sourceLanguagesContainer").getValue()) {
+            alert(Const.REQUIRE_TARNS_TARGET_LANG);
+            return;
+        }
+        showLoadingDialog();
+        var self = this;
+        var value = targetElements.source.down("textarea").getValue();
+        new Ajax.Request("<{$mod_url}>/json/?action=_divide", {
+            parameters : {
+            	sourceText: value,
+            	sourceLang: $("sourceLanguagesContainer").getValue()
+        	},
+        	onSuccess: function(r) {
+				var res = r.responseText.evalJSON();
+				res = res.reject(function(e){ return e == "[[#ret]]"; });
+				res.reverse().map(function(e, i) {
+					e = unescapeDividedString(e);
+					if(i == res.length - 1) {
+						helper.setValue(targetElements.source, e.unescapeHTML());
+						autofitTextarea(targetElements.source.down("textarea"));
+						return self;
+					} else {
+						return self.insertNewSentenceAfter().setSourceValue(e);
+					}
+				}).reverse().invoke("translate");
+				
+				hideLoadingDialog();
+        	}
+        });
+    };
+    
+    sentenceObject.translate = function() {
+        Translation.reserve(targetElements.source);
+    };
+    
+    sentenceObject.backTranslate = function() {
+        Translation.reserve(targetElements.target);
+    };
+    
+    sentenceObject.setSourceValue = function(value) {
+        helper.setValue(targetElements.source, value);
+        return this;
+    };
+    
+    sentenceObject.setTargetValue = function(value) {
+        helper.setValue(targetElements.target, value);
+        return this;
+    };
+    
+    sentenceObject.focus = function() {
+        targetsAsArray().each(function(e) {
+            if(e.down("textarea") != document.activeElement) {
+                var container = e.up("div.trans-sentence-area-waku");
+		        new Effect.Tween(e, container.scrollTop, e.offsetTop,
+		        	{duration: 0.5},
+		        	function(pos){ container.scrollTop = parseInt(pos); }
+		       	);
+            }
+        });
+        return this;
+    }
+    sentenceObject.addClassName = function(name) {
+        targetsAsArray().invoke("addClassName", name);
+        return this;
+    }
+    sentenceObject.removeClassName = function(name) {
+        targetsAsArray().invoke("removeClassName", name);
+        return this;
+    }
+	return sentenceObject;
+}
+  
+// shortcut for create sentence object
+var $S = Sentence;
+</script>
+
+<!-- script for page initializer -->
+<script type="text/javascript">
+  Object.extend(Function.prototype, {
+	  toAsync: function() {
+	  	var __method = this; 
+	  	return function() {
+		  	var args = Array.prototype.slice.call(arguments);
+		  	window.setTimeout(function(){
+				return __method.apply(this, args);  	
+			});
+	  	};
+  	  }
+  });
+  
+  Event.observe(window, 'load', function() {
+	<{if $document}>
+	$('sourceLanguagesContainer').setValue("<{$document->getSourceLanguage()}>");
+	getTargetLanguages("<{$document->getTargetLanguage()}>");
+	<{else}>
+	getTargetLanguages();
+	<{/if}>
+	
+	
+	var sentenceSources = [];
+	<{if $document}>
+	<{foreach from=$document->getSentences() item=sentence key=index}>
+	sentenceSources.push(<{$sentence->toJson()}>);
+	<{/foreach}>
+	<{/if}>
+	if(sentenceSources.length == 0) {
+		sentenceSources.push({source:"",target:"",status:""});
+	}
+	if(sentenceSources.length > 20) {
+		showLoadingDialog();
+	}
+	
+	Deferred.loop(sentenceSources.length, function(i) {
+		_SentenceHelper.insertSentence(sentenceSources[i]);
+	}).
+	next(function() {
+		_SentenceHelper.reIndex();
+	}).
+	next(function() {
+		$(document.body).observe('click', hideHoverMenues);
+	}).
+	next(hideLoadingDialog).
+	next(function(){
+    	$$(".sentence textarea").each(function(t){ t.setStyle({"height": (t.scrollHeight||19) + 'px'}); });
+	});
+	
+	<{if $parseError}>
+	alert("<{$smarty.const.CT_MES_MISSING_A_FILE}>");
+	return;
+	<{/if}>
+
+	<{if $saveMissing}>
+	alert("<{$smarty.const.CT_MSG_NO_SAVE_PERMISSION}>");
+	<{/if}>
+		  
+	updateBtns();
+
+	var dispLangSelect = $(document.body).down("select[name=ml_lang]");
+	var dispLang = dispLangSelect ? dispLangSelect.getValue() : "";
+	
+	var beforeUnloadHandler = function(event) {
+		(function(){ if(dispLangSelect) dispLangSelect.setValue(dispLang); }).defer();
+		
+		if(window.onBeforeUnloadAvailable && $(document.forms["main"]).getElements().any(function(e){ 
+			return e.tagName.toLowerCase() == "textarea" && e.getValue();
+		})) return event.returnValue=Const.CONFIRM_DISCARD;
+		
+	}
+	
+	if (window.addEventListener) {
+		window.addEventListener("beforeunload", beforeUnloadHandler, false);
+	} else if (window.attachEvent) {
+		window.attachEvent("onbeforeunload", beforeUnloadHandler);
+	} else  {
+		window.onbeforeunload = beforeUnloadHandler;
+	}
+
+	
+  });
+
+  window.onBeforeUnloadAvailable = true;
+</script>
+
+<!-- script for source & target table control API-->
+<script type="text/javascript">
+  var TEMPLATE_ROW = 0;
+  
+  function hideHoverMenues() {
+	$$(".hover_menu").each(function(e){ e.hide() });
+  }
+  function toggleHoverMenu(event, anchor) {
+	  var container = $(anchor).up(".trans-sentence-area-waku");
+	  var target = $(anchor).up("td").down(".hover_menu");
+	  var offset = $("tbx-body").cumulativeOffset().top;
+	  target.setStyle({top: (Event.pointer(event).y - offset + 10) + 'px'});
+	  var visible = target.visible();
+	  hideHoverMenues();
+	  target[visible ? "hide" : "show"]();
+	  Event.stop(event);
+  }
+  function insertNewRows(target) {
+	  $S(target).insertNewSentenceAfter();
+  }
+  function removeRows(target, notConfirm) {
+	  if(notConfirm || confirm(Const.REALLY)) {
+	  	$S(target).remove();
+	  }
+  }
+  
+  function divideRows(target) {
+	  $S(target).divide();
+  }
+  
+  function combineRows(target) {
+	  $S(target).combine();
+  }
+  
+  function changeWorkStatus(status, target, noHistory) {
+	  $S(target).changeStatus(status, noHistory);
+  }
+
+  function onEditTextStart(textarea) {
+	textarea = $(textarea);
+	var autofit = autofitTextarea.curry(textarea);
+	autofit();
+	$S(textarea).addClassName("editing").focus();
+	textarea.observe('keyup', autofit);
+	textarea.observe('blur', function() { 
+		textarea.stopObserving('keyup', autofit);
+		$S(textarea).removeClassName("editing");
+	});
+  }
+  
+  function quitEditText(textarea) {
+	  //textarea = $(textarea);
+	  //autofitTextarea(textarea);
+	  //textarea.previous('p').update(textarea.getValue().escapeHTML().gsub(/\r\n|\r|\n/, '<br>'));
+	  //$S(textarea).removeClassName("editing");
+  }
+</script>
+
+<!-- script for something about translation -->
+<script type="text/javascript">
+  var MAX_WORKER_NUM = 2;
+  var MAIN_THREAD_PERIOD = 500;
+  
+  var Translation = (function(){
+	var WORKING = true, IDLE = false;
+	var cue = [];
+	// create workers and fill IDLE flag
+	var workers = $R(0, MAX_WORKER_NUM, true).map(function(e){ return IDLE });
+	function idleWorkerIndexes() {
+		return workers.map(function(flg, i){
+			return flg == IDLE ? i : undefined;
+		}).compact();
+	}
+	var mainThread;
+	function threadStart() {
+		if(mainThread) return;
+		$$(".cancelBtn").each(Element.show);
+		$$(".translateBtn").each(Element.hide);
+		
+		mainThread = (function() {
+			idleWorkerIndexes().each(function(index) {
+				if(cue.length > 0) run(index);
+			});
+			if(cue.length > 0) {
+				setTimeout(arguments.callee, MAIN_THREAD_PERIOD);
+			} else {
+				$$(".translateBtn").each(Element.show);
+				$$(".cancelBtn").each(Element.hide);
+				mainThread = false;
+			}
+		}).defer();
+	}
+	
+	function run(workerIndex) {
+		workers[workerIndex] = WORKING;
+		var reservation = cue.shift();
+		var source = $(reservation.id);
+		
+		if(!source 
+			|| (source.up("table").id == "sentences_source" &&
+					source.hasClassName("working") || source.hasClassName("work_out"))
+			|| (source.up("table").id == "sentences_target" && 
+					source.hasClassName("work_out"))) {
+			
+			workers[workerIndex] = IDLE;
+			return;
+		}
+		
+		var target = findTargetSentenceBySourceSentence(source);
+		source.addClassName("translating");
+		target.addClassName("translating");
+		new Ajax.Request("<{$mod_url}>/json/", {
+			method: "post",
+			parameters: makeRequestParamter(reservation),
+			onSuccess: responseHandler.curry(source),
+			onFailure: responseErrorHandler.curry(source),
+			onComplete: function() {
+				workers[workerIndex] = IDLE;
+				source.removeClassName("translating");
+				target.removeClassName("translating");
+			}
+		});
+	}
+	
+	function makeRequestParamter(reservation) {
+		reservation["sourceText"] = $(reservation.id).down("textarea").getValue();
+		if($(reservation.id).up("table").id == "sentences_target") {
+			reservation["backTranslate"] = true;
+		}
+		delete reservation.id;
+		reservation["action"] = "_translate";
+		return $H(reservation).toQueryString();
+	}
+	
+	function responseHandler(sourceSentence, r) {
+		var res = r.responseText.evalJSON();
+		if(res.status == "OK") {
+			var target = findTargetSentenceBySourceSentence(sourceSentence);
+			if(target) {
+				var t = target.down("textarea").setValue(res.content);
+    			t.setStyle({"height": t.scrollHeight + 'px'});
+			}
+		}
+	}
+	
+	function responseErrorHandler(sourceSentence, r) {
+		var res = r.responseText.evalJSON();
+		alert(res.message);
+	}
+	
+	function findTargetSentenceBySourceSentence(sourceSentence) {
+		var rownum = sourceSentence.down("td.l-no", 0).innerHTML;
+		var rows = _SentenceHelper._getSentenceElementByRowNum(rownum);
+		if(sourceSentence.up("table").id == "sentences_source") {
+			// normal translate
+			return rows.target;	
+		} else {
+			// back translate
+			return rows.backtrans;
+		}
+	}
+	
+	function isDuplicate(sentence) {
+		var id = $(sentence).identify();
+		return cue.detect(function(e) { return e.id == id });
+	}
+	// Translation Object & methods
+	return {
+		reserve: function(sentence) {
+			if(isDuplicate(sentence)) return ;
+			cue.push({
+				id: $(sentence).identify(),
+				sourceLang: $("sourceLanguagesContainer").getValue(),
+				targetLang: $("targetLanguagesContainer").getValue()
+			});
+			threadStart();
+		},
+		divideAndReserve: function(sentence) {
+			
+			//Translation.reserve();
+		},
+		cancel: function() {
+			cue.clear();
+		}
+	};
+  })();
+</script>
+
+<!-- script for controll rows All or Check On -->
+<script type="text/javascript">
+function selectAll(chkbox) {
+	var val = $(chkbox).getValue();
+	$(chkbox).up("div.language-bar")
+	  	.next("div.trans-sentence-area-waku")
+	  	.select("input[type=checkbox]")
+	  	.invoke("setValue", val);
+}
+ 
+function _executeAll(table, button) {
+	var select = $(button).previous("select");
+	if(BatchProcess[select.getValue()])
+		BatchProcess[select.getValue()]($(table), true);  
+}
+ 
+var executeAllSource = _executeAll.curry("sentences_source");
+var executeAllTarget = _executeAll.curry("sentences_target");
+
+
+function _changeWorkStatusAll(status, table, checked) {
+	var sentences = checked ? 
+      	this._getCheckBoxesWithCheckOn(table).map(function(e){ return e.up("tr") }) :
+        this._getSentencesWithOutTamplate(table);
+	sentences.each(function(e){ changeWorkStatus(status, e) });
+}
+ 
+var BatchProcess = {
+	remove: function(table, checked) {
+		if(!confirm(Const.REALLY)) return;
+		BatchProcess._getCheckBoxesWithCheckOn(table).each(function(e){ removeRows(e, true)});
+	},
+	translate: function(table, checked) {
+		if(!validateTargetlanguage()) return;
+	   	var sentences = checked ? 
+	    	BatchProcess._getCheckBoxesWithCheckOn(table).map(function(e){ return e.up("tr") }) :
+	        BatchProcess._getSentencesWithOutTamplate(table);
+	   	sentences.each(Translation.reserve);
+	},
+	changeWorkStatusToNotWorking: _changeWorkStatusAll.curry("not_working"),
+	changeWorkStatusToWorking: _changeWorkStatusAll.curry("working"),
+	changeWorkStatusToWorkOut: _changeWorkStatusAll.curry("work_out"),
+	_getCheckBoxesWithCheckOn: function(table) {
+		return table.select("input[type=checkbox]")
+	 				.findAll(function(chkbox){ return chkbox.getValue(); })
+	},
+	_getSentencesWithOutTamplate: function(table) {
+	       return table.select("tr");
+	}
+};
+
+var translateAllSource = function(btn) {
+	if($(btn).btnDisabled()) return;
+	BatchProcess.translate($("sentences_source"));
+}
+	
+var translateAllTarget = function(btn){
+	if($(btn).btnDisabled()) return;
+	BatchProcess.translate($("sentences_target"));
+	$('orikaeshi-area').show();
+	var btn = $$(".trans-orikaeshi-close");
+	if(btn.length > 0) {
+		btn[0].removeClassName("trans-orikaeshi-close");
+		btn[0].addClassName("trans-orikaeshi-open");
+	}
+};
+ 
+</script>
+  
+<!-- script for tool control -->
+<script type="text/javascript">
+var TOOLS_WINDOW = $H({
+	left:0, 
+	top:0, 
+	width:720,
+	height:300,
+	status:	0,
+	scrollbars: 0,
+	menubar: 0,
+	location: 0,
+	toolbar: 0,
+	resizable: 0
+});
+
+var TOOLS_WINDOW_DEFS = $H({
+	default_window: TOOLS_WINDOW,
+	machine_translation: TOOLS_WINDOW.merge({
+	    width: 1000, height: 564, scrollbars: 1
+	}),
+	glossary: TOOLS_WINDOW.merge({
+        height: 405
+    })
+});
+
+var openTool = (function() {
+	var windowCache = {};
+	
+	function isOpen(toolName) {
+		return windowCache[toolName] && !windowCache[toolName].closed; 
+	}
+	
+	return function(btn, toolName) {
+		if($(btn).btnDisabled()) return;
+		
+		var source = $("sourceLanguagesContainer").getValue();
+		var target = $("targetLanguagesContainer").getValue();
+		if(!validateTargetlanguage()) return;
+		
+		var properties = TOOLS_WINDOW_DEFS.get(toolName) 
+		                  ? TOOLS_WINDOW_DEFS.get(toolName) : TOOLS_WINDOW_DEFS.get("default_window");
+		if(!isOpen(toolName)) {
+			var position = {left: (screen.width-properties.get("width"))/2, 
+							top: (screen.height-properties.get("height"))/2};
+			var windowParam = properties.merge(position);
+			var queries = $H({sourceLang: source, targetLang: target}).toQueryString();
+			windowParam = windowParam.map(function(e) { return e[0] + "=" + e[1]; }).join(",");
+			windowCache[toolName] = window.open("<{$mod_url}>/" + toolName + "?" + queries, toolName, windowParam);
+		}
+		windowCache[toolName].focus();
+	}
+})();
+</script>
+
+<!-- script for common component -->
+<script type="text/javascript">
+var MIN_BLOCK_HEIGHT = 200;
+var MAX_BLOCK_HEIGHT = 800;
+var CHANGE_VALUE = 20;
+function widenBlock() {
+	$$(".trans-sentence-area-waku").each(function(e) {
+		var value = (e.getHeight() + CHANGE_VALUE)
+		if(value < MAX_BLOCK_HEIGHT) e.setStyle({height: value + "px"});
+	});
+}
+function unwidenBlock() {
+	$$(".trans-sentence-area-waku").each(function(e) {
+		var value = (e.getHeight() - CHANGE_VALUE);
+		if(MIN_BLOCK_HEIGHT < value ) e.setStyle({height: value + "px"});
+	});
+}
+var fontResizer = new FontResizer(
+	["textarea"],{	min: 10, max: 100, value: 2	}
+);
+function getTargetLanguages(selected) {
+	var sourceLang = $("sourceLanguagesContainer").getValue();
+	if(sourceLang) {
+		new Ajax.Updater(
+			$("targetLanguagesContainer"), 
+			'<{$mod_url}>/path/?action=_target_languages',
+			{	parameters: 'sourceLang=' + sourceLang, 
+				method: "get",
+				onComplete: function() {
+					if(selected) $("targetLanguagesContainer").setValue(selected);
+					updateBtns();
+				}
+			}
+		);
+	}
+	updateBtns();
+}
+
+function clearAll(){
+	if(confirm(Const.REALLY)){
+        $$("table.trans-sentence-area tr").each(Element.remove);
+        _SentenceHelper.insertSentence();
+		_SentenceHelper.reIndex();
+    }
+}
+
+function _serializeParamters() {
+	var elements = Form.serialize(document.forms["main"], {hash: true});
+	var params = {};
+	for(var name in elements) {
+		if(name.match(/^sentence/))
+			elements[name].each(function(e, i) {
+				if(i == 0) return;
+				params[name.sub(/rownum/, i)] = e;
+			});
+	}
+	params["sourceLang"] = $("sourceLanguagesContainer").getValue();
+	params["targetLang"] = $("targetLanguagesContainer").getValue();
+	return $H(params).toQueryString();
+}
+function load(button) {
+
+	// permission check
+	if($("loadFromToolbox").visible()) {
+		var fParams = params($(button).up("div.area-popup"));
+		if ($(fParams['fileId']).value != '1') {
+			alert("<{$smarty.const.CT_MES_MISSING_SAVE_FILE}>");
+			return;
+		}
+	}
+			
+	// save confirm
+	if(hasEdit() && !confirm(Const.CONFIRM_DISCARD_FOR_LOAD)) {
+		return;
+	}
+	
+	if($("loadFromToolbox").visible()) {
+		var fileParams = params($(button).up("div.area-popup"));
+
+		if(fileParams['fileId']) {
+			window.onBeforeUnloadAvailable = false;
+			document.location.href = "<{$mod_url}>/?file_id=" + fileParams['fileId'];
+		} else {
+			alert("<{$smarty.const.CT_MES_MISSING_SAVE_FILE}>");
+		}
+		
+	} else if($("loadFromPC").visible()){
+		window.onBeforeUnloadAvailable = false;
+		document.forms["index_with_xml"].submit();		
+	}
+}
+function save(button) {
+
+	// folder permission check
+	if ($("parentFolderPermission").value == 0) {
+		alert("<{$smarty.const.CT_MSG_NO_SAVE_PERMISSION}>");
+		return;
+	}
+	
+	if($(button).btnDisabled()) return;
+	
+	var fileParams = params($(button).up("div.area-popup"));
+	var fileName = fileParams["fileName"];
+	if(!fileName) {
+		alert(Const.REQUIRE_FILENAME);
+		return;
+	}
+	
+	var exists = $("fileList").select(".name span").any(function(e){ 
+		return e.innerHTML == fileName; 
+	});
+	
+	if(!exists || confirm(Const.CONFIRM_OVERWRITE)) {
+		$H(fileParams).map(function(entry){
+			return new Element("input", {name: entry.key, value: entry.value, type:"hidden"})
+		}).each(function(input) { $(document.forms["main"]).insert(input) });
+		
+		setSentenceIndex();
+		window.onBeforeUnloadAvailable = false;
+		document.forms["main"].submit();
+	}
+}
+
+function overwrite(button) {
+	if($(button).btnDisabled()) return;
+	
+	var fileId = $("edittingFileId").getValue();
+	
+	setSentenceIndex();
+	showSavingDialog();
+	
+	new Ajax.Request(
+		"<{$mod_url}>/work_document/?action=_update&fileId=" + fileId,
+		{
+			parameters: $(document.forms["main"]).serialize(),
+		 	onComplete: function(r) {
+				var res = r.responseText.evalJSON();
+				if(!res.status) {
+					alert(res.message);
+				}
+				hideSavingDialog();
+			}
+		}
+	);
+	
+	(function(){
+		removeSentenceIndex();
+	}).delay(1);
+}
+
+function download(btn) {
+	if($(btn).btnDisabled()) return;
+	
+	setSentenceIndex();
+	var atLocal = new Element("input",{type: "hidden", name: "atLocal", value: "true"});
+	$(document.forms["main"]).insert(atLocal);
+	window.onBeforeUnloadAvailable = false;
+	document.forms["main"].submit();
+	(function(){
+		atLocal.remove();
+		removeSentenceIndex();
+	}).delay(1);
+}
+
+function unselectFile(btn) {
+	$("folderShowContainer").select("td").invoke("removeClassName","cell-selected");
+	$("fileList").select("input[name=fileId]").invoke("setValue", "");
+	$("saveForms").select("input").invoke("setValue", "");
+}
+
+
+function setSentenceIndex() {
+	var sentenceElements = getSentenceElementsGroupByName();
+	for(var name in sentenceElements) {
+		sentenceElements[name].each(function(element, i) {
+			element.name = name.sub(/rownum/, i);
+		});
+	}
+}
+function removeSentenceIndex() {
+	getSentenceFormElements().each(function(e) {
+		e.name = e.name.sub(/\d+/, "rownum")
+	});
+}
+function getSentenceFormElements() {
+	return $$("tr.sentence input, tr.sentence textarea").reject(function(e) { return !e.name });
+}
+function getSentenceElementsGroupByName() {
+	return getSentenceFormElements().inject({}, function(groups, element) {
+		if(!groups[element.name]) groups[element.name] = [];
+		groups[element.name].push(element);
+		return groups;
+	});
+}
+
+function _getSelectedOption(selectElement) {
+	return $($(selectElement).options[selectElement.selectedIndex]);
+}
+
+function validateTargetlanguage() {
+	if(!$("sourceLanguagesContainer").getValue() || !$("targetLanguagesContainer").getValue()) {
+		alert(Const.REQUIRE_TARNS_TARGET_LANG);
+		return false;			
+	}
+	return true;
+}
+
+function updateBtns() {
+	var available = !!$("sourceLanguagesContainer").getValue() && !!$("targetLanguagesContainer").getValue();
+	
+	$$(".open-tool-btn, .save-btn").each(function(e) {
+		e[available ? "btnEnable" : "btnDisable"]();
+	});
+
+	$$(".overwrite-btn")[0][(available && $("edittingFileId")) ? "btnEnable" : "btnDisable"]();	
+	
+	if(available && $$("#histories .history").length > 0){
+		$("tbx-body").down(".btn-history").up().btnEnable();
+	} else {
+		$("tbx-body").down(".btn-history").up().btnDisable();
+	}
+	
+	$$(".translateBtn").each(function(e) {
+		e.removeClassName("btn-s-disable").removeClassName("btn-s");
+		e.addClassName(available? "btn-s" : "btn-s-disable");
+	});
+}
+
+function hasEdit() {
+	var sources = $$("#sentences_source .sentence");
+	return sources.length >= 2 
+		|| sources.length == 1 && !!sources[0].down("textarea").getValue()
+}
+</script>

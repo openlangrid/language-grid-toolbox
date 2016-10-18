@@ -1,0 +1,98 @@
+
+<div id="search-container">
+	<h1><{$smarty.const._MI_DICTIONARY_DICTIONARY_SEARCH}></h1>
+	<a class="change-view" href="">&gt; <{$dictionary_type_name}></a>
+	<div class="clearfix"></div>
+
+	<form id="dictionary-search-form" onsubmit="return false;">
+		<input type="hidden" name="typeId" value="<{$typeId}>">
+		
+		<p class="basic">
+			<label class="formLabel"><{$smarty.const._MI_DICTIONARY_SEARCH_KEYWORD}>:</label>
+			<input type="text" name="keyword" />
+			<span id="dictionary-source-language-area"><select></select></span>
+		</p>
+		
+		<div id="advanced">
+			<p>
+				<label class="formLabel"><{$smarty.const._MI_DICTIONARY_SEARCH_MATCHING_METHOD}>:</label>
+				<select id="matching-method" name="matchingMethod">
+					<option value="partial"><{$smarty.const._MI_DICTIONARY_SEARCH_PARTIAL}></option>
+					<option value="complete"><{$smarty.const._MI_DICTIONARY_SEARCH_COMPLETE}></option>
+					<option value="prefix"><{$smarty.const._MI_DICTIONARY_SEARCH_PREFIX}></option>
+					<option value="suffix"><{$smarty.const._MI_DICTIONARY_SEARCH_SUFFIX}></option>
+				</select>
+			</p>
+				
+			<p class="target-languages">
+				<label class="formLabel"> <{$smarty.const._MI_DICTIONARY_LANGUAGE}>: </label>
+				<span>
+					<label><input type="radio" name="target_language" value="all" onClick="SearchViewController.onChangeTargetLanguage(this)" checked> <{$smarty.const._MI_DICTIONARY_ALL_LANGUAGES}></label>&nbsp;
+					<label><input type="radio" name="target_language" value="other" onClick="SearchViewController.onChangeTargetLanguage(this)"> <{$smarty.const._MI_DICTIONARY_OTHER}></label>
+					[<a class="disabled" href="javascript: void(0)"><{$smarty.const._MI_DICTIONARY_CONFIRM}></a>]
+				</span>			
+				<ul class="search-target-language-container" style="display: none;"></ul>
+			</p>
+		</div>
+		
+		<p class="action">
+			<a class="btn-s" onclick="SearchViewController.search();" href="javascript: void(0);"><span>Search</span></a>
+			<span class="count-result"></span>
+		</p>
+	</form>
+	
+	<div class="messages">
+		<p class="notfound" style="display:none;"><{$smarty.const._MI_DICTIONARY_SEARCH_DICTIONARY_NOT_FOUND}></p>
+	</div>
+	
+	<table id="dictionary-search-result" style="display:none;">
+		<thead>
+			<tr>
+			</tr>
+		</thead>
+		<tbody></tbody>
+		<tfoot>
+			<tr>
+				<td colspan="9">
+					<span class="page-no">1 - 1 of 1</span>
+					<span class="limit-link">Number of results 5 | 10 | 20 | 50 | All</span>
+					<span class="page-link">&lt; Prev 1 Next &gt;</span>
+					<input type="hidden" name="perPage" value="10"/>
+					<input type="hidden" name="pageNo" value="1"/>
+				</td>
+			</tr>
+		<tfoot>
+	</table>
+	
+	<a class="return2top" href="#" style="display:none;"><{$smarty.const._MI_DICTIONARY_RETURN_TO_TOP}></a>
+	
+	<p class="indicator" style="visibility: hidden;">
+		<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height="25" />
+		<{$smarty.const._MI_DICTIONARY_STATUS_NOW_LOADING}>
+	</p>
+</div>
+
+
+<div id="search-view-template" style="display: none;">
+	<table class="table-search-result">
+		
+		<tr class="headerCell">
+			<th class='#{langTag}'>in
+				<select onchange='SearchViewController.Table.onChangeDisplayLanguage(this)'><option></option></select>
+				<input type="hidden" value='#{langTag}'>
+			</th>
+		</tr>
+		
+		<tr class="headerResourceName">
+			<th class="resource-name">Resource name</th>
+		</tr>
+		
+		<tr class="recordCell">
+			<td>#{value}</td>
+		</tr>
+		
+		<tr class="resourceNameCell">
+			<td class='resource-name'>#{dictionaryName}</td>
+		</tr>
+	</table>
+</div>

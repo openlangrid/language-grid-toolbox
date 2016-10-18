@@ -1,0 +1,478 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+/* ------------------------------------------------------------------------- */
+
+/* ぱんくず */
+div#tbx-body #bread-path {
+	float: left;
+	font-size: 90%;
+}
+/* BBS 言語 */
+div#tbx-body #bbs-language {
+	float: right;
+	margin-right: 8px;
+}
+/* アクティブメンバー領域 */
+div#tbx-body #bbs-active-member {
+	float: right;
+	margin-right: 24px;
+}
+/* アクティブメンバー画像 */
+div#tbx-body #bbs-active-member img {
+	margin-right: 2px;
+	border: 0px;
+}
+
+
+/* トピックタイトル */
+/* 2010.02.09 調整 */
+
+div#tbx-body .area-topic-title {
+	clear: both;
+	/* background:url(../images/bg/bg_topic_title.jpg); */
+    background-color:#d0ecfa;
+	height: 32px;
+	margin-bottom: 8px;
+	padding:0px;
+	width: 99%;
+}
+
+div#tbx-body .area-topic-title h1 {
+	float:left;
+	display:block;
+	font-size: 120%;
+	margin-top:6px;
+	margin-left: 4px;
+}
+
+
+
+/* 文字サイズコントロール領域 */
+
+div#tbx-body .area-fontsize-ctrl {
+	margin-left:12px;
+}
+
+div#tbx-body .area-fontsize-ctrl .btn {
+	margin:0px;
+}
+
+/* 更新設定領域 */
+
+div#tbx-body .area-update-setting {
+	 margin-right: 12px;
+	 margin-top:2px;
+}
+
+div#tbx-body .area-update-setting a {
+	 background:url(../images/icon/icon_option.png) no-repeat;
+	 background-position:right 6px;
+	 padding-right:16px;
+}
+
+
+
+/* ----------------------- ------------------------------------------------------------------------------- */
+
+/* メッセージ領域 */
+#message-part {
+	float:left;
+	width: 500px;
+}
+
+
+
+/* 2010.02.04 スクロールなしに*/
+#message-scroll-part {
+	width:490px;
+	float:left;
+	border:1px #999 solid;
+	padding: 4px;
+	background-color:#dedede;
+	margin-bottom: 8px;
+}
+
+/* コンテンツ領域 */
+#contents-part {
+	width: 450px;
+	float:left;
+	position:relative;
+	border:2px #efefef solid;
+	padding: 0px;
+	margin-left:20px;
+	background-color:#fff;
+}
+
+
+
+/* コンテンツ領域 */
+
+#message-part2 {
+	float:left;
+	width: 458px;
+}
+
+#contents-part2 {
+	width: 450px;
+	float:left;
+	position:relative;
+	border:2px #efefef solid;
+	padding: 0px;
+	margin-left:20px;
+	background-color:#fff;
+}
+
+
+
+
+
+/* 見出し的領域 */
+.header-part {
+	display:block;
+	background-color:#efefef;
+	padding:4px;
+	height:24px;
+}
+
+.header-part:after {
+	content: "";
+	display:block;
+	clear:both;
+	height:1px;
+	overflow:hidden;
+}
+
+/* コンテンツプレビュー領域 */
+.contents-preview-area {
+	clear:both;
+	margin:auto;
+	width:98%;
+	height: 320px;
+	background-color:#d0d0d0;
+	margin-top: 8px;
+	margin-bottom:0px;
+	background-position:center;
+	background-repeat:no-repeat;
+	vertical-align:middle;
+	text-align:center;
+	overflow:auto;
+	border:1px #ddd solid;
+}
+
+#contents-preview-area2 {
+	clear:both;
+	margin:auto;
+	width:98%;
+	height: 320px;
+	background-color:#d0d0d0;
+	margin-top: 8px;
+	margin-bottom:0px;
+	background-position:center;
+	background-repeat:no-repeat;
+	vertical-align:middle;
+	text-align:center;
+	overflow:auto;
+	border:1px #ddd solid;
+}
+
+/* コンテンツプレビュー(画像) */
+.contents-preview-area img.preview-content {
+	margin:auto;
+	margin-top: 16px;
+}
+
+.contents-preview-area img.marker {
+	
+}
+
+
+
+
+/* ----------------------- ------------------------------------------------------------------------------- */
+/* メッセージ部分 */
+/* 2010.02.04 スクロールをなくした分、幅調整 */
+div#tbx-body .message-area {
+	width: 480px;
+	border: 1px solid #d5d5d5;
+	border-bottom: 2px solid #d5d5d5;
+	border-right: 2px solid #d5d5d5;
+	padding: 4px;
+	margin-bottom: 4px;
+	background-color:#fff;
+}
+/* メッセージタイトル部分 */
+div#tbx-body .message-area .message-title {
+	background-color:#d0ecfa;
+	padding-top:4px;
+	height: 34px;
+	line-height:1.0
+}
+
+/* メッセージ顔イメージ */
+/* 2009.12.22 調整 */
+div#tbx-body .message-area .message-title img {
+	float: left;
+	margin:3px;
+	margin-right: 5px;
+	margin-left:5px;
+}
+/* メッセージユーザ名 */
+div#tbx-body .message-area .message-title span.message-user {
+	font-weight:bold;
+}
+/* メッセージ言語名 */
+/* 2009.12.22 追加*/
+div#tbx-body .message-area .message-title span.message-lang {
+	font-size:85%;
+}
+
+/* メッセージ日時 */
+div#tbx-body .message-area .message-title span.message-date {
+	font-size: 80%;
+}
+
+/* メッセージ操作部分 */
+/* 2009.12.22 調整 */
+div#tbx-body .message-area .message-operation {
+	float: right;
+	margin-top: -30px;
+	margin-right: 2px;
+}
+/* メッセージ操作ボタン */
+/* 2009.12.22 調整 */
+div#tbx-body .message-area .message-operation a {
+	float: right;
+	margin-right: 2px;
+}
+/* メッセージ操作ボタン */
+/* 2009.12.22 調整 */
+div#tbx-body .message-area .message-operation img {
+	margin-right: 2px;
+	margin-top: 4px;
+}
+/* メッセージ本文 */
+div#tbx-body .message-area p {
+	margin-top: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+	line-height:1.4;
+	margin-bottom: 6px;
+}
+/* メッセージ本文 コンテンツつき */
+div#tbx-body .message-area p.ad-content {
+	margin-top: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+	line-height:1.4;
+	margin-bottom: 6px;
+	border-bottom:1px dashed #dedede;
+	padding-bottom: 8px;
+}
+
+
+/* ----------------------- ------------------------------------------------------------------------------- */
+/* コンテンツ部分 */
+
+.contents-select-popup {
+	margin-right: 8px;
+	width: 21em;
+	font-size: 90%;
+}
+
+
+/* ----------------------- ------------------------------------------------------------------------------- */
+/* 翻訳ゲージ */
+
+div.gage-base {
+	width:440px;
+	height:6px;
+	background-color:#d0d0d0;
+	margin-bottom:12px;
+	margin-top:2px;
+}
+
+div.gage-bar {
+	width:120px;
+	height:6px;
+	background:url(../images/etc/gauge_bar.png);
+}
+
+/* ----------------------- ------------------------------------------------------------------------------- */
+/* 翻訳 */
+/* 2010.02.10 調整 */
+ .trans-panel-pane {
+	clear:both;
+	margin-top: 4px;
+	/* height: 120px; */
+	/* overflow:auto; */
+}
+
+/* 翻訳設定パネル */ 
+ .trans-panel {
+	clear:both;
+	border:1px #777 solid;
+	margin-top:-1px;
+	min-height:28px;
+	padding: 4px;
+	width: 98%;
+}
+
+ .trans-panel:hover {
+	background-color:#ffffce;
+}
+
+/* 処理中アニメーション */ 
+ .trans-panel .loading {
+	float:left;
+	margin-right:4px;
+}
+
+ .trans-panel:after {
+	content: "";
+	display:block;
+	clear:both;
+	height:1px;
+	overflow:hidden;
+}
+
+/* 言語名・閉じている時 */
+a.trans-panel-lang-close {
+	padding-left:16px;
+	background:url(../images/icon/icon_plus.png) no-repeat;
+	background-position:0px 3px;
+}
+
+/* 言語名・開いている時 */
+a.trans-panel-lang-open {
+	padding-left:16px;
+	background:url(../images/icon/icon_minus.png) no-repeat;
+	background-position:0px 3px;
+}
+
+
+/* ----------------------- ------------------------------------------------------------------------------- */
+/* 履歴 */
+
+div#tbx-body .history-panel-pane {
+	clear:both;
+	/* height: 120px; */
+	/* overflow:auto; */
+}
+	
+/* 履歴パネル */ 
+div#tbx-body .history-panel {
+	clear:both;
+	border:1px #777 solid;
+	margin-top:-1px;
+	min-height:20px;
+	padding: 4px;
+	width: 98%;
+}
+
+div#tbx-body .history-panel:hover {
+	background-color:#ffffce;
+}
+
+/* 履歴・閉じている時 */
+div#tbx-body .history-panel a.history-panel-close {
+	padding-left:16px;
+	background:url(../images/icon/icon_plus.png) no-repeat;
+	background-position:0px 3px;
+}
+
+/* 履歴・開いている時 */
+div#tbx-body .history-panel a.history-panel-open {
+	padding-left:16px;
+	background:url(../images/icon/icon_minus.png) no-repeat;
+	background-position:0px 3px;
+}
+
+div#tbx-body img.loading {
+	margin-top:6px;
+}
+
+/* ----- patch -------------------------------*/
+
+.contents-preview-area {
+	position: relative;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+div.gage-bar {
+	width:0px;
+}
+
+body {
+	width: auto;
+	font-size: small;
+}
+div#wrap {
+	min-width : 980px;
+}
+
+div#tbx-body {
+	text-align: left;
+}
+
+.point_marker {
+	position: absolute;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	width: 27px;
+	height: 27px;
+	z-index: 95;
+}
+
+a.btn-disable span.btn-option {
+background:transparent url(../images/icon/icon_option.png) no-repeat scroll 0 6px;
+display:block;
+overflow:hidden;
+text-indent:-1000px;
+width:10px;
+}
+
+
+#message-scroll-part {
+	position: relative;
+}
+ .hover_menu {
+    position: absolute;
+ 	text-align:left;
+ 	padding:5px;
+ 	overflow:hidden;
+ 	border:1px;
+ 	border-style:solid;
+ 	background:white;
+ 	z-index:999;
+ 	width: 100px;
+ 	clear: both;
+ 	right: 10px;
+	margin-top: 20px;
+	*margin-top: 0px;
+ }
+ div#tbx-body .message-operation .hover_menu a {
+ 	float: none;
+ }
+
+#point_marker {
+	position: absolute;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	width: 27px;
+	height: 27px;
+	z-index: 95;
+}
+
+.contentsShowContainer {
+	width: 100%;
+	height: 100%;
+}
+
+.tab-pain {
+	height: 280px;
+}

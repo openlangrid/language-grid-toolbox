@@ -1,0 +1,83 @@
+<div class="message-area" id="message-area-<{$message->getId()}>">
+	<div class="message-title">
+		<img src="<{$message->getUserIcon()}>" alt="" width=24 height=24 />
+		<span class="message-user">
+			<a name="<{$message->getPostOrder()}>" href="<{$xoops_url}>/userinfo.php?uid=<{$message->getUserId()}>">
+				<{$message->getUserName()|escape}>
+			</a>
+		</span>
+		<br />
+		#<{$message->getPostOrder()}> 
+		(<span class="message-date"><{$message->getOriginalLanguageAsName()}> <{$message->getCreateDateAsFormatString()}></span>)
+	</div>
+  
+	<div class="message-operation">
+		<a class="btn-disable optionButtonOpen" href="javascript: void(0);" 
+		   onclick="toggleHoverMenu(event, this)" title="pulldown">
+			<span class="btn-option">PULLDOWN</span>
+		</a>
+		
+		<a href="javascript: newMessage(<{$message->getId()}>, <{$message->getPostOrder()}>); void(0);" class="btn-disable" title="reply this message">
+			<span class="btn-reply"><{$smarty.const.COM_BTN_REPLY}><!-- reply --></span>
+		</a>
+		
+		<ul class="hover_menu" style="display: none;">
+			<{if false && $message->canEditOriginal()}>
+				<li><a href="javascript: editMessage(<{$message->getId()}>)"><{$smarty.const.COM_LNK_EDIT}></a></li>
+			<{/if}>
+			
+			<{if false && $message->canEditTranslation()}>
+				<li><a href="<{$mod_url}>/translations/?action=edit&<{$message->htmlQueryString()}>"><{$smarty.const.COM_LNK_EDIT_TRANSLATION}></a></li>
+			<{/if}>
+			
+			<{if $message->canDelete()}>
+				<li><a href="javascript: void(0);" onclick="confirmDelete(<{$message->getId()}>);$(this).up('.hover_menu').hide();">
+					<{$smarty.const.COM_LNK_DELETE}><!-- delete -->
+				</a></li>
+			<{/if}>
+		</ul>
+	</div>
+
+	<p class="message-body <{$message->htmlMessageBodyClass()}>">
+		<{$message->getDescriptionForSelectedLanguage()|escape|nl2br}>
+	</p> 
+
+	<p class="message-option">
+		
+		<{if $message->hasContent() && $message->isContentAvailable()}>
+		<div>
+			<a href="javascript: void(0);" title="click to preview this contets" 
+			   onclick="changePreviewContent(this, <{$message->getContentId()}>, {messageId:<{$message->getId()}>});">
+				<{if $message->hasContentMarker()}>
+				<img src="<{$mod_url}>/images/icon/icon_file_w_marker.png" alt="marker" /> <{$message->getContentTitle()}>
+				<{else}>
+				<img src="<{$mod_url}>/images/icon/icon_file.png" /> <{$message->getContentTitle()}>
+				<{/if}> 
+			</a>
+		</div>
+		<{elseif $message->hasContent()}>
+		<div>
+			* <{$smarty.const.COM_RELATED_CONTENT_IS_DELETED}> *
+		</div>
+		<{/if}>
+		
+	
+		<{if $message->hasParentMessage()}>
+		<div>
+			<img alt="" src="<{$mod_url}>/images/icon/icon_message.png"/>
+			<{$smarty.const.COM_REPLY_TO_MESSAGE|sprintf:$message->htmlLinkParentPostOrder()}>
+		</div>
+		<{/if}>
+		
+		
+		<{if $message->hasReplies()}>
+			<{$message->getReplyPostOrders()|@count}><{$smarty.const.COM_REPLY_MESSAGES}> 
+			<{foreach from=$message->getReplyPostOrders() item=replyPostOrder key=index}>
+				<{if $index > 0}>
+				,
+				<{/if}>
+				<a href="#<{$replyPostOrder}>">#<{$replyPostOrder}></a>
+			<{/foreach}>
+		<{/if}>
+	</p>
+</div>

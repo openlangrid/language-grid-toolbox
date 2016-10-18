@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Toolbox - How to use</title>
+<link rel="stylesheet" type="text/css" href="../../../themes/default/common/css/import.css" />
+<link rel="stylesheet" type="text/css" href="../../../themes/default/css/import.css" />
+</head>
+<body id="howtouse">
+<div id="body_bg">
+    <div id="wrap">
+        <div id="container">
+            <div id="head">
+                <h1 id="logo"></h1>
+                </div>
+<div id="contents_body">
+            <h2>How to Use (Web作成)</h2>
+   <div class="inner_text">          
+<p>Web作成は、多言語のWebコンテンツの作成を支援するために、翻訳テンプレート機能を提供します。対象となるWebコンテンツの翻訳時に翻訳テンプレートを適用することで、テンプレートに該当する箇所は、ユーザの指定した訳文で作成されます。また、HTMLテンプレートをユーザ間で共有することで、ユーザは協力してWebコンテンツの多言語化を行うことができます。</p>
+
+<p>このページでは、Web作成の下記の機能について説明します。</p>
+<ol><li>1. Webページのインポートと翻訳実行</li>
+<li>2. テンプレートの使用</li>
+<li>3. テンプレートの作成・編集</li></ol>
+
+<dl><dt>1. Webページのインポートと翻訳実行</dt>
+<dd>WebページURLの欄に、翻訳したいWebページのURLを入力し、<span class="key_point">「取得」</span>ボタンをクリックします。これにより、翻訳元のWebページの欄に、入力したURLのページのHTMLが表示されます。</dd></dl>
+
+<dd><span class="key_point">「翻訳」</span>ボタンを押すと、翻訳が開始されます。翻訳には少し時間がかかることがあります。翻訳が終了すると、<span class="key_point">翻訳後のWebページ</span>・<span class="key_point">折り返し翻訳後のWebページ</span>の欄にそれぞれ翻訳結果と折り返し翻訳結果のHTMLが表示されます。</dd></dl>
+
+<dl><dt>2. テンプレートの使用</dt>
+<dd><span class="key_point">「テンプレートのロード」</span>ボタンまたは <span class="key_point">「テンプレートのアップロード」</span>ボタンを押すことで、Webぺージの翻訳に使用するテンプレートを設定できます。翻訳対象のWebページに、テンプレートにマッチする部分があると、機械翻訳ではなくテンプレートに従った置き換えによって翻訳先言語のHTMLが生成されます。
+
+<span class="key_point">「テンプレートのロード」</span>ポップアップウィンドウでは、サーバに保存されたテンプレートの名前を入力してください。<span class="key_point">「テンプレートのアップロード」</span>ポップアップウィンドウでは、ローカルのコンピュータに保存されたテンプレートのファイルを選択してください。</dd></dl>
+
+<dl><dt>3. テンプレートの作成・編集</dt>
+<dd>ページ下部にある<span class="key_point">「テンプレートの作成・編集」</span>欄から、翻訳に用いるテンプレートを入力できます。翻訳元言語でのHTML記述と翻訳先言語でのHTML記述をそれぞれ入力し、<span class="key_point">「テンプレートにペアを追加」</span>ボタンを押すことで、テンプレートに翻訳元言語と翻訳先言語のそれぞれの記述の対応が保存されます。設定されたテンプレートは、<span class="key_point">テンプレートの保存</span>・<span class="key_point">テンプレートのダウンロード</span>からそれぞれサーバ上やローカルのコンピュータに保存できます。</dd>
+
+<dd>なお、ローカルのコンピュータに保存されるテンプレートは、下記の形式となっており、テキストエディタ等で編集可能です。</dd></dl>
+
+<div style="font-size: 12px; border: 1px solid gray;">
+<pre>
+&lt;PAIR ID="1"&gt;
+&lt;SOURCE_TEXT&gt;&lt;![CDATA[<font color="red"><i>1つめのテンプレートの翻訳元言語の記述</i></font>]]&gt;&lt;/SOURCE_TEXT&gt;
+&lt;TARGET_TEXT&gt;&lt;![CDATA[<font color="red"><i>1つめのテンプレートの翻訳先言語の記述</i></font>]]&gt;&lt;/TARGET_TEXT&gt;
+&lt;/PAIR&gt;
+&lt;PAIR ID="2"&gt;
+&lt;SOURCE_TEXT&gt;&lt;![CDATA[<font color="red"><i>2つめのテンプレートの翻訳元言語の記述</i></font>]]&gt;&lt;/SOURCE_TEXT&gt;
+&lt;TARGET_TEXT&gt;&lt;![CDATA[<font color="red"><i>2つめのテンプレートの翻訳先言語の記述</i></font>]]&gt;&lt;/TARGET_TEXT&gt;
+&lt;/PAIR&gt;
+...
+</pre>
+</div>
+        </div>
+          </div>
+            <div id="footer_inner">
+                <address>
+                Copyright (C) 2009-2010 Language Grid Project, NICT. All rights reserved.　
+                </address>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

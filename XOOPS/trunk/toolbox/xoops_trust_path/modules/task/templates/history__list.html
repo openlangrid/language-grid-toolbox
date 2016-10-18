@@ -1,0 +1,88 @@
+
+<div id="<{$mod_url}>/history/?action=_list&amp;id=<{$id}>&amp;page=<{$pager->getCurrentPage()}>&amp;perPage=<{$pager->getPerPage()}>">
+  <table id="historyTable" border="0" cellspacing="0" cellpadding="0" style="width:97%; font-size:90%;">
+    <!-- ****************************************** -->
+    <thead class="table-sortable-head">
+      <tr>
+        <th><{$smarty.const._MD_TASK_DOCUMENT_NAME}></th>
+        <th colspan="2"><{$smarty.const._MD_TASK_SMOOTHING}></th>
+        <th colspan="2"><{$smarty.const._MD_TASK_CHECK}></th>
+        <th><{$smarty.const._MD_TASK_UPDATE_SUMMARY}></th>
+        <th><{$smarty.const._MD_TASK_UPDATE_DATE}></th>
+      </tr>
+    </thead>
+    <!-- ****************************************** -->
+    <tfoot>
+      <tr>
+        <td colspan="7">
+          <div style="float:left;">
+            <{$itemCount}>
+          </div>
+          <div style="float:left;margin-left:50px;">
+          <{foreach from=$perPages key=key item=value}>
+          <{if $key == $pager->getPerPage()}>
+            <{$value}>
+          <{else}>
+            <a href="<{$mod_url}>/history/?action=_list&amp;id=<{$id}>&amp;page=<{$pager->getCurrentPage()}>&amp;perPage=<{$key}>" class="perPageLink"><{$value}></a>
+          <{/if}>
+          <{/foreach}>
+          </div>
+          <div style="float:right;">
+
+          <{if $pager->hasPreviousPage()}>
+            <a href="<{$mod_url}>/history/?action=_list&amp;id=<{$id}>&amp;page=<{$pager->getPreviousPageNo()}>&amp;perPage=<{$pager->getPerPage()}>" class="pageLink"><{$smarty.const.TR_LINK_PREV}></a>
+          <{else}>
+            <{$smarty.const.TR_LINK_PREV}>
+          <{/if}>
+
+          <{section name=pageSection start=0 loop=$pager->getLastPage()}>
+          <{if $smarty.section.pageSection.iteration == $pager->getCurrentPage()}>
+            <{$smarty.section.pageSection.iteration}>
+          <{else}>
+            <a href="<{$mod_url}>/history/?action=_list&amp;id=<{$id}>&amp;page=<{$smarty.section.pageSection.iteration}>&amp;perPage=<{$pager->getPerPage()}>" class="pageLink"><{$smarty.section.pageSection.iteration}></a>
+          <{/if}>
+          <{/section}>
+
+          <{if $pager->hasNextPage()}>
+            <a href="<{$mod_url}>/history/?action=_list&amp;id=<{$id}>&amp;page=<{$pager->getNextPageNo()}>&amp;perPage=<{$pager->getPerPage()}>" class="pageLink"><{$smarty.const.TR_LINK_NEXT}></a>
+          <{else}>
+            <{$smarty.const.TR_LINK_NEXT}>
+          <{/if}>
+
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- ****************************************** -->
+    <tbody class="hover-on">
+    <{foreach name=listLoop from=$pager->getHistoryList() item=history}>
+    <{assign var=file value=$history->getFile()}>
+      <tr>
+        <td class="cell-underlined">
+          <input id="r<{$history->getId()}>" type="radio" name="history_id" value="<{$history->getId()}>"<{if $pager->getCurrentPage() == 1 && $smarty.foreach.listLoop.index == 0}>disabled="disabled"<{/if}>/>
+          <label for="r<{$history->getId()}>">
+          	<{if $file }><{$file->getName()|escape}><{else}><{$smarty.const._MD_TASK_FILE_UNAVAILABLE}><{/if}>
+          </label>
+        </td>
+        <td class="cell-underlined"><{$history->getSmoothingAchievement()}>%</td>
+        <td class="cell-underlined"><{$history->getSmoothingWorker()|escape}></td>
+        <td class="cell-underlined"><{$history->getCheckAchievement()}>%</td>
+        <td class="cell-underlined"><{$history->getCheckWorker()|escape}></td>
+        <td class="cell-underlined"><{$history->getUpdateSummary()|escape}></td>
+        <td class="cell-underlined"><{$history->getCreateDate()}> <{$history->getCreateTime()}></td>
+      </tr>
+    <{/foreach}>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+Event.observe(window,'load', function() {
+	$("historyTable").select("input[type=radio]").each(function(radio) {
+		radio.observe('click', function(e) {
+			$("historyTable").select("td").invoke("removeClassName", "cell-selected");
+			radio.up("tr").select("td").invoke("addClassName","cell-selected");
+		});
+	});
+});
+</script>

@@ -1,0 +1,63 @@
+<div class="area-popup" style="width:750px; margin-top:50px;">
+  <div class="area-fr">
+  	<a href="javascript: void(0);" onclick="hideHistoryDialog(); return false;" class="btn-popup-close">x</a>
+  </div>
+  
+  <br class="clear" />
+  
+  <strong class="h-pagetitle"><{$smarty.const.CT_LABEL_HISTORY}></strong> <br class="clear" />
+  
+  <div id="searchForm" style="margin-top:8px;margin-bottom: 8px;"> <{$smarty.const.CT_LABEL_EDIT_USER}>
+    <select name="creator">
+      <option value=""><{$smarty.const.CT_LABEL_EVERYONE}></option>
+      <option value="user"><{$smarty.const.CT_LABEL_ONLY_ME}></option>
+    </select>
+    &nbsp;&nbsp;<{$smarty.const.CT_LABEL_TERM}>
+    <select name="create_date">
+      <option value=""><{$smarty.const.CT_LABEL_ALL}></option>
+      <option value="<{'-1 month'|strtotime|date_format:'%Y-%m-%d %T'}>"> <{$smarty.const.CT_LABEL_LT_MONTH}></option>
+      <option value="<{'-1 week'|strtotime|date_format:'%Y-%m-%d %T'}>">  <{$smarty.const.CT_LABEL_LT_WEEK}></option>
+      <option value="<{'-1 day'|strtotime|date_format:'%Y-%m-%d %T'}>"> <{$smarty.const.CT_LABEL_LT_DAY}></option>
+      <option value="<{'-1 hour'|strtotime|date_format:'%Y-%m-%d %T'}>"> <{$smarty.const.CT_LABEL_LT_HOUR}></option>
+    </select>
+    <input type="button" value="<{$smarty.const.CT_BTN_FILTER}>" onClick="searchHistory(this);" />
+    <img class="indicator" src="<{$xoops_imageurl}>common/img/loading.gif" style="display: none; position: absolute;" />
+  </div>
+  
+  <div class="popup-pain" id="pagerContainer">
+  	<{include file="db:collabtrans_history__list.html"}>
+  </div>
+  
+  <div class="area-middle-p4">
+    <a href="javascript: void(0)" onclick="hideHistoryDialog();return false;" class="btn">
+    	<span class="btn-close"><{$smarty.const.CT_BTN_CLOSE}></span>
+    </a>
+  </div>
+</div>
+
+<script type="text/javascript">
+window.searchHistory = function(button) {
+	//$("pagerContainer").update();
+	$("searchForm").down(".indicator").show();
+	
+	new Ajax.Updater(
+		"pagerContainer", 
+		"<{$mod_url}>/history/?action=_list",
+		{
+			method : "post",
+			parameters: $H(params($("searchForm"))).merge(params()),
+			onSuccess: function() {
+			
+				clearLoading();
+				//(function() {
+				//	var pager = new Pager("pagerContainer", 5);
+				//}).delay(0);	
+			},
+			onComplete: function() {
+				$("searchForm").down(".indicator").hide();
+			},
+			evalScripts: true
+		}
+	);
+}
+</script>

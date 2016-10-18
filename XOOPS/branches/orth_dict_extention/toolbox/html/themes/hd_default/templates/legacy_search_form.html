@@ -1,0 +1,61 @@
+<{capture name="searchHasError"}>
+  <{if $actionForm->hasError()}>
+  <ul class="errorMsg">
+    <{foreach item=message from=$actionForm->getErrorMessages()}>
+      <li><{$message|xoops_escape}></li>
+    <{/foreach}>
+  </ul>
+  <{/if}>
+<{/capture}>
+
+<{if $caller == 'legacy_search_results'}>
+  <{$smarty.capture.searchHasError}>
+  <h2 class="clear"><{$smarty.const._SEARCH}></h2>
+<{elseif $caller == 'legacy_search_results_no_match'}>
+  <h1><{$smarty.const._SR_SEARCHRESULTS}></h1>
+  <{$smarty.capture.searchHasError}>
+  <p><strong><{$smarty.const._SR_NOMATCH}></strong></p>
+  <h2><{$smarty.const._SEARCH}></h2>
+<{else}>
+  <h1><{$smarty.const._SEARCH}></h1>
+<{/if}>
+
+<form action="<{$smarty.const.XOOPS_URL}>/search.php" method="get">
+  <{xoops_input type=hidden name=action value=results}>
+  <table class="outer" cellspacing="1" width="100%">
+    <tr>
+      <th class="head"><label for="legacy_xoopsform_query"><{$smarty.const._SR_KEYWORDS}></label></th>
+      <td class="<{cycle values="odd,even"}>">
+        <{xoops_input type=text name=query size=30 maxlength=255 value=$actionForm->get('query')}>
+      </td>
+    </tr>
+    <tr>
+      <th class="head"><label for="legacy_xoopsform_srtype"><{$smarty.const._SR_TYPE}></label></th>
+      <td class="<{cycle values="odd,even"}>">
+        <select name="andor" id="legacy_xoopsform_srtype">
+          <option id="andor_AND" value="AND" <{if $actionForm->get('andor') == 'AND'}>selected="selected"<{/if}>><{$smarty.const._SR_ALL}></option>
+          <option id="andor_OR" value="OR" <{if $actionForm->get('andor') == 'OR'}>selected="selected"<{/if}>><{$smarty.const._SR_ANY}></option>
+          <option id="andor_exact" value="exact" <{if $actionForm->get('andor') == 'exact'}>selected="selected"<{/if}>><{$smarty.const._SR_EXACT}></option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th class="head"><{$smarty.const._SR_SEARCHIN}></th>
+      <td class="<{cycle values="odd,even"}>">
+        <{foreach item=module from=$moduleArr}>
+          <label><input type="checkbox" name="mids[]" value="<{$module.mid|xoops_escape:plain}>"<{if in_array($module.mid, $selectedMidArr)}> checked="checked"<{/if}> /><{$module.name|xoops_escape}></label>
+        <{/foreach}>
+      </td>
+    </tr>
+    <tr>
+      <th class="head"><{$smarty.const._SR_SEARCHRULE}></th>
+      <td class="<{cycle values="odd,even"}>"><{$searchRuleMessage}></td>
+    </tr>
+    <tr>
+      <td class="head"></td>
+      <td class="<{cycle values="odd,even"}>">
+        <input type="submit" value="<{$smarty.const._SR_SEARCH}>" />
+      </td>
+    </tr>
+  </table>
+</form>

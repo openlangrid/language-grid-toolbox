@@ -1,0 +1,43 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+
+/* 設定 */
+table.setting-table {
+	font-size: 90%;
+}
+
+table.setting-table td {
+	padding-top: 0px;
+	padding-bottom: 4px;
+}
+
+/* 2010.3.19 調整 */
+table.setting-table th {
+	text-align:right;
+	vertical-align:top;
+	padding-right:10px;
+}
+
+/* ----- patch -------------------------------*/
+div.gage-bar {
+	width:0px;
+}
+body {
+	width: auto;
+	font-size: small;
+}
+div#wrap {
+	min-width : 980px;
+}
+div#tbx-body {
+	text-align: left;
+}
+.tab-pain {
+	height: 280px;
+}
+
+#tbx-body {
+	position: relative;
+}

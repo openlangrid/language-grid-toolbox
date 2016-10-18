@@ -1,0 +1,56 @@
+<h2><{$smarty.const._CM_MESSAGE}></h2>
+
+<{* hd default comment mode *}>
+<{if ! $smarty.get.com_mode}>
+  <{assign var=com_mode value='flat'}>
+<{else}>
+  <{assign var=com_mode value=$smarty.get.com_mode|xoops_escape:link}>
+<{/if}>
+
+<{if $smarty.get.com_mode == 'flat'}>
+  <{assign var=naviTxt value=$smarty.const._CM_TREE_CHOOSE}>
+  <{assign var=naviExplanation value=$smarty.const._CM_TREE_EXPLANATION}>
+  <{assign var=comModeTarget value='nest'}>
+<{elseif $smarty.get.com_mode == 'nest'}>
+  <{assign var=naviTxt value=$smarty.const._CM_THREAD_CHOOSE}>
+  <{assign var=naviExplanation value=$smarty.const._CM_THREAD_EXPLANATION}>
+  <{assign var=comModeTarget value='thread'}>
+<{else}>
+  <{assign var=naviTxt value=$smarty.const._CM_FLAT_CHOOSE}>
+  <{assign var=naviExplanation value=$smarty.const._CM_FLAT_EXPLANATION}>
+  <{assign var=comModeTarget value='flat'}>
+<{/if}>
+
+<{if $smarty.get.com_order == '1'}>
+  <{assign var=OrderTxt value=$smarty.const._CM_OLDER_CHOOSE}>
+  <{assign var=comOrderTarget value='0'}>
+<{else}>
+  <{assign var=OrderTxt value=$smarty.const._CM_NEWER_CHOOSE}>
+  <{assign var=comOrderTarget value='1'}>
+<{/if}>
+
+<{if $itemName}>
+  <{* jidaikobo: com_itemid wasn't escaped original template? *}>
+  <{assign var=itemNameVal value="&amp;$itemName=$com_itemid"}>
+<{/if}>
+
+<!-- hd check -->
+<{* extraParams *}>
+<{* jidaikobo: is below wrong?? *}>
+<{foreach key=key item=value from=$extraParams}>
+  <{assign var="extraParamsTmp" value="&amp;$key=$value"}>
+  <{assign var="extraParamsVal" value=$extraParamsVal+$extraParamsTmp}>
+<{/foreach}>
+
+<{* TOKEN *}>
+<{* <{xoops_token form=$actionForm}> *}>
+<{* xoops_token wasn't rendered default template, so jidaikobo deleted from this template *}>
+
+<ul id="XoopsCommentsNavigation">
+<{if $postcomment_link}>
+  <li><a href="<{$postcomment_link|xoops_escape:link}><{$link_extra|xoops_escape:link}>"><{$smarty.const._CM_POSTCOMMENT_NEW}></a></li>
+<{/if}>
+  <li><a href="<{$pageName}>?com_mode=<{$comModeTarget}>&amp;com_order=0<{$itemNameVal}><{$extraParamsVal}>" title="<{$naviExplanation}>"><{$naviTxt}></a></li>
+  <li><a href="<{$pageName}>?com_mode=<{$com_mode}>&amp;com_order=<{$comOrderTarget}><{$itemNameVal}><{$extraParamsVal}>"><{$OrderTxt}></a></li>
+</ul>
+

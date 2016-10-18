@@ -1,0 +1,50 @@
+<h2><{$smarty.const._INSTALL_CL3_MAIN}></h2>
+<p><label for="default_theme"><{$smarty.const._INSTALL_CL3_MAIN_EXP}></label></p>
+<div>
+	<select name="default_theme" id="default_theme">
+		<{foreach item=theme from=$themes}>
+			<option value="<{$theme.mDirname}>"<{if $theme.mDirname==$default}> selected<{/if}>><{$theme.mDirname}></option>
+		<{/foreach}>
+	</select>
+</div>
+
+<h2><{$smarty.const._INSTALL_CL3_AVAIL}></h2>
+
+<table class="outer">
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>Theme</th>
+			<th colspan="2"><{$smarty.const._INSTALL_CL3_INFO}></th>
+		</tr>
+	</thead>
+	<{foreach item=theme from=$themes key=k}>
+	<tr class="<{cycle values='odd,even'}>">
+		<td class="checkbox">
+			<input type="checkbox" name="option_themes_<{$k}>" value="<{$theme.mDirname}>"  id="theme<{$theme.mDirname}>" <{if $theme.checked}>checked<{/if}> /></td>
+		<td class="module">
+			<label for="theme<{$theme.mDirname}>">
+				<{$theme.mDirname}><br>
+				<{if $theme.mScreenShot}>
+				<img src="<{$smarty.const.XOOPS_URL}>/themes/<{$theme.mDirname}>/<{$theme.mScreenShot}>" width="120" height="90" alt="<{$theme.mName}>" title="<{$theme.mName}>" />
+				<{/if}>
+			</label>
+		</td>
+		<td colspan="2" class="theme">
+			<p class="legacy_list_description"><{$theme.mDescription != null}></p>
+			<ul>
+				<li><{$smarty.const._INSTALL_CL3_VERSION}> : <{$theme.mVersion}></li>
+				<li><{$smarty.const._INSTALL_CL3_RENDER}> : <{$theme.mRender_system}></li>
+				<li><{$smarty.const._INSTALL_CL3_FORMAT}> : <{$theme.mFormat}></li>
+				<li><{$smarty.const._INSTALL_CL3_AUTHOR}> : <{$theme.mAuthor}></li>
+				<{if $theme.mLicence}>
+				<li><{$smarty.const._INSTALL_CL3_LICENCE}> : <{$theme.mLicence}></li>
+				<{/if}>
+				<{if $theme.mUrl != null}>
+				<li><a href="<{$theme.mUrl}>"><{$smarty.const._INSTALL_CL3_GET_THE_LATEST_VERSION}></a></li>
+				<{/if}>
+			</ul>
+		</td>
+	</tr>
+	<{/foreach}>
+	</table>

@@ -1,0 +1,803 @@
+<style type="text/css">
+#messageEditDialog {
+	position:absolute;
+	z-index: 800;
+	top: 0;
+	text-align: left;
+}
+
+div#tbx-body {
+	position: relative;
+}
+#contentsIndexContainer {
+	float: right;
+}
+
+#contents-part {
+	margin-left: 0;
+}
+</style>
+
+
+
+<div id="tbx-body" onclick="appearContentPreviewArea(event, this)">
+  <div id="topicHeaderContainer">
+  	<{include file="db:%s__header.html"|sprintf:$mod_name}>
+  </div>
+  
+  <div id="message-part">
+  	<{include file="db:%s_messages_header.html"|sprintf:$mod_name}>
+	
+  	<div id="messageListContainer">
+  		<{include file="db:%s_messages__list.html"|sprintf:$mod_name}>
+  	</div>
+	<div class="area-fr" id="newMessageButton">
+		<a href="javascript: newMessage()" class="btn-s">
+			<span class="btn-new"><{$smarty.const.COM_BTN_NEW_MESSAGE}><!-- + New Message --></span>
+		</a>
+	</div>
+  </div>
+  
+  <div id="contentsIndexContainer">
+  	<{include file="db:%s_contents__index.html"|sprintf:$mod_name}>
+  </div>
+
+  <br class="clear">
+  <br />
+  
+	<div id="messageEditDialog" style="display: none;">
+		<div class="area-popup" style="width:950px;">
+		  <div class="area-fr"><a href="javascript: cancelNewMessage()" class="btn-popup-close">x</a></div>
+		  <br class="clear" />
+		  <div id="messagesNewContainer">
+			<{include file="db:%s_messages__new.html"|sprintf:$mod_name}>
+		  </div>
+		</div>
+	</div>
+  
+	<{include file="db:%s_file__list_client.html"|sprintf:$mod_name}>
+</div>
+
+
+<br class="clear" />
+
+
+<!-- ==================================================================================================== -->
+<script type="text/javascript">
+var Const = {
+	REALLY: "<{$smarty.const.CONFIRM_QUIT_EDIT}>"	
+};
+
+function showSelectContentWithGlayer(btn) {
+	glayerShow();
+	showSelectContent(btn);
+}
+
+var contentWithGlayer = false;
+function showSelectContent(btn) {
+	contentWithGlayer = $(btn).up(".contents-part").id == "contents-part";
+	$("messageEditDialog").hide();
+	
+	openFileDialog({
+		fileDialogURL: "<{$mod_url}>/contents/",
+		parameters: "topicId=<{$topicId}>&time=<{$smarty.now}>"
+	});
+}
+
+function cancelContentSelect() {
+	
+	$("fileDialog").hide();
+	if(contentWithGlayer) {
+		Glayer.hide("glayer")
+	} else {
+		$("messageEditDialog").show();
+	}
+}
+
+function showMessageEditDialog() {
+	glayerShow();
+	
+	var containerWidth = $("tbx-body").getDimensions().width / 2;
+	$("messageEditDialog").setStyle({
+		top: getScrollPosition().y+'px',
+		left: (containerWidth - 470) + 'px'
+	});
+}
+
+function hideMessageEditDialog() {
+	Glayer.hide("glayer");
+	$("messageEditDialog").hide();
+}
+
+function newMessage(parentId, postOrder) {
+	var params = {};
+	if(parentId) params['parentId'] = parentId;
+	if(postOrder) params['postOrder'] = postOrder;
+
+	showMessageEditDialog();
+	
+	new Ajax.Updater(
+		$("messagesNewContainer"),
+		"<{$mod_url}>/messages/?action=_new&topicId=<{$topicId}>", {
+			method: "get",
+			parameters: $H(params).toQueryString(),
+			evalScripts: true,
+			onComplete: function() {
+				//$("bbs-language").setStyle({visibility: 'hidden'});
+				clearLoading();
+				$("messageEditDialog").show();
+				setFormTitleHelp();
+				updateContentBtnStateAll();
+				
+				(function() { $("sourse-message").focus(); }).defer();
+			}
+		}
+	);
+}
+
+function cancelNewMessage(button) {
+	if(!$("sourse-message").getValue() || confirm(Const.REALLY)) {
+		$("messagesNewContainer").update();
+		hideMessageEditDialog();
+	}
+}
+
+function editMessage(messageId) {
+	var params = {"messageId": messageId};
+	
+	showMessageEditDialog();
+	
+	new Ajax.Updater(
+		$("messagesNewContainer"),
+		"<{$mod_url}>/messages/?action=_edit&topicId=<{$topicId}>", {
+			method: "get",
+			parameters: $H(params).toQueryString(),
+			evalScripts: true,
+			onComplete: function() {
+				setFormTitleHelp();
+				clearLoading();
+				$("messageEditDialog").show();
+				updateContentBtnStateAll();
+				(function(){ $("sourse-message").focus() }).defer();
+			}
+		}
+	);
+}
+
+
+function reloadContents() {
+	new Ajax.Updater(
+		"contentsIndexContainer",
+		"<{$mod_url}>/contents/?action=_index&topicId=<{$topicId}>",{
+			method: "get",
+			evalScripts: true,
+			parameters: params($("contentsIndexContainer")),
+			onComplete: function() {
+				updateContentBtnState($("contentsIndexContainer"));
+			}
+		}
+	);
+	
+	reloadContentsSelect();
+}
+
+function reloadContentsSelect() {
+	var container = $("contents-part2").down(".contents-select-popup");
+	if(container) {
+		new Ajax.Updater(container,
+			"<{$mod_url}>/contents/?action=_list&topicId=<{$topicId}>",{
+				method: "get",
+				evalScripts: true,
+				parameters: params($("contents-part2")),
+				onComplete: function() {
+					updateContentBtnState($("contents-part2"));
+				}
+			}
+		);
+	}
+}
+
+function reloadMessages() {
+	var lang = params($("bbs-language"))['lang'];
+	$('messageReloading').show();
+	$('newMessageArrived').hide();
+	new Ajax.Updater(
+		"messageListContainer",
+		"<{$mod_url}>/messages/?&topicId=<{$topicId}>",{
+			method: "get",
+			parameters: "lang=" + lang,
+			evalScripts: true
+		}
+	);
+}
+
+function reloadTopicHeader() {
+	var lang = params($("bbs-language"))['lang'];
+	new Ajax.Updater(
+		"topicHeaderContainer",
+		"<{$mod_url}>/?action=_header&topicId=<{$topicId}>",{
+			method: "get",
+			parameters: "lang=" + lang,
+			evalScripts: true
+		}
+	);
+}
+
+var AutoUpdater = (function() {
+	var checkParams = {
+		topicId: <{$smarty.get.topicId}>,
+		lastCheckTime: ''
+	};
+	
+	function getUpdateInfo() {
+		var queries = Object.extend(params($("activeUserList"))||{}, checkParams);
+		
+		new Ajax.Request("<{$mod_url}>/json/?action=_get_update_info", {
+			method: 'get',
+			parameters: queries,
+			onSuccess: function(r) {
+				var res = r.responseText.evalJSON();
+				if(res.status) {
+					update(res.updateInfo);
+					checkParams.lastCheckTime = res.lastCheckTime;
+				}
+			}
+		});
+	}
+
+	function update(updateInfo) {
+		if(updateInfo.updateMessages > 0) {
+			if($("messageReload").getValue()) {
+				reloadMessages();
+			} else {
+				$('newMessageArrived').show();
+			}
+		}
+	}
+	
+	function run() {
+		showActiveUsers();
+		
+		getUpdateInfo();
+		
+		observe();
+	}
+	
+	var timer = null;
+	function observe() {
+		var frequency = $("messageReload").getValue();
+		if(frequency) {
+			timer = setTimeout(run, frequency*1000);
+		} else {
+			timer = setTimeout(run, 20*1000);
+		}
+	}
+	
+	return {
+		changeFrequency: function() {
+			if(timer) {
+				clearTimeout(timer);
+			}
+			
+			new CookieManager().setCookie('messageReload', $("messageReload").getValue());
+			
+			observe();
+		},
+		
+		start: function(){
+			run();
+		}
+	}
+})();
+
+Event.observe(window, 'load', function() {
+	var reload = new CookieManager().getCookie("messageReload");
+	if(reload) $("messageReload").setValue(reload);
+
+	AutoUpdater.start();
+});
+
+function setFormTitleHelp() {
+	$$(".form_title_help").each(function(e) {
+		if(e.nodeName.match(/textarea/i) || e.type && e.type.match(/text/i)) {
+			var help = new Element("label").setStyle({position: "absolute"}).update(e.title);
+			e.setStyle({
+				border: "solid 1px #999",
+				backgroundColor: "transparent"
+			})
+			.insert({before: help})
+			.observe('focus', function(){ help.hide() })
+			.observe('blur', function(){ if(!e.getValue()) help.show() })
+			.removeClassName("form_title_help");
+		}
+	});
+}
+
+</script>
+
+
+<!--  script for active user area -->
+<script type="text/javascript">
+function showActiveUsers(){
+	new Ajax.Updater(
+		"bbs-active-member",
+		"<{$mod_url}>/active_users/?action=_show", {
+		method:'get',
+		evalScript: true,
+		parameters:'topicId=<{$topicId}>',  
+		onSuccess:function( transport ){
+			$('bbs-active-member').update(transport.responseText);
+		}
+	});
+}
+</script>
+
+<!--  script for message area -->
+<script type="text/javascript">
+function confirmDelete(messageId){
+	if(window.confirm('<{$smarty.const.COM_DELETE_MESSAGE_CONFIRM}>')){
+		location.href = "<{$mod_url}>/?action=delete&topicId=<{$smarty.get.topicId}>&messageId=" + messageId;
+	}
+}
+  
+function hideHoverMenues() {
+	$$(".hover_menu").each(function(e){ e.hide() });
+}
+
+function toggleHoverMenu(event, anchor) {
+	if(!$(anchor).hasClassName("btn-disable")) {
+		var target = $(anchor).next("ul");
+		var visible = target.visible();
+		hideHoverMenues();
+		target[visible ? "hide" : "show"]();
+		Event.stop(event);
+	} else {
+		$(anchor).blur();
+	}
+}
+
+var checkTime = '<{$checkTime}>';
+var topicId = '<{$topic_id}>';
+function messageCheck(){
+   	new Ajax.Request('messages/message_check.php',{
+   		method:'get',  
+   		parameters:'topicId=' + topicId,
+   		onSuccess:function( transport ){
+       		if(document.getElementById('messageReload').value == 0){
+               	// manual
+       			if (checkTime < transport.responseText){
+       				//document.getElementById('newMessageArrived').style.display='block';
+       				checkTime = transport.responseText;
+       			}
+       		} else {
+               	// auto
+       			if (checkTime < transport.responseText){
+       				// auto reload
+       				document.getElementById('messageReloading').style.display='block';
+       				checkTime = transport.responseText;
+       				messageReload();
+       			}
+       		}
+   		}
+   	});
+}
+
+Event.observe(window, 'load', function(){
+	$(document.body).observe('click', hideHoverMenues);
+	updateContentBtnStateAll();
+});
+</script>
+
+
+<!--  script for contents area -->
+<script type="text/javascript">
+function getContent(previewContainer, contentId, params) {
+	var indicator = $(previewContainer).down(".indicator").show();
+	if(!params) params = {};
+	
+	if($(previewContainer).id == "contents-part2") {
+		params['form'] = true;
+	}
+	
+	new Ajax.Updater(
+		$(previewContainer).down(".contentsShowContainer"), 
+		"<{$mod_url}>/contents/?action=_show", {
+			method: 'get',
+			evalScripts: true, 
+			parameters: Object.extend({"contentId": contentId}, params),
+			onComplete: function(){
+				Element.hide(indicator);
+				updateContentBtnState(previewContainer);
+				
+				if(previewContainer.down(".googlemap-area")) {
+					var map = new GoogleMapWrapper(previewContainer);
+					if(previewContainer.id == "contents-part2") {
+						window.contentMap = map;
+					}
+				}
+			}
+		}
+	);
+}
+
+function onChangeContent(container, options) {
+	container = $(container);
+
+	if(!$(container).hasClassName("contents-part")) {
+		container = container.up(".contents-part");
+	}
+	
+	var contentId = container.down("select").getValue();
+	if(contentId) {
+		getContent(container, contentId, options);
+	} else {
+		$(container).down(".contentsShowContainer").update();
+	}
+	
+	updateContentBtnState(container);
+	clearMarkerState(container);
+
+}
+
+function updateContentBtnStateAll() {
+	$$(".contents-part").each(updateContentBtnState);
+}
+
+function updateContentBtnState(container) {
+	
+	updateContentPageBtn(container);
+	
+	updateOperationContentBtns(container);
+
+}
+
+function updateContentPageBtn(container) {
+	var option = _getSelectedOption(container.down("select"));
+	container.down(".showPrevBtn")[option.previous() ? "btnEnable" : "btnDisable"]();
+	container.down(".showNextBtn")[option.next() ? "btnEnable" : "btnDisable"]();
+}
+
+function updateOperationContentBtns(container) {
+	var param = params($(container));
+	
+	container.select(".contents-operation a").each(function(e) {
+		var available = !!param["contentId"];
+		if(e.down(".btn-delete")) { available &= param["isOwner"] == "1"; }
+		
+		if(e.down(".btn-download")) { available &= !!param["fileId"]; }
+		
+		e[available ? "btnEnable" : "btnDisable"]();
+	});
+
+	if(container.down("#unselect_link")) {
+		param["contentId"] ? $("unselect_link").show() : $("unselect_link").hide();
+	}
+}
+
+
+var showPrevContent = _showContent.curry("previous");
+var showNextContent = _showContent.curry("next");
+
+function _showContent(method, anchor) {
+	var select = $(anchor).up(".contents-part").down("select");
+	var targetOption = _getSelectedOption(select)[method]();
+    if(targetOption) {
+        select.setValue(targetOption.readAttribute("value"));
+        onChangeContent(select);
+    }
+}
+
+function changePreviewContent(btn, contentId, options) {
+	$("contents-part").down("select").setValue(contentId);
+	
+	onChangeContent($("contents-part"), options);
+	
+	moveContentPreviewArea($(btn).up(".message-area"));
+}
+
+function moveContentPreviewArea(messageArea) {
+	var cTop = messageArea.positionedOffset().top - 4;
+	var cBottom = cTop + $("contents-part").getDimensions().height;
+	var maxBottom = $("message-scroll-part").getDimensions().height + 30;
+	if(maxBottom < cBottom) {
+		cTop = maxBottom - $("contents-part").getDimensions().height;
+	}
+	if(cTop < 0) cTop = 0;
+	$("contents-part").setStyle({top: cTop + 'px'});
+}
+
+function _isInsideContentVertical(position) {
+    var offset = $("contents-part").cumulativeOffset();
+    var offsetBottom = offset.top + $("contents-part").getDimensions().height;
+	return offset.top < position.y && position.y < offsetBottom; 
+}
+
+function _contentMoveTarget(pointer, container) {
+	var cHeight = $("contents-part").getDimensions().height;
+	var cTop = pointer.y - $(container).cumulativeOffset().top - cHeight / 2;
+	
+	var maxBottom = $("message-scroll-part").getDimensions().height + 30;
+	if(maxBottom < cTop + cHeight) {
+		cTop = maxBottom - cHeight;
+	}
+	
+	if(cTop < 0) {
+		cTop = 0;
+	}
+	return cTop;
+}
+
+function appearContentPreviewArea(event, container) {
+	var pointer = Event.pointer(event);
+	if(_isInsideContentVertical(pointer)) return;
+	
+	var cRect =$("contents-part").getDimensions();
+	var cPos = $("contents-part").cumulativeOffset();
+	var mPos = $("messageListContainer").cumulativeOffset();
+	if(cPos.left < pointer.x && pointer.x < cPos.left + cRect.width && mPos.top < pointer.y) {
+		var cTop = _contentMoveTarget(pointer, container);
+		$("contents-part").setStyle({top: cTop + 'px'});
+	}
+}
+
+/*
+function showContentAreaTarget(event, container) {
+	var pointer = Event.pointer(event);
+	if(_isInsideContentVertical(pointer)) return;
+	container.addClassName("mouseover");
+
+	if(!$("contentAreaTarget")) $("contentsIndexContainer").insert({top: new Element("div",{id: "contentAreaTarget"})});
+	
+	var contentRect = $("contents-part").getDimensions();
+	$("contentAreaTarget").setStyle({
+		width: contentRect.width + 'px',
+		height: contentRect.height + 'px',
+		top: _contentMoveTarget(pointer, container) + 'px'
+	}).show();
+
+}
+	
+function hideContentAreaTarget(event, container) {
+	
+	container.removeClassName("mouseover");
+	if($("contentAreaTarget")) $("contentAreaTarget").hide();
+}
+*/
+function _getSelectedOption(selectElement) {
+	return $($(selectElement).options[selectElement.selectedIndex]);
+}
+
+function clearSelectContent(container) {
+	var select = $(container).down("select");
+	select.setValue("");
+	onChangeContent(select);
+}
+
+
+var ZOOM_WINDOW = $H({
+	left:0, 
+	top:0, 
+	width:920,
+	height:750,
+	status:	0,
+	scrollbars:1,
+	menubar:0,
+	location:0,
+	toolbar:0,
+	resizable:0
+});
+
+function showZoom(btn) {
+	if($(btn).hasClassName("btn-disable")) return;
+	var container = $(btn).up(".contents-part");
+	var contentId = Form.serialize(container).toQueryParams()['contentId'];
+	if(contentId) {
+		
+		var messageId = container.down("input[name=messageId]").getValue();
+		var x = ($("marker[x_coordinate]") || $("marker[x]"));
+		var y = ($("marker[y_coordinate]") || $("marker[y]"));
+		
+
+		var params = $H({
+			"action" : "_zoom",
+			"contentId" : contentId,
+			"messageId" : messageId,
+			"x" : (x ? x.getValue() : ""),
+			"y" : (y ? y.getValue() : "")
+		});
+			
+		var windowParam = ZOOM_WINDOW.map(function(e) { return e[0] + "=" + e[1]; }).join(",");
+		window.open("<{$mod_url}>/contents/?" + params.toQueryString(),	"zoomWindow", windowParam);
+    }
+}
+
+function downloadContent(btn) {
+	if($(btn).hasClassName("btn-disable")) return;
+	var param = params($(btn).up(".contents-part"));
+	if (param['fileId'] && param['canRead']) {
+		document.location.href="<{$xoops_url}>/modules/filesharing/?page=file_dl&lid=" + param['fileId']; 
+	} else {
+		alert("<{$smarty.const.COM_PERMISSION_DENIED}>");
+	}
+}
+
+function deleteContent(btn) {
+	if($(btn).hasClassName("btn-disable")) return;
+	var param = params($(btn).up(".contents-part"));
+	if (param['contentId']) {
+		var count = param['relatedMessageNum'];
+		if (count > 0) {
+			if (confirm("<{$smarty.const.COM_CONFIRM_RELATED_CONTENT_DELETE|sprintf:'"+count+"'}>")) {
+				location.href = "<{$mod_url}>/contents/?action=delete&contentId="  + param['contentId'];
+			}
+		} else {
+			if (confirm("<{$smarty.const.COM_CONTENT_DEL_REMAIN}>")) {
+				location.href = "<{$mod_url}>/contents/?action=delete&contentId="  + param['contentId'];
+			}
+		}
+	}
+};
+
+</script>
+
+
+<!-- script for contents select form controll -->
+<script type="text/javascript">
+// onclick unselect link
+function unselect(btn) {
+	var container = $(btn).up(".contents-part");
+	clearSelectContent(container);
+};
+
+function clearMarkerState(container) {
+	var marker = container.down("#point_marker");
+	if(!marker) return; 
+
+	marker.hide();			
+	clearMarkerPosition(container);
+	updateMarkerToggleBtn(container);
+}
+
+function updateMarkerToggleBtn(container) {
+	var marker = container.down("#point_marker");
+	if(marker.visible()) {
+		$("markerSet").hide();
+		$("markerDelete").show();
+		
+	} else {
+		$("markerSet").show();
+		$("markerDelete").hide();
+	}
+}
+
+function delMarker(btn) {
+	if($(btn).btnDisabled()) return;
+	$("point_marker").hide();
+	
+	var container = $(btn).up(".contents-part");
+	clearMarkerPosition(container); 	
+	updateMarkerToggleBtn(container);
+};
+
+function clearMarkerPosition(container) {
+	$("point_marker").setStyle({top:"", left:""});
+    $("marker[x_coordinate]").value = "";
+    $("marker[y_coordinate]").value = "";
+	if(container.down(".googlemap-area")) {
+ 	   	window.contentMap.removeMarker();
+ 	}
+}
+
+function setMarker(btn) {
+	if($(btn).btnDisabled()) return;
+	
+	var con = $("markerContainer");
+	
+	if(con.down(".googlemap-area")) {
+ 	   	window.contentMap.removeMarker();
+ 	}
+ 	
+	$("point_marker").show();
+	updateMarkerToggleBtn(con);
+ 	
+	con.setStyle({cursor : "pointer"})
+		.observe("mousemove", _updateCurrentPostion)
+		.observe("click", function(e) {
+	   		this.stopObserving("mousemove", _updateCurrentPostion)
+	   	   		.stopObserving("click", arguments.callee)
+	   	   		.setStyle({cursor : ""});
+   	   		if(con.down(".googlemap-area")) {
+   	   	   		$("point_marker").hide();
+   	   	   		window.contentMap.showMarker();
+   	   	   		var pos = window.contentMap.getLastClickedPosition();
+			    $("marker[x_coordinate]").value = pos.x;
+			    $("marker[y_coordinate]").value = pos.y;
+   	   		}
+		});
+	
+	window.markerEventListners.onStartMarkerSet();
+	return true;
+}
+
+function _updateCurrentPostion(event) {
+    var pointer = event.pointer();
+    var offset = $("markerContainer").cumulativeOffset();
+    var scroll = {left: $("markerContainer").scrollLeft, top: $("markerContainer").scrollTop};
+   	_markerMoveTo(pointer.x - offset.left + scroll.left - 25, 
+   		   		  pointer.y - offset.top  + scroll.top  - 30);
+}
+
+function _markerMoveTo(left, top) {
+	$("point_marker").setStyle({"top": top + "px", "left": left + "px"});
+	$("marker[x_coordinate]").setValue(left);
+    $("marker[y_coordinate]").setValue(top);
+}
+
+window.markerEventListners = {
+	onStartMarkerSet: function(){}
+};
+</script>
+
+<!-- script for google map controll -->
+<script type="text/javascript">
+function GoogleMapWrapper(container) {
+	this.mapContainer = container.down(".googlemap-area");
+	var param = params(this.mapContainer);
+	var type = GoogleMapWrapper.TYPES[param["mapType"]] || google.maps.MapTypeId.ROADMAP;
+	
+	this.map = new google.maps.Map(this.mapContainer, {
+        zoom: parseInt(param['zoomValue']),
+        center: new google.maps.LatLng(
+			param['centerLat'], param['centerLng']
+        ),
+        mapTypeId: type,
+        scaleControl: true
+	});
+	
+    if(param["markerLat"] && param["markerLng"]) {
+		this.markerObj = new google.maps.Marker({
+	    	position: new google.maps.LatLng(param["markerLat"], param["markerLng"]), 
+	    	map: this.map,
+	    	icon: '<{$mod_url}>/images/marker/marker_A.png'
+		});
+    }
+    
+	
+	google.maps.event.addListener(this.map, "click", this.onClick.bind(this));
+}
+
+Object.extend(GoogleMapWrapper.prototype, {
+	onClick: function(event) {
+		this.mapContainer.next(".last_clicked_lat").setValue(event.latLng.lat());
+		this.mapContainer.next(".last_clicked_lng").setValue(event.latLng.lng());
+	},
+	showMarker: function() {
+		var container = this.mapContainer.up(".contentsShowContainer");
+		this.markerObj = new google.maps.Marker({
+	    	position: new google.maps.LatLng(
+	    	    container.down(".last_clicked_lat").getValue(), 
+	    	    container.down(".last_clicked_lng").getValue()
+	    	),
+	    	map: this.map,
+	    	icon: '<{$mod_url}>/images/marker/marker_A.png'
+		});
+	},
+	removeMarker: function() {
+		if(this.markerObj) this.markerObj.setMap(null);
+		this.markerObj = null;
+	},
+	getLastClickedPosition: function() {
+		return {
+			x: this.mapContainer.next(".last_clicked_lat").getValue(),
+			y: this.mapContainer.next(".last_clicked_lng").getValue()
+		}
+	}
+});
+
+GoogleMapWrapper.TYPES = {
+	m: google.maps.MapTypeId.ROADMAP,
+	d: google.maps.MapTypeId.SATELLITE,
+	h: google.maps.MapTypeId.HYBRID,
+	p: google.maps.MapTypeId.TERRAIN
+};
+</script>

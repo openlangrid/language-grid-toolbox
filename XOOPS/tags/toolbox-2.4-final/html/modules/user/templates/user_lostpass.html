@@ -1,0 +1,23 @@
+<div id="contents_body">
+	<{if $actionForm->hasError()}>
+		<div class="errorMsg">
+			<ul>
+				<{foreach item=message from=$actionForm->getErrorMessages()}>
+					<li><{$message}></li>
+				<{/foreach}>
+			</ul>
+		</div>
+	<{/if}>
+	<h2><{$smarty.const._MD_USER_LANG_LOSTPASSWORD}></h2>
+	<p><{$smarty.const._MD_USER_LANG_NOPROBLEM}></p>
+	<div id="pass_box">
+		<form name="f1" action="#" method="post"><{xoops_token form=$actionForm}>
+			<label><{$smarty.const._MD_USER_LANG_EMAIL}> : </label>
+			<{xoops_input name=email value=$actionForm->get('email') size=34 maxlength=34}>
+			<input type="submit" value="<{$smarty.const._SEND}>" />
+			<a onclick="document.f1.submit(); return false;" href="#">
+				<div class="btn_blue01">Send</div>
+			</a>
+		</form>
+	</div>
+</div>

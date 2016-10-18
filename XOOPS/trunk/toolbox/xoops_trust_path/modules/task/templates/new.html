@@ -1,0 +1,330 @@
+
+<script type="text/javascript">
+//<![CDATA[
+	function hideHoverMenu() {
+		$$("#mainForm .hover_menu").each(Element.hide);
+	}
+	
+	Event.observe(window, "load", function() {
+		var form = $("mainForm");
+		var hovers = $$("#mainForm .hover_menu");
+
+		// #mainForm
+		form
+			.getElements()
+			.each(function(element) {
+				element.observe("focus", hideHoverMenu);
+			});
+
+		// #sourceLangList
+		$("sourceLangList").observe("change", list_Change);
+
+		// calendar
+		var calendarOptions = {
+			close : true,
+			mindate : "<{$smarty.now|date_format:'%m/%d/%Y'}>",
+			HIDE_BLANK_WEEKS : true,
+			LOCALE_WEEKDAYS : "medium"
+		};
+		["smoothingCalendar", "checkCalendar"].each(function(prefix) {
+			var calendar = new YAHOO.widget.Calendar(prefix, prefix, calendarOptions);
+			var container = $(prefix);
+			var label = $(prefix + "Label");
+			var field = $(prefix + "Field");
+			$(prefix + "Link").observe("click", function(event) {
+				event.stop();
+				hideHoverMenu();
+				container.toggle();
+			});
+
+			calendar.selectEvent.subscribe(function(type, dateObject, cal) {
+				var date = dateObject.toString().replace(/,/g, "/");
+				label.innerHTML = date;
+				field.value = date;
+				hideHoverMenu();
+			}, calendar, true);
+			calendar.render();
+		});
+
+		// time list
+		["smoothingTime", "checkTime"].each(function(prefix) {
+			var timeBox = $(prefix + "Box")
+				.observe("click", function(e){ e.stop()});
+			var textbox = $(prefix + "Text")
+				.observe(
+					"click",
+					function(event) {
+						event.stop();
+						hideHoverMenu();
+						timeBox.show();
+					}
+				);
+
+			// links in time list
+			timeBox.select("a").each(function(link) {
+				link.observe("click", function(event) {
+					event.stop();
+					textbox.value = link.innerHTML;
+					timeBox.hide();
+				});
+			});
+		});
+
+		// #selectFileButton
+		$("selectFileButton").observe("click", function(event) {
+			openFileDialog();
+		});
+
+		// #submitButton
+		$("submitButton").observe("click", function(event) {
+			var message = validate();
+			if (message != null) {
+				alert(message);
+				return false;
+			}
+
+			$("mainForm").submit();
+		});
+
+		// function definition
+
+		function list_Change(event) {
+			var list = event.target;
+			var another;
+			var params = $H({});
+
+			if (list.id == "sourceLangList") {
+				another = $("targetLangList");
+				params.set("sourceLang", list.value);
+			} else {
+				another = $("sourceLangList");
+				params.set("targetLang", list.value);
+			}
+
+			var selected = another.value;
+			if (list.value) {
+				new Ajax.Updater(
+					another,
+					'<{$mod_url}>/path/?action=_target_languages',
+					{	parameters: params.toQueryString(),
+						method: "get",
+						onCreate : function() {
+							another.options[0].innerHTML = "<{$smarty.const._MD_TASK_LOADING}>";
+							another.options.length = 1;
+						},
+						onComplete: function() {
+							another.observe("change", list_Change);
+							for (var i = 0; i < another.length; i++) {
+								var option = another.options[i];
+								if (option.value == selected) {
+									option.selected = true;
+									break;
+								}
+							}
+						}
+					}
+				);
+			}
+		}
+
+		function validate() {
+			var message;
+			var elements;
+
+			// validate not empty
+			elements = {
+				nameText : "<{$smarty.const._MD_TASK_NAME}>",
+				sourceLangList : "<{$smarty.const._MD_TASK_SOURCE_LANG}>",
+				targetLangList : "<{$smarty.const._MD_TASK_TARGET_LANG}>",
+				smoothingCalendarField : "<{$smarty.const._MD_TASK_SMOOTHING_LIMIT_DATE}>",
+				smoothingTimeText : "<{$smarty.const._MD_TASK_SMOOTHING_LIMIT_TIME}>",
+				smoothingWorkerText : "<{$smarty.const._MD_TASK_SMOOTHING_WORKER}>",
+				checkCalendarField : "<{$smarty.const._MD_TASK_CHECK_LIMIT_DATE}>",
+				checkTimeText : "<{$smarty.const._MD_TASK_CHECK_LIMIT_TIME}>",
+				checkWorkerText : "<{$smarty.const._MD_TASK_CHECK_WORKER}>",
+				fileIdField : "<{$smarty.const._MD_TASK_DOCUMENT}>"
+			};
+			message = doValidate(elements, "Required", "<{$smarty.const._MD_TASK_EMPTY_PREDICATE}>");
+			if (message.length > 0) {
+				return message;
+			}
+
+			// validate date
+			elements = {
+				smoothingCalendarField : "<{$smarty.const._MD_TASK_SMOOTHING_LIMIT_DATE}>",
+				checkCalendarField : "<{$smarty.const._MD_TASK_CHECK_LIMIT_DATE}>"
+			};
+			message = doValidate(elements, "Date", "<{$smarty.const._MD_TASK_INVALID_PREDICATE}>");
+			if (message.length > 0) {
+				return message;
+			}
+
+			// validate time
+			elements = {
+				smoothingTimeText : "<{$smarty.const._MD_TASK_SMOOTHING_LIMIT_TIME}>",
+				checkTimeText : "<{$smarty.const._MD_TASK_CHECK_LIMIT_TIME}>"
+			};
+			message = doValidate(elements, "Time", "<{$smarty.const._MD_TASK_INVALID_PREDICATE}>");
+			if (message.length > 0) {
+				return message;
+			}
+
+			// compare datetime
+			var older = new Date($("smoothingCalendarField").value + " " + $("smoothingTimeText").value + ":00");
+			var newer = new Date($("checkCalendarField").value + " " + $("checkTimeText").value + ":00");
+
+			var now = new Date();
+			if(older < now) {
+				return "<{$smarty.const._MD_TASK_INVALID_SMOOSING_DATETIME_PASTTIME}>";
+			}
+
+			if (!(older <= newer)) {
+				return "<{$smarty.const._MD_TASK_INVALID_DATETIME_RELATION}>";
+			}
+			
+			// passed all validations
+			return null;
+		}
+		
+		
+		$(document.body).observe("click", hideHoverMenu);
+	});
+//]]>
+</script>
+
+<div id="tbx-body">
+	<button id="how-to-use-button" 
+		onclick="window.open('<{$mod_url}>/how-to-use/<{$smarty.const._MD_TASK_HOW_TO_USE_LINK}>', '_blank'); return false;">How to use
+	</button>
+  <{include file="db:task_file__list_client.html"}>
+  <div class="area-fl-p8">
+    <a href="<{$mod_url}>/"><{$smarty.const._MD_TASK_LIST_TITLE}></a>&gt;<{$smarty.const._MD_TASK_NEW_TITLE}>
+  </div>
+  <br class="clear" />
+  <h1 class="h-pagetitle" style="float:left;"><{$smarty.const._MD_TASK_NEW_TITLE}></h1>
+  <br class="clear" />
+  <form id="mainForm" action="<{$mod_url}>/?action=create" method="post">
+    <table border="0" cellspacing="12" cellpadding="0" class="setting-table" style="margin-top:16px;">
+      <tfoot>
+        <tr>
+
+       	 <th> </th>
+          <td colspan="2" style="background-color:#fff;">
+            <a id="submitButton" href="#" class="btn-s" style="width:80px;"><span class="btn-save"><{$smarty.const._MD_TASK_CREATE}></span></a>
+            <a id="cancelButton" href="<{$mod_url}>/" class="btn"><span><{$smarty.const._MD_TASK_CANCEL}></span></a>
+          </td>
+
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr>
+          <th><{$smarty.const._MD_TASK_NAME}></th>
+          <td>
+            <input id="nameText" type="text" name="params[name]" size="32" style="font-size:120%;"/>
+            &nbsp;&nbsp;<{$smarty.const._MD_TASK_CREATOR}>: <{$creator|escape}>
+          </td>
+        </tr>
+        <tr>
+          <th><{$smarty.const._MD_TASK_LANG}></th>
+          <td>
+	          <table border="0" cellspacing="0" cellpadding="0">
+	            <tr>
+	              <td><{$smarty.const._MD_TASK_SOURCE_LANG}>&nbsp;:&nbsp;</td>
+	              <td>
+		            <select id="sourceLangList" name="params[source_lang]">
+		              <option value=""><{$smarty.const._MD_TASK_SELECT_LANG}></option>
+		              <{include file="db:collabtrans_path__target_languages.html"}>
+		            </select>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td><{$smarty.const._MD_TASK_TARGET_LANG}>&nbsp;:&nbsp;</td>
+	              <td>
+	              	<select id="targetLangList" name="params[target_lang]">
+		              <option value=""><{$smarty.const._MD_TASK_SELECT_LANG}></option>
+		            </select>
+            	  </td>
+	            </tr>
+	          </table>
+          </td>
+        </tr>
+        <tr>
+          <th><{$smarty.const._MD_TASK_LIMIT}></th>
+          <td>
+	          <table>
+	            <tr>
+	              <td><{$smarty.const._MD_TASK_SMOOTHING}></td>
+	              <td>
+	              	<{$smarty.const._MD_TASK_CLOSING_DATE}>&nbsp;:&nbsp;
+	              	<input id="smoothingCalendarField" type="hidden" name="smoothing_date"/>
+	                <a id="smoothingCalendarLink" href="#">
+	                   <img id="smoothingCalendarButton" src="images/icon/icon_calendar.png" alt="<{$smarty.const._MD_TASK_CLICK_CALENDAR}>"/>
+	                   <span id="smoothingCalendarLabel"><{$smarty.const._MD_TASK_CLICK_CALENDAR}></span>
+	                </a>
+                  	<div id="smoothingCalendar" class="hover_menu" style="display: none;"></div>
+	              </td>
+	              <td>
+	              	<{$smarty.const._MD_TASK_CLOSING_TIME}>&nbsp;:&nbsp;
+	              	<input id="smoothingTimeText" type="text" name="smoothing_time" size="8" maxlength="5"/>
+	              	
+	                <div id="smoothingTimeBox" class="hover_menu timeListBox" style="display: none;">
+	                    <table>
+	                      <tbody class="hover-on">
+	                      <{foreach from=$timeList item=time}>
+	                        <tr>
+	                          <td><a href="#"><{$time}></a></td>
+	                        </tr>
+	                      <{/foreach}>
+	                      </tbody>
+	                    </table>
+	                </div>
+	              </td>
+	              <td>&nbsp;&nbsp;<{$smarty.const._MD_TASK_WORKER}>&nbsp;:&nbsp;
+	                <input id="smoothingWorkerText" type="text" name="params[smoothing_worker]" size="12"/>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td><{$smarty.const._MD_TASK_CHECK}></td>
+	              <td>
+	              	<{$smarty.const._MD_TASK_CLOSING_DATE}>&nbsp;:&nbsp;
+		            <input id="checkCalendarField" type="hidden" name="check_date"/>
+	                <a id="checkCalendarLink" href="#">
+	                    <img id="checkCalendarButton" src="images/icon/icon_calendar.png" alt="<{$smarty.const._MD_TASK_CLICK_CALENDAR}>"/>
+	                    <span id="checkCalendarLabel"><{$smarty.const._MD_TASK_CLICK_CALENDAR}></span>
+	                </a>
+	                <div id="checkCalendar" class="hover_menu" style="display: none;"></div>
+	              </td>
+	              <td> <{$smarty.const._MD_TASK_CLOSING_TIME}>&nbsp;:&nbsp;
+	              	<input id="checkTimeText" type="text" name="check_time" size="8" maxlength="5"/>
+	              	
+	                  <div id="checkTimeBox" class="hover_menu timeListBox" style="display: none;">
+	                    <table>
+	                      <tbody class="hover-on">
+	                      <{foreach from=$timeList item=time}>
+	                        <tr>
+	                          <td><a href="#"><{$time}></a></td>
+	                        </tr>
+	                      <{/foreach}>
+	                      </tbody>
+	                    </table>
+	                  </div>
+	              </td>
+	              <td>&nbsp;&nbsp;<{$smarty.const._MD_TASK_WORKER}>&nbsp;:&nbsp;
+	              	<input id="checkWorkerText" type="text" name="params[check_worker]" size="12"/>
+	              </td>
+	            </tr>
+	          </table>
+          </td>
+        </tr>
+        <tr>
+          <th><{$smarty.const._MD_TASK_FILE}></th>
+          <td>
+            <span id="fileNameLabel"><{$smarty.const._MD_TASK_NOT_SELECTED}></span>
+            <input id="fileIdField" type="hidden" name="params[file_id]"/>
+            <a id="selectFileButton" href="#" class="btn"><{$smarty.const._MD_TASK_SELECT_FILE}></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>

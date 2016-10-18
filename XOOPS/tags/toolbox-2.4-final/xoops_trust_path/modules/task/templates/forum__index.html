@@ -1,0 +1,111 @@
+
+<div class="area-popup" style="width:750px;">
+  <div class="area-fr"><a href="#" class="btn-popup-close">x</a></div>
+  <br class="clear" />
+
+  <strong class="h-pagetitle"><{$forumDialogTitle|escape}></strong><br />
+  <form id="ajaxForm" action="">
+    <div class="area-fl">
+    <table style="font-size: 90%; margin-top: 8px;">
+      <tr>
+        <td><{$smarty.const._MD_TASK_CATEGORY}></td>
+        <td>
+          <select id="categoryList" name="categoryId">
+            <option value=""><{$smarty.const._MD_TASK_ALL}></option>
+            <{html_options options=$categoryList}>
+          </select>
+        </td>
+      </tr>
+    </table>
+    </div>
+    <div class="area-fr-p8">
+      in
+      <select id="languageList" name="lang">
+        <{html_options options=$languageList selected=$selectedLanguage}>
+      </select>
+    </div>
+  </form>
+
+  <form id="associateForm" action="<{$mod_url}>/forum/" style="clear:both;">
+    <input type="hidden" name="action" value="_associate"/>
+    <input type="hidden" name="id" value="<{$task->getId()}>"/>
+    <div id="forumListBox" class="popup-pain">
+      <{include file="db:task_forum__list.html"}>
+    </div>
+  </form>
+
+  <div class="area-fr-p4">
+    <a id="associateButton" href="#" class="btn-s"><{$smarty.const._MD_TASK_ASSOCIATE}></a>
+    <a href="#" class="btn"><span class="btn-cancel"><{$smarty.const._MD_TASK_CANCEL}></span></a>
+  </div>
+  <br class="clear" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+	window.redrawForums = (function() {
+		var params = $H({id : <{$id}>});
+		var disabled = false;
+		var elements = $("ajaxForm").getElements();
+
+		return function(event) {
+			toggle();
+
+			params.set(this.name, this.value);
+
+			new Ajax.Updater(
+				"forumListBox",
+				"<{$mod_url}>/forum/?action=_list",
+				{
+					method : "get",
+					parameters : params.toQueryString(),
+					evalScripts : true,
+					onSuccess : toggle
+				}
+			);
+
+			function toggle() {
+				disabled = !disabled;
+
+				if (disabled) {
+					elements.each(function(element) {
+						element.disable();
+					});
+				} else {
+					elements.each(function(element) {
+						element.enable();
+					});
+				}
+			}
+		};
+	})();
+
+	$("categoryList", "languageList").each(function(list) {
+		list.observe("change", redrawForums);
+	});
+
+	$("associateButton").observe("click", function(event) {
+		event.stop();
+
+		var form = $("associateForm");
+
+		// validation
+		var checked = form.getInputs("radio").find(function(radio) {
+			return radio.checked;
+		});
+
+		if (!checked) {
+			alert("<{$smarty.const._MD_TASK_MSG_SELECT_FORUM}>");
+			return false;
+		}
+
+		form.submit();
+	});
+
+	$$(".btn-popup-close,.btn-cancel").each(function(button) {
+		button.observe("click", function(event) {
+			hideFileDialog();
+		});
+	});
+//]]>
+</script>

@@ -1,0 +1,29 @@
+
+	<div class="notification-part" id="search-result-message">
+		<{assign var=resultNum value=$dictionaries|@count}>
+		<{$smarty.const.CT_LABEL_SEARCH_RESULT|sprintf:$resultNum}> [<a href="javascript: $$('input[name=keyword]')[0].setValue(''); void(0)">検索条件をクリア</a>]
+	</div>
+	
+	<div class="popup-pain" style="height:100px; overflow:auto;" >
+	    <table border="0" cellspacing="0" cellpadding="0" style="width:97%;">
+	      <!-- ****************************************** -->
+	      <thead class="table-sortable-head">
+	        <tr>
+	          <th><{$smarty.const.CT_LABEL_HEADWORD}></th>
+	          <th><{$smarty.const.CT_LABEL_TRANSLATIONS}></th>
+	          <th><{$smarty.const.CT_LABEL_RESOURCE_NAME}></th>
+	        </tr>
+	      </thead>
+	      <!-- ****************************************** -->
+	      <tbody>
+	      	<{foreach from=$dictionaries item=dict key=index}>
+	        <tr>
+	          <td class="cell-underlined"><{$dict->getExpressionForSourceLang()}></td>
+	          <td class="cell-underlined"><{$dict->getExpressionForTargetLang()}></td>
+	          <td class="cell-underlined"><{$dict->getName()}></td>
+	        </tr>
+	      	<{/foreach}>
+	      </tbody>
+	    </table>
+    </div>
+

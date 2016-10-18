@@ -1,0 +1,187 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* 翻訳言語設定 */
+div.language-bar {
+	background:url(../images/bg/bg_table_header.jpg) repeat-x;
+	background-position:top;
+	background-color:#d5f1ff;
+	padding:3px;
+	border:1px solid #8fd9fe;
+	margin-top: 4px;
+}
+
+/* ツールバー */
+div.language-tool-bar {
+	background-color:#efefef;
+	padding:3px;
+	border-left:1px solid #999;
+	border-right:1px solid #999;
+	font-size: 100%;
+}
+
+/* 機械翻訳結果一覧 */
+/* 2010.02.17 */
+div.area-language-auto-trans-result {
+	width:460px;
+	overflow:auto;
+	padding:3px;
+	border:1px solid #999;
+	height:200px;
+	margin-top:4px;
+}
+
+/* 機械翻訳結果 */
+div.auto-trans-block {
+	border:1px solid #999;
+	padding:4px;
+	margin-bottom:4px;
+}
+
+/* 機械翻訳結果デフォルトパス */
+div.auto-trans-block-default {
+	border:1px solid #999;
+	padding:4px;
+	margin-bottom:4px;
+	background-color: #ffffce;
+}
+
+
+
+/* 各翻訳結果開閉タイトル */
+/* 2010.03.24 */
+a.auto-trans-title-open {
+	padding-left:16px;
+	background:url(../images/icon/icon_minus.png) no-repeat;
+	background-position:0px 3px;
+}
+
+/* 2010.03.24 */
+a.auto-trans-title-close {
+	padding-left:16px;
+	background:url(../images/icon/icon_plus.png) no-repeat;
+	background-position:0px 3px;
+}
+
+/* 機械翻訳結果文章 */
+div.auto-trans-block p {
+	clear:both;
+	font-size: 90%;
+	line-height: 1.6em;
+}
+
+div.auto-trans-block-default p {
+	clear:both;
+	font-size: 90%;
+}
+
+/* パス詳細ボタン */
+/* 2010.01.19 拡張子忘れ修正 */
+a.btn span.btn-pathinfo-mini {
+	background:url(../images/icon/icon_information.png) no-repeat;
+	background-position:-1px 0px;
+	display:block;
+	width:13px;
+	text-indent:-1000px;
+	overflow:hidden;
+}
+
+div.area-pathinfo-detail {
+	border:1px solid #999;
+	padding:4px;
+	width:98%;
+}
+
+
+
+/* 2010.02.17 */
+div.trans-sentence-area-waku {
+	border: 1px solid #ddd;
+	width:470px;
+	height:240px;
+	overflow:auto;
+	overflow-y: scroll;
+}
+
+table.trans-sentence-area td {
+	padding: 2px;
+	border-bottom:1px solid #ddd;
+	vertical-align:top;
+}
+
+/* 2010.03.24 */
+table.trans-sentence-area td.l-no {
+	padding-left: 2px;
+	padding-right: 2px;
+	background-color:#efefef;
+	text-align:right;
+	color: #aaa;
+	width: 25px;
+	font-size:10pt;
+}
+
+/* 2010.03.24 */
+table.trans-sentence-area td.l-no input {
+	float:right;
+	margin-right:2px;
+}
+
+
+/* 2010.02.17 */
+table.trans-sentence-area td textarea {
+	width: 370px;
+	height: 1em;
+	border: 0px;
+	font-size: 90%;
+	padding-bottom: 4px;
+	overflow:hidden;
+	background-color:transparent;
+}
+
+table.trans-sentence-area td a.btn {
+	margin: 0px;
+	width:10px;
+	height: 16px;
+	margin-top:0px;
+}
+
+
+a.trans-orikaeshi-open {
+	padding-left:20px;
+	background:url(../images/icon/icon_minus.png) no-repeat;
+	background-position:0px 3px;
+}
+
+a.trans-orikaeshi-close {
+	padding-left:16px;
+	background:url(../images/icon/icon_plus.png) no-repeat;
+	background-position:0px 3px;
+}
+
+div#orikaeshi-area {
+	display: none;
+}
+
+
+
+/* ----- patch -------------------------------*/
+div.gage-bar {
+	width:0px;
+}
+body {
+	width: auto;
+	font-size: small;
+}
+div#wrap {
+	min-width : 980px;
+}
+div#tbx-body {
+	text-align: left;
+}
+.tab-pain {
+	height: 280px;
+}
+
+div.trans-sentence-area-waku {
+	overflow-y: scroll;
+}

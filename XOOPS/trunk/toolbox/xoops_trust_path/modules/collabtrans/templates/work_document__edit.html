@@ -1,0 +1,63 @@
+
+<div class="area-popup" style="width:850px; text-align: left;">
+
+	<div class="area-fr">
+		<a href="javascript: void(0);" onclick="cancelDialog(); return false;" class="btn-popup-close">x</a>
+	</div>
+	<br class="clear" />
+  
+	<strong class="h-pagetitle"><{$smarty.const.CT_BTN_SAVE_AT_TOOLBOX}></strong>
+	<p style="margin-bottom:8px;margin-top: 8px;">
+		<{$smarty.const.CT_LABEL_EXPLAIN_ABOUT_SAVE}>
+	</p>
+  
+	<br class="clear" />
+ 
+	<div class="popup-pain" id="folderShowContainer">
+		<{include file="db:collabtrans_file__list.html"}>
+	</div>
+  
+	<table id="saveForms">
+		<tbody>
+		<tr>
+			<td align="right"><{$smarty.const.CT_LABEL_FILENAME}></td>
+			<td>
+				<input type="text" name="fileName" style="width:18em;font-size:120%;font-weight:bold;" />&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td align="right"><{$smarty.const.CT_LABEL_DESCRIPTION}></td>
+			<td><input type="text" name="description" style="width:32em;" /></td>
+		</tr>
+		<tr>
+			<td align="right"><{$smarty.const.CT_LABEL_PERMISSION}></td>
+			<td>
+				<{$smarty.const.CT_LABEL_READABLE}>
+				<select name="readPermission">
+					<option value="public"><{$smarty.const.CT_LABEL_EVERYONE}></option>
+					<option value="user"><{$smarty.const.CT_LABEL_ONLY_ME}></option>
+				</select>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<{$smarty.const.CT_LABEL_WRITEABLE}>
+				<select name="writePermission">
+					<option value="public"><{$smarty.const.CT_LABEL_EVERYONE}></option>
+					<option value="user"><{$smarty.const.CT_LABEL_ONLY_ME}></option>
+				</select>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+  
+	<br class="clear" />
+  
+	<div class="area-fr-p4">
+		<a href="javascript: void(0);" onClick="save(this); return false;" class="btn-s" style="width:100px;">
+			<span class="btn-save"><{$smarty.const.CT_BTN_SAVE}></span>
+		</a>
+		<a href="javascript: void(0);" onclick="cancelDialog(); return false;" class="btn">
+			<span class="btn-cancel"><{$smarty.const.CT_BTN_CANCEL}></span>
+		</a>
+	</div>
+  
+  <br class="clear" />
+</div>

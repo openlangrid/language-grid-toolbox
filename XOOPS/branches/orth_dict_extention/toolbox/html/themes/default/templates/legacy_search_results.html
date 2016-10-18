@@ -1,0 +1,35 @@
+<{capture name="searchResultshtml"}>
+<{foreach item=module from=$searchResults}>
+  <h3><{$module.name}></h3>
+  <!-- start results item loop -->
+  <table class="outer clear" summary="search results">
+  <{foreach item=result from=$module.results}>
+    <tr class="<{cycle values='odd,even'}>">
+      <th style="width:21px;"><img src="<{$result.image}>" alt="<{$module.name}>" title="<{$module.name}>" /></th>
+      <td><a href="<{$result.link}>"><{$result.title}></a><br />
+        <span class="whisper">
+        <{if $result.uid > 0}>
+          <a href="<{$smarty.const.XOOPS_URL}>/userinfo.php?uid=<{$result.uid|xoops_escape}>"><{$result.uid|xoops_user:uname}></a>
+        <{/if}>
+        (<{$result.time|xoops_formattimestampGMT:l}>)
+        </span>
+      </td>
+    </tr>
+  <{/foreach}>
+  </table>
+  <!-- end results item loop -->
+
+  <{if $module.has_more}>
+    <p><a href="<{$smarty.const.XOOPS_URL}>/search.php?action=showall&amp;query=<{$actionForm->get('query')|escape:url}>&amp;mid=<{$module.mid}>&amp;andor=<{$actionForm->get('andor')|xoops_escape}>"><{$smarty.const._MD_LEGACY_LANG_SHOW_ALL}></a></p>
+  <{/if}>
+<{/foreach}>
+<{/capture}>
+
+<{if trim($smarty.capture.searchResultshtml)}>
+  <h1><{$smarty.const._SR_SEARCHRESULTS}></h1>
+  <h2><{$smarty.const._SR_SEARCHRESULTS_BY_MODULES}></h2>
+  <{$smarty.capture.searchResultshtml}>
+  <{include file=db:legacy_search_form.html caller="legacy_search_results"}>
+<{else}>
+  <{include file=db:legacy_search_form.html caller="legacy_search_results_no_match"}>
+<{/if}>

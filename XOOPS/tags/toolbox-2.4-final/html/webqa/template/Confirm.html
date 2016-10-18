@@ -1,0 +1,56 @@
+
+<style type="text/css">
+	#lg {
+		display: none;
+	}
+</style>
+<{*<script language="JavaScript" type="text/javascript" src="<{$smarty.const.APP_ROOT_URL}>/js/confirm.js"></script>*}>
+
+<div id="webqa">
+	<div id="input_wrapper" class="borderbox clearfix">
+		<form name="searchform">
+		<div class="box1">
+			<div class="box1_title">
+				<h1><{$smarty.const.WQA_LB_CONFIRM_QUESTION_POST}></h1>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="contents_wrapper" class="borderbox">
+	<form name="newqa" method="post" action="./">
+		<input type="hidden" name="action" value="done">
+		<table class="add_qa_table">
+			<tr>
+				<th><label><{$smarty.const.WQA_LB_CONFIRM_CATEGORY}></label></th>
+				<td>
+					<div class="input_value"><{$form.category_name}></div>
+				</td>
+			</tr>
+			<{*<tr>
+				<th><label><{$smarty.const.WQA_LB_CONFIRM_TITLE}></label></th>
+				<td>
+					<div class="input_value"><{$form.title}></div>
+				</td>
+			</tr>*}>
+			<tr>
+				<th><label><{$smarty.const.WQA_LB_CONFIRM_BODY}></label></th>
+				<td>
+					<div class="input_value textarea_value"><{$form.question|escape|nl2br}></div>
+				</td>
+			</tr>
+			</table>
+			<div class="button_area">
+				<button type="submit" class="common_blue_button"><{$smarty.const.WQA_LB_CONFIRM_SUBMIT}></button>
+				<button class="common_blue_button" onclick="on_confirmform_cancel(); return false;"><{$smarty.const.WQA_LB_CONFIRM_CANCEL}></button>
+			</div>
+	</form>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+function on_confirmform_cancel() {
+	document.location.href = './?action=question';
+}
+-->
+</script>
+

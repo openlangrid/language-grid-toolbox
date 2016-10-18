@@ -1,0 +1,187 @@
+<?php $tpl = $this->assign; ?>
+<script type="text/javascript">
+var LanguageSelectorOptions = <?php echo $tpl->languageSelectorOptions; ?>;
+var TranslationLanguagePairs = <?php echo $tpl->translationLanguagePairs; ?>;
+var TranslationLanguages = <?php echo $tpl->translationLanguages; ?>;
+var ImportedDictionaries = <?php echo $tpl->importedDictionaries; ?>;
+</script>
+<?php require_once dirname(__FILE__).'/php2js.html'; ?>
+<div id="contents_body">
+	<div id="translation-message" style="display: none;">
+		<?php echo wfMsg('lg:Please_create_translation_path_settings_first.'); ?>
+	</div>
+	<div id="translation-area">
+	<span id="translation-area-controller" class="link">
+		<img src="<?php echo $tpl->imagePath; ?>/icon_plus.png" id="translation-area-expand" style="display: none;" /><img src="<?php echo $tpl->imagePath; ?>/icon_minus.png" id="translation-area-collapse" /> <?php echo wfMsg('lg:Translation'); ?> 
+	</span><br />
+	<div id="translation-wrapper">
+		<table>
+			<tr>
+				<td>
+					<select id="source-language"></select>
+				</td>
+				<td>
+					<div class="float-right">
+						<span class="clickable" id="source-font-smaller">
+							<img src="<?php echo $tpl->imagePath; ?>/font_small.jpg" width="22" height="21" />
+						</span>
+						<span class="clickable" id="source-font-larger">
+							<img src="<?php echo $tpl->imagePath; ?>/font_large.jpg" width="22" height="21" />
+						</span>
+						<span class="clickable" id="source-area-smaller">
+							<img src="<?php echo $tpl->imagePath; ?>/area_small.gif" width="22" height="21" />
+						</span>
+						<span class="clickable" id="source-area-larger">
+							<img src="<?php echo $tpl->imagePath; ?>/area_large.gif" width="22" height="21" />
+						</span>
+					</div>
+				</td>
+				<td rowspan="2" width="15"></td>
+				<td>
+					<select id="target-language"></select>
+				</td>
+				<td>
+					<div class="float-right">
+						<span class="clickable" id="target-font-smaller">
+							<img src="<?php echo $tpl->imagePath; ?>/font_small.jpg" width="22" height="21" />
+						</span>
+						<span class="clickable" id="target-font-larger">
+							<img src="<?php echo $tpl->imagePath; ?>/font_large.jpg" width="22" height="21" />
+						</span>
+						<span class="clickable" id="target-area-smaller">
+							<img src="<?php echo $tpl->imagePath; ?>/area_small.gif" width="22" height="21" />
+						</span>
+						<span class="clickable" id="target-area-larger">
+							<img src="<?php echo $tpl->imagePath; ?>/area_large.gif" width="22" height="21" />
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<textarea class="translation-area" style="height: 150px; font-size: 15px;" id="source-area"></textarea>
+				</td>
+				<td colspan="2">
+					<textarea class="translation-area" style="height: 150px; font-size: 15px;" id="target-area"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img id="translation-loading" style="display: none;" src="<?php echo $tpl->imagePath; ?>/loading.gif" /> <span id="translation-time"></span>
+				</td>
+				<td>
+					<div class="float-right">
+						<input type="button" value="<?php echo wfMsg('lg:Clear'); ?>" id="clear-button" />
+						<input type="button" value="<?php echo wfMsg('lg:Translate'); ?>" id="translation-button" />
+					</div>
+				</td>
+				<td colspan="3"></td>
+			</tr>
+		</table>
+	</div>
+
+	<span id="back-translation-area-controller" class="link">
+		<img src="<?php echo $tpl->imagePath; ?>/icon_plus.png" id="back-translation-area-expand" /><img src="<?php echo $tpl->imagePath; ?>/icon_minus.png" id="back-translation-area-collapse" style="display: none;" /> <?php echo wfMsg('lg:Back_Translation'); ?> 
+	</span>
+
+	<div id="back-translation-wrapper" style="display: none;">
+		<textarea id="back-area" style="height: 150px; font-size: 15px;"></textarea>
+		
+	</div>
+</div>
+
+	<div id="pane1">
+		<div style="" class="dictionary_label">
+			<p class="dict_entry_label">
+				<span id="current-entrys" style="display:none;"><!--11 entries, last update on 2009/12/01 15:02:52 by 127.0.0.1--></span>
+			</p>
+		</div>
+	</div>
+
+	<h3><?php echo wfMsg('lg:Page_Dictionary'); ?></h3>
+
+	<div id="search_box_wrapper">
+		<input type="text" name="word" id="word" size="100">
+		<button id="search_button"><?php echo wfMsg('lg:Search'); ?></button>
+		<select name="search_lang" id="search_lang" style="width: 230px;">
+		<?php
+			foreach ($tpl->language_array as $key => $value) {
+				$selected = ($key == $tpl->f_selected_language_code) ? 'selected=yes' : '';
+				echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+			}
+		?>
+		</select>
+	</div>
+
+	<!--pane-->
+	<div id="dictionary-edit-area">
+		<div id="">
+			[<a style="" id="add-record" class="hand"><?php echo wfMsg('lg:Add_record'); ?></a>]
+			[<a style="" id="delete-record" class="hand"><?php echo wfMsg('lg:Delete_record'); ?></a>]
+			[<a style="" id="add-language" href="<?php echo $tpl->selectlanguageurl; ?>"><?php echo wfMsg('lg:Add/Delete_language'); ?></a>]
+			<span id="now-edit" style="margin-left: 20px; font-style: italic; color: rgb(102, 102, 102);">* <?php echo wfMsg('lg:Updated'); ?></span>
+		</div>
+		<div id="edit-dictionary-table-header-wrapper-wrapper">
+			<div id="edit-dictionary-table-header-wrapper" style="left: 0pt; width: 808px;">
+				<table class="body_title" id="edit-dictionary-table-header" style="" border="0" cellpadding="0" cellspacing="0">
+				<thead id="edit-dictionary-head">
+					<tr class="table_title_bg">
+						<td id="userDictHeadCell_0">
+							<select id="lang1" name="lang1" style="width: 296px;">
+								<?php
+									foreach ($tpl->language_array as $key => $value) {
+										$selected = ($key == $tpl->f_selected_language_code) ? 'selected=yes' : '';
+										echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+									}
+								?>
+							</select>
+							<span>[<a href="javascript:void(0);" id="lang1_asc" class="sortheader">↑</a>]</span>
+							<span>[<a href="javascript:void(0);" id="lang1_desc" class="sortheader">↓</a>]</span>
+						</td>
+						<td id="userDictHeadCell_1">
+							<select name="lang2" id="lang2" style="width: 296px;">
+								<?php
+									foreach ($tpl->language_array as $key => $value) {
+										$selected = ($key == $tpl->s_selected_language_code) ? 'selected=yes' : '';
+										echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+									}
+								?>
+							</select>
+							<span>[<a href="javascript:void(0);" id="lang2_asc" class="sortheader">↑</a>]</span>
+							<span>[<a href="javascript:void(0);" id="lang2_desc" class="sortheader">↓</a>]</span>
+						</td>
+					</tr>
+				</thead>
+				</table>
+			</div>
+		</div>
+		<?php /*<div onscroll="xyScroll('edit-dictionary-table-header-wrapper', 'edit-dictionary-table-wrapper');" id="edit-dictionary-table-wrapper" style="width: 825px;">*/ ?>
+		<div id="edit-dictionary-table-wrapper" style="width: 825px;">
+			<table class="body_title" id="dictionary-table" style="width: 808px; float:left;" border="0" cellpadding="0" cellspacing="0">
+			</table>
+		</div>
+		<div>
+			<input name="Save" id="Save" value="<?php echo wfMsg('lg:Save'); ?>" type="button">
+			<span style="margin-left: 20px;">
+				<a id="" href="<?php echo $tpl->cancelurl; ?>"><?php echo wfMsg('lg:Cancel'); ?></a>
+				｜
+				<a id="upload-dictionary-edit" href="javascript:void(0);"><?php echo wfMsg('lg:Upload'); ?></a>
+				｜
+				<a id="download-dictionary-edit" href="<?php echo $tpl->downloadurl; ?>"><?php echo wfMsg('lg:Download'); ?></a>
+			</span>
+		</div>
+	</div>
+	<table width="830">
+		<tr>
+			<td align="left">
+				<h3><?php echo wfMsg('lg:Import_Page_Dictionary'); ?></h3>
+			</td>
+			<td align="right">
+				[<span class="link" id="import-dictionary-button"><?php echo wfMsg('lg:Import_Dictionary'); ?></span>]
+			</td>
+		</tr>
+	</table>
+	<div id="import-dictionary-area"></div>
+	<h3><?php echo wfMsg('lg:License_Information'); ?></h3>
+	<div id="license-area"></div>
+</div>

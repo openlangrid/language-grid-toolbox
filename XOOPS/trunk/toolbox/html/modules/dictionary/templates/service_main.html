@@ -1,0 +1,29 @@
+<p><h2>
+local dictionary service test.
+</h2></p>
+<table>
+	<tr><th>Billingual Dictionary wsdls</th></tr>
+	<{foreach from=$bds item=bdRow}>
+	<tr>
+		<td>
+		<{foreach from=$bdRow item=bdUrl}>
+			<a href='wsdl/billingualdictionary_wsdl.php?serviceId=<{$bdUrl}>' /><{$bdUrl}></a>
+			&nbsp;|&nbsp;
+		<{/foreach}>
+		</td>
+	</tr>
+	<{/foreach}>
+</table>
+<table>
+	<tr><th>Parallel Text wsdls</th></tr>
+	<{foreach from=$pts item=ptRow}>
+	<tr>
+		<td>
+		<{foreach from=$ptRow item=ptUrl}>
+			<a href='wsdl/paralleltext_wsdl.php?serviceId=<{$ptUrl}>' /><{$ptUrl}></a>
+			&nbsp;|&nbsp;
+		<{/foreach}>
+		</td>
+	</tr>
+	<{/foreach}>
+</table>

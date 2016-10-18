@@ -1,0 +1,168 @@
+<script charset="utf-8" type="text/javascript">
+<{include file="db:web_creation_script.html"}>
+</script>
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="#">
+			<ul class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m">
+					<span><{$smarty.const._MI_WEB_CREATION_TOOL_NAME}></span>
+				</li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<input type='hidden' id='moduleId' value='web_creation'>
+<input type='hidden' id='screenId' value='web_creation_main'>
+<div id="wc-wrapper">
+	<div id="wc-translation-container" class="wc-container">
+		<div id="wc-title-area" class="clearfix">
+			<div id="wc-title">
+				<h2 class="wc-title"><{$smarty.const._MI_WEB_CREATION_TRANSLATE}></h2>
+			</div>
+			<div id="wc-workspace-controller">
+				<span id="wc-load-html-by-file-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_LOAD_HTML}></span>
+				<span id="wc-load-workspace-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_LOAD_WORKSPACE}></span>
+				<span id="wc-save-workspace-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_SAVE_WORKSPACE}></span>
+				<span id="wc-translation-area-toggle-button" class="wc-toggle-button">-</span>
+			</div>
+			<div id="wc-workspace-load-dialog"></div>
+			<div id="wc-workspace-save-dialog"></div>
+			<div id="wc-html-load-dialog"></div>
+		</div>
+
+		<div id="wc-translation-area-wrapper">
+			<table id="wc-url-area" width="100%">
+				<tr>
+					<td id="wc-url-input-label">
+						<label for="wc-url-input"><{$smarty.const._MI_WEB_CREATION_WEB_PAGE_URL}>:</label>
+					</td>
+					<td>
+						<input id="wc-url-input" type="text" value="http://" />
+					</td>
+					<td id="wc-url-ajax">
+						<img id="wc-url-ajax-image" src="./image/ajax.gif" style="display: none;" />
+					</td>
+					<td id="wc-url-controller">
+						<span id="wc-load-html-by-url-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_IMPORT}></span>
+						<span id="wc-display-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_DISPLAY}></span>
+					</td>
+				</tr>
+			</table>
+
+			<div id="wc-apply-template-area" class="clearfix">
+				<div class="clearfix">
+					<div id="wc-apply-template-title"><{$smarty.const._MI_WEB_CREATION_APPLY_TEMPLATE}></div>
+					<div id="wc-apply-template-controller">
+						<span id="wc-load-apply-template-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_APPLY_TEMPLATE}></span>
+					</div>
+				</div>
+				<div id="wc-apply-template-body">
+
+				</div>
+				<div id="wc-apply-template-load-dialog"></div>
+			</div>
+
+			<div id="wc-translation-controller-area" class="clearfix">
+				<div id="wc-languages">
+					<select id="wc-source-language-selector"></select>
+					&nbsp;&gt;&nbsp;
+					<select id="wc-target-language-selector"></select>
+				</div>
+				<div id="wc-translation-button-area">
+					<img id="wc-translation-ajax-image" src="./image/ajax_green.gif" style="display: none;" />
+					<span id="wc-translation-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_TRANSLATE}></span>
+				</div>
+			</div>
+
+			<table id="wc-translation-area">
+				<tr>
+					<td id="wc-source">
+						<div id="wc-source-title-area" class="clearfix">
+							<div id="wc-source-title">
+								<{$smarty.const._MI_WEB_CREATION_ORIGINAL_WEB_PAGE}>: <span id="wc-source-language"></span>
+							</div>
+							<div id="wc-source-height-controllers">
+								<span id="wc-source-expand-button"><img src="./image/button/larger.gif" width="22" height="21" alt="" /></span>
+								<span id="wc-source-contract-button"><img src="./image/button/smaller.gif" width="22" height="21" alt="" /></span>
+							</div>
+						</div>
+						<div id="wc-source-body">
+
+						</div>
+						<div id="wc-source-controller-area" class="clearfix">
+							<div id="wc-source-controller-button-wrapper">
+								<span id="wc-source-display-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_DISPLAY_ORIGINAL_WEB_PAGE}></span>
+								<span id="wc-source-save-html-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_SAVE_HTML}></span>
+								<span id="wc-source-download-html-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_DOWNLOAD_HTML}></span>
+							</div>
+						</div>
+					</td>
+					<td id="wc-target">
+						<div id="wc-target-title-area" class="clearfix">
+							<div id="wc-target-title">
+								<{$smarty.const._MI_WEB_CREATION_TRANSLATED_WEB_PAGE}>: <span id="wc-target-language">Japanese</span>
+							</div>
+							<div id="wc-target-height-controllers">
+								<span id="wc-target-expand-button"><img src="./image/button/larger.gif" width="22" height="21" alt="" /></span>
+								<span id="wc-target-contract-button"><img src="./image/button/smaller.gif" width="22" height="21" alt="" /></span>
+							</div>
+						</div>
+						<div id="wc-target-body">
+
+						</div>
+						<div id="wc-target-controller-area" class="clearfix">
+							<div id="wc-target-controller-button-wrapper">
+								<span id="wc-target-display-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_DISPLAY_TRANSLATED_WEB_PAGE}></span>
+								<span id="wc-target-save-html-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_SAVE_HTML}></span>
+								<span id="wc-target-download-html-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_DOWNLOAD_HTML}></span>
+							</div>
+							<div id="wc-target-sub-controller-area" class="clearfix">
+								<span><input type="checkbox" name="wc-target-all-fix-button" id="wc-target-all-fix-button" /><{$smarty.const._MI_WEB_CREATION_ALL_FIX}></span>
+								<span><input type="checkbox" name="wc-target-show-tag-button" id="wc-target-show-tag-button" /><{$smarty.const._MI_WEB_CREATION_SHOW_TAG}></span>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div id="wc-html-save-dialog"></div>
+		</div>
+	</div>
+
+	<div id="wc-template-container" class="wc-container">
+		<div id="wc-template-workspace-area" class="clearfix">
+			<h2 class="wc-title"><{$smarty.const._MI_WEB_CREATION_TEMPLATE}></h2>
+			<div id="wc-template-controller-area">
+				<span id="wc-template-load-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_LOAD_TEMPLATE}></span>
+				<span id="wc-template-save-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_SAVE_TEMPLATE}></span>
+				<span id="wc-template-add-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_ADD_TEMPLATE}></span>
+				<span id="wc-template-toggle-button" class="wc-toggle-button">-</span>
+			</div>
+		</div>
+		<div id="wc-template-area">
+
+		</div>
+		<div id="wc-template-load-dialog"></div>
+		<div id="wc-template-save-dialog"></div>
+	</div>
+
+	<div id="wc-license-area">
+		<div id="wc-license-area-title"><{$smarty.const._MI_WEB_CREATION_LICENSE_INFORMATION}></div>
+		<div id="wc-license-area-body"></div>
+	</div>
+</div>
+<div id="wc-dialog" style="display: none;">
+<div id="wc-dialog-main">
+	<div id="wc-dialog-title"></div>
+	<div id="wc-dialog-body"></div>
+	<div id="wc-dialog-button-set">
+		<div id="wc-dialog-ok-cancel" class="clearfix">
+			<span id="wc-dialog-ok" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_OK}></span>
+			<span id="wc-dialog-cancel" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_CANCEL}></span>
+		</div>
+	</div>
+</div>
+<div id="wc-dialog-mask"></div>
+</div>

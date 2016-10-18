@@ -1,0 +1,57 @@
+  <div class="area-popup" style="width:420px;">
+    <div class="area-fr">
+    
+    <a href="javascript: glayerHidden('glayer');" class="btn-popup-close">x</a></div>
+    <br class="clear" />
+    <strong><{$smarty.const.STF_LABEL_DISPLAY_LANGUAGE_SETTING}></strong>
+    <p style="margin-bottom:8px;font-size:85%;">
+    <{$smarty.const.STF_DESCRIPTION_DISPLAY_LANGUAGE_SETTING}></p>
+    <div class="popup-pain" >
+   <br  />
+   
+   <table>
+     <tr>
+       <td valign="top"><{$smarty.const.STF_LABEL_MAIN_LANGUAGE}></td>
+       <td>
+         <select id="mainLanguage">
+   		   <{foreach from=$languageCodeList item=langCode}>
+		     <option value="<{$langCode}>"><{$languageNameMap[$langCode]}></option>
+		   <{/foreach}>
+         </select>
+         <br />
+         <span style="font-size:80%;"><{$smarty.const.STF_DESCRIPTION_MAIN_LANGUAGE}></td>
+     </tr>
+     <tr>
+       <td valign="top"><{$smarty.const.STF_LABEL_SUB_LANGUAGE}></td>
+       <td>
+         <select id="subLanguage">
+   		   <{foreach from=$languageCodeList item=langCode}>
+		     <option value="<{$langCode}>"><{$languageNameMap[$langCode]}></option>
+		   <{/foreach}>
+         </select>
+         <br />
+         <span style="font-size:80%;"><{$smarty.const.STF_DESCRIPTION_SUB_LANGUAGE}></span>
+       </td>
+     </tr>
+   </table>
+
+    </div>
+    <div class="area-fr-p4">
+      <!-- -->
+      <a href="javascript: goCategoryList();" class="btn-s" style="width:100px;"><span><{$smarty.const.STF_LABEL_START_STORE_FRONT}></span></a> 
+      <a href="javascript: glayerHidden('glayer');" class="btn"><span class="btn-cancel"><{$smarty.const.STF_LABEL_CANCEL}></span></a>
+    </div>
+    <br class="clear" />
+
+  </div>
+  
+<script type="text/javascript">
+//<![CDATA[
+
+goCategoryList = function () {
+	location.href = "<{$mod_url}>/?action=selectlang&resourceName=<{$resourceName}>" +
+	                "&mainLanguage=" + $("mainLanguage").value + "&subLanguage=" + $("subLanguage").value;
+}
+
+//]]>
+</script>

@@ -1,0 +1,83 @@
+
+<div id="<{$_showUrl}>&amp;questionId=<{$question->getId()}>&amp;page=<{$pager->getCurrentPage()}>">
+  <div class="AnswerArea">
+    <div class="DescriptionArea">
+      <p class="main">
+        <{$highlighter->getMainExpression()}>
+      </p>
+      <p class="sub">
+        <{$highlighter->getSubExpression()}>
+      </p>
+
+      <{foreach name=terms from=$highlighter->getUsedTerms() key=language item=terms}>
+      <{foreach from=$terms item=term}>
+        <ol id="definition_<{$term->getRecordId()}>_<{$language}>_p<{$pager->getCurrentPage()}>" class="definitionBlock" style="display:none;">
+        <{foreach from=$term->getDefinitions() item=definition}>
+          <li><{$definition}></li>
+        <{/foreach}>
+        </ol>
+      <{/foreach}>
+      <{/foreach}>
+    </div>
+    <!-- End .DescriptionArea -->
+
+    <table class="pager">
+      <tr>
+        <td>
+        <{if $pager->hasPrevPage()}>
+          <a href="<{$_showUrl}>&amp;questionId=<{$question->getId()}>&amp;page=<{$pager->getPrevPageNo()}>" class="arrow pageLink previousLink">&nbsp;</a>
+        <{else}>
+          <span class="arrow previousLink">&nbsp;</span>
+        <{/if}>
+        </td>
+        <td class="PageCount"><{$pager->getCurrentPage()}>/<{$pager->getLastPageNo()}></td>
+        <td>
+        <{if $pager->hasNextPage()}>
+          <a href="<{$_showUrl}>&amp;questionId=<{$question->getId()}>&amp;page=<{$pager->getNextPageNo()}>" class="arrow pageLink nextLink">&nbsp;</a>
+        <{else}>
+          <span class="arrow nextLink">&nbsp;</span>
+        <{/if}>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- End .AnswerArea -->
+
+<{foreach from=$answer->getContents() item=content}>
+  <div class="MapPhotoArea" style="position: relative;">
+    <{if $content->getContentType() == 'google_map'}>
+    <span id="map<{$content->getShopAnswerContentId()}>" class="mapBox">&nbsp;</span>
+    <script type="text/javascript">
+    //<![CDATA[
+		new Ajax.Updater(
+			"map<{$content->getShopAnswerContentId()}>",
+			"<{$mod_url}>/answer_content/?action=_map&shopAnswerContentId=<{$content->getShopAnswerContentId()}>",
+			{
+				method: "get",
+				evalScripts: true
+			}
+		);
+	//]]>
+	</script>
+    <{else}>
+    <img src="<{$mod_url}>/answer_content/?action=image&shopAnswerContentId=<{$content->getShopAnswerContentId()}>"
+    	<{$content->htmlStylePreviewSize()}> />
+    <{/if}>
+	<div onclick="showZoom(this)" class="MapLayer" style="opacity: 0.01; filter: alpha(opacity = 1); background-color: #FFF; z-index: 999;"></div>
+	<input type="hidden" id="contentId" value="<{$content->getShopAnswerContentId()}>" />
+    <p><{$content->getContentTitle()|escape}></p>
+  </div>
+<{foreachelse}>
+  <script type="text/javascript" >
+  //<![CDATA[
+	$$("#list_container div.AnswerArea")
+		.find(function(answerArea) {
+			return answerArea.up().visible();
+		}).setStyle({
+			width : 958 + "px"
+		});
+  //]]>
+  </script>
+		
+<{/foreach}>
+</div>

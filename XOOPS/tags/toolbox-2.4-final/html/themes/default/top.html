@@ -1,0 +1,141 @@
+<div id="contents_body">
+	<div id="top_contents">
+		<div id="contents_left_box_top">
+			<div id="top_main_img">
+				<{$smarty.const._THEME_TOP_MESSAGE_HTML}>
+				<{*
+				<dl>
+					<dd>
+						<span class="main_text01"><{$smarty.const._THEME_TOP_TEXT00_LB}></span>
+						<{$smarty.const._THEME_TOP_TEXT01_LB}>
+					</dd>
+					<dd class="main_text02">【<{$smarty.const._THEME_TOP_TEXT02_LB}>】</dd>
+					<dt>■<{$smarty.const._THEME_TOP_TEXT03_LB}></dt>
+					<dd>
+					<{$smarty.const._THEME_TOP_TEXT04_LB}>
+					</dd>
+					<dt>■<{$smarty.const._THEME_TOP_TEXT05_LB}></dt>
+					<dd>
+					<{$smarty.const._THEME_TOP_TEXT06_LB}></dt>
+					</dd>
+					<dt>■<{$smarty.const._THEME_TOP_TEXT07_LB}></dt>
+					<dd>
+					<{$smarty.const._THEME_TOP_TEXT08_LB}>
+					</dd>
+				</dl>
+				*}>
+			</div>
+			<div style="text-align:left; font-weight:bold;"><{$smarty.const._THEME_TOP_SUPPORT_SITE}></div>
+			<div style="text-align:left; font-size:10px; color:#007EC4;"><{$smarty.const._THEME_TOP_BROWSER_INFO_LB}></div>
+			<div class="top_info"><{$smarty.const._THEME_TOP_INFOMATION_LB}></div>
+			<{$smarty.const._THEME_INFORMATION_HTML}>
+			<{*
+			<dl>
+				<dd><{$smarty.const._THEME_TOP_INFO05_LB}></dd>
+				<dd><{$smarty.const._THEME_TOP_INFO04_LB}></dd>
+				<dd><{$smarty.const._THEME_TOP_INFO03_LB}></dd>
+				<dd><{$smarty.const._THEME_TOP_INFO01_LB}></dd>
+				<dd><{$smarty.const._THEME_TOP_INFO02_LB}></dd>
+				<dd>&nbsp;</dd>
+			</dl>
+			*}>
+		</div>
+		<div id="contents_right_box_top">
+		<{*
+			<form action="" method="get">
+				<div id="login_set_logout">
+					<div id="btn_set01">
+						<table border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="70">
+								<span>Language</span>
+							</td>
+							<td width="80">
+								<select name="ui" readonly='yes' disabled='true'>
+									<option value="jp" selected="selected">日本語</option>
+									<option value="en">English</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+					</div>
+				</div>
+			</form>
+		*}>
+		<{if $uname == ''}>
+			<{if $redirect_message != ''}>
+				<div id="login_message" style="color: #f00;"><{$redirect_message}></div>
+			<{/if}>
+			<div id="top_loginbox">
+				<form action="<{$xoops_url}>/user.php" method="post" name='login_form'>
+					<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
+					<input name="op" id="legacy_xoopsform_block_op" type="hidden" value="login" />
+					<table width="210" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="60"><label for="legacy_xoopsform_uname"><{$smarty.const._THEME_TOP_UNAME_LB}></label></td>
+							<td><{xoops_input type='text' name='uname' class='login_text' id='legacy_xoopsform_uname'}></td>
+						</tr>
+						<tr>
+							<td><label for="legacy_xoopsform_pass"><{$smarty.const._THEME_TOP_PASSWD_LB}></label></td>
+							<td><{xoops_input type='password' name='pass' class='login_text' id='legacy_xoopsform_pass'}></td>
+						</tr>
+					</table>
+					<table width="210" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="210" class="login_text02">
+								<input name="rememberme" id="rememberme_check" type="checkbox" value="On" />
+								<label for="rememberme_check"><{$smarty.const._THEME_TOP_AUTOLOGIN_LB}></label>
+							</td>
+						</tr>
+						<tr>
+							<td width="210">
+								<div class="btn_login">
+									<button onclick="document.login_form.submit(); return false;"><{$smarty.const._THEME_TOP_LOGIN_LB}></button>
+									<{* <input name="submit" id="legacy_xoopsform_block_submit" type="submit" value="<{$smarty.const._THEME_TOP_LOGIN_LB}>" /> *}>
+									<{* <a href="#" onclick="document.login_form.submit(); return false;"><{$smarty.const._THEME_TOP_LOGIN_LB}></a> *}>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div id="lost_pass_box">
+				<div class="btn_gy01">
+					<a href="<{$xoops_url}>/lostpass.php"><{$smarty.const._MD_USER_LANG_LOSTPASS}></a>
+				</div>
+			</div>
+			<div id="new_user">
+				<div class="signin_message">
+					<{$smarty.const._THEME_SIGNIN_MESSAGE}>
+				</div>
+				<span>
+					<a href="<{$xoops_url}>/register.php"><{$smarty.const._THEME_TOP_NEW_USER_LB}></a>
+				</span>
+			</div>
+		<{/if}>
+		</div>
+	</div>
+</div>
+<script language="JavaScript" type="text/javascript">
+<!--
+window.onload = function() {
+	Event.observe(window.document, 'keypress',
+		function login_form_keypress(e){
+			if(e.keyCode == Event.KEY_RETURN ){
+				if(Field.present('legacy_xoopsform_uname') && Field.present('legacy_xoopsform_pass')){
+					document.login_form.submit();
+				}else if(Field.present('legacy_xoopsform_uname')){
+					Field.focus('legacy_xoopsform_pass');
+				}else if(Field.present('legacy_xoopsform_pass')){
+					Field.focus('legacy_xoopsform_uname');
+				}else{
+					Field.focus('legacy_xoopsform_uname');
+				}
+
+			}
+		}
+	);
+}
+
+-->
+</script>

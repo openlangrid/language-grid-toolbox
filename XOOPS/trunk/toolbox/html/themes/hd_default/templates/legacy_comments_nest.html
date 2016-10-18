@@ -1,0 +1,12 @@
+<{section name=i loop=$comments}>
+
+<{include file="db:legacy_comment.html" comment=$comments[i]}>
+
+<!-- start comment replies -->
+<{foreach item=reply from=$comments[i].replies}>
+<{include file="db:system_comment.html" comment=$reply}>
+<{/foreach}>
+<!-- end comment tree -->
+
+<hr class="XoopsCommentsDivision" />
+<{/section}>

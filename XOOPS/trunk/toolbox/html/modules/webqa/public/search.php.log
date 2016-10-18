@@ -1,0 +1,149 @@
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [0] => 1
+        )
+
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [status] => OK
+    [message] => Success
+    [contents] => Array
+        (
+            [0] => ToolboxVO_QA_QARecord Object
+                (
+                    [id] => 2
+                    [question] => Array
+                        (
+                            [0] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => fr
+                                    [expression] => 
+                                )
+
+                            [1] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => ja
+                                    [expression] => ffff
+                                )
+
+                            [2] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => zh
+                                    [expression] => 
+                                )
+
+                        )
+
+                    [answers] => Array
+                        (
+                        )
+
+                    [categoryIds] => Array
+                        (
+                            [0] => 1
+                        )
+
+                    [creationDate] => 1285145889
+                    [updateDate] => 1285314268
+                )
+
+            [1] => ToolboxVO_QA_QARecord Object
+                (
+                    [id] => 3
+                    [question] => Array
+                        (
+                            [0] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => fr
+                                    [expression] => 
+                                )
+
+                            [1] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => ja
+                                    [expression] => 
+                                )
+
+                            [2] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => zh
+                                    [expression] => 
+                                )
+
+                        )
+
+                    [answers] => Array
+                        (
+                        )
+
+                    [categoryIds] => Array
+                        (
+                        )
+
+                    [creationDate] => 1285296343
+                    [updateDate] => 1285296343
+                )
+
+            [2] => ToolboxVO_QA_QARecord Object
+                (
+                    [id] => 4
+                    [question] => Array
+                        (
+                            [0] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => fr
+                                    [expression] => 
+                                )
+
+                            [1] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => ja
+                                    [expression] => 
+                                )
+
+                            [2] => ToolboxVO_Resource_Expression Object
+                                (
+                                    [language] => zh
+                                    [expression] => 
+                                )
+
+                        )
+
+                    [answers] => Array
+                        (
+                        )
+
+                    [categoryIds] => Array
+                        (
+                        )
+
+                    [creationDate] => 1285296346
+                    [updateDate] => 1285296346
+                )
+
+        )
+
+)

@@ -1,0 +1,12 @@
+<?php
+
+class ServiceGridTranslationExec{
+	private $pathId;	private $execId;	private $execOrder;	private $sourceLang;	private $targetLang;	private $serviceType;	private $serviceId;	private $dictionaryFlag;	private $createUserId;	private $updateUserId;	private $createTime;	private $updateTime;	private $translationBinds;
+	public function getPathId() {		return $this->pathId;	}	public function getExecId() {		return $this->execId;	}	public function getExecOrder() {		return $this->execOrder;	}	public function getSourceLang() {		return $this->sourceLang;	}	public function getTargetLang() {		return $this->targetLang;	}	public function getServiceType() {		return $this->serviceType;	}	public function getServiceId() {		return $this->serviceId;	}	public function getDictionaryFlag() {		return $this->dictionaryFlag;	}	public function getCreateUserId() {		return $this->createUserId;	}	public function getUpdateUserId() {		return $this->updateUserId;	}	public function getCreateTime() {		return $this->createTime;	}	public function getUpdateTime() {		return $this->updateTime;	}	public function setPathId($pathId) {		$this->pathId = $pathId;	}	public function setExecId($execId) {		$this->execId = $execId;	}	public function setExecOrder($execOrder) {		$this->execOrder = $execOrder;	}	public function setSourceLang($sourceLang) {		$this->sourceLang = $sourceLang;	}	public function setTargetLang($targetLang) {		$this->targetLang = $targetLang;	}	public function setServiceType($serviceType) {		$this->serviceType = $serviceType;	}	public function setServiceId($serviceId) {		$this->serviceId = $serviceId;	}	public function setDictionaryFlag($dictionaryFlag) {		$this->dictionaryFlag = $dictionaryFlag;	}	public function setCreateUserId($createUserId) {		$this->createUserId = $createUserId;	}	public function setUpdateUserId($updateUserId) {		$this->updateUserId = $updateUserId;	}	public function setCreateTime($createTime) {		$this->createTime = $createTime;	}	public function setUpdateTime($updateTime) {		$this->updateTime = $updateTime;	}	public function setTranslationBinds($translationBinds) {
+		$this->translationBinds = $translationBinds;
+	}
+	public function getTranslationBinds() {
+		return $this->translationBinds;
+	}
+}
+?>

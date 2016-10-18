@@ -1,0 +1,105 @@
+/******************************************************************************/
+/* high contrast css */
+/******************************************************************************/
+
+body{
+  font-size:120%;
+  color: #fff;
+  background-color:#000;
+}
+
+/* img */
+
+img{
+  border: 0;
+}
+
+/* Container */
+
+#Container{
+  padding: 15px 25px;
+}
+
+/* header */
+
+div#Header {
+  height: 100px;
+  background-color:#666;
+}
+
+div#Header div#Logo {
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+/* Breadcrumb */
+
+div#breadcrumb, div#theme_breadcrumbs {
+  clear: both;
+  width: 100%;
+  margin-bottom: 5px;
+  border-bottom: #DDD dotted 1px;
+}
+
+/* headings */
+
+h1, h1 a {
+  font-size: 200%;
+  margin: 15px 0;
+}
+
+h2 {
+  border-bottom: 1px #fff solid;
+  margin: 15px 0;
+}
+
+h2, h3, h4, h5, h6 {
+  font-size: 130%;
+}
+
+/* for accessibility */
+.HdSkip {
+  margin: 0 0 15px;
+}
+
+/* Table */
+
+table.outer * {
+  margin-top:0;
+  margin-bottom:0;}
+table.outer {
+  margin:5px 0 10px !important;
+  border-collapse:collapse;
+  border-top:1px #bbb solid;
+  border-left:1px #bbb solid;}
+table.outer th,table.outer td {
+  text-align:left;
+  padding:2px 5px;
+  border-bottom:1px #bbb solid;
+  border-right:1px #bbb solid;}
+table.outer th {
+  text-align:left;
+  background-color:#f8f8f8;
+  font-weight:bold;
+  color:#111;}
+table.outer thead th {
+  background-color:#ddd;
+  color:#111;}
+table.outer ul,table.outer ol {
+  padding:0;
+  margin-left:25px;
+  margin-right:0;}
+
+/* LinkColor */
+a:link {
+  color: #fff;
+}
+a:visited {
+  color: #aabbff;
+}
+a:active {
+  color: #fff;
+}
+a:hover {
+  text-decoration: none;
+}

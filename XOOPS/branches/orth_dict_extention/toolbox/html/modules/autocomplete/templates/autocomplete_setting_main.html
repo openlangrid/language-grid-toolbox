@@ -1,0 +1,70 @@
+<script language="javascript" type="text/javascript">
+<!--
+var Const = {
+	Message: {
+		Error: {
+			SaveError: '<{$smarty.const._MD_AUTOCOMPLETE_SETTING_JS_MSG_SAVEERROR}>'
+		}
+	}
+};
+-->
+</script>
+
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="javascript:void(0);" onclick="return false;">
+			<ul class="tab_on">
+				<li class="tab_l">
+				</li>
+				<li class="tab_m">
+					<span><{$smarty.const._MD_AUTOCOMPLETE_SETTING}></span>
+				</li>
+				<li class="tab_r">
+				</li>
+			</ul>
+		</a>
+	</div>
+</div>
+<div id="contents_body">
+<div id="autocomplete-setting-main">
+	<h2><{$smarty.const._MD_AUTOCOMPLETE_SETTING_DESCRIPT}></h2>
+	<div class="clearfix">
+		<label for="selectall">
+			<input type="checkbox" name="selectall" id="selectall">
+			<span><{$smarty.const._MD_AUTOCOMPLETE_SETTING_SELECTALL}></span>
+		</label>
+	</div>
+
+	<form name="autocompleteform" id="autocompleteform">
+	<{foreach from=$datas item=item name=foo}>
+	<div class="list clearfix">
+		<label for="<{$item.name}>">
+			<input type="checkbox" name="paralleltexts[<{$smarty.foreach.foo.index}>]" id="<{$item.name}>" value="<{$item.name}>" <{$item.checked}>>
+			<span><{$item.name}></span>
+		</label>
+	</div>
+	<{/foreach}>
+	</form>
+
+	<div class="clearfix">
+	<ul class="btn_set01">
+		<li>
+			<a style="">
+				<div class="btn_gray01">
+					<span id="save_btn"><{$smarty.const._MD_AUTOCOMPLETE_SETTING_BTN_SAVE}></span>
+				</div>
+			</a>
+		</li>
+		<li>
+			<a style="">
+				<div class="btn_gray01">
+					<span id="cancel_btn"><{$smarty.const._MD_AUTOCOMPLETE_SETTING_BTN_CANCEL}></span>
+				</div>
+			</a>
+		</li>
+	</ul>
+	</div>
+</div>
+</div>
+
+<{* $Id: autocomplete_setting_main.html 3547 2010-03-19 08:24:23Z yoshimura $ *}>

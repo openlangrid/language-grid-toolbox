@@ -1,0 +1,120 @@
+<script charset="utf-8" type="text/javascript">
+<{include file="db:web_translation_script.html"}>
+</script>
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="#">
+			<ul class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m">
+					<span><{$smarty.const._MI_WEB_CREATION_TOOL_NAME}></span>
+				</li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+<input type='hidden' id='moduleId' value='web_translation'>
+<input type='hidden' id='screenId' value='web_translation_main'>
+<div id="wc-wrapper">
+	<div id="wc-translation-container" class="wc-container">
+		<div id="wc-title-area" class="clearfix">
+			<div id="wc-title">
+				<h2 class="wc-title"><{$smarty.const._MI_WEB_CREATION_TRANSLATE}></h2>
+			</div>
+			<{*
+			<div id="wc-workspace-controller">
+				<span id="wc-load-html-by-file-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_LOAD_HTML}></span>
+				<span id="wc-load-workspace-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_LOAD_WORKSPACE}></span>
+				<span id="wc-save-workspace-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_SAVE_WORKSPACE}></span>
+				<span id="wc-translation-area-toggle-button" class="wc-toggle-button">-</span>
+			</div>
+			<div id="wc-workspace-load-dialog"></div>
+			<div id="wc-workspace-save-dialog"></div>
+			<div id="wc-html-load-dialog"></div>
+			*}>
+		</div>
+
+		<div id="wc-translation-area-wrapper">
+			<{*
+			<div id="wc-apply-template-area" class="clearfix">
+				<div class="clearfix">
+					<div id="wc-apply-template-title"><{$smarty.const._MI_WEB_CREATION_APPLY_TEMPLATE}></div>
+					<div id="wc-apply-template-controller">
+						<span id="wc-load-apply-template-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_APPLY_TEMPLATE}></span>
+					</div>
+				</div>
+				<div id="wc-apply-template-body">
+
+				</div>
+				<div id="wc-apply-template-load-dialog"></div>
+			</div>
+			*}>
+
+			<div id="wc-translation-controller-area" class="clearfix">
+			<div id="wc-languages">
+				From:&nbsp;&nbsp;
+				<select id="wc-source-language-selector"></select>
+				&nbsp;To:&nbsp;&nbsp;
+				<select id="wc-target-language-selector"></select>
+			</div>
+			<table width="100%" id="wc-url-area">
+							<tbody><tr>
+								<td id="wc-url-input-label">
+									<label for="wc-url-input">URL:</label>
+								</td>
+								<td>
+									<input type="text" value="http://" id="wc-url-input">
+								</td>
+								<td id="wc-url-controller">
+									<span id="wc-translation-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_TRANSLATE}></span>
+								</td>
+								<td id="wc-url-ajax">
+									<img style="display: none;" src="./image/ajax_clear.gif" id="wc-url-ajax-image">
+								</td>
+							</tr>
+						</tbody>
+			</table>			
+			</div>
+
+			<div id="wc-html-save-dialog"></div>
+		</div>
+	</div>
+
+	<{*
+	<div id="wc-template-container" class="wc-container">
+		<div id="wc-template-workspace-area" class="clearfix">
+			<h2 class="wc-title"><{$smarty.const._MI_WEB_CREATION_TEMPLATE}></h2>
+			<div id="wc-template-controller-area">
+				<span id="wc-template-load-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_LOAD_TEMPLATE}></span>
+				<span id="wc-template-save-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_SAVE_TEMPLATE}></span>
+				<span id="wc-template-add-button" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_ADD_TEMPLATE}></span>
+				<span id="wc-template-toggle-button" class="wc-toggle-button">-</span>
+			</div>
+		</div>
+		<div id="wc-template-area">
+
+		</div>
+		<div id="wc-template-load-dialog"></div>
+		<div id="wc-template-save-dialog"></div>
+	</div>
+	*}>
+
+	<div id="wc-license-area">
+		<div id="wc-license-area-title"><{$smarty.const._MI_WEB_CREATION_LICENSE_INFORMATION}></div>
+		<div id="wc-license-area-body"></div>
+	</div>
+</div>
+<div id="wc-dialog" style="display: none;">
+<div id="wc-dialog-main">
+	<div id="wc-dialog-title"></div>
+	<div id="wc-dialog-body"></div>
+	<div id="wc-dialog-button-set">
+		<div id="wc-dialog-ok-cancel" class="clearfix">
+			<span id="wc-dialog-ok" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_OK}></span>
+			<span id="wc-dialog-cancel" class="wc-basic-button"><{$smarty.const._MI_WEB_CREATION_CANCEL}></span>
+		</div>
+	</div>
+</div>
+<div id="wc-dialog-mask"></div>
+</div>

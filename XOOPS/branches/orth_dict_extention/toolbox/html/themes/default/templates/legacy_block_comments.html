@@ -1,0 +1,5 @@
+<ul>
+<{foreach item=comment from=$block.comments}>
+  <li title="<{$comment.module|strip_tags}>"><{$comment.title}> (<{$comment.poster}>,<{$comment.time|xoops_formattimestamp:m}>)</li>
+<{/foreach}>
+</ul>

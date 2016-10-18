@@ -1,0 +1,27 @@
+<script type="text/javascript">
+<!--
+    function logout_confirm(){ 
+      if( window.confirm('<{$smarty.const._US_LOGOUT_CONFIRM}>') ){
+        location.href = "<{$xoops_url}>/user.php?op=logout" ;
+      }
+    }
+//-->
+</script>
+
+<div id="admin_ctrl">
+  <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=PreferenceEdit&amp;confcat_id=1" class="direct"><{$smarty.const._THEME_ADMIN_GENERAL}></a>
+  <a href="<{$xoops_url}>/modules/altsys/admin/index.php?mode=admin&amp;lib=altsys&amp;page=myblocksadmin&amp;dirname=legacy" class="direct"><{$smarty.const._THEME_ADMIN_BLOCKS}></a>
+  <a href="<{$xoops_url}>/modules/legacy/admin/index.php?action=ModuleList" class="direct"><{$smarty.const._THEME_ADMIN_MODULES}></a>
+  <a href="<{$xoops_url}>/modules/user/admin/index.php" class="direct end_of_shortcut"><{$smarty.const._THEME_ADMIN_USERS}></a>
+
+  <a href="<{$xoops_url}>/admin.php"><{$smarty.const._CPHOME}></a>
+  <a href="<{$xoops_url}>/"><{$smarty.const._YOURHOME}></a>
+  <script type="text/javascript">
+  <!--
+    document.write('  <a href="javascript:logout_confirm()"><{$smarty.const._LOGOUT}><\/a>') ;
+  //-->
+  </script>
+  <noscript>
+    <a href="<{$xoops_url}>/user.php?op=logout"><{$smarty.const._LOGOUT}></a>
+  </noscript>
+</div>

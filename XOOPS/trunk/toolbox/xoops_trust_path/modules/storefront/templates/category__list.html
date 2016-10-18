@@ -1,0 +1,41 @@
+
+<div id="<{$mod_url}>/category/?resourceName=<{$resourceName}>&page=<{$pager->getCurrentPage()}>&keyWord=<{$keyWord|escape:'url'}>" >
+  <{if $pager->getSum() >= 1}>
+  <ul>
+    <{foreach item=values from=$pager->getEntitiesInCurrentPage()}>
+    <li>
+      <a href="<{$mod_url}>/question/?resourceName=<{$resourceName}>&amp;caId=<{$values->getId()}>" class="CategoryButton">
+      <span class="main"><{$values->getMainExpression()|escape}></span>
+      <span class="sub"><{$values->getSubExpression()|escape}></span>
+      </a>
+    </li>
+    <{/foreach}>
+  </ul>
+
+  <div id="PageSwitch" align="center">
+    <table summary="send_page">
+      <tr>
+        <td>
+          <{if $pager->hasPrevPage()}>
+          <a id="PagePrevButton" class="pageLink" href="<{$mod_url}>/category/?resourceName=<{$resourceName}>&amp;page=<{$pager->getPrevPageNo()}>&amp;keyWord=<{$keyWord|escape:'url'}>">&nbsp;</a>
+          <{else}>
+          <a id="PagePrevButton" class="down" href="javascript: void(0);">&nbsp;</a>
+          <{/if}>
+        </td>
+        <td id="dispPage" class="PageCount">
+          <{$pager->getCurrentPage()}>/<{$pager->getLastPageNo()}>
+        </td>
+        <td>
+          <{if $pager->hasNextPage()}>
+  	      <a id="PageNextButton" class="pageLink" href="<{$mod_url}>/category/?resourceName=<{$resourceName}>&amp;page=<{$pager->getNextPageNo()}>&keyWord=<{$keyWord|escape:'url'}>">&nbsp;</a>
+  	      <{else}>
+  	      <a id="PageNextButton" class="down" href="javascript: void(0);">&nbsp;</a>
+  	      <{/if}>
+  	    </td>
+      </tr>
+    </table>
+  </div>
+  <{else}>
+  <{$smarty.const.STF_LABEL_NOSEARCH_CATEGORY}>
+  <{/if}>
+</div>

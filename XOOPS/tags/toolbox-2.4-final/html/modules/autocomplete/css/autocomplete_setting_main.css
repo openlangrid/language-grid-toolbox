@@ -1,0 +1,15 @@
+#autocomplete-setting-main {
+	text-align: left;
+}
+#autocomplete-setting-main h2 {
+	color:#005AAA;
+	display:block;
+	font-size:166%;
+	margin-bottom:0.6em;
+}
+#autocomplete-setting-main div.list {
+	margin-top: 20px;
+}
+#autocomplete-setting-main div.list label {
+	margin-left: 10px;
+}

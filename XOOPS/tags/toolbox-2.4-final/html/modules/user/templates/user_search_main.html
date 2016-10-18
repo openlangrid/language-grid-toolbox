@@ -1,0 +1,75 @@
+<{include file="db:user_php2js.html"}>
+
+
+<a name="top"></a>
+<div id="tab_set">
+	<div id="tab_box">
+		<a href="#">
+			<ul id="panetab1" class="tab_on">
+				<li class="tab_l"></li>
+				<li class="tab_m"><span><{$smarty.const._MD_USER_LANG_USER_SEARCH}></span></li>
+				<li class="tab_r"></li>
+			</ul>
+		</a>
+	</div>
+</div>
+
+
+<div id="contents_body" class="yui-skin-sam">
+
+<{include file="db:user_search.html"}>
+
+			<div style="">
+				<div id="result_title" style=""><{$smarty.const._MD_USER_LANG_USER_SEARCH}></div>
+				<div id="load-dictionary-table-wrapper" style="">
+					<div id="containerTableResult" class="load-resource-body-wrapper">
+
+
+						<table id="userList-table" class="load-resource-body-table body_title" cellspacing="0"	cellpadding="0" border="0" width="820">
+							<thead id="userList-head">
+								<tr class='searchResultTitle'>
+									<td class="tableBlankCell"	style="border-width:0px;"></td>
+									<td class="nocase" style="text-align: center;">
+											<{$smarty.const._MD_USER_LANG_NICKNAME}>
+									</td>
+									<td class="nocase" style="text-align: center;">
+										<{$smarty.const._MD_USER_LANG_NAME}>
+									</td>
+								<{if $title}>
+									<{foreach from=$title key=titleID item=t name= titleLoop}>
+										<td  style="text-align: center;" id="titleTD<{$smarty.foreach.titleLoop.index}>" class="nocase"><{$t|escape}></td>
+									<{/foreach}>
+								<{/if}>
+								</tr>
+							</thead>
+
+							<tbody id="userList-body">
+							<{foreach from=$userData key=k item=u name=userDataLoop}>
+							<tr class="userDataTR<{$smarty.foreach.userDataLoop.index}>">
+							<td  class="userSearchTD" width="20px" ><{$smarty.foreach.userDataLoop.index+1}></td>
+									<td  class="userSearchTD" ><a  id="uname<{$smarty.foreach.userDataLoop.index}>" href="../../../userinfo.php?uid=<{$u.id}>"><{$u.uname|escape}></a></td>
+									<td  class="userSearchTD"  id="name<{$smarty.foreach.userData.index}>" ><{$u.name|escape}></td>
+								<{if $title}>
+									<{foreach from=$u.subProfile item=prof}>
+									<td  class="userSearchTD"><{$prof|escape}></td>
+									<{/foreach}>
+								<{/if}>
+								</tr>
+							<{/foreach}>
+
+							</tbody>
+						</table>
+
+						<a href="#top"><{$smarty.const._MD_USER_LANG_TO_TOP}></a>
+
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<{$header}>
+
+<body class="oneColFixCtrHdr">
+<div id="container">
+
+<{$divHeader}>
+
+  <div id="mainContent">
+  	<div class="function_title">
+	    <h1>
+	      <span class="main"><{$hitCount}><{$smarty.const.STF_TITLE_QUESTION}></span>
+	      <span class="sub"></span>
+	    </h1>
+    </div>
+    <div class="searchBox">
+  		<form name="searchForm" method="get" action="<{$mod_url}>/question/?action=_list" onsubmit="return validateKeyWordAndSubmit();" >
+  			<input type="hidden" name="resourceName" value="<{$resourceName}>" />
+  			<input type="hidden" name="caId" value="<{$caId}>" />
+  			<input type="hidden" name="page" value="1" />
+  			<!-- <input type="hidden" name="sort" value="<{$sort}>" /> -->
+  			<!-- <input type="hidden" name="orderBy" value="<{$orderBy}>" /> -->
+   			<input type="hidden" name="sort" value="asec" />
+  			<input type="hidden" name="orderBy" value="creationDate" />
+  			<input type="text" name="keyWord" value="<{$keyWord}>" />
+	  		<input type="submit" value="<{$smarty.const.STF_LABEL_SEARCH}>" />
+	  		<input type="button" value="<{$smarty.const.STF_LABEL_CLEAR}>" onclick="clearKeyWordAndSubmit();" />
+  		</form>
+  	</div>
+  	<div class="clear"></div>
+    <!-- -->
+    <div id="CategoryArea">
+      <{include file="db:storefront_question__list.html"}>
+    </div>
+    <!-- end #mainContent -->
+  </div>
+  <div id="footer">
+    <div id="FooterButtonArea">
+      <a id="BackButton" name="BackButton" class="GlobalButton" href="<{$mod_url}>/category/?resourceName=<{$smarty.get.resourceName}>">
+	      <span class="left"></span>
+			  <span class="center">
+			      <span id="ReturnIcon"></span>
+			      <span class="main"><{$smarty.const.STF_LABEL_BACK}></span>
+			      <span class="sub"></span>
+		      </span>
+	      <span class="right"></span>
+      </a>
+    </div>
+    <!-- end #footer -->
+  </div>
+  <!-- end #container -->
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+function validateKeyWordAndSubmit(){
+
+ 	 if(document.searchForm.elements["keyWord"].value==""){
+
+		alert("<{$smarty.const.STF_LABEL_FORMVALUDATE}>");
+		return false;
+ 	 }
+	return true;
+}
+
+function clearKeyWordAndSubmit() {
+	document.searchForm.elements["keyWord"].value="";
+	document.searchForm.submit();
+}
+
+//]]>
+</script>
+</body>
+</html>
+

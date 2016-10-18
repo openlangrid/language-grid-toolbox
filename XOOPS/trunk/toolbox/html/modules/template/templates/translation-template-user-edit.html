@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="<{$xoops_charset}>"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<!--
+// -------------------------------------------------------------------------- //
+// This is a module for Language Grid Toolbox, which allows non-registered users
+// to easily access text translation, dictionary search and parallel text search
+// modules on a Web page outside of the Toolbox site.
+// Copyright (C) 2011 Department of Social Informatics, Kyoto University
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+// -------------------------------------------------------------------------- //
+-->
+<head>
+	<meta http-equiv="Content-Type"			content="text/html; charset=<{$xoops_charset}>" />
+	<meta http-equiv="content-language"		content="<{$xoops_langcode}>" />
+	<meta http-equiv="content-script-type"	content="text/javascript" />
+	<meta http-equiv="content-style-type"	content="text/css" />
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="<{$xoops_imageurl}>common/css/default.css?timestamp=<{$smarty.now}>" />
+	<link rel="stylesheet" type="text/css" href="<{$xoops_imageurl}>common/css/style.css?timestamp=<{$smarty.now}>" />
+
+	<meta name="robots"						content="<{$xoops_meta_robots|upper}>" />
+	<meta name="keywords"					content="<{$xoops_meta_keywords}>" />
+	<meta name="description"				content="<{$xoops_meta_description}>" />
+	<meta name="rating"						content="<{$xoops_meta_rating}>" />
+	<meta name="author"						content="<{$xoops_meta_author|replace:"@":"&#x40;"}>" />
+	<meta name="copyright"					content="<{$xoops_meta_copyright}>" />
+	<meta name="generator"					content="XOOPS Cube Legacy" />
+	<title><{$xoops_sitename}><{if $xoops_pagetitle}> - <{$xoops_pagetitle}><{elseif $xoops_slogan}> - <{$xoops_slogan}><{/if}></title>
+	<link href="<{$xoops_url}>/favicon.ico" rel="SHORTCUT ICON" />
+	
+	<{if $xoops_block_header}><{$xoops_block_header}><{/if}>
+	<{if $user_define_header}><{$user_define_header}><{/if}>
+	<{if $xoops_module_header}><{$xoops_module_header}><{/if}>
+
+	<script language="JavaScript" type="text/javascript" src="<{$xoops_imageurl}>common/js/rollover.js"></script>
+	<script language="JavaScript" type="text/javascript"><{$xoops_js|regex_replace:"/(\/\/\-\->|<!\-\-)/":""}></script>	
+
+	<script type="text/javascript">
+	function crossDomainCall(height) {
+		try {
+			var domain = location.hash.replace(/#/,"");
+			domain = domain.split(/\//)[0];
+			if (domain == location.hostname) {
+				parent.resizeHeight(height);
+			} else {
+				var url = getCrossDomainHelperUrl() + "#" + height;
+				document.getElementById("pipe").src = getCrossDomainHelperUrl() + "#" + height;
+			}
+		} catch (e) {;}
+	}
+
+	function getCrossDomainHelperUrl() {
+		var xdhelperUrl = location.hash.replace(/#/,"");
+		var time = new Date().getTime();
+		if (xdhelperUrl != "") {
+			return "http://" + xdhelperUrl + "?" + time;
+		} else {
+			throw ("domain is not found!");
+		}
+	}
+
+	function getHeight() {
+		var divBody = document.getElementById("body_bg");
+		return Math.max(divBody.clientHeight ||
+				document.body.scrollHeight ||
+				document.documentElement.scrollHeight);
+	}
+
+	</script>
+</head>
+<body id="template">
+
+<div id="body_bg">
+	<div id="wrap">
+		<div id="container" class="clearfix">
+			<script type="text/javascript">
+				//<![CDATA[
+					function jumpLang(selObj){
+						var nbsp = String.fromCharCode(160);
+
+						var textarea_key = ["original-textarea_editor", "translation-textarea_editor", "backtranslation-textarea_editor"];
+						var texts   = [];
+
+						for (var index = 0;  index < textarea_key.length; index++) {
+							if ($(textarea_key[index]).contentDocument) {
+								// except IE
+								texts[textarea_key[index]] = $(textarea_key[index]).contentDocument.body.innerHTML.stripTags().replace(/&nbsp;|\s/g, "");
+							} else {
+								// IE
+								texts[textarea_key[index]] = $(textarea_key[index]).contentWindow.document.body.innerHTML.stripTags().replace(/&nbsp;|\s/g, "");
+							}
+						}
+
+						for (var index = 0;  index < textarea_key.length; index++) {
+							if (texts[textarea_key[index]].length != 0) {
+								if (window.confirm('<{$smarty.const._MI_SMARTTRANS_LANGWARN}>')) {
+									break;
+								} else {
+									selObj.options[<{$ml_lang_index}>].selected = true;
+									return false;
+								}
+							}
+						}
+						
+						var action = '<{$action}>';
+						if (action == 'search') {
+							action = 'default';
+						}
+						window.location.href = './?action=' + action
+							+ '&ml_lang=' + selObj.options[selObj.selectedIndex].value
+							+ '#' + location.hash.replace(/#/,"");
+					}
+				//]]>
+			</script>
+		</div>
+		<{include file="db:translation-template-main.html"}>
+	</div>
+</div>
+</body>
+</html>

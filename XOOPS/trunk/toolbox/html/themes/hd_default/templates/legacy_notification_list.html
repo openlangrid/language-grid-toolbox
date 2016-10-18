@@ -1,0 +1,98 @@
+<h1><{$smarty.const._NOT_ACTIVENOTIFICATIONS}></h1>
+
+<{php}>
+//jidaikobo couldn't construct without php :-(
+if( ! empty( $this->_tpl_vars['modules'] ) ){
+<{/php}>
+<p><{$smarty.const._NOT_ACTIVENOTIFICATIONS_EXPLANATION}></p>
+
+<form name="notificationlist" id="notificationlist" action="notifications.php" method="post">
+  <{xoops_token form=$actionForm}>
+  <script type="text/javascript">
+  <!--
+    document.write('  <table class="outer" summary="notifications controler">') ;
+    document.write('    <thead>') ;
+    document.write('        <tr class="head">') ;
+    document.write('          <th style="text-align:center;"><input name="allbox" id="allbox" onclick="xoopsCheckAll(\'notificationlist\', \'allbox\');" type="checkbox" value="<{$smarty.const._NOT_CHECKALL}>" /><\/th>') ;
+    document.write('          <th><label for="allbox"><{$smarty.const._NOT_EVENT}><\/label><\/th>') ;
+    document.write('          <th><{$smarty.const._NOT_CATEGORY}><\/th>') ;
+    document.write('          <th><{$smarty.const._NOT_ITEMID}><\/th>') ;
+    document.write('          <th><{$smarty.const._NOT_ITEMNAME}><\/th>') ;
+    document.write('        <\/tr>') ;
+    document.write('    <\/thead>') ;
+    document.write('    <{foreach item=module from=$modules}>') ;
+    document.write('      <tr>') ;
+    document.write('        <td class="head" style="text-align:center;"><input name="del_mod[<{$module.id}>]" id="del_mod_<{$module.id}>" onclick="xoopsCheckGroup(\'notificationlist\', \'del_mod_<{$module.id|escape}>\', \'del_not_<{$module.id|escape}>\');" type="checkbox" value="<{$module.id}>" /><\/td>') ;
+    document.write('        <td class="head" colspan="4"><label for="del_mod_<{$module.id}>"><{$smarty.const._NOT_MODULE}>: <{$module.name}><\/label><\/td>') ;
+    document.write('      <\/tr>') ;
+    document.write('      <{foreach item=category from=$module.categories}>') ;
+    document.write('        <{foreach item=item from=$category.items}>') ;
+    document.write('          <{foreach item=notification from=$item.notifications}>') ;
+    document.write('            <tr>') ;
+    document.write('              <{cycle values=odd,even assign=class}>') ;
+    document.write('              <td class="<{$class}>" style="text-align:center;"><input type="checkbox" name="del_not[<{$module.id}>][]" id="del_not_<{$module.id}>_<{$notification.id}>" value="<{$notification.id}>" /><\/td>') ;
+    document.write('              <td class="<{$class}>"><label for="del_not_<{$module.id}>_<{$notification.id}>"><{$notification.event_title}><\/label><\/td>') ;
+    document.write('              <td class="<{$class}>"><{$notification.category_title}><\/td>') ;
+    document.write('              <td class="<{$class}>"><{if $item.id != 0}><{$item.id}><{/if}><\/td>') ;
+    document.write('              <td class="<{$class}>"><{if $item.id != 0}><{if $item.url != ""}><a href="<{$item.url}>"><{/if}><{$item.name}><{if $item.url != ""}><\/a><{/if}><{/if}><\/td>') ;
+    document.write('            <\/tr>') ;
+    document.write('          <{/foreach}>') ;
+    document.write('        <{/foreach}>') ;
+    document.write('      <{/foreach}>') ;
+    document.write('    <{/foreach}>') ;
+    document.write('  <tr>') ;
+    document.write('    <td class="foot" colspan="5">') ;
+    document.write('      <input type="submit" name="delete_cancel" value="<{$smarty.const._CANCEL}>" />') ;
+    document.write('      <input type="reset" name="delete_reset" value="<{$smarty.const._NOT_CLEAR}>" />') ;
+    document.write('      <input type="submit" name="delete" value="<{$smarty.const._DELETE}>" />') ;
+    document.write('    <\/td>') ;
+    document.write('  <\/tr>') ;
+    document.write('  <\/table>') ;
+  //-->
+  </script>
+  <noscript>
+  <table class="outer" summary="notifications controler">
+    <thead>
+        <tr class="head">
+          <th colspan="2"><{$smarty.const._NOT_EVENT}></th>
+          <th><{$smarty.const._NOT_CATEGORY}></th>
+          <th><{$smarty.const._NOT_ITEMID}></th>
+          <th><{$smarty.const._NOT_ITEMNAME}></th>
+        </tr>
+    </thead>
+    <{foreach item=module from=$modules}>
+      <tr>
+        <td class="head" colspan="5"><{$smarty.const._NOT_MODULE}>: <{$module.name}></td>
+      </tr>
+      <{foreach item=category from=$module.categories}>
+        <{foreach item=item from=$category.items}>
+          <{foreach item=notification from=$item.notifications}>
+            <tr>
+              <{cycle values=odd,even assign=class}>
+              <td class="<{$class}>" style="text-align:center;"><input type="checkbox" name="del_not[<{$module.id}>][]" id="del_not_<{$module.id}>_<{$notification.id}>" value="<{$notification.id}>" /></td>
+              <td class="<{$class}>"><label for="del_not_<{$module.id}>_<{$notification.id}>"><{$notification.event_title}></label></td>
+              <td class="<{$class}>"><{$notification.category_title}></td>
+              <td class="<{$class}>"><{if $item.id != 0}><{$item.id}><{/if}></td>
+              <td class="<{$class}>"><{if $item.id != 0}><{if $item.url != ''}><a href="<{$item.url}>"><{/if}><{$item.name}><{if $item.url != ''}></a><{/if}><{/if}></td>
+            </tr>
+          <{/foreach}>
+        <{/foreach}>
+      <{/foreach}>
+    <{/foreach}>
+  <tr>
+    <td class="foot" colspan="5">
+      <input type="submit" name="delete_cancel" value="<{$smarty.const._CANCEL}>" />
+      <input type="reset" name="delete_reset" value="<{$smarty.const._NOT_CLEAR}>" />
+      <input type="submit" name="delete" value="<{$smarty.const._DELETE}>" />
+    </td>
+  </tr>
+  </table>
+  </noscript>
+</form>
+<{php}>
+}else{
+<{/php}>
+<p><{$smarty.const._NOT_ACTIVENOTIFICATIONS_EXPLANATION_NON}></p>
+<{php}>
+}
+<{/php}>

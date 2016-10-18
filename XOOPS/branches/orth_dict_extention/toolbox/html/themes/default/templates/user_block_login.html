@@ -1,0 +1,21 @@
+<form action="<{$xoops_url}>/user.php" method="post" style="margin-top: 0px;">
+<dl class="fh">
+<dt><label for="legacy_xoopsform_block_uname"><{$smarty.const._MB_USER_USERNAME}></label></dt>
+  <dd><{xoops_input type=text name=uname size=10 value=$block.unamevalue maxlength=25 id="`$smarty.const.XOOPS_INPUT_DEFID_PREFIX`block_uname"}></dd>
+<dt><label for="legacy_xoopsform_block_pass"><{$smarty.const._MB_USER_PASSWORD}></label></dt>
+  <dd><{xoops_input type=password name=pass size=10 maxlength=32 id="`$smarty.const.XOOPS_INPUT_DEFID_PREFIX`block_pass"}></dd>
+  <dd><{* <label><{xoops_input type=checkbox name=rememberme value=On class=formButton}><{$smarty.const._MB_USER_REMEMBERME}></label><br /> *}>
+  <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
+  <{xoops_input type=hidden name=op value=login id="`$smarty.const.XOOPS_INPUT_DEFID_PREFIX`block_op"}>
+  <{xoops_input type=submit name=submit value=$smarty.const._MB_USER_LOGIN id="`$smarty.const.XOOPS_INPUT_DEFID_PREFIX`block_submit"}></dd>
+</dl>
+</form>
+<ul class="nlm">
+<{if $block.use_ssl == '1'}>
+  <li><a href="javascript:openWithSelfMain('<{$block.sslloginlink}>', 'ssllogin', 300, 200);"><{$smarty.const._MB_USER_SECURE}></a></li>
+<{/if}>
+  <li><a href="<{$xoops_url}>/lostpass.php"><{$smarty.const._MB_USER_LOSTPASS}></a></li>
+<{if $block.allow_register == '1'}>
+  <li><a href="<{$xoops_url}>/register.php"><{$smarty.const._MB_USER_USERREG}></a></li>
+<{/if}>
+</ul>

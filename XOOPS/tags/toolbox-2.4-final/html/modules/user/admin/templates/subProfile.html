@@ -1,0 +1,168 @@
+<script type="text/javascript" src="Prototype.js"></script>
+<script type="text/javascript" src="inputValue.js"></script>
+<script>
+	var Const={
+		Message:{
+			notInputTitle:"<{$smarty.const._MI_USER_LANG_ERROR_NOT_INPUT_TITLE}>"
+		}
+	}
+</script>
+
+<div class="adminnavi">
+	<a href="./index.php"><{$smarty.const._MI_USER_NAME}></a>
+	&raquo;&raquo; <span class="adminnaviTitle"><{$smarty.const._MI_USER_LANG_USER_SUB_PROFILE}></span>
+</div>
+
+<h3 class="admintitle"><{$smarty.const._MI_USER_LANG_USER_SUB_PROFILE}></h3>
+<form name="frmUserProfile" method="post" action="subProfileRegister.php">
+<table class="outer">
+	<tr>
+		<th colspan="2"><{$smarty.const._MI_USER_LANG_USER_SUB_PROFILE}></th>
+	</tr>
+
+	<{foreach from=$config key=index item=s name=subProfileConfig}>
+	<tr>
+		<td class="head"><{$s.display}></td>
+		<td class="<{cycle values='odd,even'}>">
+			<input type="radio" name="radSub<{$s.order}>" value="1" id="sub<{$s.order}>Yes" <{$s.checkedYes}>><{$smarty.const._MI_USER_LANG_YES}></input>
+			<input type="radio" name="radSub<{$s.order}>" value="0" id="sub<{$s.order}>No" <{$s.checkedNo}>><{$smarty.const._MI_USER_LANG_NO}></input>
+		</td>
+	</tr>
+	<tr>
+		<td class="head"><{$s.title}></td>
+		<td class="<{cycle values='odd,even'}>">
+		<p><{$smarty.const._MI_USER_LANG_SUB_TITLE_MESSAGE}></p>
+	<input type="text" name="txtSub<{$s.order}>Title" id="sub<{$s.order}>Title" size="100" value="<{$s.titleValue|escape}>"/>
+		</td>
+	</tr>
+	<tr>
+		<td class="head"><{$s.length}></td>
+		<td class="<{cycle values='odd,even'}>">
+			<input type="text" name="txtSub<{$s.order}>Length" id="sub<{$s.order}>Length" size="100" value="<{$s.lengthValue|escape}>" />
+		</td>
+	</tr>
+	<tr>
+		<td class="head"><{$s.default}></td>
+		<td class="<{cycle values='odd,even'}>">
+			<input type="text" name="txtSub<{$s.order}>Default" id="sub<{$s.order}>Default" size="100" value="<{$s.defaultValue|escape}>" />
+		</td>
+	</tr>
+	<tr>
+	<{/foreach}>
+
+
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB1_DISPLAY}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="radio" name="radSub1" value="1" id="sub1Yes"><{$smarty.const._MI_USER_LANG_YES}></input>-->
+<!--			<input type="radio" name="radSub1" value="0" id="sub1No" checked><{$smarty.const._MI_USER_LANG_NO}></input>-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB1_TITLE}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--		<p><{$smarty.const._MI_USER_LANG_SUB_TITLE_MESSAGE}></p>-->
+<!--	<input type="text" name="txtSub1Title" id="sub1Title"size="100" value=""/>-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB1_LENGTH}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="text" name="txtSub1Length" id="sub1Length" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB1_DEFAULT}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="text" name="txtSub1Default" id="sub1Default" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB2_DISPLAY}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="radio" name="radSub2" id="sub2Yes"value="1"><{$smarty.const._MI_USER_LANG_YES}></input>-->
+<!--			<input type="radio" name="radSub2" id="sub2No" value="0" checked><{$smarty.const._MI_USER_LANG_NO}></input>-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB2_TITLE}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--		<p><{$smarty.const._MI_USER_LANG_SUB_TITLE_MESSAGE}></p>-->
+<!--	<input type="text" name="txtSub2Title" size="100" id="sub2Title" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB2_LENGTH}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="text" name="txtSub2Length" id="sub2Length" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB2_DEFAULT}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="text" name="txtSub2Default" id="sub2Default" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!---->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB3_DISPLAY}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="radio" name="radSub3" id="sub3Yes" value="1"><{$smarty.const._MI_USER_LANG_YES}></input>-->
+<!--			<input type="radio" name="radSub3" id="sub3No" value="0" checked><{$smarty.const._MI_USER_LANG_NO}></input>-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB3_TITLE}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--		<p><{$smarty.const._MI_USER_LANG_SUB_TITLE_MESSAGE}></p>-->
+<!--		<input type="text" name="txtSub3Title" id="sub3Title" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB3_LENGTH}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="text" name="txtSub3Length" id="sub3Length" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB3_DEFAULT}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="text" name="txtSub3Default" id="sub3Default" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB4_DISPLAY}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="radio" name="radSub4" id="sub4Yes" value="1"><{$smarty.const._MI_USER_LANG_YES}></input>-->
+<!--			<input type="radio" name="radSub4" id="sub4No" value="0" checked><{$smarty.const._MI_USER_LANG_NO}></input>-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB4_TITLE}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--		<p><{$smarty.const._MI_USER_LANG_SUB_TITLE_MESSAGE}></p>-->
+<!--		<input type="text" name="txtSub4Title" id="sub4Title" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB4_LENGTH}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="text" name="txtSub4Length" id="sub4Length" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td class="head"><{$smarty.const._MI_USER_LANG_SUB4_DEFAULT}></td>-->
+<!--		<td class="<{cycle values='odd,even'}>">-->
+<!--			<input type="text" name="txtSub4Default" id="sub4Default" size="100" />-->
+<!--		</td>-->
+<!--	</tr>-->
+	<tr>
+		<th colspan="2">
+			<input class="formButton" type="button" value="Submit" onclick="validateValue();"/>
+			<!--<input class="formButton" type="submit" name="_form_control_cancel" value="Back"/>-->
+			<a href="../index.php?action=UserList"><input class="formButton" type="button" name="_form_control_cancel" value="Back"/></a>
+		</th>
+	</tr>
+</table>
+</form>

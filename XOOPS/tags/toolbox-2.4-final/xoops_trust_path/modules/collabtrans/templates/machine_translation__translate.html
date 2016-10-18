@@ -1,0 +1,19 @@
+			<{foreach from=$translations item=tran key=index}>
+              <div class="auto-trans-block">
+                <div class="area-fl">
+                	<a href="javascript: void(0)" onclick="toggleTargetText(this);" class="orderLabel auto-trans-title-open">
+                		Translation Result <{$index+1}>
+                	</a>
+                </div>
+                <div class="area-fr translate_result" id="result_<{$tran->getPathId()}>">
+                	<{if $tran->isDefault()}>
+                	<span id="default_label">Default</span>
+                	<{/if}>
+                	<a href="javascript: void(0)" onclick="showTranslationPath(this, <{$tran->getPathId()}>)" class="btn">
+                		<span class="btn-pathinfo-mini"><{$smarty.const.CT_BTN_SETTING}></span>
+                	</a> 
+                </div>
+                <p style="font-size: 12px;"><{$tran->getTargetText()|mb_truncate:100|escape|nl2br}></p>
+                <p style="display: none; font-size: 12px;"><{$tran->getTargetText()|escape|nl2br}></p>
+              </div>
+			<{/foreach}>

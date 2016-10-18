@@ -1,0 +1,82 @@
+/******************************************************************************/
+/* text decoration */
+/* disappear and adjust */
+/* Table */
+/* pico */
+/******************************************************************************/
+
+/* text decoration */
+* {
+  padding:0 !important;
+  margin:0 !important;
+  font-size: 11pt;
+}
+
+h1, h1 a {
+  font-size: 15pt !important;
+  margin-bottom:7mm !important;
+}
+h1 {
+  border-bottom: 1px #000 solid;
+}
+
+h2, h3, h4, h5, h6 {
+  font-size: 13pt !important;
+  padding:0 !important;
+  margin-top:7mm !important;
+  margin-bottom:3mm !important;
+  color:#000 !important;
+  background-color:#fff !important;
+  border:none !important;
+}
+
+/* disappear and adjust */
+
+div#Header, div#LeftColumn, div#RightColumn, div#Footer, #theme_breadcrumbs, #BacktoTop, .HdSkip {
+  display:none !important;
+}
+
+div#CenterColumn, #CenterWrapper {
+  float:none !important;
+  margin:0 !important;
+}
+#Header{
+  height:auto;}
+
+/* Table */
+
+table.outer * {
+  margin-top:0;
+  margin-bottom:0;}
+table.outer {
+  margin:5px 0 10px !important;
+  border-collapse:collapse;
+  border-top:1px #bbb solid;
+  border-left:1px #bbb solid;}
+table.outer th,table.outer td {
+  text-align:left;
+  padding:2px 5px;
+  border-bottom:1px #bbb solid;
+  border-right:1px #bbb solid;}
+table.outer th {
+  text-align:left;
+  background-color:#f8f8f8;
+  font-weight:bold;
+  color:#111;}
+table.outer thead th {
+  background-color:#ddd;
+  color:#111;}
+table.outer ul,table.outer ol {
+  padding:0;
+  margin-left:25px;
+  margin-right:0;}
+
+/* pico */
+
+.bottom_of_content_body, .pico_print_icon, .pico_tellafriend_icon, .pico_controllers,
+.pico_breadcrumbs, .pico_vote, .pico_pagenavigation{
+  display:none !important;
+}
+.pico_informations_for_admin{
+  border-top:1px #000 dotted;
+  margin-top:2em !important;}

@@ -1,0 +1,84 @@
+
+<div class="area-popup" style="width:900px; text-align: left;">
+
+	<div class="area-fr">
+		<a href="javascript: void(0)" onclick="cancelDialog(); return false;" class="btn-popup-close">x</a>
+	</div>
+	<br class="clear" />
+  
+	<strong class="h-pagetitle"><{$smarty.const.CT_BTN_OPEN_FILE}></strong>
+  
+    <div class="tab-part-bg">
+		<ul class="tab-part">
+		  <li>
+		  	<a href="#loadFromToolbox" onclick="changeMode(event, this); return false;"><span>Toolbox</span></a>
+		  </li>
+		  <li class="non-act">
+		  	<a href="#loadFromPC" onclick="changeMode(event, this); return false;"><span><{$smarty.const.CT_LABEL_OPEN_AT_LOCAL}></span></a>
+		  </li>
+		</ul>
+  
+		<br class="clear" />
+  
+		<div id="loadFromPC" class="tab-pain" style="display: none;">
+			<p style="margin-bottom:8px;margin-top: 8px;">
+			<{$smarty.const.CT_LABEL_EXPLAIN_ABOUT_LOAD}>
+			</p>
+			<div>
+				<{include file="db:collabtrans__upload.html"}>
+			</div>
+		</div>
+  
+		<div id="loadFromToolbox" class="tab-pain" >
+			<div id="folderShowContainer">
+				<{include file="db:collabtrans_file__list.html"}>
+			</div>
+		</div>
+	</div>
+  
+	<div class="area-fr-p4">
+		<a href="javascript: void(0)" onClick="load(this); return false;" class="btn-s" style="width:100px;">
+			<span class="btn-save"><{$smarty.const.CT_BTN_LOAD}></span>
+		</a>
+		&nbsp;
+		<a href="javascript: void(0)" onclick="cancelDialog(); return false;" class="btn">
+			<span class="btn-cancel"><{$smarty.const.CT_BTN_CANCEL}></span>
+		</a> 
+	</div>
+	
+	<br class="clear" />
+</div>
+
+
+<script type="text/javascript">
+(function() {
+	
+window.changeMode = function(event, anchor) {
+	var anchor = $(anchor);
+	var targetId = anchor.readAttribute("href").replace(/^.*#/, '');
+	$$('.tab-pain').each(function(e){ e.hide(); });
+	$$('ul.tab-part li').each(function(e){ e.addClassName('non-act') });
+	anchor.up('li.non-act').removeClassName('non-act');
+	$(targetId).show();
+	Event.stop(event);
+	return false;
+};
+	
+	var serializeParams = Form.serialize($("folderShowContainer"));
+	
+	var timer = new PeriodicalExecuter(function(){
+		if(!$("loadFromToolbox")) {
+			this.stop();
+			return;
+		}
+		
+		if(serializeParams != Form.serialize($("folderShowContainer"))) {
+			var selected = $("folderShowContainer").down('input[name="fileId"]:checked');
+			$("folderShowContainer").select("td").invoke("removeClassName","cell-selected");
+			if(selected) {
+				selected.up("tr").select("td").invoke("addClassName", "cell-selected");
+			}
+		}
+	}, 0.5);
+}).defer();
+</script>

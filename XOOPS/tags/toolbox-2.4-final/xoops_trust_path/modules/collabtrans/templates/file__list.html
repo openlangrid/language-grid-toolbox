@@ -1,0 +1,100 @@
+<p class="area-fl">
+	<{foreach from=$current->getParents() item=dir key=index}>
+	<a href="<{$mod_url}>/file/?action=_list&parentId=<{$dir->getId()}>" onclick="openDirectory(event, this); return false;"><{$dir->getName()}></a>&nbsp;&gt;
+	<{/foreach}>
+	<{$current->getName()}>
+</p>
+<p class="area-fr-p4">
+	<a href="javascript: void(0);" onclick="openUploadDialog(<{$current->getId()}>); return false;" class="btn-s" title="<{$smarty.const.COM_BTN_UPLOAD_FILE}>">
+		<span class="btn-new"><{$smarty.const.COM_BTN_UPLOAD_FILE}></span>
+	</a>
+</p>
+
+<br class="clear">
+
+<div class="fileListContainer">
+
+	<div class="permission">
+	<{if isset($parentFolder)}>
+		<{if $parentFolder->getEditPermissionType() == 'public'}>
+			<input type="hidden" name="parentFolderPermission" value="1" id="parentFolderPermission" />
+		<{elseif $parentFolder->getEditPermissionUserId() == $userInfo->getUserName()}>
+			<input type="hidden" name="parentFolderPermission" value="1" id="parentFolderPermission" />
+		<{else}>
+			<input type="hidden" name="parentFolderPermission" value="0" id="parentFolderPermission" />
+		<{/if}>
+	<{/if}>
+	</div>
+
+<table id="fileList" border="0" cellspacing="0" cellpadding="0" style="clear:both; width:100%; font-size:85%;">
+	<!-- ****************************************** -->
+	<thead class="table-sortable-head">
+	  <tr>
+	    <th class="case" nowrap="nowrap" style="padding-left: 0px; display: none;"><{$smarty.const.COM_LABEL_SELECT}></th>
+	    <th class="case" width="180"><{$smarty.const.COM_LABEL_FILE_NAME}></th>
+	    <th class="case"><{$smarty.const.COM_LABEL_DESCRIPTION}></th>
+	    <th class="case" nowrap="nowrap"><{$smarty.const.COM_LABEL_PERM_READ}></th>
+	    <th class="case" nowrap="nowrap"><{$smarty.const.COM_LABEL_PERM_WRITE}></th>
+	    <th class="case"><{$smarty.const.COM_LABEL_UPDATER}></th>
+	    <th class="case" width="130"><{$smarty.const.COM_LABEL_UPDATE_DATE}></th>
+	    <th></th>
+	  </tr>
+	</thead>
+	<!-- ****************************************** -->
+	<tbody class="hover-on">
+	<{foreach from=$current->getChilds() item=file key=index}>
+	  <tr class="<{$file->htmlStyleClass()}>" <{if $file|is_a:'File'}>onclick="selectRow(this)"<{/if}> >
+	    <td class="cell-underlined id" style=" display: none;">
+	    	<{if $file|is_a:'File'}>
+			<input type="radio" name="fileId" value="<{$file->getId()}>" id="r<{$file->getId()}>" />
+			<input type="hidden" name="filePermission" value="<{$file->canRead()}>" id="<{$file->getId()}>" />
+			<{/if}>
+	    </td>
+	    <td class="cell-underlined name">
+	    	<{if $file|is_a:'Folder'}>
+	    	<a href="<{$mod_url}>/file/?action=_list&parentId=<{$file->getId()}>" onclick="openDirectory(event, this)">
+	    		<img src="<{$mod_url}>/images/icon/icon_dir.png" /> 
+	    		<span><{$file->getName()}></span>
+	    	</a>
+	    	<{else}>
+	    	<label for="r<{$file->getId()}>">
+	    	<img src="<{$mod_url}>/images/icon/icon_file.png" />
+	    	<span><{$file->getName()}></span>
+	    	</label>
+	    	<{/if}>
+	    </td>
+	    <td class="cell-underlined description"><{$file->getDescription()}></td>
+	    <td class="cell-underlined readPermission">
+	    	<{if $file->canRead()}>
+	    	<img src="<{$mod_url}>/images/icon/icon_check.png" alt="" />
+	    	<{/if}>
+	    	<input type="hidden" value="<{$file->getReadPermission()}>" />
+	    </td>
+	    <td class="cell-underlined writePermission">
+	    	<{if $file->canWrite()}>
+	    	<img src="<{$mod_url}>/images/icon/icon_check.png" alt="" />
+	    	<{/if}>
+	    	<input type="hidden" value="<{$file->getWritePermission()}>" />
+	    </td>
+	    <td class="cell-underlined userName"><{$file->getUserName()}></td>
+	    <td class="cell-underlined updateDate"><{$file->getUpdateDateAsFormatString()}></td>
+	    <td class="cell-underlined download">
+	    	<{if $file|is_a:'File' && $file->canRead()}>
+	    	<a target="_blank" onclick="Event.stop(event); document.location.href='<{$xoops_url}>/modules/filesharing/?page=file_dl&lid=<{$file->getId()}>'" href="javascript:void(0);" class="btn" title="<{$smarty.const.CT_LABEL_DOWNLOAD}>">
+	    		<span class="btn-download-mini"><{$smarty.const.CT_LABEL_DOWNLOAD}></span>
+	    	</a>
+	    	<{/if}>
+	    </td>
+	  </tr>
+	  <{/foreach}>
+	</tbody>
+</table>
+</div>
+
+<input type="hidden" value="<{$current->getId()}>" name="parentId"></input>
+
+<script type="text/javascript">
+(function(){
+	TableSort.init("fileList");
+}).defer();
+</script>

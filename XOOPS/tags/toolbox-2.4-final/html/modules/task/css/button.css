@@ -1,0 +1,406 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+/* ------------------------------------------------------------------------- */
+/* リンク・ボタン */
+
+/* リンクボタン基本形 */
+a.btn {
+	display:inline-block;
+	/* line-height: 120%; */
+	padding: 2px;
+	width: auto;
+	height: 18px;
+	background-color:#dee2e5;
+	background-image:url(../images/btn/btn_bg.png);
+	background-repeat:repeat-x;
+	text-decoration:none;
+	color: #0066FF;
+	text-align: center;
+	font-size: 90%;
+	margin-right: 8px;
+	border:1px solid #ccc;
+	padding-left: 6px;
+	padding-right:6px;
+}
+
+/* 基本ボタン・アイコン画像配置 */
+a.btn img {
+	padding-top: 1px;
+	padding-left: 2px;
+	float: left;
+	border: 0px;
+}
+
+/* 基本ボタンロールオーバー時 */
+a.btn:hover {
+	display:inline-block;
+	/* line-height: 120%; */
+	padding: 2px;
+	width: auto;
+	height: 18px;
+	background-color:#dee2e5;
+	background-image:url(../images/btn/btn_bg_hover.png);
+	background-repeat:repeat-x;
+	text-decoration:none;
+	color: #0066FF;
+	text-align: center;
+	font-size: 90%;
+	margin-right: 8px;
+	border:1px solid #999;
+	padding-left: 6px;
+	padding-right:6px;
+}
+
+/* 基本ボタン・押せない状態 */
+a.btn-disable {
+	display:inline-block;
+	/* line-height: 120%; */
+	padding: 2px;
+	width: auto;
+	height: 18px;
+	background-color:#dee2e5;
+	background-repeat:repeat-x;
+	text-decoration:none;
+	color: #000099;
+	text-align: center;
+	font-size: 90%;
+	margin-right: 8px;
+	border:1px solid #bbb;
+	padding-left: 6px;
+	padding-right:6px;
+	cursor:default;
+}
+
+/* 強調ボタン */
+/* 2010.01.19 背景色調整 */
+a.btn-s {
+	display:inline-block;
+	/* line-height: 120%; */
+	padding: 2px;
+	width: auto;
+	height: 18px;
+	background-color:#0360ad;
+	background-image:url(../img/btn/btn_bg_s.png);
+	background-image:url(../images/btn/btn_bg_s.png);
+	background-repeat:repeat-x;
+	text-decoration:none;
+	color: #fff;
+	text-align: center;
+	font-size: 90%;
+	margin-right: 8px;
+	border:1px solid #bbb;
+	padding-left: 8px;
+	padding-right:8px;
+	font-weight:normal;
+}
+
+/* 強調ボタンロールオーバー */
+/* 2010.01.19 背景色調整 */
+a.btn-s:hover {
+	background-color:#1290d5;
+	background-image:url(../images/btn/btn_bg_s_hover.png);
+	text-decoration:none;
+}
+
+/* 強調ボタン・押せない状態 */
+/* 2010.01.19 アイコン＆パラメータ調整 */
+/* 2010.02.04 文字色調整 */
+a.btn-s-disable {
+	display:inline-block;
+	/* line-height: 120%; */
+	padding: 2px;
+	width: auto;
+	height: 18px;
+	background-color:#dee2e5;
+	background-repeat:repeat-x;
+	text-decoration:none;
+	color: #000099;
+	text-align: center;
+	font-size: 90%;
+	margin-right: 8px;
+	border:1px solid #bbb;
+	padding-left: 8px;
+	padding-right:8px;
+	font-weight:normal;
+	cursor:default;
+}
+
+
+/* ----------------------------------------------------------------- */
+
+/* POPUP ウィンドウクローズ */
+a.btn-popup-close {
+	background-image:url(../images/btn/btn_bg.png);
+	background-repeat:repeat-x;
+	border:1px solid #bbb;
+	text-align:center;
+	display:block;
+	width:40px;
+	overflow:hidden;
+}
+
+
+/* オプションメニュー */
+a.btn span.btn-option {
+	background:url(../images/icon/icon_option.png) no-repeat;
+	background-position:0px 6px;
+	display:block;
+	width:10px;
+	text-indent:-1000px;
+	overflow:hidden;
+}
+
+
+
+/* reply */
+a.btn span.btn-reply {
+	/* background:url(../images/icon/icon_reply.png) no-repeat; */
+	/* padding-left:20px; */
+}
+
+/* close */
+a.btn span.btn-close {
+	background:url(../images/icon/icon_close.gif) no-repeat;
+	background-position:0px 1px;
+	padding-left:20px;
+}
+
+/* import */
+/* 2009.12.22 position 微調整 */
+a.btn span.btn-import {
+	background:url(../images/icon/icon_pagetop.gif) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+/* cancel */
+a.btn span.btn-cancel {
+	background:url(../images/icon/icon_cancel.png) no-repeat;
+	background-position:0px 1px;
+	padding-left:20px;
+}
+
+/* delete */
+/* 2009.12.21 アイコン＆パラメータ調整 */
+/* 2010.01.19 アイコン＆パラメータ調整 */
+/* 2010.02.04 パラメータ調整 */
+a.btn span.btn-delete {
+	background:url(../images/icon/icon_delete.png) no-repeat;
+	background-position:-2px -4px;
+	padding-left:20px;
+}
+
+/* 2010.01.19 アイコン＆パラメータ調整 */
+/* 2010.02.04 パラメータ調整 */
+a.btn-disable span.btn-delete {
+	background:url(../images/icon/icon_delete.png) no-repeat;
+	background-position:-3px -4px;
+	padding-left:20px;
+}
+
+/* zoom */
+a.btn span.btn-zoom {
+	background:url(../images/icon/icon_zoom.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+a.btn-disable span.btn-zoom {
+	background:url(../images/icon/icon_zoom.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+/* marker */
+/* 2009.12.21 アイコン変更 */
+a.btn span.btn-marker {
+	background:url(../images/icon/icon_setmarker.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+a.btn-disable span.btn-marker {
+	background:url(../images/icon/icon_edit.gif) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+/* new */
+a.btn-s span.btn-new {
+	background:url(../images/icon/icon_new.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+/* new */
+/* 2010.2.1 追加 */
+a.btn span.btn-new {
+	background:url(../images/icon/icon_new_gray.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+
+
+/* save */
+a.btn-s span.btn-save {
+	background:url(../images/icon/icon_save.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+/* post */
+/* 2010.02.04 調整 */
+a.btn-s span.btn-post {
+	background:url(../images/icon/icon_save.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+	display:inline-block;
+}
+
+/* 2010.02.04 追加 */
+a.btn-s-disable span.btn-post {
+	background:url(../images/icon/icon_save.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+	display:inline-block;
+}
+
+
+/* translate */
+a.btn-s span.btn-translate {
+	background:url(../images/icon/icon_translate.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+/* search */
+a.btn-s span.btn-search {
+	background:url(../images/icon/icon_search.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+
+
+
+/* 削除・アイコンのみ */
+/* 2009.12.21 アイコン変更 */
+a.btn span.btn-delete-mini {
+	background:url(../images/icon/icon_delete.png) no-repeat;
+	background-position:-7px -3px;
+	display:block;
+	width:10px;
+	text-indent:-1000px;
+	overflow:hidden;
+}
+
+
+
+
+
+
+a.btn span.btn-load-pc {
+	background:url(../images/icon/icon_load_pc.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+a.btn span.btn-load-tbx {
+	background:url(../images/icon/icon_load_tbx.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+a.btn-s span.btn-load-tbx {
+	background:url(../images/icon/icon_load_tbx.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+
+a.btn span.btn-save-pc {
+	background:url(../images/icon/icon_save_pc.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+a.btn span.btn-save-tbx {
+	background:url(../images/icon/icon_save_tbx.png) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}
+
+/* 文章関連付け */
+a.btn span.btn-relate {
+	background:url(../images/icon/icon_relate.png) no-repeat;
+	background-position:0px 1px;
+	padding-left:20px;
+}
+
+
+
+
+
+/* タスク機能・コミュニケーションに移動 */
+/* 2010.01.19 追加 */
+a.btn-go-communication {
+	display: block;
+	float: left;
+	width:24px;
+	height:24px;
+	overflow:hidden;
+	text-indent:-1000px;
+	background:url(../images/icon/btn_go_communication.gif) no-repeat;
+	margin-right: 4px;
+}
+
+/* タスク機能・翻訳に移動 */
+/* 2010.01.19 追加 */
+a.btn-go-translation {
+	
+	display: block;
+	float: left;
+	width:24px;
+	height:24px;
+	overflow:hidden;
+	text-indent:-1000px;
+	background:url(../images/icon/btn_go_translation.gif) no-repeat;
+	margin-right: 4px;
+}
+
+
+/* ダウンロード */
+/* 2010.02.10 追加 */
+a.btn span.btn-download {
+	background:url(../images/icon/icon_save_pc.png) no-repeat;
+	padding-left:20px;
+}
+
+/* 2010.02.10 追加 */
+a.btn-disable span.btn-download {
+	background:url(../images/icon/icon_save_pc.png) no-repeat;
+	padding-left:20px;
+}
+
+
+/* ダウンロード・アイコンのみ */
+/* 2010.02.04 追加 */
+a.btn span.btn-download-mini {
+	background:url(../images/icon/icon_save_pc.png) no-repeat;
+	background-position:-2px 0px;
+	display:block;
+	width:12px;height:16px;
+	text-indent:-1000px;
+	overflow:hidden;
+}
+
+/* edit */
+/* 2010.02.04 追加 */
+a.btn span.btn-edit {
+	background:url(../images/icon/icon_edit.gif) no-repeat;
+	background-position:0px 0px;
+	padding-left:20px;
+}

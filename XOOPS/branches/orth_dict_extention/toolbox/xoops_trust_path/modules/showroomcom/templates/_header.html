@@ -1,0 +1,57 @@
+<style type="text/css">
+.activeUserList {
+	position:absolute;
+	text-align:left;
+	padding:10px 30px 10px 10px;
+	border:solid 1px #666;
+	background:white;
+	z-index:10;
+	min-width: 150px;
+}
+</style>
+
+
+<div style="float:right">
+  <!-- Change display language -->
+  <{include file="db:%s_language.html"|sprintf:$mod_name}>
+  
+  <!-- Active User -->
+  <div id="bbs-active-member">
+  	<{include file="db:%s_active_users__show.html"|sprintf:$mod_name}>
+  </div>
+</div>
+
+<!-- Bread list -->
+<{include file="db:%s_bread_path.html"|sprintf:$mod_name}>
+
+<!-- Topic title -->
+<div class="area-topic-title">
+	<h1><{$comtopic->getTitleForSelectedLanguage()}>(<{$comtopic->getOriginalLanguageAsName()}>)</h1>
+	<div class="area-fr-p4">
+		<{if $selectedLanguageTag == $topic->getOriginalLanguage()}>
+			<{if false && $topic->canPreEditByLoginUser()}>
+			<a class="btn" href="javascript:document.forms['editLinkForm'].submit();">
+				<span class="btn-edit"><{$smarty.const.COM_BTN_EDIT_TOPIC}></span>
+			</a>
+			<{/if}>
+		<{else}>
+			<{if false}>
+			<a class="btn" href="<{$mod_url}>/?page=topic-modify&topicId=<{$smarty.get.topicId}>">
+				<span class="btn-edit"><{$smarty.const._MD_D3FORUM_MODIFY_TOPIC}></span>
+			</a>
+			<{/if}>
+		<{/if}>
+		
+		<{if $topic->canDelete()}>
+		<a href="<{$mod_url}>/?page=topic-delete&topicId=<{$smarty.get.topicId}>" class="btn">
+			<span class="btn-delete"><{$smarty.const.COM_BTN_CONTENT_DELETE}></span>
+		</a>
+		<{/if}>
+	</div>
+</div>
+
+		
+<form action="<{$mod_url}>/?page=preview" method="post" name="editLinkForm">
+	<input type="hidden" name="type_code" value="topic_edit" />
+	<input type="hidden" name="id" value="<{$smarty.get.topicId}>" />
+</form>

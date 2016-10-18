@@ -1,0 +1,25 @@
+<{if $block.showgroups == true}>
+<{foreach item=group from=$block.groups}>
+<h3><{$group.name}></h3>
+<ul>
+<{foreach item=user from=$group.users}>
+  <li><a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>"><{if ! strstr($user.avatar,"blank.gif")}><img src="<{$user.avatar}>" alt="" width="32" /> <{/if}><{$user.name}></a>
+  <{$user.msglink|replace:'alt=""':$smarty.const._MB_LEGACY_SEND_PM}></li>
+<{/foreach}>
+</ul>
+<{/foreach}>
+<{/if}>
+
+<{*<img src="<{$block.logourl}>" alt="" border="0" />*}>
+
+<{if $block.recoomendtime != 0}>
+  <script type="text/javascript">
+  <!--
+    document.write('<h3><{$smarty.const._MB_LEGACY_RECO}><\/h3>') ;
+    document.write('<a href="javascript:openWithSelfMain(\'<{$xoops_url}>/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=<{$block.recoomendtime}>\',\'friend\',<{$block.popup_width}>,<{$block.popup_height}>)"><{$smarty.const._MB_LEGACY_RECO}><\/a>') ;
+  //-->
+  </script>
+  <noscript>
+    <p><{$smarty.const._MB_LEGACY_RECO_CANNOT}></p>
+  </noscript>
+<{/if}>

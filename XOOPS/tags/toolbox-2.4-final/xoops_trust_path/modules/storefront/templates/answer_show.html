@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<{$header->getHeader()}>
+<body class="oneColFixCtrHdr">
+
+<div id="container">
+  <{$header->getDivHeader()}>
+  <div id="mainContent">
+    <h1>
+      <span class="main"><{$question->getMainExpression()|escape}></span>
+      <span class="sub"><{$question->getSubExpression()|escape}></span>
+    </h1>
+    <div id="list_container">
+      <{include file="db:storefront_answer__show.html"}>
+    </div>
+    <!-- end #mainContent -->
+  </div>
+  <div id="footer">
+    <div id="FooterButtonArea">
+      <a id="BackButton" class="GlobalButton" href="#">
+        <span class="left"></span>
+        <span class="center">
+          <span id="ReturnIcon"></span>
+          <span class="main"><{$smarty.const.STF_LABEL_BACK}></span>
+        </span>
+        <span class="right"></span>
+      </a>
+      <a id="PrintButton" class="GlobalButton" href="#">
+        <span class="left"></span>
+        <span class="center">
+          <span id="PrintIcon"></span>
+          <span class="main"><{$smarty.const.STF_LABEL_PRINT}></span>
+        </span>
+        <span class="right"></span>
+      </a>
+    </div>
+    <!-- end #footer -->
+  </div>
+  <!-- end #container -->
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    function initTermLink() {
+		$$("#list_container div.AnswerArea")
+			.each(function (div) {
+				if (! div.up().visible()) {
+					return true;
+				}
+				var hrefchunk = div.up().id.split("&");
+				var page = hrefchunk[hrefchunk.length - 1].split("=")[1];
+				div.select("a.termLink")
+				.each(function(a) {
+					var block = $(a.className.split(" ")[0].replace(/^term/, "definition") + "_p" + page);
+					a.observe("mouseover", function(event) {
+						block.style.top = this.positionedOffset().top + this.getHeight() + 10 + "px";
+						block.style.left = this.positionedOffset().left + "px";
+						block.show();
+					})
+					.observe("mouseout", function(event) {
+						block.hide();
+					});
+				});
+			});
+	}
+           
+    Pager.prototype.link_click = function() {
+		var pager = this;
+		$$("a.perPageLink, a.pageLink").each(function(a) {
+			a.observe("click", function(event) {
+				event.stop();
+				pager.redraw(this);
+			});
+		});
+		initTermLink();
+	};
+
+	var ZOOM_WINDOW = $H({
+		left:0,
+		top:0,
+		width:920,
+		height:750,
+		status:	0,
+		scrollbars:1,
+		menubar:0,
+		location:0,
+		toolbar:0,
+		resizable:0
+	});
+
+	function showZoom(btn) {
+		if($(btn).hasClassName("btn-disable")) return;
+		var contentId = $(btn).up().down("input[type=hidden]").value;
+		if(contentId) {
+			var params = $H({
+				"action" : "_zoom",
+				"contentId" : contentId,
+			});
+
+			var windowParam = ZOOM_WINDOW.map(function(e) { return e[0] + "=" + e[1]; }).join(",");
+			window.open("<{$mod_url}>/answer/?" + params.toQueryString(), "zoomWindow", windowParam);
+	    }
+	}
+//]]>
+</script>
+
+</body>
+</html>

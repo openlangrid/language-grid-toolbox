@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*---------------------------------------------------------------------------------------*/
+/* mainContent */
+/*---------------------------------------------------------------------------------------*/
+#mainContent h1 {
+	font-size:150%;
+}
+/*---------------------------------------------------------------------------------------*/
+/* 説明文 */
+/*---------------------------------------------------------------------------------------*/
+#AnswerArea {
+	float:left;
+	position:relative;
+	top:6px;
+	width:756px;
+	height:500px;
+	margin:0px 0px 2px 2px;
+	border:1px solid #b5b5b5;
+	line-height:150%;
+}
+#DescriptionArea {
+	height:430px;
+	padding:10px;
+}
+p {
+	margin:10px 0px;
+}
+p.main {
+	font-size:100%;
+}
+p.sub {
+	font-size:70%;
+}
+p a {
+	text-decoration:underline;
+}
+/*---------------------------------------------------------------------------------------*/
+/* ページ送り */
+/*---------------------------------------------------------------------------------------*/
+#PageSwitch {
+	width:756px;
+	height:50px;
+}
+/*---------------------------------------------------------------------------------------*/
+/* 地図、画像 */
+/*---------------------------------------------------------------------------------------*/
+.MapPhotoArea {
+	float:left;
+	position:relative;
+	top:6px;
+	width:198px;
+	height:248px;
+	margin:0px 0px 2px 2px;
+	background-image:url(../img/bg/thumbnail_background.png);
+	background-repeat:no-repeat;
+	border:1px solid #b5b5b5;
+	text-align:center;
+}
+.MapPhotoArea img {
+	margin:15px;
+	margin-bottom:5px;
+	border:1px solid #b5b5b5;
+}

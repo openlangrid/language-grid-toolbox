@@ -1,0 +1,225 @@
+<script type="text/javascript">
+//<![CDATA[
+	function hideHoverMenu() {
+		$$(".hover_menu").each(Element.hide);
+	}
+
+    var searchFlag = false;
+
+	Event.observe(window, "load", function() {
+
+		searchFlag = false;
+
+  		init_list(null);
+  		var pager = new Pager("list_container", 10, init_list);
+
+  		// #searchButton
+  		$("searchButton").observe("click", function(event) {
+  	  		if (searchFlag || $("nameText").value != ""){
+	  	  		var params = {
+					"params[name]" : $("nameText").value,
+					"searchMethod" : 0
+				};
+
+				if ($("search-detail").visible()) {
+					params["searchMethod"] = $("searchMethodList").value;
+					params["params[source_lang]"] = $("sourceLangList").value;
+					params["params[target_lang]"] = $("targetLangList").value;
+					params["work"] = $("workList").value;
+					params["symbol"] = $("symbolList").value;
+					params["achievement"] = $("achievementText").value;
+	  	  		} else {
+	  	  	  		params["searchMethod"] = 0;
+	  	  		}
+
+	  	  		new Ajax.Updater("list_container", "<{$mod_url}>/?action=_list", {
+	  	  	  		method : "get",
+	  	  	  		parameters : $H(params).toQueryString(),
+	  	  	  		onComplete : function(httpRequest, json) {
+	  	  	  			$("list_container").select("div.notification-part")[0].show();
+						init_list();
+						pager.initCache();
+	  	  			}
+	  	  	  	});
+  	  		}else{
+				alert("<{$smarty.const._MD_TASK_MSG_EMPTY_KEYWORD}>");
+  	  		}
+  		});
+
+  		$("detailSearchLink").observe("click", function(event) {
+  	  		$("search-detail").toggle();
+  		});
+
+  		$("toTopLink").observe("click", function(event) {
+  	  		document.body.scrollTo();
+  		});
+
+		$("sourceLangList").observe("change", list_Change);
+
+		function init_list() {
+			// a.clearButton
+			// resets the form when clicked
+			var clearButton = $$("a.clearButton").find(match);
+			if (clearButton) {
+				clearButton.observe("click", function(event) {
+					event.stop();
+
+					$("searchTaskForm").reset();
+				});
+			}
+
+			$$("a.btn-go-communication")
+				.filter(function(button) {
+					return match(button) && button.href.match(/task/);
+				})
+				.invoke("observe", "click", function(event) {
+					event.stop();
+
+					glayerShow();
+					openFileDialog({fileDialogURL : this.href});
+				});
+
+			// a.btn
+			// toggles the visibility of the menu
+			$$("a.btn")
+				.filter(match)
+				.invoke("observe", "click", function(event) {
+					event.stop();
+
+					$$(".hover_menu")
+						.reject(function(menu) {
+							return menu == this;
+						}, this.next())
+						.invoke("hide");
+					this.next().toggle();
+				});
+
+			$$(".hover_menu")
+				.filter(match)
+				.invoke("observe", "click", function(event) {
+					event.stop();
+				});
+			$$(".hover_menu a")
+				.invoke("observe", "click", function(event) {
+					event.stop();
+
+					window.location = this.href;
+					this.up(".hover_menu").hide();
+				});
+
+			// a.deleteLink
+			$$("a.deleteLink")
+				.filter(match)
+				.each(function(link) {
+					var linkUrl = link.href;
+					link.href = "javascript: void(0)";
+					link.observe("click", function(event) {
+					if (confirm("<{$smarty.const._MD_TASK_MSG_DELETE}>")) {
+						document.location.href = linkUrl;
+					}
+				});
+			});
+
+			function match(element) {
+				return element.up("div").visible();
+			}
+		}
+
+		Event.observe('sourceLangList', 'change',changeSearchFlag);
+		Event.observe('achievementText', 'change',changeSearchFlag);
+		$(document.body).observe("click", hideHoverMenu);
+	});
+	function list_Change(event) {
+		var list = event.target;
+		var another;
+		var params = $H({});
+
+		if (list.id == "sourceLangList") {
+			another = $("targetLangList");
+			params.set("sourceLang", list.value);
+		} else {
+			another = $("sourceLangList");
+			params.set("targetLang", list.value);
+		}
+
+		var selected = another.value;
+		if (list.value) {
+			new Ajax.Updater(
+				another,
+				'<{$mod_url}>/path/?action=_target_languages',
+				{	parameters: params.toQueryString(),
+					method: "get",
+					onCreate : function() {
+						another.options[0].innerHTML = "<{$smarty.const._MD_TASK_LOADING}>";
+						another.options.length = 1;
+					},
+					onComplete: function() {
+						another.observe("change", list_Change);
+						for (var i = 0; i < another.length; i++) {
+							var option = another.options[i];
+							if (option.value == selected) {
+								option.selected = true;
+								break;
+							}
+						}
+					}
+				}
+			);
+		}
+	}
+
+	function changeSearchFlag(){
+
+		searchFlag = true;
+
+	}
+
+//-->
+</script>
+
+<div id="tbx-body">
+	<button id="how-to-use-button" 
+		onclick="window.open('<{$mod_url}>/how-to-use/<{$smarty.const._MD_TASK_HOW_TO_USE_LINK}>', '_blank'); return false;">How to use
+	</button>
+	
+  <{include file="db:task_file__list_client.html"}>
+  <h1 class="h-pagetitle" style="float:left;"><{$smarty.const._MD_TASK_LIST_TITLE}></h1>
+  <br class="clear" />
+
+  <form id="searchTaskForm" action="">
+    <div class="area-fl-p8">
+      <{$smarty.const._MD_TASK_NAME}>:<input id="nameText" type="text"/>
+      <input id="searchButton" type="button" value="<{$smarty.const._MD_TASK_SEARCH}>"/>
+      <a id="detailSearchLink" href="#">&gt;<{$smarty.const._MD_TASK_DETAIL_SEARCH}></a>
+    </div>
+    <div class="area-fr">
+      <a href="<{$mod_url}>/?action=new" class="btn-s"><span class="btn-new"><{$smarty.const._MD_TASK_NEW_TITLE}></span></a>
+    </div>
+    <div id="search-detail" style="clear:both; display:none; text-align: left;">
+      <{html_options id="searchMethodList" name="search_method" options=$searchMethods}><br/>
+      <{$smarty.const._MD_TASK_SOURCE_LANG}>
+        <select id="sourceLangList">
+        <option value=""><{$smarty.const._MD_TASK_SELECT_LANG}></option>
+        <{include file="db:collabtrans_path__target_languages.html"}>
+      </select>
+      <{$smarty.const._MD_TASK_TARGET_LANG}>:
+      <select id="targetLangList">
+        <option value=""><{$smarty.const._MD_TASK_SELECT_LANG}></option>
+      </select>
+      <br/>
+      <{$smarty.const._MD_TASK_STATUS}>
+      <{html_options id="workList" name="work" options=$workList}>
+      <{html_options id="symbolList" name="symbol" options=$symbolList}>
+      <input id="achievementText" type="text" size="2"/>%
+    </div>
+  </form>
+
+  <div id="list_container">
+  	<{include file="db:task__list.html"}>
+  </div>
+
+  <div style="text-align: left; margin-top: 8px;">
+  	<a id="toTopLink" href="#" class="lnk-return2top"><{$smarty.const._MD_TASK_TO_TOP}></a>
+  </div>
+</div>
+

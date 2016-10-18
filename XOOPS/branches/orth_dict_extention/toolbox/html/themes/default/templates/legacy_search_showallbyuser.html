@@ -1,0 +1,53 @@
+<{capture name="searchResultshtml"}>
+
+  <{capture name="searchResultsCtrl"}>
+    <{if $actionForm->get('start') > 0}>
+      <li class="prev"><a href="<{$smarty.const.XOOPS_URL}>/search.php?action=showallbyuser&amp;uid=<{$targetUser->getShow('uid')}>&amp;mid=<{$searchResults.0.mid}>&amp;start=<{$prevStart}>"><{$smarty.const._MD_LEGACY_LANG_PREV_PAGE}></a></li>
+    <{/if}>
+    <{if $searchResults.0.has_more}>
+      <li class="next"><a href="<{$smarty.const.XOOPS_URL}>/search.php?action=showallbyuser&amp;uid=<{$targetUser->getShow('uid')}>&amp;mid=<{$searchResults.0.mid}>&amp;start=<{$nextStart}>"><{$smarty.const._MD_LEGACY_LANG_NEXT_PAGE}></a></li>
+    <{/if}>
+  <{/capture}>
+
+  <{if trim($smarty.capture.searchResultsCtrl)}>
+    <ul class="ctrl2">
+      <{$smarty.capture.searchResultsCtrl}>
+    </ul>
+  <{/if}>
+
+<{foreach item=module from=$searchResults}>
+  <!-- start results item loop -->
+  <table class="outer clear" summary="search results by user">
+  <{foreach item=result from=$searchResults.0.results}>
+    <{assign var=be_searched_uname value=$result.uid|xoops_user:uname}>
+    <tr class="<{cycle values='odd,even'}>">
+      <th style="width:21px;"><img src="<{$result.image}>" alt="<{$searchResults.0.name}>" title="<{$searchResults.0.name}>" /></th>
+      <td><a href="<{$result.link}>"><{$result.title}></a><br />
+        <span class="whisper">
+        <{if $result.uid > 0}>
+          <a href="<{$smarty.const.XOOPS_URL}>/userinfo.php?uid=<{$result.uid|xoops_escape}>"><{$result.uid|xoops_user:uname}></a>
+        <{/if}>
+        (<{$result.time|xoops_formattimestampGMT:l}>)
+        </span>
+      </td>
+    </tr>
+  <{/foreach}>
+  </table>
+  <!-- end results item loop -->
+<{/foreach}>
+
+  <{if trim($smarty.capture.searchResultsCtrl)}>
+    <ul class="ctrl2">
+      <{$smarty.capture.searchResultsCtrl}>
+    </ul>
+  <{/if}>
+
+<{/capture}>
+
+<{if trim($smarty.capture.searchResultshtml)}>
+  <h1><{$smarty.const._SR_SEARCHRESULTS_BY_USER|sprintf:$module.name:$be_searched_uname}></h1>
+  <{$smarty.capture.searchResultshtml}>
+  <{include file=db:legacy_search_form.html caller="legacy_search_results"}>
+<{else}>
+  <{include file=db:legacy_search_form.html caller="legacy_search_results_no_match"}>
+<{/if}>

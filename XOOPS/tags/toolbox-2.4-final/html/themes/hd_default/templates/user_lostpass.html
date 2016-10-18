@@ -1,0 +1,29 @@
+<h1><{$smarty.const._MD_USER_LANG_LOSTPASSWORD}></h1>
+<{if $actionForm->hasError()}>
+<h2><{$smarty.const._HD_ERROR}></h2>
+<ul class="errorMsg">
+  <{foreach item=message from=$actionForm->getErrorMessages()}>
+    <li><{$message}></li>
+  <{/foreach}>
+</ul>
+<{else}>
+<p><{$smarty.const._MD_USER_LANG_NOPROBLEM}></p>
+<{/if}>
+
+<form action="#" method="post">
+<{xoops_token form=$actionForm}>
+
+<table class="outer">
+  <tr>
+    <th class="head"><label for="legacy_xoopsform_email"><{$smarty.const._MD_USER_LANG_EMAIL}></label></th>
+    <td class="even">
+      <{xoops_input name=email value=$actionForm->get('email') size=34 maxlength=34}>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="foot" style="text-align:center;">
+      <input type="submit" value="<{$smarty.const._SEND}>" />
+    </td>
+  </tr>
+</table>
+</form>

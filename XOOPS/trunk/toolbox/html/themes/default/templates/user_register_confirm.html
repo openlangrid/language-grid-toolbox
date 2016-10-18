@@ -1,0 +1,88 @@
+			<div id="contents_body">
+				<div id="profile_inner">
+					<div>
+						<h2><{$smarty.const._MD_USER_LANG_CONFIRM_NEW_ACCOUNT}></h2>
+						<div class="list_table02">
+							<form name="regForm" action="#" method="post">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td width="110" class="list_line03"><{$smarty.const._MD_USER_LANG_USER_ID}></td>
+										<td><{$registForm->get('uname')|xoops_escape}></td>
+									</tr>
+									<tr>
+										<td class="list_line03"><{$smarty.const._MD_USER_LANG_USER_NAME}></td>
+										<td><{$registForm->get('name')|xoops_escape}></td>
+									</tr>
+									<tr>
+										<td class="list_line03"><{$smarty.const._MD_USER_LANG_EMAIL}></td>
+										<td><{$registForm->get('email')|xoops_escape}></td>
+									</tr>
+									<tr>
+										<td class="list_line03"><{$smarty.const._MD_USER_LANG_TIMEZONE_OFFSET}></td>
+										<td>
+											<{foreach from=$timezones item=zoneobj}>
+												<{if $zoneobj->getVars("offset") == $registForm->get('timezone_offset')}>
+													<{$zoneobj->getVars("zone_name")|xoops_escape}>
+												<{/if}>
+											<{/foreach}>
+										<{$posted_timezone|capitalize|xoops_escape}>
+										</td>
+									</tr>
+									<tr>
+										<td class="list_line03"><{$smarty.const._MD_USER_LANG_DISPLAY_LANGUAGE}></td>
+										<td><{$display_language_name|capitalize|xoops_escape}></td>
+									</tr>
+									<tr>
+										<td class="list_line03"><{$smarty.const._MD_USER_LANG_PASSWORD}></td>
+										<{*<td><{$registForm->get('pass')|xoops_escape}></td>*}>
+										<td><{$registForm->get('pass')|regex_replace:"/./":"*"}></td>
+									</tr>
+									<{*
+									<tr>
+										<td class="list_line03"><{$smarty.const._MD_USER_LANG_GROUP_ID}></td>
+										<td><{$registForm->get('group_id')}></td>
+									</tr>
+									*}>
+									<{*
+									<tr>
+										<td class="list_line03"><{$smarty.const._MD_USER_LANG_CONFIRMPASS}></td>
+										<td><{$registForm->get('vpass')|xoops_escape}></td>
+									</tr>
+									*}>
+									<{*
+									<tr>
+										<td class="list_line03"><{$smarty.const._MD_USER_LANG_GROUP_KEY}></td>
+										<td><{$registForm->get('group_key')|xoops_escape}></td>
+									</tr>
+									*}>
+								</table>
+								<div id="form_btnset">
+									<ul class="btn_set01">
+										<li>
+											<a href="<{$smarty.const.XOOPS_URL}>">
+											<div class="btn_gray01">
+												<span><{$smarty.const._MD_USER_REGCONFIRM_CANCEL}></span>
+											</div>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+											<div class="btn_gray01" onclick="javascript:location.href='?action=back';">
+												<span><{$smarty.const._MD_USER_REGCONFIRM_BACK}></span>
+											</div>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+											<div class="btn_blue01" onclick="document.regForm.submit(); return false;">
+												<span><{$smarty.const._MD_USER_REGCONFIRM_OK}></span>
+											</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>

@@ -1,0 +1,82 @@
+<{include file="db:`$mydirname`_component_tab_navigation.html" topicId=$topicId forumId=$forumId categoryId=$categoryId activeTab=$activeTab}>
+<style type="text/css">
+.list_line03 {
+	width: 200px;
+}
+<{include file="db:`$mydirname`_forum_style.html"}>
+</style>
+<script type="text/javascript">
+var Const = {
+	Images : {
+		loading : '<img src="<{$xoops_imageurl}>/common/img/loading.gif" width="25" height"25" alt="" />'
+	},
+	Label : {
+		postedOn : '<{$smarty.const._MD_D3FORUM_ON}>',
+		remove : '<{$smarty.const._MD_D3FORUM_COMMON_DELETE}>',
+		edit : '<{$smarty.const._MD_D3FORUM_COMMON_EDIT}>',
+		modify : '<{$smarty.const._MD_D3FORUM_COMMON_MODIFY}>',
+		reply : '<{$smarty.const._MD_D3FORUM_COMMON_REPLY}>',
+		translationResult : '<{$smarty.const._MD_D3FORUM_TRANSLATION_RESULT}>',
+		backTranslationResult : '<{$smarty.const._MD_D3FORUM_BACK_TRANSLATION_RESULT}>',
+		serviceName : '<{$smarty.const._MD_D3FORUM_COMMON_SERVICE_NAME}>',
+		copyright : '<{$smarty.const._MD_D3FORUM_COMMON_COPYRIGHT}>',
+		licenseInformation : '<{$smarty.const._MD_D3FORUM_COMMON_LICENSE_INFORMATION}>',
+		captionUpload:'<{$smarty.const._MD_D3FORUM_CAPTION_UPLOAD}>',
+		captionFileList:'<{$smarty.const._MD_D3FORUM_ATACCHED_FILELIST}>',
+		captionFileSize:'<{$smarty.const._MD_D3FORUM_CAPTION_FILESIZE}>',
+		captionFileName:'<{$smarty.const._MD_D3FORUM_CAPTION_FILENAME}>',
+		deleteFile:'<{$smarty.const._MD_D3FORUM_DELETE_FILE}>',
+		captionClose:'<{$smarty.const._MD_D3FORUM_CAPTION_CLOSE}>',
+		translate: '<{$smarty.const._MD_D3FORUM_COMMON_TRANSLATE}>',
+		ok: '<{$smarty.const._MD_D3FORUM_COMMON_OK}>',
+		cancel: '<{$smarty.const._MD_D3FORUM_COMMON_CANCEL}>'
+	},
+	Message : {
+		confirmDelete : '<{$smarty.const._MD_D3FORUM_CONFIRM_DELETE}>',
+		errorMessageRequired : '<{$smarty.const._MD_D3FORUM_MODIFY_ERROR_MESSAGE_IS_EMPTY}>',
+		langridError : '<{$smarty.const._MD_D3FORUM_TRANSLATION_LANGRID_ERROR}>',
+		translationUnavailable : '<{$smarty.const._MD_D3FORUM_NO_TRANSLATION}>',
+		nowTranslating : '<{$smarty.const._MD_D3FORUM_COMMON_NOW_TRANSLATING}>',
+		previewSourceError : '<{$smarty.const._MD_D3FORUM_PREVIEW_NO_SOURCE}>',
+		previewTargetError : '<{$smarty.const._MD_D3FORUM_PREVIEW_NO_TRANSLATOIN_RESULT}>',
+		errorFileNotExist:'<{$smarty.const._MD_D3FORUM_FILE_NOT_EXIST}>',
+		errorFileOverLimit:'<{$smarty.const._MD_D3FORUM_FILE_OVER_LIMIT}>',
+ 		OverLimitCount:'<{$smarty.const._MD_D3FORUM_FILE_OVER_LIMIT_COUNT}>'
+
+	},
+	Pull : {
+		autoUpdateIntervalTime : <{$autoUpdateIntevalTime}>,
+		manualUpdateIntevalTime : <{$manualUpdateIntevalTime}>
+	}
+};
+</script>
+<div id="contents_body">
+		
+
+			<select style="<{if $changeLanguageDisabled}>display:none;<{/if}>float:right;" name="lang" id="displaylanguage" onchange="lanChange(this.value);">
+			<{foreach from=$allLanguages item=item key=key}>
+				<{if $key == $selectedLanguageTag }>
+					<{assign var="selected" value=" selected='selected'"}>
+				<{else}>
+					<{assign var="selected" value="" }>
+				<{/if}>
+				<option<{$selected}> value="<{$key}>"><{$item}></option>
+			<{/foreach}>
+			</select>
+			<script>
+			function lanChange(value) {
+				location.href = '<{$pagenquery}>' + value;
+			}
+			</script>
+
+	<{include file="db:`$mydirname`_add_dictoionary_panel.html"}>
+
+	<table style="clear:both;" width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td valign="top" width="200" id="contents_left_box">
+				<{include file="db:`$mydirname`_user_access.html"}>
+				<{include file="db:`$mydirname`_component_menu.html"}>
+			</td>
+			<td width="16" class="contents_m">&nbsp;</td>
+			<td width="100%" valign="top" bordercolor="0">
+				<div id="contents_right_box">

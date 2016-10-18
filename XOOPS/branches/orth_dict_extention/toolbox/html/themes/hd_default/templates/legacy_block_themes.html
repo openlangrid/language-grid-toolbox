@@ -1,0 +1,37 @@
+<{if $block.isEnableChanger == false}>
+  <{$smarty.const._MB_LEGACY_MESSAGE_CAN_NOT_THEME_CHANGE}>
+<{else}>
+
+<{capture name="themeChangeSelect"}>
+  <select id="xoops_theme_select" name="xoops_theme_select" size="3">
+  <{foreach item=theme_option from=$block.theme_options}>
+      <option value="<{$theme_option.name}>!-!<{$theme_option.screenshot}>" <{$theme_option.selected}> ><{$theme_option.name}></option>
+  <{/foreach}>
+  </select>
+<{/capture}>
+
+<h3><label for="xoops_theme_select"><{$smarty.const._MB_LEGACY_THEME_BLOCKTITLE}></label> (<{"<strong>"|cat:$block.count|cat:"</strong>"|string_format:$smarty.const._MB_LEGACY_LANG_NUMTHEME}>)</h3>
+<form action="#" method="post">
+<{if $block.mode==1}>
+  <script type="text/javascript">
+  <!--
+    document.write('<ul class="cut m">') ;
+    document.write('  <li><img id="xoops_theme_img" src="<{$xoops_imageurl}><{$block.theme_selected_screenshot}>" alt="screenshot" title="screenshot" width="<{$block.width}>" /><\/li>') ;
+    document.write('<\/ul>') ;
+    document.write('<select id="xoops_theme_select" name="xoops_theme_select" onchange="showThemeScreenshot(\'xoops_theme_img\',\'xoops_theme_select\', \'<{$xoops_url}>\');">') ;
+    <{foreach item=theme_option from=$block.theme_options}>
+    document.write('<option value="<{$theme_option.name}>!-!<{$theme_option.screenshot}>" <{$theme_option.selected}>><{$theme_option.name}><\/option>') ;
+    <{/foreach}>
+    document.write('<\/select>') ;
+  //-->
+  </script>
+  <noscript>
+    <p><{$smarty.const._MB_LEGACY_THEME_IMGCHANGE_CANNOT}></p>
+    <{$smarty.capture.themeChangeSelect}>
+  </noscript>
+<{else}>
+  <{$smarty.capture.themeChangeSelect}>
+<{/if}>
+  <input type="submit" value="<{$smarty.const._GO}>" />
+</form>
+<{/if}>

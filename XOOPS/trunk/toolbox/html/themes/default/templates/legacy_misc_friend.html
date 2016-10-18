@@ -1,0 +1,49 @@
+<{if $actionForm->hasError()}>
+<div class="errorMsg">
+  <ul>
+    <{foreach item=message from=$actionForm->getErrorMessages()}>
+      <li><strong><{$message}></strong></li>
+    <{/foreach}>
+  </ul>
+</div>
+<{/if}>
+<form action="./misc.php?type=friend" method="post">
+  <{xoops_token form=$actionForm}>
+  <table width="100%" class="outer" cellspacing="1">
+    <caption><{$smarty.const._MB_LEGACY_LANG_RECOMMENDSITE}></caption>
+    <tr>
+      <th class='head'>
+        <input type='hidden' name='type' value='friend' />
+        <label for="legacy_xoopsform_yname"><{$smarty.const._MD_LEGACY_LANG_YNAME}></label>
+      </th>
+      <td class='even'>
+        <{xoops_input type=text name=yname value=$actionForm->get('yname')}>
+      </td>
+    </tr>
+    <tr>
+      <th class='head'><label for="legacy_xoopsform_ymail"><{$smarty.const._MD_LEGACY_LANG_YMAIL}></label></th>
+      <td class='odd'>
+        <{xoops_input type=text name=ymail value=$actionForm->get('ymail')}>
+      </td>
+    </tr>
+    <tr>
+      <th class='head'><label for="legacy_xoopsform_fname"><{$smarty.const._MD_LEGACY_LANG_FNAME}></label></th>
+      <td class='even'>
+        <{xoops_input type=text name=fname value=$actionForm->get('fname')}>
+      </td>
+    </tr>
+    <tr>
+      <th class='head'><label for="legacy_xoopsform_fmail"><{$smarty.const._MD_LEGACY_LANG_FMAIL}></label></th>
+      <td class='odd'>
+        <{xoops_input type=text name=fmail value=$actionForm->get('fmail')}>
+      </td>
+    </tr>
+    <tr>
+      <td class='head'>&nbsp;</td>
+      <td class='even'>
+        <input type='submit' value='<{$smarty.const._SUBMIT}>' />&nbsp;
+        <input value='<{$smarty.const._CLOSE}>' type='button' onclick='javascript:window.close();' />
+      </td>
+    </tr>
+  </table>
+</form>
