@@ -122,6 +122,10 @@ abstract class Toolbox_TranslationTemplateAbstractManager extends Toolbox_Abstra
 		if (!$object->m_categoryRelationsLoaded) {
 			$object->_loadCategoryRelations();
 		}
+		// force load
+		$object->_loadBoundWordSetRelations();
+		$object->_loadCategoryRelations();
+		
 		
 		$record = new ToolboxVO_TranslationTemplate_TranslationTemplateRecord();
 		$record->id = $object->get('id');
